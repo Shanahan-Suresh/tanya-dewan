@@ -1,0 +1,7 @@
+# Downloaded texts, indexes, vectors, eval runs and usage logs stay on this machine.
+data/
+
+.venv/
+__pycache__/
+.pytest_cache/
+.claude/settings.local.json
