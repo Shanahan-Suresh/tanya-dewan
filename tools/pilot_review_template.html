@@ -1,0 +1,283 @@
+<title>Debate Notes Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; each note is a record card set like a Hansard citation, the verbatim speeches folded beneath it. Same palette as the project's roadmap page. */
+:root {
+  --bg: #f6f7f4;
+  --surface: #ffffff;
+  --sunk: #ecefe9;
+  --fg: #1c231f;
+  --muted: #5a665f;
+  --line: #d5dbd4;
+  --green: #0f6b4a;
+  --green-soft: #e1efe8;
+  --gold: #9a6a12;
+  --gold-soft: #f6ecd6;
+  --warn: #9b3d22;
+  --warn-soft: #f7e4dc;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121714; --surface: #1a211d; --sunk: #222b26; --fg: #e6ece8; --muted: #a2b0a8; --line: #33403a;
+    --green: #5cc49a; --green-soft: #1d3a2e; --gold: #e0b45a; --gold-soft: #3a3020; --warn: #ef9a7d; --warn-soft: #3d2620;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121714; --surface: #1a211d; --sunk: #222b26; --fg: #e6ece8; --muted: #a2b0a8; --line: #33403a;
+  --green: #5cc49a; --green-soft: #1d3a2e; --gold: #e0b45a; --gold-soft: #3a3020; --warn: #ef9a7d; --warn-soft: #3d2620;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 780px; margin: 0 auto; padding-block: 40px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 40px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 6vw, 42px); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 700; }
+h3 { font-size: 15px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); font-family: var(--body); }
+p { margin: 0; }
+header { display: flex; flex-direction: column; gap: 16px; }
+.lead { font-size: 19px; }
+ol.steps { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 6px; }
+.offline { background: var(--warn-soft); color: var(--warn); padding: 12px 16px; border-radius: 8px; }
+.notes { display: flex; flex-direction: column; gap: 28px; }
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.note.mistake { background: var(--warn-soft); border-color: var(--warn); }
+.meta { font-family: var(--mono); font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; font-variant-numeric: tabular-nums; }
+.part { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ms { color: var(--muted); font-style: italic; }
+.qa, .promise { border-left: 3px solid var(--line); padding-left: 14px; display: flex; flex-direction: column; gap: 4px; }
+.promise { border-left-color: var(--gold); }
+.who { font-size: 14px; color: var(--muted); }
+.figs { font-family: var(--mono); font-size: 14px; color: var(--green); }
+blockquote { margin: 0; padding: 8px 12px; background: var(--gold-soft); border-radius: 6px; font-size: 15px; overflow-wrap: anywhere; }
+.topics { font-size: 14px; color: var(--muted); }
+details { border-top: 1px solid var(--line); padding-top: 12px; }
+summary { cursor: pointer; color: var(--green); font-weight: 700; }
+summary:focus-visible, button:focus-visible, textarea:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+.speech { margin-top: 12px; font-size: 15px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.speech b { font-weight: 700; }
+.choice { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+button { font: inherit; font-size: 15px; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--line); background: var(--sunk); color: var(--fg); cursor: pointer; }
+button[aria-pressed="true"].right { background: var(--green); border-color: var(--green); color: var(--surface); }
+button[aria-pressed="true"].wrong { background: var(--warn); border-color: var(--warn); color: var(--surface); }
+.save-state { font-size: 14px; color: var(--muted); }
+label { font-weight: 700; font-size: 15px; }
+textarea { font: inherit; font-size: 15px; width: 100%; box-sizing: border-box; min-height: 80px; padding: 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); }
+.finish { display: flex; flex-direction: column; gap: 12px; }
+#confirm { background: var(--green); color: var(--surface); border-color: var(--green); font-weight: 700; padding: 12px 24px; align-self: flex-start; }
+#confirm:disabled { opacity: 0.6; cursor: default; }
+.status.ok { color: var(--green); font-weight: 700; }
+.status.bad { color: var(--warn); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Are the AI notes on the debates right?</h1>
+    <p class="lead">The AI read five sitting days of Parliament. For each part of a sitting it wrote a summary, the questions and answers, and any promise a minister made. Below are 20 of those notes, each beside what was actually said.</p>
+    <ol class="steps">
+      <li>Read each note. Open "What was said" to compare it with the record.</li>
+      <li>Every note starts as "Right". Press "Has a mistake" if anything is wrong, and say what.</li>
+      <li>Press "Confirm" at the bottom when you are done.</li>
+    </ol>
+    <p class="offline" id="offline" hidden>Your answers cannot be saved from this view. Open the page on claude.ai, or tell me your answers in the chat.</p>
+  </header>
+
+  <div class="notes" id="notes"></div>
+
+  <section class="finish">
+    <h2>Anything else?</h2>
+    <label for="note-overall">A note on the notes as a whole (optional)</label>
+    <textarea id="note-overall"></textarea>
+    <button type="button" id="confirm">Confirm</button>
+    <p class="status" id="confirm-status" role="status"></p>
+  </section>
+</div>
+
+<script>
+(function () {
+  var RECORDS = __RECORDS__;
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var db = null;
+  var state = {};
+  RECORDS.forEach(function (r) { state[r.id] = { verdict: "right", note: "", savedText: "" }; });
+
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function longDate(iso) { var p = iso.split("-"); return Number(p[2]) + " " + MONTHS[Number(p[1]) - 1] + " " + p[0]; }
+
+  function card(r, i) {
+    var s = state[r.id];
+    var box = el("article", { "class": "note" + (s.verdict === "mistake" ? " mistake" : ""), id: "r-" + r.id });
+    var meta = el("div", { "class": "meta" });
+    meta.appendChild(el("span", {}, "Note " + (i + 1) + " of " + RECORDS.length));
+    meta.appendChild(el("span", {}, r.chamber));
+    meta.appendChild(el("span", {}, longDate(r.date)));
+    box.appendChild(meta);
+    box.appendChild(el("h2", {}, r.business || "Opening of the sitting"));
+
+    var sum = el("div", { "class": "part" });
+    sum.appendChild(el("h3", {}, "Summary"));
+    sum.appendChild(el("p", {}, r.summary_en));
+    sum.appendChild(el("p", { "class": "ms", lang: "ms" }, r.summary_ms));
+    if (r.topics.length) sum.appendChild(el("p", { "class": "topics" }, "Topics: " + r.topics.join(", ")));
+    box.appendChild(sum);
+
+    if (r.qa.length) {
+      var qa = el("div", { "class": "part" });
+      qa.appendChild(el("h3", {}, "Questions and answers"));
+      r.qa.forEach(function (q) {
+        var d = el("div", { "class": "qa" });
+        d.appendChild(el("p", { "class": "who" }, "Asked by " + q.q_by));
+        d.appendChild(el("p", {}, q.q));
+        d.appendChild(el("p", { "class": "who" }, "Answered by " + q.a_by));
+        d.appendChild(el("p", {}, q.a));
+        if (q.figures.length) d.appendChild(el("p", { "class": "figs" }, "Figures: " + q.figures.map(function (f) { return f.value + " (" + f.meaning + ")"; }).join("; ")));
+        qa.appendChild(d);
+      });
+      box.appendChild(qa);
+    }
+
+    if (r.commitments.length) {
+      var pr = el("div", { "class": "part" });
+      pr.appendChild(el("h3", {}, "Promises"));
+      r.commitments.forEach(function (c) {
+        var d = el("div", { "class": "promise" });
+        d.appendChild(el("p", { "class": "who" }, "By " + c.by));
+        d.appendChild(el("p", {}, c.promise));
+        var extra = [];
+        if (c.deadline) extra.push("When: " + c.deadline);
+        if (c.amount) extra.push("Amount: " + c.amount);
+        if (extra.length) d.appendChild(el("p", { "class": "figs" }, extra.join("; ")));
+        d.appendChild(el("blockquote", { lang: "ms" }, c.quote));
+        pr.appendChild(d);
+      });
+      box.appendChild(pr);
+    }
+
+    var det = el("details", {});
+    det.appendChild(el("summary", {}, "What was said (" + r.speeches.length + (r.speeches.length === 1 ? " speech)" : " speeches)")));
+    r.speeches.forEach(function (sp) {
+      var p = el("p", { "class": "speech", lang: "ms" });
+      p.appendChild(el("b", {}, sp.label + ": "));
+      p.appendChild(document.createTextNode(sp.text));
+      det.appendChild(p);
+    });
+    box.appendChild(det);
+
+    var row = el("div", { "class": "choice" });
+    var a = el("button", { type: "button", "class": "right", "aria-pressed": String(s.verdict === "right"), id: "a-" + r.id }, "Right");
+    var w = el("button", { type: "button", "class": "wrong", "aria-pressed": String(s.verdict === "mistake"), id: "w-" + r.id }, "Has a mistake");
+    a.addEventListener("click", function () { setVerdict(r.id, "right"); });
+    w.addEventListener("click", function () { setVerdict(r.id, "mistake"); });
+    row.appendChild(a); row.appendChild(w);
+    row.appendChild(el("span", { "class": "save-state", id: "s-" + r.id }, s.savedText));
+    box.appendChild(row);
+    if (s.verdict === "mistake") {
+      box.appendChild(el("label", { "for": "n-" + r.id }, "What is wrong?"));
+      var ta = el("textarea", { id: "n-" + r.id });
+      ta.value = s.note;
+      ta.addEventListener("change", function () { setNote(r.id, ta.value); });
+      box.appendChild(ta);
+    }
+    return box;
+  }
+
+  var list = document.getElementById("notes");
+  var openDetails = {};
+  function render() {
+    list.querySelectorAll("article").forEach(function (a) {
+      var d = a.querySelector("details");
+      if (d) openDetails[a.id] = d.open;
+    });
+    list.textContent = "";
+    RECORDS.forEach(function (r, i) {
+      var c = card(r, i);
+      if (openDetails["r-" + r.id]) c.querySelector("details").open = true;
+      list.appendChild(c);
+    });
+  }
+
+  function markSaved(id, text) {
+    state[id].savedText = text;
+    var s = document.getElementById("s-" + id);
+    if (s) s.textContent = text;
+  }
+  async function save(id) {
+    if (!db) { markSaved(id, "Not saved"); return; }
+    markSaved(id, "Saving...");
+    try {
+      await db.doc("verdicts/" + id).set({ verdict: state[id].verdict, note: state[id].note, at: new Date().toISOString() });
+      markSaved(id, "Saved");
+    } catch (e) { markSaved(id, "Not saved. Try again."); }
+  }
+  function setVerdict(id, v) {
+    if (state[id].verdict === v) return;
+    state[id].verdict = v;
+    render();
+    if (v === "mistake") { var t = document.getElementById("n-" + id); if (t) t.focus(); }
+    save(id);
+  }
+  function setNote(id, text) {
+    if (state[id].note === text) return;
+    state[id].note = text;
+    save(id);
+  }
+
+  var overall = document.getElementById("note-overall");
+  var overallSaved = "";
+  overall.addEventListener("change", async function () {
+    if (!db || overall.value === overallSaved) return;
+    try { await db.doc("verdicts/overall").set({ note: overall.value, at: new Date().toISOString() }); overallSaved = overall.value; } catch (e) {}
+  });
+
+  var confirmBtn = document.getElementById("confirm");
+  var status = document.getElementById("confirm-status");
+  confirmBtn.addEventListener("click", async function () {
+    if (!db) { status.className = "status bad"; status.textContent = "Not saved from this view. Tell me your answers in the chat."; return; }
+    confirmBtn.disabled = true;
+    status.className = "status"; status.textContent = "Saving...";
+    var wrong = RECORDS.filter(function (r) { return state[r.id].verdict === "mistake"; }).map(function (r) { return r.id; });
+    try {
+      if (overall.value !== overallSaved) { await db.doc("verdicts/overall").set({ note: overall.value, at: new Date().toISOString() }); overallSaved = overall.value; }
+      await db.doc("verdicts/_confirmed").set({ at: new Date().toISOString(), mistakes: wrong });
+    } catch (e) {
+      confirmBtn.disabled = false;
+      status.className = "status bad"; status.textContent = "Could not save. Check your connection and press Confirm again.";
+      return;
+    }
+    confirmBtn.disabled = false;
+    status.className = "status ok";
+    status.textContent = "Saved: " + (RECORDS.length - wrong.length) + " right, " + wrong.length + " with a mistake. Tell me in the chat that you are done.";
+  });
+
+  render();
+
+  (async function connect() {
+    try { db = window.claude ? await window.claude.use("db") : null; } catch (e) { db = null; }
+    if (!db) { document.getElementById("offline").hidden = false; return; }
+    db.collection("verdicts").onSnapshot(function (snap) {
+      snap.docs.forEach(function (d) {
+        var v = d.data() || {};
+        if (d.id === "overall") { if (document.activeElement !== overall) { overall.value = v.note || ""; overallSaved = overall.value; } return; }
+        if (!state[d.id]) return;
+        if (document.activeElement && document.activeElement.id === "n-" + d.id) return;
+        state[d.id].verdict = v.verdict === "mistake" ? "mistake" : "right";
+        state[d.id].note = typeof v.note === "string" ? v.note : "";
+        state[d.id].savedText = "Saved";
+      });
+      render();
+    }, function () {});
+  })();
+})();
+</script>
