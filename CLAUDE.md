@@ -1,7 +1,9 @@
 # parlimen-search: project guide
 
-Hybrid RAG over Malaysia's principal Acts and the Hansard debates, in Malay and English, with
-filters by date, chamber, speaker, party and Act. `ROADMAP.md` holds the plan; work through its
+Hybrid RAG over Malaysia's principal Acts and the Dewan Rakyat Hansard, with its Special
+Chamber (14th and 15th Parliaments), in Malay and English, with filters by date, Parliament, speaker, party, ministry,
+topic and Act. Claude Batch enrichment turns the debates into structured records: question-answer
+pairs, tags, summaries and ministers' commitments. `ROADMAP.md` holds the plan; work through its
 phases in order. The pipeline starts as a copy of novel-rag (`D:\Projects\personal\novel-rag`);
 read that project's `CLAUDE.md` and `README.md` before changing search, eval or chat code.
 
@@ -24,3 +26,7 @@ read that project's `CLAUDE.md` and `README.md` before changing search, eval or 
 7. **The GPU is shared on this machine.** Long GPU jobs go through the forge-tools GPU lease, as in
    novel-rag (`tools\gpu_run.py` there).
 8. **The repository stays private** until the owner says it can go public.
+9. **The parser decides who spoke, never the model.** Summaries appear beside the verbatim text with
+   an AI label, and a commitment whose quote does not match the Hansard text is dropped.
+10. **No paid-tier code (accounts, billing, alert sending) before the Track A gate** in `ROADMAP.md`
+    (Money path) passes.
