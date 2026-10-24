@@ -1,0 +1,443 @@
+"""The site: the ask page (search plus a cited answer), and server-rendered record pages for Acts,
+sittings, agenda items, question-answer pairs, commitments, MPs, bills and topics.
+
+Record pages read `data/site.db` (parlimen/records.py) and need no model. The ask page runs the
+chosen search (parlimen/search.py, Haiku reranking) and the answer step (parlimen/answer.py). A
+Searcher's SQLite connection may only be used on the thread that opened it, so the searcher is
+built on one worker thread and every search runs there; Claude calls run on the request's thread.
+At start the server loads the index, the vectors and the embedder in the background (`_Engine`):
+the embedder runs on the CPU, so the shared GPU is never held.
+
+Interface text follows the `hl` cookie (en or ms); record text shows as the source prints it.
+Run:  python -m parlimen.web [--port 8780]
+"""
+from __future__ import annotations
+
+import json
+import os
+import re
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Callable
+from urllib.parse import quote, urlencode
+
+from fastapi import FastAPI, Form, Request
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+from pydantic import BaseModel
+
+from .. import config
+from ..records import Records, reflow, slug
+from .i18n import LANGS, t
+
+HERE = Path(__file__).resolve().parent
+CORRECTIONS = config.DATA / "corrections.jsonl"
+IDLE_MINUTES = 10
+DEVICE = os.environ.get("PARLIMEN_SITE_DEVICE", "cpu")
+EXAMPLES = {
+    "en": ["Can my employer cut my salary?", "What did MPs say about the Online Safety Bill?",
+           "How many hours a week may an employee work?", "What was said about the price of rice?"],
+    "ms": ["Bolehkah majikan memotong gaji saya?", "Apa kata menteri tentang subsidi diesel?",
+           "Apakah hukuman memandu dalam keadaan mabuk?", "Bilakah gaji minimum dinaikkan?"],
+}
+MALAY = frozenset("adakah apa apakah bagaimana berapa bila bilakah boleh bolehkah dalam dan dengan di ialah ini "
+                  "itu kenapa kepada mengapa saya siapa tentang untuk yang menteri kerajaan akta".split())
+PARTIES = ("AMANAH", "BERSATU", "DAP", "GPS", "MCA", "MIC", "MUDA", "PAS", "PBB", "PKR", "UMNO", "WARISAN")
+
+
+def question_lang(question: str) -> str:
+    words = re.findall(r"[^\W\d_]+", question.lower())
+    malay = sum(w in MALAY for w in words)
+    return "ms" if words and malay >= max(1, len(words) // 6) else "en"
+
+
+class AskRequest(BaseModel):
+    question: str = ""
+    kind: str = ""
+    act: str = ""
+    lang: str = ""
+    date_from: str = ""
+    date_to: str = ""
+    parliament: str = ""
+    chamber: str = ""
+    speaker: str = ""
+    party: str = ""
+    topic: str = ""
+
+
+class _Engine:
+    """Holds the Searcher, built on first use, and runs every search on one worker thread.
+
+    The site embeds only questions (about 90 ms each on this CPU), so the embedder runs on the CPU
+    by default and stays loaded: it holds no GPU, and no reader waits for a model load from the
+    hard disk. With PARLIMEN_SITE_DEVICE=cuda it runs on the GPU and unloads after IDLE_MINUTES.
+    """
+
+    def __init__(self, searcher=None, device: str = DEVICE) -> None:
+        self.searcher = searcher
+        self.device = device
+        self.last_used = time.monotonic()
+        self.unloaded = False
+        self.warmed = False
+        self._worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="parlimen-search")
+
+    def _built(self):
+        if self.searcher is None:
+            from ..models import Embedder
+            from ..search import Searcher
+            self.searcher = Searcher(embedder=Embedder(config.EMBEDDER, device=self.device))
+        return self.searcher
+
+    def run(self, fn: Callable):
+        def work():
+            try:
+                return fn(self._built())
+            finally:
+                self.last_used = time.monotonic()
+                self.unloaded = False
+        return self._worker.submit(work).result()
+
+    def warm(self) -> None:
+        """Load the index, the vectors and (on the CPU) the embedder in the background. The venv, the
+        model and the index sit on this machine's hard disk, where a cold first search takes minutes.
+        A GPU embedder is left for the first question, so an idle site holds no GPU."""
+        def work():
+            s = self._built()
+            _ = s.vectors
+            from ..search import Filters
+            s.bm25("warm up", Filters())
+            if self.device == "cpu":
+                s.embedder.query("warm up")
+            self.warmed = True
+        self._worker.submit(work)
+
+    def unload_if_idle(self, now: float) -> bool:
+        def work():
+            if (self.device == "cpu" or self.searcher is None or self.unloaded
+                    or now - self.last_used < IDLE_MINUTES * 60):
+                return False
+            unload = getattr(self.searcher.embedder, "unload", None)
+            if unload is not None:
+                unload()
+            self.unloaded = True
+            return True
+        return self._worker.submit(work).result()
+
+
+def law_url(act: str, lang: str, section: str = "") -> str:
+    return f"/law/{quote(act)}/{lang}" + (f"#s-{slug(section)}" if section else "")
+
+
+def debate_url(unit: str, seq: int | None = None) -> str:
+    return f"/debate/{unit}" + (f"#seq-{seq}" if seq else "")
+
+
+def pdf_page(url: str, page: int | None) -> str:
+    return f"{url}#page={page}" if url and page else url
+
+
+def create_app(records: Records | None = None, searcher=None, answer_fn: Callable | None = None,
+               corrections: Path = CORRECTIONS) -> FastAPI:
+    app = FastAPI(title="parlimen-search", docs_url=None, redoc_url=None)
+    app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
+    env = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]),
+                      trim_blocks=True, lstrip_blocks=True)
+    env.filters["loads"] = json.loads
+    env.filters["reflow"] = reflow
+    env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug)
+    engine = _Engine(searcher)
+    app.state.engine = engine
+    holder: dict = {"records": records}
+
+    def rec() -> Records:
+        if holder["records"] is None:
+            holder["records"] = Records()
+        return holder["records"]
+
+    if answer_fn is None:
+        from ..answer import ask
+
+        def answer_fn(question, passages, lang):
+            return ask(question, passages, lang, job="site-answer")
+
+    def hl(request: Request) -> str:
+        v = request.cookies.get("hl", "en")
+        return v if v in LANGS else "en"
+
+    def page(request: Request, template: str, status: int = 200, **ctx) -> HTMLResponse:
+        lang = hl(request)
+        args = dict(request.query_params)
+
+        def with_page(n: int) -> str:
+            return "?" + urlencode({**args, "page": n})
+
+        html = env.get_template(template).render(
+            lang=lang, t=lambda k, **kw: t(k, lang).format(**kw) if kw else t(k, lang), path=request.url.path,
+            full_path=str(request.url.path) + (f"?{request.url.query}" if request.url.query else ""),
+            args=args, with_page=with_page, **ctx)
+        return HTMLResponse(html, status)
+
+    def missing(request: Request) -> HTMLResponse:
+        return page(request, "missing.html", 404)
+
+    def num(v: str, default: int = 1) -> int:
+        try:
+            return max(1, int(v))
+        except (TypeError, ValueError):
+            return default
+
+    # ---------- language ----------
+
+    @app.get("/hl/{lang}")
+    def set_lang(lang: str, next: str = "/"):
+        resp = RedirectResponse(next if next.startswith("/") else "/", 303)
+        if lang in LANGS:
+            resp.set_cookie("hl", lang, max_age=365 * 86400, samesite="lax")
+        return resp
+
+    # ---------- ask ----------
+
+    @app.get("/", response_class=HTMLResponse)
+    def home(request: Request):
+        r = rec()
+        return page(request, "home.html", examples=EXAMPLES[hl(request)], topics=r.topics(), parties=PARTIES,
+                    sittings=r.sittings(limit=6), commitments=r.commitments(size=5).rows)
+
+    @app.post("/api/ask")
+    def api_ask(body: AskRequest):
+        from ..search import Filters
+
+        q = body.question.strip()
+        if not q:
+            return JSONResponse({"error": "empty question"}, 400)
+        if len(q) > 500:
+            return JSONResponse({"error": "question too long (500 characters at most)"}, 400)
+        f = Filters(kind=body.kind or None, act=body.act.strip() or None, lang=body.lang or None,
+                    date_from=body.date_from or None, date_to=body.date_to or None,
+                    parliament=int(body.parliament) if body.parliament.isdigit() else None,
+                    chamber=body.chamber or None, speaker=body.speaker.strip() or None,
+                    party=body.party or None, topic=body.topic or None)
+        t0 = time.perf_counter()
+
+        def search(s):
+            trace = s.search(q, f)
+            seqs = [s.row(p.ids[0]).seq_first for p in trace.passages]
+            return trace, seqs
+
+        trace, seqs = engine.run(search)
+        search_ms = (time.perf_counter() - t0) * 1000
+        lang = question_lang(q)
+        ans = answer_fn(q, trace.passages, lang)
+        r = rec()
+        acts: dict[str, dict | None] = {}
+        sittings: dict[tuple, dict | None] = {}
+        passages = []
+        for p, seq in zip(trace.passages, seqs):
+            if p.kind == "law":
+                a = acts.setdefault(p.act, r.act(p.act))
+                sec = r.section(p.act, p.section, p.lang)
+                pdf = (a or {}).get("pdf_bi" if p.lang == "BI" else "pdf_bm", "")
+                url, pdf = law_url(p.act, p.lang, p.section), pdf_page(pdf, (sec or {}).get("page_start"))
+            else:
+                s = sittings.setdefault((p.chamber, p.date), r.sitting(p.chamber, p.date))
+                sp = r.speech(p.unit, seq)
+                url, pdf = debate_url(p.unit, seq), pdf_page((s or {}).get("pdf", ""), (sp or {}).get("page_start"))
+            passages.append({"cite": p.cite, "header": p.header, "text": p.text, "kind": p.kind, "url": url,
+                             "pdf": pdf, "via": p.via, "score": round(p.score, 4)})
+        sources = [{"n": s.n, "cite": s.cite, "quotes": s.quotes,
+                    "url": passages[s.index]["url"] if 0 <= s.index < len(passages) else "",
+                    "pdf": passages[s.index]["pdf"] if 0 <= s.index < len(passages) else ""}
+                   for s in ans.sources]
+        stages = [{"name": st.name, "hits": len(st.hits), "ms": round(st.ms)} for st in trace.stages]
+        return {"question": q, "lang": lang, "filters": trace.filters.describe(), "answer": ans.text,
+                "sources": sources, "passages": passages, "stages": stages, "usd": round(ans.usd, 5),
+                "search_ms": round(search_ms), "total_ms": round((time.perf_counter() - t0) * 1000)}
+
+    # ---------- the law ----------
+
+    @app.get("/law", response_class=HTMLResponse)
+    def acts(request: Request, q: str = ""):
+        rows = rec().acts()
+        if q:
+            words = q.lower().split()
+            rows = [a for a in rows if all(w in f"{a['number']} {a['title_bi']} {a['title_bm']}".lower() for w in words)]
+        return page(request, "acts.html", acts=rows, q=q)
+
+    @app.get("/law/{act}")
+    def act_default(act: str):
+        a = rec().act(act)
+        if not a:
+            return RedirectResponse("/law", 303)
+        return RedirectResponse(law_url(act, "BI" if "BI" in a["langs"] else "BM"), 303)
+
+    @app.get("/law/{act}/{lang}", response_class=HTMLResponse)
+    def act_text(request: Request, act: str, lang: str):
+        r = rec()
+        a = r.act(act)
+        if not a or lang not in ("BI", "BM"):
+            return missing(request)
+        sections = r.sections(act, lang)
+        if not sections:
+            return missing(request)
+        return page(request, "act.html", act=a, lang_code=lang, sections=sections,
+                    other=[x for x in a["langs"].split(",") if x and x != lang],
+                    pdf=a["pdf_bi"] if lang == "BI" else a["pdf_bm"], debates=r.act_debates(act))
+
+    # ---------- the debates ----------
+
+    @app.get("/hansard", response_class=HTMLResponse)
+    def sittings(request: Request, parliament: str = "15"):
+        p = int(parliament) if parliament in ("14", "15") else 15
+        rows = rec().sittings(p)
+        meetings: dict[str, list] = {}
+        for s in rows:
+            meetings.setdefault(s["meeting"], []).append(s)
+        return page(request, "sittings.html", meetings=meetings, parliament=p)
+
+    @app.get("/hansard/{chamber}/{date}", response_class=HTMLResponse)
+    def sitting(request: Request, chamber: str, date: str):
+        r = rec()
+        s = r.sitting(chamber, date)
+        if not s:
+            return missing(request)
+        return page(request, "sitting.html", sitting=s, units=r.sitting_units(chamber, date))
+
+    @app.get("/debate/{unit_id}", response_class=HTMLResponse)
+    def debate(request: Request, unit_id: str):
+        r = rec()
+        u = r.unit(unit_id)
+        if not u:
+            return missing(request)
+        prev, nxt = r.neighbours(u)
+        bill = r.bill(u["bill"]) if u["bill"] else None
+        return page(request, "debate.html", unit=u, sitting=r.sitting(u["chamber"], u["date"]),
+                    speeches=r.speeches(unit_id), qa=r.unit_qa(unit_id), commitments=r.unit_commitments(unit_id),
+                    prev=prev, next=nxt, bill=bill, act=r.act(u["act"]) if u["act"] else None)
+
+    # ---------- records with filters ----------
+
+    def _filters(request: Request) -> dict:
+        a = request.query_params
+        return {k: a.get(k, "") for k in ("q", "year", "ministry", "topic", "parliament")}
+
+    def _options(r: Records, table: str) -> dict:
+        return {"years": [(y, y) for y in r.years()],
+                "ministries": [(x["ministry"], x["ministry"]) for x in r.ministries(table)],
+                "topics": [(x["topic"], x["name"]) for x in r.topics()]}
+
+    @app.get("/commitments", response_class=HTMLResponse)
+    def commitments(request: Request, kind: str = ""):
+        r = rec()
+        f = _filters(request)
+        if kind not in ("", "promise", "routine"):
+            kind = ""
+        res = r.commitments(**f, kind=kind, page=num(request.query_params.get("page", "1")))
+        return page(request, "commitments.html", res=res, f=f, kind=kind, opts=_options(r, "commitments"))
+
+    @app.get("/questions", response_class=HTMLResponse)
+    def questions(request: Request):
+        r = rec()
+        f = _filters(request)
+        res = r.questions(**f, page=num(request.query_params.get("page", "1")))
+        return page(request, "questions.html", res=res, f=f, opts=_options(r, "qa"))
+
+    # ---------- MPs, bills, topics ----------
+
+    @app.get("/mp", response_class=HTMLResponse)
+    def members(request: Request, parliament: str = "15"):
+        p = int(parliament) if parliament in ("14", "15") else 15
+        return page(request, "members.html", members=rec().members(p), parliament=p)
+
+    @app.get("/mp/{member}", response_class=HTMLResponse)
+    def member(request: Request, member: str):
+        r = rec()
+        m = r.member(member)
+        if not m:
+            return missing(request)
+        n = num(request.query_params.get("page", "1"))
+        return page(request, "member.html", m=m, units=r.member_units(member, n), parliament_now=r.parliament_now(),
+                    asked=r.questions(member=member, size=20).rows,
+                    made=r.commitments(member=member, size=20).rows)
+
+    @app.get("/bills", response_class=HTMLResponse)
+    def bills(request: Request):
+        return page(request, "bills.html", bills=rec().bills())
+
+    @app.get("/bill/{bill}", response_class=HTMLResponse)
+    def bill(request: Request, bill: str):
+        r = rec()
+        b = r.bill(bill)
+        if not b:
+            return missing(request)
+        return page(request, "bill.html", bill=b, act=r.act(b["act"]) if b["act"] else None)
+
+    @app.get("/topics", response_class=HTMLResponse)
+    def topics(request: Request):
+        return page(request, "topics.html", topics=rec().topics())
+
+    @app.get("/topic/{topic}", response_class=HTMLResponse)
+    def topic(request: Request, topic: str):
+        r = rec()
+        names = {slug(x["topic"]): x for x in r.topics()}
+        if topic not in names:
+            return missing(request)
+        n = num(request.query_params.get("page", "1"))
+        return page(request, "topic.html", topic=topic, topic_name=names[topic]["name"], units=r.topic_units(topic, n),
+                    commitments=r.commitments(topic=topic, size=10).rows)
+
+    # ---------- corrections and about ----------
+
+    @app.get("/correction", response_class=HTMLResponse)
+    def correction_form(request: Request, record: str = "", back: str = ""):
+        return page(request, "correction.html", record=record, back=back if back.startswith("/") else "", sent=False)
+
+    @app.post("/correction", response_class=HTMLResponse)
+    def correction_send(request: Request, record: str = Form(""), back: str = Form(""), text: str = Form(""),
+                        contact: str = Form("")):
+        text = text.strip()[:4000]
+        if text:
+            corrections.parent.mkdir(parents=True, exist_ok=True)
+            with open(corrections, "a", encoding="utf-8") as f:
+                f.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(), "record": record[:200],
+                                    "page": back[:300], "text": text, "contact": contact.strip()[:200]},
+                                   ensure_ascii=False) + "\n")
+        return page(request, "correction.html", record=record, back=back if back.startswith("/") else "",
+                    sent=bool(text))
+
+    @app.get("/about", response_class=HTMLResponse)
+    def about(request: Request):
+        return page(request, "about.html", meta=rec().meta())
+
+    @app.get("/api/health")
+    def health():
+        return {"ok": True, "searcher": engine.searcher is not None, "warmed": engine.warmed}
+
+    return app
+
+
+def _watch_idle(engine: _Engine) -> None:
+    while True:
+        time.sleep(30)
+        try:
+            engine.unload_if_idle(time.monotonic())
+        except Exception:  # noqa: BLE001 - the watcher must outlive one failed check
+            pass
+
+
+def main() -> None:
+    import argparse
+
+    import uvicorn
+
+    ap = argparse.ArgumentParser(description="parlimen-search site")
+    ap.add_argument("--host", default="127.0.0.1")
+    ap.add_argument("--port", type=int, default=8780)
+    a = ap.parse_args()
+    app = create_app()
+    app.state.engine.warm()
+    threading.Thread(target=_watch_idle, args=(app.state.engine,), daemon=True).start()
+    uvicorn.run(app, host=a.host, port=a.port, log_level="info")

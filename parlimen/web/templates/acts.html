@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav_law') }}{% endblock %}
+{% block main %}
+<h1>{{ t('nav_law') }}</h1>
+<form class="inline-filter" method="get">
+  <label>{{ t('search_title') }} <input name="q" value="{{ q }}" placeholder="employment / kerja"></label>
+  <button type="submit">{{ t('apply') }}</button>
+</form>
+<p class="muted">{{ acts|length }} {{ t('results') }}</p>
+<table class="list">
+  <thead><tr><th>{{ t('act') }}</th><th>English</th><th>Bahasa Melayu</th><th>{{ t('as_at') }}</th></tr></thead>
+  <tbody>
+  {% for a in acts %}
+  <tr {% if a.status != 'in force' %}class="dim"{% endif %}>
+    <td><a href="/law/{{ a.number }}">{{ a.number }}</a></td>
+    <td>{% if 'BI' in a.langs %}<a href="{{ law_url(a.number, 'BI') }}">{{ a.title_bi }}</a>{% else %}{{ a.title_bi }}{% endif %}</td>
+    <td>{% if 'BM' in a.langs %}<a href="{{ law_url(a.number, 'BM') }}">{{ a.title_bm }}</a>{% else %}{{ a.title_bm }}{% endif %}</td>
+    <td class="nowrap">{{ a.as_at }}{% if a.status != 'in force' %}<br><span class="muted small">{{ t('repealed') }}</span>{% endif %}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}{{ m.chamber(sitting.chamber) }}, {{ sitting.date }}{% endblock %}
+{% block description %}Hansard of the {{ m.chamber(sitting.chamber) }}, {{ sitting.date }}: every agenda item with its speeches.{% endblock %}
+{% block main %}
+<div class="doc-head">
+  <p class="eyebrow">{{ t('f_parliament') }} {{ sitting.parliament }} · {{ sitting.meeting }}</p>
+  <h1>{{ m.chamber(sitting.chamber) }}, {{ sitting.date }}</h1>
+  <p class="meta">{% if sitting.pdf %}<a href="{{ sitting.pdf }}" rel="noopener">{{ t('official_pdf') }}</a> · {% endif %}{{ units|length }} {{ t('items') }}</p>
+</div>
+{{ m.ai_note(t('ai_label')) }}
+<ol class="units">
+  {% for u in units %}{{ m.unit_row(u) }}{% endfor %}
+</ol>
+{% endblock %}

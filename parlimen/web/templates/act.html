@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set title = act.title_bi if lang_code == 'BI' else act.title_bm %}
+{% block title %}{{ title }} (Act {{ act.number }}){% endblock %}
+{% block description %}{{ title }}, Act {{ act.number }}: every section, with the Dewan Rakyat debates on its bills.{% endblock %}
+{% block main %}
+<div class="doc-head">
+  <p class="eyebrow">{{ t('act') }} {{ act.number }} · {{ t('in_force') if act.status == 'in force' else t('repealed') }}</p>
+  <h1>{{ title }}</h1>
+  <p class="meta">
+    {{ t('as_at') }} <strong>{{ act.as_at }}</strong>
+    {% if pdf %} · <a href="{{ pdf }}" rel="noopener">{{ t('official_pdf') }}</a>{% endif %}
+    {% for o in other %} · {{ t('other_lang') }} <a href="{{ law_url(act.number, o) }}">{{ t('lang_' ~ o) }}</a>{% endfor %}
+  </p>
+  <p class="notice">{{ t('reprint_note') }} {{ t('not_advice') }}</p>
+</div>
+<div class="act-layout">
+  <aside class="toc" aria-label="{{ t('contents') }}">
+    <details open>
+      <summary>{{ t('contents') }}</summary>
+      <ol>
+        {% for s in sections %}<li><a href="#s-{{ slug(s.number) }}">{{ s.number }}. {{ s.heading|truncate(60) }}</a></li>{% endfor %}
+      </ol>
+    </details>
+    <section class="side-box">
+      <h2>{{ t('bill_debates') }}</h2>
+      {% if debates %}
+      <ul class="plain">
+        {% for d in debates %}<li><a href="{{ debate_url(d.id) }}">{{ d.bill_title }}</a><br><span class="muted small">{{ m.chamber(d.chamber) }}, {{ d.date }}</span></li>{% endfor %}
+      </ul>
+      {% else %}<p class="muted small">{{ t('no_bill_debates') }}</p>{% endif %}
+    </section>
+  </aside>
+  <div class="sections">
+    {% set ns = namespace(part='', chapter='') %}
+    {% for s in sections %}
+      {% if s.part and s.part != ns.part %}{% set ns.part = s.part %}<h2 class="part">{{ s.part }}{% if s.part_title %}<br><span>{{ s.part_title }}</span>{% endif %}</h2>{% endif %}
+      {% if s.chapter and s.chapter != ns.chapter %}{% set ns.chapter = s.chapter %}<h3 class="chapter">{{ s.chapter }}{% if s.chapter_title %} · {{ s.chapter_title }}{% endif %}</h3>{% endif %}
+      <section class="section" id="s-{{ slug(s.number) }}">
+        <h3><a class="anchor" href="#s-{{ slug(s.number) }}">{{ t('section') }} {{ s.number }}</a> {{ s.heading }}</h3>
+        <div class="law-text">{{ s.text | reflow }}</div>
+        {% if s.notes %}<details class="notes"><summary>{{ t('editorial_notes') }}</summary><div class="law-text small">{{ s.notes | reflow }}</div></details>{% endif %}
+        <p class="card-foot">
+          {% if pdf %}<a href="{{ pdf_page(pdf, s.page_start) }}" rel="noopener">{{ t('official_pdf') }}, {{ t('page') }} {{ s.page_start }}</a> · {% endif %}
+          {% for o in other %}<a href="{{ law_url(act.number, o, s.number) }}">{{ t('lang_' ~ o) }}</a> · {% endfor %}
+          {{ m.correction('law:' ~ act.number ~ ':' ~ lang_code ~ ':' ~ s.number) }}
+        </p>
+      </section>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

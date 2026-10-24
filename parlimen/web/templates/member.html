@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import "_macros.html" as mac with context %}
+{% block title %}{{ m.name }}{% endblock %}
+{% block description %}{{ m.name }}: seat, party by date, debates spoken in, questions asked in the Dewan Rakyat.{% endblock %}
+{% block main %}
+<div class="doc-head">
+  <p class="eyebrow">{{ t('nav_mps') }}</p>
+  <h1>{{ m.name }}</h1>
+  <p class="meta">{% for s in m.seats %}{{ t('f_parliament') }} {{ s.parliament }}: {{ s.code }} {{ s.seat }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+</div>
+<div class="two-col">
+  <section>
+    <h2>{{ t('party_history') }}</h2>
+    {% if m.parties %}
+    <ul class="plain">
+      {% for p in m.parties %}<li><strong>{{ p.party }}</strong> <span class="muted">{{ t('f_parliament') }} {{ p.parliament }}, {{ p.date_from or t('term_start') }} – {{ p.date_to or (t('now') if p.parliament == parliament_now else t('term_end')) }}</span></li>{% endfor %}
+    </ul>
+    {% else %}<p class="muted">—</p>{% endif %}
+    <p class="muted small">{{ t('party_from_seat') }}</p>
+    <p class="muted small">{{ t('no_rank') }}</p>
+  </section>
+  <section>
+    {% if made %}
+    <h2>{{ t('commitments_made') }}</h2>
+    {% for c in made %}{{ mac.commitment_card(c) }}{% endfor %}
+    <p><a href="/commitments?q={{ m.name|urlencode }}">{{ t('nav_commitments') }} →</a></p>
+    {% endif %}
+    {% if asked %}
+    <h2>{{ t('questions_asked') }}</h2>
+    {% for q in asked %}{{ mac.qa_card(q) }}{% endfor %}
+    {% endif %}
+  </section>
+</div>
+<section>
+  <h2>{{ t('debates_spoken') }}</h2>
+  <ol class="units">
+    {% for u in units.rows %}
+    <li class="unit-row"><a href="{{ debate_url(u.id, u.seq) }}">{{ u.business or u.id }}</a> <span class="muted small">{{ mac.chamber(u.chamber) }} {{ u.date }}</span></li>
+    {% endfor %}
+  </ol>
+  {{ mac.pager(units) }}
+</section>
+{% endblock %}

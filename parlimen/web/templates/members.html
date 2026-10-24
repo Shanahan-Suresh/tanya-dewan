@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav_mps') }}, {{ t('f_parliament') }} {{ parliament }}{% endblock %}
+{% block main %}
+<h1>{{ t('nav_mps') }}</h1>
+<p class="tabs">{% for p in (15, 14) %}<a href="?parliament={{ p }}" {% if p == parliament %}aria-current="page"{% endif %}>{{ t('f_parliament') }} {{ p }}</a>{% endfor %}</p>
+<p class="muted">{{ t('no_rank') }}</p>
+<table class="list">
+  <thead><tr><th></th><th>{{ t('seat') }}</th><th>{{ t('nav_mps') }}</th></tr></thead>
+  <tbody>
+  {% for m in members %}<tr><td class="muted">{{ m.code }}</td><td>{{ m.seat }}</td><td><a href="/mp/{{ m.slug }}">{{ m.name }}</a></td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

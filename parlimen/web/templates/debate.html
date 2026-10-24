@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set summary = unit.summary_ms if lang == 'ms' and unit.summary_ms else unit.summary_en %}
+{% block title %}{{ unit.business|truncate(80) }} · {{ m.chamber(unit.chamber) }} {{ unit.date }}{% endblock %}
+{% block description %}{{ summary|truncate(200) }}{% endblock %}
+{% block main %}
+<div class="doc-head">
+  <p class="eyebrow"><a href="/hansard/{{ unit.chamber }}/{{ unit.date }}">{{ m.chamber(unit.chamber) }}, {{ unit.date }}</a> · {{ t('f_parliament') }} {{ unit.parliament }} · {{ unit.id }}</p>
+  <h1>{{ unit.business or t('business') }}</h1>
+  <p class="meta">
+    {% if sitting and sitting.pdf %}<a href="{{ pdf_page(sitting.pdf, unit.page_start) }}" rel="noopener">{{ t('official_pdf') }}, {{ t('page') }} {{ unit.page_start }}</a>{% endif %}
+    {% if bill %} · <a href="/bill/{{ bill.slug }}">{{ bill.title }}</a>{% endif %}
+    {% if act %} · <a href="/law/{{ act.number }}">{{ act.title_bi }} (Act {{ act.number }})</a>{% endif %}
+  </p>
+  <p class="neighbours">{% if prev %}<a href="{{ debate_url(prev.id) }}">← {{ prev.business|truncate(50) }}</a>{% endif %}{% if next %}<a href="{{ debate_url(next.id) }}">{{ next.business|truncate(50) }} →</a>{% endif %}</p>
+</div>
+<div class="debate-layout">
+  <aside class="beside">
+    {% if summary %}
+    <section class="card ai-card">
+      <h2><span class="ai-tag">{{ t('ai_summary') }}</span></h2>
+      <p>{{ summary }}</p>
+      {% set topics = unit.topics|loads %}
+      {% if topics %}<p class="small">{% for x in topics %}<a href="/topic/{{ slug(x) }}">{{ x }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+      {{ m.ai_note(t('ai_label')) }}
+    </section>
+    {% endif %}
+    {% if qa %}
+    <section>
+      <h2>{{ t('qa') }}</h2>
+      {{ m.ai_note(t('qa_ai')) }}
+      {% for q in qa %}{{ m.qa_card(q, False) }}{% endfor %}
+    </section>
+    {% endif %}
+    {% if commitments %}
+    <section>
+      <h2>{{ t('commitments') }}</h2>
+      {% for c in commitments %}{{ m.commitment_card(c, False) }}{% endfor %}
+    </section>
+    {% endif %}
+  </aside>
+  <section class="speeches" aria-label="{{ t('verbatim') }}">
+    <h2 class="section-label">{{ t('verbatim') }} · {{ speeches|length }} {{ t('speeches') }}</h2>
+    {% for s in speeches %}
+    <article class="speech" id="seq-{{ s.seq }}">
+      <header>
+        {% if s.member %}<a class="speaker" href="/mp/{{ s.member }}">{{ s.label }}</a>{% else %}<span class="speaker">{{ s.label }}</span>{% endif %}
+        {% if s.party %}<span class="party">{{ s.party }}</span>{% endif %}
+        <span class="muted small">{% if s.time %}{{ s.time[:2] }}.{{ s.time[2:] }} · {% endif %}{% if sitting and sitting.pdf %}<a href="{{ pdf_page(sitting.pdf, s.page_start) }}" rel="noopener">{{ t('page') }} {{ s.page_start }}</a>{% else %}{{ t('page') }} {{ s.page_start }}{% endif %}{% if s.question_no %} · Q{{ s.question_no }}{% endif %}</span>
+        <a class="anchor small" href="#seq-{{ s.seq }}" aria-label="link">#</a>
+      </header>
+      <div class="verbatim-text">{{ s.text | reflow }}</div>
+    </article>
+    {% endfor %}
+    <p class="card-foot">{{ m.correction(unit.id) }}</p>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}{{ topic_name }}{% endblock %}
+{% block main %}
+<div class="doc-head">
+  <p class="eyebrow">{{ t('nav_topics') }}</p>
+  <h1>{{ topic_name[:1]|upper }}{{ topic_name[1:] }}</h1>
+  <p class="meta"><a href="/commitments?topic={{ topic }}">{{ t('nav_commitments') }}</a> · <a href="/questions?topic={{ topic }}">{{ t('nav_questions') }}</a></p>
+</div>
+{{ m.ai_note(t('ai_label')) }}
+<ol class="units">{% for u in units.rows %}{{ m.unit_row(u) }}{% endfor %}</ol>
+{{ m.pager(units) }}
+{% endblock %}

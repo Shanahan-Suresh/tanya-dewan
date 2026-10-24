@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav_topics') }}{% endblock %}
+{% block main %}
+<h1>{{ t('nav_topics') }}</h1>
+<ul class="topic-grid">
+  {% for x in topics %}<li><a href="/topic/{{ x.topic }}">{{ x.name }}</a> <span class="muted small">{{ "{:,}".format(x.n) }} {{ t('items') }}</span></li>{% endfor %}
+</ul>
+{% endblock %}

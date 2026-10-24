@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}{{ t('nav_commitments') }}{% endblock %}
+{% block main %}
+<h1>{{ t('nav_commitments') }}</h1>
+<p class="lead">{{ t('commitments_intro') }}</p>
+<form class="filter-bar" method="get">
+  <label>{{ t('f_words') }} <input name="q" value="{{ f.q }}" placeholder="RM / 2027 / sekolah"></label>
+  {{ m.select('year', t('f_year'), opts.years, f.year, t('f_any')) }}
+  {{ m.select('ministry', t('f_ministry'), opts.ministries, f.ministry, t('f_any')) }}
+  {{ m.select('topic', t('f_topic'), opts.topics, f.topic, t('f_any')) }}
+  {{ m.select('parliament', t('f_parliament'), [('15', '15'), ('14', '14')], f.parliament, t('f_any')) }}
+  {{ m.select('kind', t('f_kind_commit'), [('promise', t('f_kind_promise')), ('routine', t('f_kind_routine'))], kind, t('f_any')) }}
+  <button type="submit">{{ t('apply') }}</button>
+</form>
+<p class="muted">{{ "{:,}".format(res.total) }} {{ t('results') }}</p>
+{% if res.rows %}
+<div class="cards">{% for c in res.rows %}{{ m.commitment_card(c) }}{% endfor %}</div>
+{% else %}<p>{{ t('empty') }}</p>{% endif %}
+{{ m.pager(res) }}
+{% endblock %}

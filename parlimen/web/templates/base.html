@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{ 'ms' if lang == 'ms' else 'en' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ t('site') }}{% endblock %} · parlimen-search</title>
+<meta name="description" content="{% block description %}{{ t('tagline') }}{% endblock %}">
+<link rel="stylesheet" href="/static/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="/">parlimen<span>-search</span></a>
+    <nav aria-label="Main">
+      <a href="/" {% if path == '/' %}aria-current="page"{% endif %}>{{ t('nav_ask') }}</a>
+      <a href="/law" {% if path.startswith('/law') %}aria-current="page"{% endif %}>{{ t('nav_law') }}</a>
+      <a href="/hansard" {% if path.startswith('/hansard') or path.startswith('/debate') %}aria-current="page"{% endif %}>{{ t('nav_hansard') }}</a>
+      <a href="/questions" {% if path.startswith('/questions') %}aria-current="page"{% endif %}>{{ t('nav_questions') }}</a>
+      <a href="/commitments" {% if path.startswith('/commitments') %}aria-current="page"{% endif %}>{{ t('nav_commitments') }}</a>
+      <a href="/mp" {% if path.startswith('/mp') %}aria-current="page"{% endif %}>{{ t('nav_mps') }}</a>
+      <a href="/bills" {% if path.startswith('/bill') %}aria-current="page"{% endif %}>{{ t('nav_bills') }}</a>
+      <a href="/topics" {% if path.startswith('/topic') %}aria-current="page"{% endif %}>{{ t('nav_topics') }}</a>
+    </nav>
+    <a class="lang" href="/hl/{{ 'en' if lang == 'ms' else 'ms' }}?next={{ full_path|urlencode }}">{{ t('switch_lang') }}</a>
+  </div>
+</header>
+<main class="wrap">
+{% block main %}{% endblock %}
+</main>
+<footer class="wrap foot">
+  <p>{{ t('footer_sources') }}</p>
+  <p>{{ t('footer_ai') }} <a href="/about">{{ t('nav_about') }}</a> · <a href="/correction?back={{ full_path|urlencode }}">{{ t('correction') }}</a></p>
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

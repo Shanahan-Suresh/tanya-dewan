@@ -43,6 +43,7 @@ class Source:
     cite: str
     quotes: list[str] = field(default_factory=list)
     context: str = ""  # the passage header the model also read: agenda item, speakers and parties
+    index: int = -1    # the passage's place in the list the answer read
 
 
 @dataclass
@@ -142,7 +143,7 @@ def parse(message, passages: Sequence[Passage]) -> tuple[str, list[Source], list
             if i is None or i >= len(passages):
                 continue
             if i not in numbers:
-                numbers[i] = Source(len(numbers) + 1, passages[i].cite, context=passages[i].header)
+                numbers[i] = Source(len(numbers) + 1, passages[i].cite, context=passages[i].header, index=i)
             quote = " ".join((getattr(c, "cited_text", "") or "").split())
             who = speaker_at(passages[i].text, getattr(c, "start_char_index", None)) if passages[i].kind == "debate" else ""
             if quote and who and not quote.startswith(who):

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav_bills') }}{% endblock %}
+{% block main %}
+<h1>{{ t('nav_bills') }}</h1>
+<table class="list">
+  <thead><tr><th>{{ t('nav_bills') }}</th><th>{{ t('the_act') }}</th><th>{{ t('debated') }}</th></tr></thead>
+  <tbody>
+  {% for b in bills %}
+  <tr>
+    <td><a href="/bill/{{ b.slug }}">{{ b.title }}</a></td>
+    <td>{% if b.act %}<a href="/law/{{ b.act }}">{{ t('change_' ~ b.change) }}: {{ b.act_title_bi|replace('*', '') }}</a>{% else %}<span class="muted">—</span>{% endif %}</td>
+    <td class="nowrap">{{ b.first }}{% if b.last != b.first %} – {{ b.last }}{% endif %}<br><span class="muted small">{{ b.units }} {{ t('items') }}</span></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% macro chamber(code) %}{{ t('chamber_' ~ code) }}{% endmacro %}
+
+{% macro ai_note(text) %}
+<p class="ai-note"><svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path d="M8 1l1.6 4.4L14 7l-4.4 1.6L8 13l-1.6-4.4L2 7l4.4-1.6z" fill="currentColor"/></svg>{{ text }}</p>
+{% endmacro %}
+
+{% macro correction(record) %}
+<a class="fix" href="/correction?record={{ record|urlencode }}&back={{ full_path|urlencode }}">{{ t('correction') }}</a>
+{% endmacro %}
+
+{% macro pager(res) %}
+{% if res.pages > 1 %}
+<nav class="pager" aria-label="Pages">
+  {% if res.page > 1 %}<a href="{{ with_page(res.page - 1) }}">← {{ t('prev') }}</a>{% endif %}
+  <span>{{ t('page_of', page=res.page, pages=res.pages) }}</span>
+  {% if res.page < res.pages %}<a href="{{ with_page(res.page + 1) }}">{{ t('next') }} →</a>{% endif %}
+</nav>
+{% endif %}
+{% endmacro %}
+
+{% macro commitment_card(c, show_unit=True) %}
+<article class="card commit {% if c.kind == 'routine' %}routine{% endif %}" id="{{ c.id }}">
+  <blockquote class="verbatim">“{{ c.quote }}”</blockquote>
+  <p class="who"><a href="{{ debate_url(c.unit, c.seq) }}">{{ c.speaker }}</a>{% if c.office and c.office not in c.speaker %}, {{ c.office }}{% if c.office_inferred %} <span class="muted" title="{{ t('office_inferred') }}">*</span>{% endif %}{% endif %}
+    · <a href="/hansard/{{ c.chamber }}/{{ c.date }}">{{ c.date }}</a></p>
+  <div class="ai">
+    <p><span class="ai-tag">{{ t('promise_ai') }}</span> {{ c.promise }}</p>
+    {% if c.deadline or c.amount %}<p class="facts">{% if c.deadline %}<span>{{ t('deadline') }}: {{ c.deadline }}</span>{% endif %}{% if c.amount %}<span>{{ t('amount') }}: {{ c.amount }}</span>{% endif %}</p>{% endif %}
+    {% if c.kind == 'routine' %}<p class="facts"><span>{{ t('routine') }}</span></p>{% endif %}
+  </div>
+  {% if show_unit and c.business %}<p class="muted small">{{ c.business|truncate(140) }}</p>{% endif %}
+  <p class="card-foot">{{ correction(c.id) }}</p>
+</article>
+{% endmacro %}
+
+{% macro qa_card(q, show_unit=True) %}
+<article class="card qa" id="{{ q.id }}">
+  <p class="who">{{ t('asked_by') }} <a href="{{ debate_url(q.unit, q.asker_seq) }}">{{ q.asker }}</a></p>
+  <div class="ai"><p><span class="ai-tag">Q (AI)</span> {{ q.question }}</p></div>
+  <p class="who">{{ t('answered_by') }} <a href="{{ debate_url(q.unit, q.answerer_seq) }}">{{ q.answerer }}</a>{% if q.office and q.office not in q.answerer %}, {{ q.office }}{% endif %}</p>
+  <div class="ai"><p><span class="ai-tag">A (AI)</span> {{ q.answer }}</p>
+  {% set figs = q.figures|loads %}
+  {% if figs %}<details><summary>{{ t('figures') }} ({{ figs|length }})</summary><ul class="figs">{% for f in figs %}<li><strong>{{ f.value }}</strong> {{ f.meaning }}</li>{% endfor %}</ul></details>{% endif %}
+  </div>
+  <p class="card-foot"><a href="/hansard/{{ q.chamber }}/{{ q.date }}">{{ q.date }}</a>{% if show_unit and q.business %} · {{ q.business|truncate(100) }}{% endif %} · {{ correction(q.id) }}</p>
+</article>
+{% endmacro %}
+
+{% macro unit_row(u) %}
+<li class="unit-row">
+  <a href="{{ debate_url(u.id) }}">{{ u.business or u.id }}</a>
+  <span class="muted small">{{ t('chamber_' ~ u.chamber) if u.chamber else '' }} {{ u.date }}</span>
+  {% set s = u.summary_ms if lang == 'ms' and u.summary_ms else u.summary_en %}
+  {% if s %}<p class="ai-line"><span class="ai-tag">AI</span> {{ s|truncate(260) }}</p>{% endif %}
+</li>
+{% endmacro %}
+
+{% macro select(name, label, options, current, any_label) %}
+<label>{{ label }}
+  <select name="{{ name }}">
+    <option value="">{{ any_label }}</option>
+    {% for value, text in options %}<option value="{{ value }}" {% if value|string == current|string %}selected{% endif %}>{{ text }}</option>{% endfor %}
+  </select>
+</label>
+{% endmacro %}

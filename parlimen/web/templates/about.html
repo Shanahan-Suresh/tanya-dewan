@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav_about') }}{% endblock %}
+{% block main %}
+<article class="prose">
+{% if lang == 'ms' %}
+<h1>Perihal parlimen-search</h1>
+<p>parlimen-search mencari Akta utama Malaysia dan perbahasan Dewan Rakyat (Parlimen ke-14 dan ke-15, termasuk Dewan Khas) bersama-sama, dalam bahasa Melayu dan Inggeris.</p>
+<h2>Apa yang ada di dalamnya</h2>
+<ul>
+  <li>{{ "{:,}".format(meta.units) }} urusan persidangan dengan {{ "{:,}".format(meta.speeches) }} ucapan verbatim.</li>
+  <li>{{ "{:,}".format(meta.qa) }} soalan lisan yang digabung dengan jawapan menteri.</li>
+  <li>{{ "{:,}".format(meta.commitments) }} komitmen menteri, setiap satu dengan petikan yang disemak oleh kod.</li>
+</ul>
+<h2>Apa yang ditulis oleh AI</h2>
+<p>Ringkasan, gabungan soalan dan jawapan, serta nota komitmen ditulis oleh model Claude dan dilabel "AI". Ia sentiasa dipaparkan di sebelah teks verbatim. Penghurai, bukan model, menentukan siapa yang bercakap. Petikan komitmen yang tidak sepadan dengan teks Hansard dibuang.</p>
+<h2>Cara jawapan ditulis</h2>
+<p>Carian kata kunci dan carian makna mencari petikan, Claude Haiku menyusunnya semula, dan Claude Haiku menulis jawapan daripada lapan petikan terbaik. Setiap ayat jawapan mesti memetik sumber; ayat tanpa petikan dibuang.</p>
+<h2>Bukan nasihat undang-undang</h2>
+<p>{{ t('not_advice') }} Teks Akta ialah cetakan semula yang dipaparkan oleh portal Laws of Malaysia Online pada tarikh yang ditunjukkan.</p>
+{% else %}
+<h1>About parlimen-search</h1>
+<p>parlimen-search searches Malaysia's principal Acts and the Dewan Rakyat debates (the 14th and 15th Parliaments, with the Special Chamber) together, in Malay and English.</p>
+<h2>What it holds</h2>
+<ul>
+  <li>{{ "{:,}".format(meta.units) }} agenda items with {{ "{:,}".format(meta.speeches) }} verbatim speeches.</li>
+  <li>{{ "{:,}".format(meta.qa) }} oral questions joined to the minister's answer.</li>
+  <li>{{ "{:,}".format(meta.commitments) }} ministers' commitments, each with a quote that code checks against the Hansard text.</li>
+</ul>
+<h2>What AI wrote</h2>
+<p>Summaries, question-answer joins and commitment notes are written by Claude models and labelled "AI". They always show beside the verbatim text. The parser, not the model, decides who spoke. A commitment whose quote does not match the Hansard text is dropped.</p>
+<h2>How an answer is written</h2>
+<p>Keyword search and meaning search find passages, Claude Haiku reorders them, and Claude Haiku writes the answer from the best eight. Every sentence of an answer must cite a source; a sentence with no citation is removed.</p>
+<h2>How well it works</h2>
+<p>Measured on fixed test questions: the right Act section is in the top 10 results for 91% of law questions, and the right speech for 73% of debate questions. A blind judge graded 77% of answers correct and 82% fully backed by their citations.</p>
+<h2>Not legal advice</h2>
+<p>{{ t('not_advice') }} Act texts are the reprints Laws of Malaysia Online shows, at the date given on each page.</p>
+{% endif %}
+<p class="muted small">Built {{ meta.built }}.</p>
+</article>
+{% endblock %}
