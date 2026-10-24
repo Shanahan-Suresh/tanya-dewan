@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "parlimen-search": {
+      "type": "stdio",
+      "command": "D:\\Projects\\work\\parlimen-search\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "parlimen.mcp_server"],
+      "env": {"PYTHONPATH": "D:\\Projects\\work\\parlimen-search", "HF_HUB_OFFLINE": "1"}
+    }
+  }
+}
