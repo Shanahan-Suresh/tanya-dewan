@@ -226,7 +226,7 @@ Qwen3-Reranker-0.6B), settings added to `parlimen/config.py` (INDEX = `data/inde
   `index.db` lacks is enriched (Messages API), commitment-checked, bill-linked, chunked, appended
   and embedded. A stopped run resumes.
 - Tests: `tests/test_chunk_index.py`, `tests/test_search.py`, `tests/test_ingest.py`,
-  `tests/test_eval.py`, `tests/test_answer.py`; suite 62 pass.
+  `tests/test_eval.py`, `tests/test_answer.py`.
 - The venv has sentence-transformers 6.2, transformers 5.20, accelerate; torch 2.14.1+cu130 comes
   from the user site through `.venv\Lib\site-packages\zz-user-torch.pth` (uv installs a CPU torch
   with sentence-transformers: uninstall it).
@@ -286,15 +286,57 @@ The tools:
   2-thread CPU.
 - `parlimen/judge.py [--arms ...] [--ids ...] [--answer-effort E]`: Haiku answers, Opus 5.5
   grades each answer blind, twice.
-- Tests: suite 70 pass.
 
 Open, for later: Hansard recall. Most misses are questions that name no date, where the top hits
 are the same topic in another sitting.
 
-## Next: phase 6, the pages and the MCP server
+## Phase 6: the pages and the MCP server: built, exit check passes
 
-Scope and exit are in ROADMAP Phase 6. The search and answer code above is what the pages and
-the MCP server call.
+Scope and exit are in ROADMAP Phase 6.
+
+## Phase 7: launch plan confirmed, owner's refinement passes next
+
+The owner confirmed the plan in ROADMAP Phase 7 on its review page; the data stays on D:.
+Owed: the owner's refinement notes on the local site, then the gaps in Phase 7 step 2. Nothing
+goes public until the owner gives the word (CLAUDE.md rules 1 and 8).
+
+Open: the Sepang seat shows two MP pages; each question is answered alone, with no memory of the
+previous one.
+
+- Page database: `python -m parlimen.records build|stats` writes `data/site.db` (about 620 MB)
+  from the corpus and enrichment files. Stop the site first: Windows refuses to replace an open
+  file. Last build (measured 2026-10-25, 100 s): 30,091 extracts, 361,676 speeches, 31,767
+  question-answer pairs, 18,523 commitments (98.7% with an office), 342 MPs. Rebuild after
+  every ingest, so the pages show the new sittings.
+- Site: `python -m parlimen.web [--port 8780]` (`parlimen/web/`). Record pages need no model and
+  load in 0.02 to 0.6 s. At start the server loads the index, the vectors and the embedder on
+  the CPU in the background (149 to 162 s measured 2026-10-25, while other jobs used the D:
+  hard disk); record pages serve during that. The embedder stays on the CPU (about 90 ms a
+  question, 3.4 GB RAM for the process), so the site holds no GPU; `PARLIMEN_SITE_DEVICE=cuda`
+  puts it on the GPU, unloaded after 10 idle minutes. A warm question takes 6.8 to 12.7 s and
+  about [amount removed] (Haiku rerank plus answer). Corrections go to
+  `data/corrections.jsonl`.
+- MCP server: `python -m parlimen.mcp_server` (stdio), registered in `.mcp.json`. The read tools
+  answer in under 1 s; the search tools load the searcher on the first call (minutes on the
+  cold D: disk) and unload the embedder after `PARLIMEN_IDLE_MINUTES` (10).
+- Digest: `python -m parlimen.digest --sector energy --from 2026-10-19 --to 2026-10-23` writes
+  `data/digests/energy-2026-10-19-2026-10-23.html` and `.json` (raw answer, kept items,
+  dropped ids). One Haiku 5.5 call; ids not in the week's records are dropped in code, and
+  every quote on the page comes from the record. Sectors are in `digest.SECTORS`.
+- Exit check: `python tools/check_phase6.py [--lang ms]` against the running site, 4 of 4 pass
+  in both languages (measured 2026-10-25); shots in `data/shots/check-*.png`.
+  `tools/site_shots.py [--ask "..."] [--lang ms]` shoots every page at desktop and phone width
+  with load times and any overflow.
+- Ingest of DR and KK 2026-10-22 (log `data/ingest-2026-10-22.log`): 444 speeches, 58 extracts
+  enriched, [amount removed]. October spend logged (measured 2026-10-25): [amount removed].
+- Tests: `tests/test_records.py`, `tests/test_web.py`, `tests/test_mcp_server.py`,
+  `tests/test_digest.py`; suite 103 pass.
+
+Open:
+- The Sepang seat keeps two MP pages (`raj-munni-sabu`, `aiman-athirah-sabu`), not checked
+  against the record; the other seats with two MPs are real by-elections.
+- The D: hard disk holds the venv, the model and the index, so every cold start is slow. Moving
+  `data/index` and the HF cache to the NVMe C: drive would cut it; that is the owner's call.
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking
 
@@ -308,7 +350,9 @@ measured and costed in `docs/sources.md`.
 
 ## Environment
 
-- `.venv` (Python 3.14, uv): httpx, pdfplumber, pypdfium2, anthropic, pytest, playwright (drives
-  the installed Chrome with `channel="chrome"`; no bundled browser needed).
+- `.venv` (Python 3.14, uv), packages pinned in `requirements.txt`: httpx, pdfplumber,
+  pypdfium2, anthropic, sentence-transformers, fastapi, uvicorn, jinja2, mcp, pytest,
+  playwright (drives the installed Chrome with `channel="chrome"`; no bundled browser needed).
+  torch comes from the user site (see Phase 4).
 - Tesseract 5.4 at `C:\Program Files\Tesseract-OCR`; poppler's `pdftotext` from Git's mingw64.
 - API key: `~/.claude/anthropic-api-key.txt`; usage log `data/api-usage.jsonl`.

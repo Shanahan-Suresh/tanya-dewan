@@ -215,7 +215,7 @@ avenue at a time; this one opens after release 1 launches.
 | Front ends | The chat page, static MP, bill and topic pages, the commitments page, an MCP server, a CLI |
 
 Stack: Python 3.12+, FastAPI, SQLite FTS5, NumPy, PyTorch for the search models. Hosting: a CPU
-container on Cloud Run, where the owner already runs SiteMedic. Licence: MIT for the code; the
+VPS (phase 7), since the daily ingest writes to the data the site reads. Licence: MIT for the code; the
 structured records under a non-commercial licence with a paid commercial option (Track B).
 
 ### Data model
@@ -384,24 +384,66 @@ The chosen setup is hybrid search with Haiku 5.5 reranking the top 20 hits:
 
 ### Phase 6: the pages and the MCP server
 
-- Chat with filters; section viewer with anchors; speech cards with summary beside verbatim text;
-  question-answer cards; the commitments page; static MP, bill and topic pages; links to the
-  official PDF pages; the AI label, the correction link and the not-legal-advice line; Malay and
-  English interface text.
-- MCP server: `search_law`, `search_debates`, `read_section`, `read_sitting`, `list_commitments`.
-- A sample weekly digest for one sector, generated from the records, for the validation outreach.
+- [x] The site (`parlimen/web/`, FastAPI and Jinja2, server-rendered, page data from
+  `data/site.db` built by `parlimen/records.py`): the ask page with filters; Act pages with a
+  section anchor each; sitting and debate pages with each speech verbatim beside the AI summary;
+  question-answer cards; the commitments page; MP, bill and topic pages; links to the official
+  PDF pages; the AI label, the correction link and the not-legal-advice line; Malay and English
+  interface text. Each question is answered on its own, with no memory of earlier questions.
+- [x] MCP server (`parlimen/mcp_server.py`, registered in `.mcp.json`): `search_law`,
+  `search_debates`, `read_section`, `read_sitting`, `list_commitments`.
+- [x] A sample weekly digest (`parlimen/digest.py`): energy, water and climate, 19 to 22 October
+  2026, 7 items and 8 commitments to watch, [amount removed].
+- [x] Exit check (`tools/check_phase6.py`, 4 of 4 pass in English and Malay): a reader clicks from
+  the Acts search to a section, to its bill debate, from the questions page to a deputy finance
+  minister's answer, and from the commitments page to the speech that holds the quote.
 - **Exit:** a reader finds a section, its debate, a minister's answer and a commitment without the
   CLI.
 
 ### Phase 7: public demo and launch
 
-- Cloud Run deployment, rate limit per visitor, daily answer budget, Haiku 5.5 answers.
-- A scheduled job ingests new sittings during Parliament's meetings.
-- README with the results table and a GIF; a write-up for the personal site, LinkedIn and dev.to on
-  structured extraction at corpus scale.
-- Launch timed to a Parliament meeting, when Parliament is in the news.
-- Outreach, by the owner: Sinar Project, r/malaysia, Lowyat forum, university law and politics
-  societies, civic tech meetups, journalists who cover Parliament, and the 30 prospects.
+Nothing in this phase goes public until the owner says so; the owner's refinement passes come
+first. The owner confirmed the plan on the review page (`docs/launch-page.html`,
+https://claude.ai/artifact/A54eghUEJ1ucrYFh81QvYz, db `verdicts`): the host, the [amount removed] daily
+budget, the limit of 20 questions an hour, the ingest on the host, a launch at the first 2027
+meeting, public code at launch, the working name until the trial, and the anonymous question log.
+
+1. **Refinement passes (owner, then Claude).** The owner reads the local site and sends notes;
+   Claude fixes them and reshoots the pages (`tools/site_shots.py`). The site's files stay on the
+   D: hard disk (owner's choice), so each restart warms for about 2.5 minutes.
+2. **Gaps before launch (Claude).**
+   - Draft flag: every sitting and record shows when its text is the unrevised draft ("BELUM
+     DISEMAK"), read from the PDF.
+   - Revised sittings: the ingest re-checks draft sittings each week and re-processes one whose
+     PDF changed (about [amount removed] a sitting).
+   - Rate limit per visitor (20 questions an hour) and a daily answer budget ([amount removed]). Past the budget, the ask page shows the found passages without a written
+     answer, and says so.
+   - An anonymous question log (question, filters, cost; no IP address), for which topics people
+     ask about. The About page states what is stored, including the optional contact on the
+     correction form.
+   - `sitemap.xml`, `robots.txt`, page titles and descriptions, share previews, so MP, bill and
+     topic pages reach search engines.
+   - The Sepang seat's two MP pages checked against the record.
+   - The site reloads its data after an ingest (a nightly restart is enough).
+3. **Host: a small VPS, 4 vCPU, 8 GB RAM (Hetzner CX33; CPX32 if the CX33 is sold out).** The site needs about 4 GB of data
+   (only the "h" vectors), about 3.5 GB of RAM, and no GPU. A VPS at about [amount removed] a month
+   (Hetzner, after its June 2026 price rise) keeps the warm process up all day. Cloud Run with one
+   warm instance costs about [amount removed] a month idle; with none, every first visitor waits through a
+   cold load, and the daily ingest would have to rebuild and redeploy the image, since a Cloud Run
+container keeps no files. HTTPS through Caddy, the site as a systemd service, a health check and an uptime
+   monitor. A deploy pilot checks RAM, answer time and that the host can reach parlimen.gov.my.
+4. **Ingest on the host.** A daily job during Parliament's meetings: fetch new sittings, enrich
+   them (about [amount removed] a sitting day, so about [amount removed] a 37-day meeting), embed on the CPU, rebuild
+   the page database, restart the site. A failed run leaves the site as it was and logs why.
+5. **Launch materials.** README with the eval results table and a GIF of the ask page; the
+   public repository (code only; `data/` stays out); a write-up for the personal site, LinkedIn
+   and dev.to on structured extraction at corpus scale.
+6. **Launch and outreach (owner).** At the first Parliament meeting of 2027. The current meeting
+   ends 8 December 2026; the 15th Parliament dissolves by December 2027 at the latest, so the general
+   election brings the largest interest in what MPs said. Outreach: Sinar Project, r/malaysia,
+   Lowyat forum, university law and politics societies, civic tech meetups, journalists who cover
+   Parliament, and the 30 prospects.
+
 - **Exit:** the demo is public, answers within the budget, and ingests new sittings on its own.
 
 ### Phase 8: paid pilot (only after the Track A gate passes)
