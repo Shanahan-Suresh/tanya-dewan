@@ -408,6 +408,9 @@ page later grows into an app.
   https://claude.ai/artifact/Ub2MRtJRcswidYHisSDPi5, source in `docs/design/logo/`). It is in the
   header (a light version in dark mode, `--mark` tokens), `static/favicon.svg` and `.ico`, the
   phone icons (`tools/make_icons.py`) and the share image (`tools/make_og.py`).
+- Copy: one voice across the site in English and Malay (voice guide and every change in
+  `data/copy-pass.md`). Open: the Malay About page gained the "how well it works" section from
+  the English one, owner to confirm; the 404 button still says "Ask".
 - Memory: a full site holds about 3.2 GB (bfloat16 embedder on the CPU, vectors, torch). The
   vectors stay float16 in memory (`Searcher.scores` widens one block at a time), saving about
   580 MB; not yet measured on a running site. `hold_single_site` refuses a second full site on
