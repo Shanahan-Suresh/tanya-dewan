@@ -154,6 +154,9 @@ def merge_texts(a: str, b: str) -> str:
     return a + sep + b
 
 
+SCORE_BLOCK = 16384  # vectors widened to float32 per block in Searcher.scores
+
+
 class Searcher:
     def __init__(self, root: Path = config.INDEX, size: str = config.EMBEDDER, variant: str = config.VARIANT,
                  rerank_size: str | None = config.RERANKER, embedder=None, reranker=None):
@@ -200,9 +203,25 @@ class Searcher:
 
     @property
     def vectors(self) -> np.ndarray:
+        """The passage vectors as stored (float16): half the memory of float32, the same values."""
         if self._vectors is None:
-            self._vectors = load_vectors(self.size, self.variant, self.root).astype(np.float32)
+            self._vectors = load_vectors(self.size, self.variant, self.root)
         return self._vectors
+
+    def scores(self, q: np.ndarray) -> np.ndarray:
+        """Cosine score of every passage against a unit query vector, in float32.
+
+        numpy has no fast float16 product, so the vectors are widened one block at a time: the
+        scores match a float32 copy exactly, and the extra memory is one block (64 MB), not 1.2 GB.
+        """
+        vec = self.vectors
+        if vec.dtype == np.float32:
+            return vec @ q
+        q = q.astype(np.float32, copy=False)
+        out = np.empty(len(vec), dtype=np.float32)
+        for at in range(0, len(vec), SCORE_BLOCK):
+            out[at:at + SCORE_BLOCK] = vec[at:at + SCORE_BLOCK].astype(np.float32) @ q
+        return out
 
     def warm(self) -> None:
         _ = self.vectors
@@ -277,8 +296,7 @@ class Searcher:
     def dense(self, question: str, f: Filters, k: int = config.CANDIDATES, keep: np.ndarray | None = None) -> list[Hit]:
         keep = self.mask(f) if keep is None else keep
         q = self.embedder.query(question, config.QUERY_TASK)
-        vec = self.vectors
-        scores = vec @ q
+        scores = self.scores(q)
         scores[~keep[:len(scores)]] = -np.inf
         k = min(k, int(np.isfinite(scores).sum()))
         if k <= 0:

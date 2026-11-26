@@ -17,6 +17,9 @@
 <meta property="og:locale" content="{{ 'ms_MY' if lang == 'ms' else 'en_MY' }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <link rel="stylesheet" href="/static/site.css">
 <link rel="preload" href="/static/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/static/htmx.min.js" defer></script>
@@ -48,7 +51,7 @@
 </pattern></defs></svg>
 <a class="skip" href="#main">{{ t('skip') }}</a>
 <header class="site-header"><div class="wrap">
-  <a class="brand" href="/" aria-label="{{ site_name }}"><svg viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#0A1F5C"/><path d="M17 6l9 11-9 11-9-11z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 12.5l4.6 4.5-4.6 4.5-4.6-4.5z" fill="#F5B800"/></svg>{{ site_name }}</a>
+  <a class="brand" href="/" aria-label="{{ site_name }}"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="bm-o" d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z" stroke-width="3" stroke-linejoin="round"/><path class="bm-r" d="M32 19 L45 32 L32 45 L19 32 Z" fill="none" stroke-width="3"/><path d="M32 26 L38 32 L32 38 L26 32 Z" fill="#F5B800"/></svg>{{ site_name }}</a>
   <nav class="nav" aria-label="{{ t('nav_main') }}">
     {% for href, key, icon, match in nav %}<a href="{{ href }}" {% if ((path == '/') if href == '/' else path.startswith(match)) %}aria-current="page"{% endif %}>{{ t(key) }}</a>{% endfor %}
   </nav>

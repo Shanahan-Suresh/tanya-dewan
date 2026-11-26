@@ -37,6 +37,7 @@ from xml.sax.saxutils import escape
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import (HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response,
                                StreamingResponse)
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader, pass_context, select_autoescape
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -563,6 +564,11 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         locs = "".join(f"<url><loc>{escape(base + p)}</loc></url>\n" for p in paths)
         return xml(f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{locs}</urlset>\n')
 
+    @app.get("/favicon.ico", include_in_schema=False)
+    def favicon():
+        return FileResponse(HERE / "static" / "favicon.ico", media_type="image/x-icon",
+                            headers={"Cache-Control": "public, max-age=604800"})
+
     @app.get("/robots.txt", response_class=PlainTextResponse)
     def robots(request: Request):
         return ("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /hl/\nDisallow: /correction\n"
@@ -613,6 +619,39 @@ def _watch_idle(engine: _Engine) -> None:
             pass
 
 
+LOCK = config.DATA / "site.lock"
+
+
+def hold_single_site(lock: Path = LOCK):
+    """Refuse to start a second full site on this machine; returns the open lock file to keep.
+
+    A full site holds the search model and vectors (about 2.5 GB), so two copies starve the PC.
+    The operating system drops the lock when the process ends, however it ends, so a crash
+    leaves nothing to clean up. The holder's PID sits beside it for the error message.
+    """
+    lock.parent.mkdir(parents=True, exist_ok=True)
+    pid_file = lock.with_suffix(".pid")
+    f = open(lock, "a+b")
+    try:
+        if os.name == "nt":
+            import msvcrt
+            f.seek(0)
+            msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        f.close()
+        try:
+            holder = pid_file.read_text(encoding="utf-8").strip()
+        except OSError:
+            holder = "unknown"
+        raise SystemExit(f"A full site is already running (PID {holder}). Stop that process first, "
+                         "or start this one with --replay, which loads no model.") from None
+    pid_file.write_text(str(os.getpid()), encoding="utf-8")
+    return f
+
+
 def main() -> None:
     import argparse
 
@@ -624,6 +663,7 @@ def main() -> None:
     ap.add_argument("--replay", type=Path, help="serve this saved answer on the ask page, with no model or spend "
                                                 "(for design work; docs/design/data.json holds one)")
     a = ap.parse_args()
+    _lock = None if a.replay else hold_single_site()  # noqa: F841 - kept open for the life of the site
     app = create_app(replay=a.replay)
     if not a.replay:
         app.state.engine.warm()

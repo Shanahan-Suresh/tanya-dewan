@@ -10,7 +10,7 @@
   --brand: #0A1F5C; --link: #0A1F5C; --tint: #ECEFFA;
   --accent: #F5B800; --accent-soft: #FDF1C4; --accent-line: #E6CE7A; --warn: #7A4F00; --err: #9B1C1C;
   --chart: #0A1F5C; --motif: #D9D5C4; --motif-inv: rgba(255,255,255,.55); --focus: #0A1F5C;
-  --heat0: #F1EFE6; --heat1: #DDE4F7; --heat2: #B4C3EE; --heat3: #6E89D6; --heat4: #0A1F5C;
+  --mark: #0A1F5C; --mark-ring: #FFFFFF; --heat0: #F1EFE6; --heat1: #DDE4F7; --heat2: #B4C3EE; --heat3: #6E89D6; --heat4: #0A1F5C;
   --sp0: #0A1F5C; --sp1: #B8860B; --sp2: #1F7A6D; --sp3: #A23B72; --sp4: #5B6EE1; --sp5: #8A5A2B;
   --shadow: 0 1px 2px rgba(12,20,51,.06), 0 6px 20px rgba(12,20,51,.07);
   --shadow-lg: 0 2px 4px rgba(12,20,51,.08), 0 18px 40px rgba(12,20,51,.16);
@@ -25,7 +25,7 @@
     --ink: #EEF0FA; --muted: #A8B1D0; --line: #1E2850; --line-strong: #2E3A6B;
     --link: #9DB2FF; --tint: #16204A; --accent-soft: #3A2F07; --accent-line: #6B5710; --warn: #F5B800; --err: #FF9B9B;
     --chart: #6F8BFF; --motif: #3B4A85; --motif-inv: rgba(255,255,255,.5); --focus: #F5B800;
-    --heat0: #1C2753; --heat1: #263A85; --heat2: #2F46A0; --heat3: #5675E0; --heat4: #B7C7FF;
+    --mark: #EEF0FA; --mark-ring: #0A1F5C; --heat0: #1C2753; --heat1: #263A85; --heat2: #2F46A0; --heat3: #5675E0; --heat4: #B7C7FF;
     --sp0: #9DB2FF; --sp1: #F5B800; --sp2: #5FD0BD; --sp3: #F08DBE; --sp4: #8FA0FF; --sp5: #D9A66B;
     --shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 20px rgba(0,0,0,.35);
     --shadow-lg: 0 2px 4px rgba(0,0,0,.6), 0 18px 40px rgba(0,0,0,.6);
@@ -61,6 +61,7 @@ svg.divider { display: block; width: 100%; height: 16px; }
 .site-header .wrap { display: flex; align-items: center; gap: 16px; min-height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 650; font-size: 18px; letter-spacing: -0.02em; min-height: 44px; }
 .brand svg { width: 34px; height: 34px; flex: none; }
+.brand .bm-o { fill: var(--mark); stroke: var(--mark); } .brand .bm-r { stroke: var(--mark-ring); }
 .nav { display: none; margin-left: 12px; gap: 2px; }
 .nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--muted); text-decoration: none; font-weight: 500; font-size: 15px; border-radius: 8px; }
 .nav a:hover { color: var(--ink); background: var(--surface-2); }

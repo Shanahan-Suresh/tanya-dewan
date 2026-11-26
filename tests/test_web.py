@@ -300,3 +300,29 @@ def test_the_ask_page_prefills_q_and_never_runs_it(client):
     page = client.get("/?q=rice+prices").text
     assert 'value="rice prices"' in page and 'id="answer" hidden' in page
     assert 'name="parliament"' in page and 'name="date_from"' in page and "Copy link" in page
+
+
+def test_second_full_site_is_refused(tmp_path):
+    from parlimen.web.app import hold_single_site
+
+    lock = tmp_path / "site.lock"
+    first = hold_single_site(lock)
+    try:
+        with pytest.raises(SystemExit, match=r"already running \(PID \d+\)"):
+            hold_single_site(lock)
+    finally:
+        first.close()
+    hold_single_site(lock).close()  # free again once the holder is gone
+
+
+def test_float16_scores_match_float32():
+    import numpy as np
+
+    from parlimen import search
+
+    rng = np.random.default_rng(0)
+    vec = rng.standard_normal((search.SCORE_BLOCK + 7, 16)).astype(np.float16)
+    q = rng.standard_normal(16).astype(np.float32)
+    s = search.Searcher.__new__(search.Searcher)
+    s._vectors = vec
+    assert np.array_equal(s.scores(q), vec.astype(np.float32) @ q)
