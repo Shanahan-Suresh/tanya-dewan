@@ -256,6 +256,9 @@ TEXT = {
     "bill_journey": ("The bill's debates", 'Perbahasan rang undang-undang ini'),
     "you_are_here": ("This item", "Urusan ini"),
     "all_n_debates": ("All {n} debates", "Semua {n} perbahasan"),
+    "no_act": ("No Act yet", "Belum ada Akta"),
+    "part_n": ("part {n}", "bahagian {n}"),
+    "ask_tiny": ("Ask a question", "Tanya soalan"),
     "ask_short": ("Ask about a law or a debate", "Tanya tentang undang-undang atau perbahasan"),
 }
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
-{% set title = act.title_bi if lang_code == 'BI' else act.title_bm %}
+{% set title = (act.title_bi if lang_code == 'BI' else act.title_bm)|tcase %}
 {% block title %}{{ title }} (Act {{ act.number }}){% endblock %}
 {% block description %}{{ title }}, Act {{ act.number }}: every section, with the Dewan Rakyat debates on its bills.{% endblock %}
 {% block main %}
@@ -8,7 +8,7 @@
   <p class="eyebrow"><a href="/law">{{ t('nav_law') }}</a> · {{ t('act') }} {{ act.number }} · {{ t('in_force') if act.status == 'in force' else t('repealed') }}</p>
   <h1>{{ title }}</h1>
   <p class="meta">
-    {{ t('as_at') }} <strong>{{ act.as_at }}</strong>
+    {{ t('as_at') }} <strong>{{ act.as_at|hdate }}</strong>
     {% if pdf %} · <a href="{{ pdf }}" rel="noopener">{{ t('official_pdf') }}</a>{% endif %}
     {% for o in other %} · {{ t('other_lang') }} <a href="{{ law_url(act.number, o) }}">{{ t('lang_' ~ o) }}</a>{% endfor %}
   </p>
@@ -26,7 +26,7 @@
       <h2>{{ t('bill_debates') }}</h2>
       {% if debates %}
       <ul>
-        {% for d in debates %}<li><a href="{{ debate_url(d.id) }}">{{ d.bill_title }}</a><br><span class="muted small">{{ m.chamber(d.chamber) }}, {{ d.date }}</span></li>{% endfor %}
+        {% for g in debates|groupby('bill_title') %}<li><b>{{ g.grouper|tcase }}</b><br>{% for day in g.list|groupby('date') %}<a class="small" href="{{ debate_url(day.list[0].id) }}">{{ day.grouper|hdate }}{% if day.list|length > 1 %} ({{ day.list|length }}){% endif %}</a>{{ ', ' if not loop.last }}{% endfor %}</li>{% endfor %}
       </ul>
       {% else %}<p class="muted small">{{ t('no_bill_debates') }}</p>{% endif %}
     </section>

@@ -38,11 +38,13 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import (HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response,
                                StreamingResponse)
 from fastapi.staticfiles import StaticFiles
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, pass_context, select_autoescape
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel
 
 from .. import config
 from ..records import Records, reflow, slug
+from . import present
 from .i18n import LANGS, t
 from .limits import Limits
 
@@ -184,6 +186,14 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                       trim_blocks=True, lstrip_blocks=True)
     env.filters["loads"] = json.loads
     env.filters["reflow"] = reflow
+    env.filters.update(tcase=present.tcase, unstar=present.unstar, unnum=present.unnum, cap=present.cap,
+                       stage=present.stage)
+
+    @pass_context
+    def hdate(ctx, iso):
+        return present.hdate(iso, ctx.get("lang", "en"))
+
+    env.filters["hdate"] = hdate
     env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug,
                        site_name=config.SITE_NAME, examples=EXAMPLES)
     engine = _Engine(searcher)
@@ -233,6 +243,13 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
 
     def missing(request: Request) -> HTMLResponse:
         return page(request, "missing.html", 404)
+
+    @app.exception_handler(StarletteHTTPException)
+    async def not_found_page(request: Request, exc: StarletteHTTPException):
+        # An unknown address gets the site's own 404 page; the JSON API and static files keep theirs.
+        if exc.status_code == 404 and not request.url.path.startswith(("/api/", "/static/")):
+            return missing(request)
+        return JSONResponse({"detail": exc.detail}, exc.status_code, headers=getattr(exc, "headers", None))
 
     def num(v: str, default: int = 1) -> int:
         try:

@@ -9,7 +9,7 @@
 <section class="meeting">
   <h2>{{ meeting }}</h2>
   <ul class="days">
-    {% for s in rows %}<li><a class="tnum" href="/hansard/{{ s.chamber }}/{{ s.date }}">{{ s.date }}</a> <span class="muted small">{{ m.chamber(s.chamber) }} · {{ s.units }} {{ t('items') }}</span>{% if s.draft %} {{ m.draft_mark() }}{% endif %}</li>{% endfor %}
+    {% for s in rows %}<li><a class="tnum" href="/hansard/{{ s.chamber }}/{{ s.date }}">{{ s.date|hdate }}</a><span class="muted small">{{ m.chamber(s.chamber) }} · {{ s.units }} {{ t('items') }}</span>{% if s.draft %}{{ m.draft_mark() }}{% endif %}</li>{% endfor %}
   </ul>
 </section>
 {% endfor %}

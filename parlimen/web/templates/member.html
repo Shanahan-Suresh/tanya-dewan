@@ -39,7 +39,7 @@
       <ul class="party-list body">
         {% for p in m.parties %}<li><strong>{{ p.party }}</strong> <span class="muted">{{ t('f_parliament') }} {{ p.parliament }}, {{ p.date_from or t('term_start') }} – {{ p.date_to or (t('now') if p.parliament == parliament_now else t('term_end')) }}</span></li>{% endfor %}
       </ul>
-      {% else %}<p class="muted body">—</p>{% endif %}
+      {% else %}<p class="muted body">{{ t("empty") }}</p>{% endif %}
       <p class="muted small" style="margin-top:12px">{{ t('party_from_seat') }}</p>
     </section>
     {% if offices %}

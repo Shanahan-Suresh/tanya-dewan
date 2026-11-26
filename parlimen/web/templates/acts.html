@@ -10,14 +10,14 @@
 <div id="results" aria-live="polite">
 {% block results %}
 <p class="count tnum">{{ acts|length }} {{ t('results') }}</p>
-<div class="list-wrap"><table class="list">
+<div class="list-wrap"><table class="list rows">
   <thead><tr><th>{{ t('act') }}</th><th>English</th><th>Bahasa Melayu</th><th>{{ t('as_at') }}</th></tr></thead>
   <tbody>
   {% for a in acts %}
   <tr {% if a.status != 'in force' %}class="dim"{% endif %}>
-    <td><a href="/law/{{ a.number }}">{{ a.number }}</a></td>
-    <td>{% if 'BI' in a.langs %}<a href="{{ law_url(a.number, 'BI') }}">{{ a.title_bi }}</a>{% else %}{{ a.title_bi }}{% endif %}</td>
-    <td>{% if 'BM' in a.langs %}<a href="{{ law_url(a.number, 'BM') }}">{{ a.title_bm }}</a>{% else %}{{ a.title_bm }}{% endif %}</td>
+    <td class="nowrap"><a href="/law/{{ a.number }}">{{ a.number }}</a></td>
+    <td>{% if 'BI' in a.langs %}<a href="{{ law_url(a.number, 'BI') }}">{{ a.title_bi|tcase }}</a>{% else %}{{ a.title_bi|tcase }}{% endif %}</td>
+    <td>{% if 'BM' in a.langs %}<a href="{{ law_url(a.number, 'BM') }}">{{ a.title_bm|tcase }}</a>{% else %}{{ a.title_bm|tcase }}{% endif %}</td>
     <td class="nowrap">{{ a.as_at }}{% if a.status != 'in force' %}<br><span class="muted small">{{ t('repealed') }}</span>{% endif %}</td>
   </tr>
   {% endfor %}

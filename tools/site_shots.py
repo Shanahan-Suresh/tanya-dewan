@@ -23,7 +23,7 @@ SIZES = {"desktop": (1366, 900), "phone": (390, 844)}
 
 
 def name(path: str) -> str:
-    return (path.strip("/").replace("/", "_").replace("#", "_") or "home")
+    return (path.strip("/").replace("/", "_").replace("#", "_").replace("?", "_").replace("=", "_") or "home")
 
 
 def main() -> None:

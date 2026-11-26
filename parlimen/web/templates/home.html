@@ -11,7 +11,7 @@
     <div class="ask-field">
       {{ m.icon('search') }}
       <label class="sr-only" for="q">{{ t('ask_placeholder') }}</label>
-      <input id="q" name="q" type="text" value="{{ q }}" maxlength="500" placeholder="{{ t('ask_short') }}" enterkeyhint="search" required>
+      <input id="q" name="q" type="text" value="{{ q }}" maxlength="500" placeholder="{{ t('ask_tiny') }}" enterkeyhint="search" required>
       <button class="ask-go" type="submit"><span class="go-text">{{ t('ask_button') }}</span>{{ m.icon('arrow') }}<span class="sr-only go-sr">{{ t('ask_button') }}</span></button>
     </div>
     <div class="try" id="try" aria-label="{{ t('examples') }}"><span class="k">{{ t('examples') }}</span></div>
@@ -76,7 +76,7 @@
     {% for s in sittings %}
     <a class="card sit" href="/hansard/{{ s.chamber }}/{{ s.date }}">
       <span class="ch">{{ m.chamber(s.chamber) }}</span>
-      <span class="d tnum">{{ s.date }}</span>
+      <span class="d tnum">{{ s.date|hdate }}</span>
       <span class="row"><span class="tnum">{{ s.units }} {{ t('items') }}</span>{% if s.draft %}{{ m.draft_mark() }}{% endif %}</span>
     </a>
     {% endfor %}
@@ -90,7 +90,7 @@
     <article class="card commit-mini">
       {{ m.verbatim('“' ~ (c.quote|truncate(200)) ~ '”') }}
       <p>{{ m.ai_label(t('promise_ai')) }} {{ c.promise|truncate(160) }}</p>
-      <p class="who"><a href="{{ debate_url(c.unit, c.seq) }}">{{ c.speaker|truncate(50) }}</a> · {{ c.date }}</p>
+      <p class="who"><a href="{{ debate_url(c.unit, c.seq) }}">{{ c.speaker|truncate(50) }}</a> · {{ c.date|hdate }}</p>
     </article>
     {% endfor %}
   </div>

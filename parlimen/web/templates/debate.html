@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% set summary = unit.summary_ms if lang == 'ms' and unit.summary_ms else unit.summary_en %}
-{% block title %}{{ unit.business|truncate(80) }} · {{ m.chamber(unit.chamber) }} {{ unit.date }}{% endblock %}
+{% block title %}{{ unit.business|tcase|truncate(80) }} · {{ m.chamber(unit.chamber) }} {{ unit.date|hdate }}{% endblock %}
 {% block description %}{{ summary|truncate(200) }}{% endblock %}
 {% block main %}
 {# Speakers in order of first appearance, each with a colour slot and a speech count. #}
@@ -12,14 +12,14 @@
   {% set _ = sp.counts.update({k: sp.counts.get(k, 0) + 1}) %}
 {% endfor %}
 
-<nav class="crumbs" aria-label="{{ t('breadcrumb') }}"><a href="/hansard">{{ t('nav_hansard') }}</a>{{ m.icon('arrow') }}<a href="/hansard/{{ unit.chamber }}/{{ unit.date }}">{{ m.chamber(unit.chamber) }}, {{ unit.date }}</a></nav>
+<nav class="crumbs" aria-label="{{ t('breadcrumb') }}"><a href="/hansard">{{ t('nav_hansard') }}</a>{{ m.icon('arrow') }}<a href="/hansard/{{ unit.chamber }}/{{ unit.date }}">{{ m.chamber(unit.chamber) }}, {{ unit.date|hdate }}</a></nav>
 <header class="card dh">
-  <p class="kicker tnum"><span>{{ m.chamber(unit.chamber) }}, {{ unit.date }}</span><span>{{ t('f_parliament') }} {{ unit.parliament }}</span><span>{{ unit.id }}</span></p>
-  <h1>{{ unit.business or t('business') }}</h1>
+  <p class="kicker tnum"><span>{{ t('f_parliament') }} {{ unit.parliament }}</span><span>{{ unit.id }}</span></p>
+  <h1>{{ (unit.business or t('business'))|tcase }}</h1>
   <p class="links">
     {% if sitting and sitting.pdf %}<a href="{{ pdf_page(sitting.pdf, unit.page_start) }}" rel="noopener">{{ t('official_pdf') }}, {{ t('page') }} {{ unit.page_start }}</a>{% endif %}
-    {% if bill %}<a href="/bill/{{ bill.slug }}">{{ bill.title }}</a>{% endif %}
-    {% if act %}<a href="/law/{{ act.number }}">{{ act.title_bi }} (Act {{ act.number }})</a>{% endif %}
+    {% if bill %}<a href="/bill/{{ bill.slug }}">{{ bill.title|tcase }}</a>{% endif %}
+    {% if act %}<a href="/law/{{ act.number }}">{{ act.title_bi|tcase }} (Act {{ act.number }})</a>{% endif %}
   </p>
   {% if sitting and sitting.draft %}{{ m.draft_note() }}{% endif %}
 </header>
@@ -49,8 +49,8 @@
     {% if bill %}{{ m.bill_stepper(bill, unit.id) }}{% endif %}
 
     <nav class="pn" aria-label="{{ t('neighbours') }}">
-      {% if prev %}<a class="card" href="{{ debate_url(prev.id) }}"><span class="d">{{ m.icon('back', 'sm') }}{{ t('prev') }}</span><span class="t">{{ prev.business|truncate(80) }}</span></a>{% endif %}
-      {% if next %}<a class="card nx" href="{{ debate_url(next.id) }}"><span class="d">{{ t('next') }}{{ m.icon('arrow', 'sm') }}</span><span class="t">{{ next.business|truncate(80) }}</span></a>{% endif %}
+      {% if prev %}<a class="card" href="{{ debate_url(prev.id) }}"><span class="d">{{ m.icon('back', 'sm') }}{{ t('prev') }}</span><span class="t">{{ prev.business|tcase|truncate(80) }}</span></a>{% endif %}
+      {% if next %}<a class="card nx" href="{{ debate_url(next.id) }}"><span class="d">{{ t('next') }}{{ m.icon('arrow', 'sm') }}</span><span class="t">{{ next.business|tcase|truncate(80) }}</span></a>{% endif %}
     </nav>
   </section>
 

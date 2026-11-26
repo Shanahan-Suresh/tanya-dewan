@@ -105,9 +105,9 @@ def test_record_lists_and_filters(client):
     assert "When will the rice subsidy arrive?" in client.get("/questions?q=rice").text
     assert "Hannah Yeoh" in client.get("/mp/hannah-yeoh-tseow-suan").text
     assert "DAP" in client.get("/mp/lim-guan-eng").text
-    assert "KERJA (PINDAAN) 2022" in client.get("/bill/kerja-pindaan-2022").text
+    assert "Kerja (Pindaan) 2022" in client.get("/bill/kerja-pindaan-2022").text
     assert "Sabah and Sarawak" in client.get("/topic/sabah-and-sarawak").text
-    assert "EMPLOYMENT ACT 1955" in client.get("/law?q=employment").text
+    assert "Employment Act 1955" in client.get("/law?q=employment").text
     for path in ("/", "/hansard", "/hansard/DR/2022-03-01", "/mp", "/bills", "/topics", "/about", "/law"):
         assert client.get(path).status_code == 200, path
     for path in ("/debate/nope", "/mp/nope", "/bill/nope", "/topic/nope", "/hansard/DR/1999-01-01"):

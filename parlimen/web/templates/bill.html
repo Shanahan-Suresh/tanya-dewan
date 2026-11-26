@@ -1,20 +1,24 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
-{% block title %}{{ bill.title }}{% endblock %}
+{% block title %}{{ bill.title|tcase }}{% endblock %}
 {% block description %}The Dewan Rakyat debates on the {{ bill.title }} bill{% if act %} and the Act it {{ 'changed' if bill.change != 'new' else 'became' }}{% endif %}.{% endblock %}
 {% block main %}
 <header class="ph">
   <p class="eyebrow"><a href="/bills">{{ t('nav_bills') }}</a></p>
-  <h1>{{ bill.title }}</h1>
-  {% if act %}<p class="meta">{{ t('change_' ~ bill.change) }}: <a href="/law/{{ act.number }}">{{ act.title_bi }} (Act {{ act.number }})</a></p>{% endif %}
+  <h1>{{ bill.title|tcase }}</h1>
+  {% if act %}<p class="meta">{{ t('change_' ~ bill.change) }}: <a href="/law/{{ act.number }}">{{ act.title_bi|tcase }} (Act {{ act.number }})</a></p>{% endif %}
 </header>
 {{ m.ai_note(t('ai_label')) }}
 <ol class="timeline">
-  {% for u in bill.units|sort(attribute='date,id') %}
+  {% set units = bill.units|sort(attribute='date,id') %}
+  {% set stages = units|map(attribute='business')|map('stage', bill.title)|map('tcase')|list %}
+  {% for u in units %}
+  {% set k = loop.index0 %}
+  {% set st = stages[k] or (u.business or u.id)|tcase %}
   <li>
-    <p class="when tnum">{{ u.date }} · {{ m.chamber(u.chamber) }}</p>
+    <p class="when tnum">{{ u.date|hdate }} · {{ m.chamber(u.chamber) }}</p>
     <div class="unit-row">
-      <a href="{{ debate_url(u.id) }}">{{ u.business or u.id }}</a>
+      <a href="{{ debate_url(u.id) }}">{{ st }}{% if stages.count(stages[k]) > 1 %}, {{ t('part_n', n=stages[:k].count(stages[k]) + 1) }}{% endif %}</a>
       {% set s = u.summary_ms if lang == 'ms' and u.summary_ms else u.summary_en %}
       {% if s %}<p class="ai-line">{{ m.ai_label() }}<span>{{ s|truncate(260) }}</span></p>{% endif %}
     </div>

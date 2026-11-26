@@ -64,13 +64,13 @@
 <article class="card commit {% if c.kind == 'routine' %}routine{% endif %}" id="{{ c.id }}">
   {{ verbatim('“' ~ c.quote ~ '”') }}
   <p class="who"><a href="{{ debate_url(c.unit, c.seq) }}">{{ c.speaker }}</a>{% if c.office and c.office not in c.speaker %}, {{ c.office }}{% if c.office_inferred %} <span title="{{ t('office_inferred') }}">*</span>{% endif %}{% endif %}
-    · <a href="/hansard/{{ c.chamber }}/{{ c.date }}">{{ c.date }}</a></p>
+    · <a href="/hansard/{{ c.chamber }}/{{ c.date }}">{{ c.date|hdate }}</a></p>
   <div class="ai">
     <p>{{ ai_label(t('promise_ai')) }} {{ c.promise }}</p>
     {% if c.deadline or c.amount %}<p class="facts-row">{% if c.deadline %}<span>{{ t('deadline') }}: <b>{{ c.deadline }}</b></span>{% endif %}{% if c.amount %}<span>{{ t('amount') }}: <b>{{ c.amount }}</b></span>{% endif %}</p>{% endif %}
     {% if c.kind == 'routine' %}<p class="facts-row"><span>{{ t('routine') }}</span></p>{% endif %}
   </div>
-  {% if show_unit and c.business %}<p class="muted small">{{ c.business|truncate(140) }}</p>{% endif %}
+  {% if show_unit and c.business %}<p class="muted small">{{ c.business|tcase|truncate(140) }}</p>{% endif %}
   <p class="card-foot">{{ correction(c.id) }}</p>
 </article>
 {% endmacro %}
@@ -81,7 +81,7 @@
     <div>
       <p class="k">{{ ai_label('Q (AI)') }}</p>
       <p>{{ q.question }}</p>
-      <p class="who">{{ t('asked_by') }} <a href="{{ debate_url(q.unit, q.asker_seq) }}">{{ q.asker }}</a></p>
+      <p class="who">{{ t('asked_by') }} <a href="{{ debate_url(q.unit, q.asker_seq) }}">{{ q.asker|unnum }}</a></p>
     </div>
     <div>
       <p class="k">{{ ai_label('A (AI)') }}</p>
@@ -90,15 +90,15 @@
     </div>
   </div>
   {% set figs = q.figures|loads %}
-  {% if figs %}<details><summary>{{ t('figures') }} ({{ figs|length }})</summary><ul class="figs">{% for f in figs %}<li><strong>{{ f.value }}</strong> {{ f.meaning }}</li>{% endfor %}</ul></details>{% endif %}
-  <p class="card-foot"><a href="/hansard/{{ q.chamber }}/{{ q.date }}">{{ q.date }}</a>{% if show_unit and q.business %}<span>{{ q.business|truncate(100) }}</span>{% endif %}{{ correction(q.id) }}</p>
+  {% if figs %}<details class="figs-d"><summary>{{ t('figures') }} ({{ figs|length }}){{ icon('chev', 'sm chev') }}</summary><ul class="figs">{% for f in figs %}<li><strong>{{ f.value }}</strong> {{ f.meaning }}</li>{% endfor %}</ul></details>{% endif %}
+  <p class="card-foot"><a href="/hansard/{{ q.chamber }}/{{ q.date }}">{{ q.date|hdate }}</a>{% if show_unit and q.business %}<span>{{ q.business|tcase|truncate(100) }}</span>{% endif %}{{ correction(q.id) }}</p>
 </article>
 {% endmacro %}
 
-{% macro unit_row(u) %}
+{% macro unit_row(u, meta=True) %}
 <li class="unit-row">
-  <a href="{{ debate_url(u.id, u.seq) if u.seq else debate_url(u.id) }}">{{ u.business or u.id }}</a>
-  <span class="muted small">{{ t('chamber_' ~ u.chamber) if u.chamber else '' }} {{ u.date }}</span>
+  <a href="{{ debate_url(u.id, u.seq) if u.seq else debate_url(u.id) }}">{{ (u.business or u.id)|tcase }}</a>
+  {% if meta %}<span class="muted small">{{ t('chamber_' ~ u.chamber) if u.chamber else '' }}{{ ', ' if u.chamber and u.date }}{{ u.date|hdate }}</span>{% endif %}
   {% set s = u.summary_ms if lang == 'ms' and u.summary_ms else u.summary_en %}
   {% if s %}<p class="ai-line">{{ ai_label() }}<span>{{ s|truncate(260) }}</span></p>{% endif %}
 </li>
@@ -178,14 +178,14 @@
 <section class="bill card" id="bill" aria-label="{{ t('bill_journey') }}">
   <div class="headcard">
     <p class="eyebrow">{{ t('bill_journey') }}</p>
-    <h2><a href="/bill/{{ bill.slug }}" style="color:inherit">{{ bill.title }}</a></h2>
+    <h2><a href="/bill/{{ bill.slug }}" style="color:inherit">{{ bill.title|tcase }}</a></h2>
     <ol class="stepper">
       {% for u in units[lo:lo + 5] %}
       {% set i = lo + loop.index0 %}
       <li class="{{ 'now' if u.id == current else ('done' if i < idx.i else '') }}" {% if u.id == current %}aria-current="step"{% endif %}>
         <span class="node" aria-hidden="true">{{ i + 1 }}</span>
-        <h3>{% if u.id == current %}{{ u.business|truncate(70) }}{% else %}<a href="{{ debate_url(u.id) }}">{{ u.business|truncate(70) }}</a>{% endif %}</h3>
-        <p class="when tnum">{{ u.date }} · {{ chamber(u.chamber) }}</p>
+        <h3>{% if u.id == current %}{{ u.business|tcase|truncate(70) }}{% else %}<a href="{{ debate_url(u.id) }}">{{ u.business|tcase|truncate(70) }}</a>{% endif %}</h3>
+        <p class="when tnum">{{ u.date|hdate }} · {{ chamber(u.chamber) }}</p>
         {% if u.id == current %}<span class="here">{{ t('you_are_here') }}</span>{% endif %}
       </li>
       {% endfor %}
