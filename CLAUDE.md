@@ -1,4 +1,4 @@
-# parlimen-search: project guide
+# Tanya Dewan (repo parlimen-search): project guide
 
 Hybrid RAG over Malaysia's principal Acts and the Dewan Rakyat Hansard, with its Special
 Chamber (14th and 15th Parliaments), in Malay and English, with filters by date, Parliament, speaker, party, ministry,

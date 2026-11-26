@@ -18,12 +18,12 @@ USAGE_LOG = DATA / "api-usage.jsonl"
 # intermediate ships in certs/ and joins certifi's roots instead of turning verification off.
 EXTRA_CA = ROOT / "certs" / "sectigo-dv-r36.pem"
 
-USER_AGENT = "parlimen-search/0.1 (civic research crawler; one request at a time, cached)"
+USER_AGENT = "tanya-dewan/0.1 (civic research crawler; one request at a time, cached)"
 MIN_INTERVAL_S = 1.5  # seconds between two requests to the same host
 TIMEOUT_S = 60
 
 # The site's public name, in one place: page titles, the header, share previews, the MCP server.
-SITE_NAME = "parlimen-search"
+SITE_NAME = "Tanya Dewan"
 
 PARLIAMENT_SITE = "https://www.parlimen.gov.my"
 # Hansard archive per chamber: the Dewan Rakyat itself and its Special Chamber (Dewan Khas,

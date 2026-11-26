@@ -1,4 +1,4 @@
-# parlimen-search
+# Tanya Dewan (repo parlimen-search)
 
 Ask Malaysian law and Malaysia's Parliament in plain Malay or English. Answers quote the Act and
 section, or the Hansard sitting, date, speaker and page, so every claim can be checked. Each Act

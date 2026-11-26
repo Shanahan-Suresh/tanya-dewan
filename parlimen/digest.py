@@ -174,7 +174,7 @@ a {{ color:var(--accent); }}
 details {{ margin-top:24px; }}
 </style></head>
 <body><main>
-<p class="eyebrow">parlimen-search · weekly digest · {esc(sector)}</p>
+<p class="eyebrow">Tanya Dewan · weekly digest · {esc(sector)}</p>
 <h1>Parliament this week: {_when(date_from)} to {_when(date_to)}</h1>
 <p class="headline">{esc(d["headline"])}</p>
 <p>{esc(d["intro"])}</p>

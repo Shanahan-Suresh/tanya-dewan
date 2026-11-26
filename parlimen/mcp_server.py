@@ -27,7 +27,7 @@ CHECK_SECONDS = 30
 SPEECH_CHARS = 4000     # one speech is cut here in read_sitting, with a note of its full length
 SITTING_CHARS = 60000   # read_sitting stops adding speeches past this
 
-server = MCPServer(name="parlimen-search", instructions=(
+server = MCPServer(name="tanya-dewan", instructions=(
     "Searches Malaysia's principal Acts (English and Malay, at the reprint date shown) and the Dewan Rakyat "
     "Hansard of the 14th and 15th Parliaments (July 2018 onwards, with the Special Chamber). Use search_law "
     "for what an Act says, search_debates for what MPs and ministers said, read_section and read_sitting to "

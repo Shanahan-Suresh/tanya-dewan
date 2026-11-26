@@ -20,7 +20,7 @@ the scripts are `parlimen/sittings.py` and `tools/phase0_sample.py`.
 - **Reading:** Hansard debates (political speeches and debates) and the text of Acts (official
   texts of a legislative nature) are not literary works, so they carry no copyright as text. The
   footers "Copyright Reserved Parliament of Malaysia" and "All Rights Reserved by Attorney
-  General's Chambers" cover the sites and their own compilation and layout. parlimen-search
+  General's Chambers" cover the sites and their own compilation and layout. Tanya Dewan
   therefore republishes extracted text, never the PDFs' page images, and links each official PDF.
 - Not legal advice; a lawyer's reading is the stronger basis before any paid product.
 
@@ -32,7 +32,7 @@ the scripts are `parlimen/sittings.py` and `tools/phase0_sample.py`.
 | lom.agc.gov.my | `tnc.php` | No warranty; "Copyright 2023 by Attorney General's Chambers, Malaysia, all rights reserved"; laws "can be accessed and downloaded at no charge"; a print-out is not a copy of the Gazette and is not prima facie evidence of it | server error (500) |
 | hansard.parlimen.gov.my (Hansard Digital) | none | None found | none (404) |
 
-Every law page in parlimen-search states that its text is not an official copy and links the
+Every law page in Tanya Dewan states that its text is not an official copy and links the
 official source, as the LOM terms (items 7 to 10) require.
 
 ## Hansard (debates)
@@ -83,7 +83,7 @@ official source, as the LOM terms (items 7 to 10) require.
 - **Also on the site:** oral answers and written answers pages, the order paper, and the members
   list.
 - **Hansard Digital** (https://hansard.parlimen.gov.my/) is a Next.js app with internal routes
-  (`/api/autocomplete`, `/api/count`), no published API, export or terms. parlimen-search uses the
+  (`/api/autocomplete`, `/api/count`), no published API, export or terms. Tanya Dewan uses the
   official PDFs, which are the authoritative record.
 
 ## Bills (the link between debates and Acts)
@@ -98,7 +98,7 @@ exact sittings that debated each bill, and the bill PDF carries its explanatory 
 The portal's Act lists load their rows as an encrypted payload (`{"encrypted": true, ...}`) that
 only the portal's own script reads, and every link is a signed token (`processFile.php?token=...`).
 The reprint list (`principal.php?type=reprint`) fails for every visitor with a server error (a
-missing table, `V_LG_TIMELINE_REPRINT_ONLINE_2025`). parlimen-search never decrypts the payload.
+missing table, `V_LG_TIMELINE_REPRINT_ONLINE_2025`). Tanya Dewan never decrypts the payload.
 `parlimen/acts.py` drives the installed Chrome, lets the page draw its table, reads the rows a
 visitor sees, and fetches each PDF through the same browser session, one every 5 seconds.
 

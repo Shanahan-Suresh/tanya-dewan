@@ -1,4 +1,4 @@
-# parlimen-search: progress
+# Tanya Dewan (repo parlimen-search): progress
 
 Current state and what is owed. `ROADMAP.md` is the plan; `docs/sources.md` is the phase 0 finding.
 
@@ -399,7 +399,12 @@ page later grows into an app.
   125 tests pass). One real question through the stream (2026-11-26): answered in 7.8 s warm,
   [amount removed]. Owed: the owner's own read of the local site; the Malay pages have not been looked
   at by eye.
-- Name: the owner wants a better name than parlimen-search. Shortlist page
+- Name: the owner chose **Tanya Dewan** (2026-11-26). The rename covers `config.SITE_NAME`,
+  i18n, the About page, the digest, the MCP server name, the crawler user agent, a new share
+  image (`tools/make_og.py`), the docs' titles and the published review pages. The Python
+  package and the repo folder keep `parlimen`. Owed: a trademark (MyIPO) and social handle check,
+  and registering tanyadewan.my (the owner's step; all three addresses were free on 2026-11-26).
+  Shortlist page
   https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE (source `docs/design/names/`); my pick is
   Tanya Dewan. The rename is `config.SITE_NAME` plus docs, OG image and the MCP description.
 - Next: the owner picks a name; finish the port, then build the chosen

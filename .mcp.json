@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "parlimen-search": {
+    "tanya-dewan": {
       "type": "stdio",
       "command": "D:\\Projects\\work\\parlimen-search\\.venv\\Scripts\\python.exe",
       "args": ["-m", "parlimen.mcp_server"],

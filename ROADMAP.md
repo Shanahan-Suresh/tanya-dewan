@@ -1,4 +1,4 @@
-# parlimen-search: roadmap
+# Tanya Dewan (repo parlimen-search): roadmap
 
 Ask Malaysian law and Malaysia's Parliament in plain Malay or English. One search covers two
 sources:
@@ -59,7 +59,7 @@ Searched 2026-10-18 and 2026-10-22 (GitHub, web).
 - **Parliament's Hansard Digital** (GovTech Malaysia, handed over 9 June 2026): keyword search, a
   word cloud and filters by MP and chamber, 1959 to 2026, Malay and English. No AI answers, no
   links to the Acts, no API or export found. The ministry says it does not replace the official
-  Hansard. This is the main rival for plain lookup; parlimen-search wins on meaning-based search,
+  Hansard. This is the main rival for plain lookup; Tanya Dewan wins on meaning-based search,
   cited answers, the Act links, structured records and alerts.
 - **Singapore's Pair Search** (GovTech Open Government Products, pilot since 2024): semantic search
   over Hansard, judgments and Acts, with AI trend summaries. It proves the demand, and it shows that

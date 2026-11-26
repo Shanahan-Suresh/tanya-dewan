@@ -4,7 +4,7 @@ prints it; only the words around it change with the reader's choice."""
 LANGS = ("en", "ms")
 
 TEXT = {
-    "site": ("parlimen-search", "parlimen-search"),
+    "site": ("Tanya Dewan", "Tanya Dewan"),
     "tagline": ("Malaysia's Acts and Dewan Rakyat debates, searched together, with sources you can check.",
                 "Akta Malaysia dan perbahasan Dewan Rakyat, dicari bersama, dengan sumber yang boleh disemak."),
     "nav_ask": ("Ask", "Tanya"),

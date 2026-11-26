@@ -601,7 +601,7 @@ def main() -> None:
 
     import uvicorn
 
-    ap = argparse.ArgumentParser(description="parlimen-search site")
+    ap = argparse.ArgumentParser(description="Tanya Dewan site")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8780)
     ap.add_argument("--replay", type=Path, help="serve this saved answer on the ask page, with no model or spend "

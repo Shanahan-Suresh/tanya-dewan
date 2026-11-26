@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ t('nav_about') }}{% endblock %}
-{% block description %}What parlimen-search holds, what AI wrote and how answers are checked, how well it works, and what the site stores.{% endblock %}
+{% block description %}What Tanya Dewan holds, what AI wrote and how answers are checked, how well it works, and what the site stores.{% endblock %}
 {% block main %}
 <article class="prose">
 {% if lang == 'ms' %}
-<h1>Perihal parlimen-search</h1>
-<p>parlimen-search mencari Akta utama Malaysia dan perbahasan Dewan Rakyat (Parlimen ke-14 dan ke-15, termasuk Dewan Khas) bersama-sama, dalam bahasa Melayu dan Inggeris.</p>
+<h1>Perihal Tanya Dewan</h1>
+<p>Tanya Dewan mencari Akta utama Malaysia dan perbahasan Dewan Rakyat (Parlimen ke-14 dan ke-15, termasuk Dewan Khas) bersama-sama, dalam bahasa Melayu dan Inggeris.</p>
 <h2>Apa yang ada di dalamnya</h2>
 <ul>
   <li>{{ "{:,}".format(meta.units) }} urusan persidangan dengan {{ "{:,}".format(meta.speeches) }} ucapan verbatim.</li>
@@ -30,8 +30,8 @@
 <h2>Bukan nasihat undang-undang</h2>
 <p>{{ t('not_advice') }} Teks Akta ialah cetakan semula yang dipaparkan oleh portal Laws of Malaysia Online pada tarikh yang ditunjukkan.</p>
 {% else %}
-<h1>About parlimen-search</h1>
-<p>parlimen-search searches Malaysia's principal Acts and the Dewan Rakyat debates (the 14th and 15th Parliaments, with the Special Chamber) together, in Malay and English.</p>
+<h1>About Tanya Dewan</h1>
+<p>Tanya Dewan searches Malaysia's principal Acts and the Dewan Rakyat debates (the 14th and 15th Parliaments, with the Special Chamber) together, in Malay and English.</p>
 <h2>What it holds</h2>
 <ul>
   <li>{{ "{:,}".format(meta.units) }} agenda items with {{ "{:,}".format(meta.speeches) }} verbatim speeches.</li>
