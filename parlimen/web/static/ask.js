@@ -75,7 +75,7 @@
     closePeek();
     openMark = mark; mark.setAttribute("aria-expanded", "true");
     peek.querySelector(".num").textContent = s.n;
-    peek.querySelector(".cl-t").textContent = s.cite;
+    peek.querySelector(".cl-t").textContent = (s.title || s.cite) + (s.meta ? " · " + s.meta : "");
     peek.querySelector("blockquote").textContent = (s.quotes && s.quotes[0]) || "";
     peek.dataset.n = s.n;
     peek.hidden = false;
@@ -99,7 +99,7 @@
   // ---- final state ----
   function sourceCard(s) {
     return `<li class="card src" id="src-${s.n}" data-n="${s.n}" tabindex="-1">
-      <div class="top"><span class="num">${s.n}</span><div class="cl"><a href="${esc(s.url)}">${esc(s.cite)}</a></div></div>
+      <div class="top"><span class="num">${s.n}</span><div class="cl"><a href="${esc(s.url)}">${esc(s.title || s.cite)}</a>${s.meta ? `<span class="meta">${esc(s.meta)}</span>` : ""}</div></div>
       ${draft(s)}
       <div class="quotes">${(s.quotes || []).map((q) => `<blockquote class="rec" lang="ms">${esc(q)}</blockquote>`).join("")}</div>
       ${s.pdf ? `<div class="links"><a href="${esc(s.pdf)}" rel="noopener">${esc(S.pdf)}</a></div>` : ""}
@@ -110,7 +110,10 @@
     const answered = !!(r.answer && r.answer.trim()) && !r.budget_out;
     $("answer-state").textContent = answered ? S.done : "";
     if (answered) {
-      text.innerHTML = markdown(r.answer);
+      // The answer ends with the not-legal-advice line, which the answer foot already shows.
+      let body = r.answer.trim();
+      for (const line of S.advice_lines || []) if (body.endsWith(line)) body = body.slice(0, -line.length).trim();
+      text.innerHTML = markdown(body);
       $("answer-foot").hidden = false;
     } else {
       text.innerHTML = `<p class="wait">${esc(S.no_answer)}</p>`;
@@ -133,7 +136,7 @@
     const ps = r.passages || [];
     $("passages-n").textContent = ps.length ? `(${ps.length})` : "";
     $("passages-body").innerHTML = ps.map((p, i) => `<div class="passage">
-      <div class="head">${i + 1}. <a href="${esc(p.url)}">${esc(p.cite)}</a>${p.via ? " · " + esc(p.via) : ""}</div>
+      <div class="head">${i + 1}. <a href="${esc(p.url)}">${esc(p.title || p.cite)}</a>${p.meta ? " · " + esc(p.meta) : ""}${p.via ? " · " + esc(p.via) : ""}</div>
       ${draft(p)}
       <div class="muted small">${esc(p.header)}</div>
       <blockquote class="rec" lang="ms">${esc(p.text)}</blockquote>

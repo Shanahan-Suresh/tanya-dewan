@@ -548,3 +548,9 @@ ol.timeline .when { font-weight: 650; font-size: 14.5px; color: var(--muted); ma
   .peek { left: 12px !important; right: 12px; top: auto !important; width: auto;
     bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* A source card's title, then where and when it is from. */
+.src .cl { display: grid; gap: 2px; }
+.src .cl .meta { font-weight: 400; font-size: 13.5px; color: var(--muted); }
+/* Help text under a form field. */
+.hint { display: block; font-weight: 400; font-size: 13.5px; color: var(--muted); margin-top: 4px; }

@@ -410,17 +410,17 @@ page later grows into an app.
   phone icons (`tools/make_icons.py`) and the share image (`tools/make_og.py`).
 - Copy: one voice across the site in English and Malay (voice guide and every change in
   `data/copy-pass.md`). Open: the Malay About page gained the "how well it works" section from
-  the English one, owner to confirm; the 404 button still says "Ask".
+  the English one, owner to confirm.
 - Memory: a full site holds about 3.2 GB (bfloat16 embedder on the CPU, vectors, torch). The
   vectors stay float16 in memory (`Searcher.scores` widens one block at a time), saving about
   580 MB; not yet measured on a running site. `hold_single_site` refuses a second full site on
   the machine. Stop the site by its PID (`data/site.pid`), never by stopping the shell job only.
   UI/UX polish pass done (ranked audit in `data/ux-audit.md`): title-case labels and readable
   dates through `parlimen/web/present.py` filters, bill readings on the timeline, phone tables
-  stacked, 44 px touch targets, the site's own 404 page. Open items: the not-legal-advice line
-  can show twice on an answer, the MPs list has no name filter, the answer's source titles show
-  raw ids and ISO dates (`ask.js`), the correction form's Record field has no hint. Not checked
-  by eye: J/K keys, citation popover, More sheet, AA contrast, most Malay and dark desktop pages.
+  stacked, 44 px touch targets, the site's own 404 page, an MP name or seat search, readable
+  source titles on answers (`title` and `meta` in the answer body), the not-legal-advice line
+  shown once, a hint on the report form. Not checked by eye: J/K keys, citation popover, More
+  sheet, AA contrast, most Malay and dark desktop pages, source titles on a live answer.
   Shortlist page
   https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE (source `docs/design/names/`); my pick is
   Tanya Dewan. The rename is `config.SITE_NAME` plus docs, OG image and the MCP description.

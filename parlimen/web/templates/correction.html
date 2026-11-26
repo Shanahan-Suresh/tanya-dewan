@@ -9,7 +9,7 @@
 {% if not sent %}
 <form class="stack card pad" method="post" action="/correction">
   <input type="hidden" name="back" value="{{ back }}">
-  <label>{{ t('correction_record') }} <input name="record" value="{{ record }}"></label>
+  <label>{{ t('correction_record') }} <input name="record" value="{{ record }}" aria-describedby="record-hint"><span class="hint" id="record-hint">{{ t('correction_record_hint') }}</span></label>
   <label>{{ t('correction_text') }} <textarea name="text" rows="6" maxlength="4000" required></textarea></label>
   <label>{{ t('correction_contact') }} <input name="contact" maxlength="200"></label>
   <div><button class="btn" type="submit">{{ t('send') }}</button></div>

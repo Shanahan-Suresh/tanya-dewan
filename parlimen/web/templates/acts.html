@@ -9,7 +9,7 @@
 </form>
 <div id="results" aria-live="polite">
 {% block results %}
-<p class="count tnum">{{ acts|length }} {{ t('results') }}</p>
+<p class="count tnum">{{ acts|length }} {{ t('result') if acts|length == 1 else t('results') }}</p>
 <div class="list-wrap"><table class="list rows">
   <thead><tr><th>{{ t('act') }}</th><th>English</th><th>Bahasa Melayu</th><th>{{ t('as_at') }}</th></tr></thead>
   <tbody>

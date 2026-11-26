@@ -16,7 +16,7 @@
 <div id="results" aria-live="polite">
 {% block results %}
 {% import "_macros.html" as m with context %}
-<p class="count tnum">{{ "{:,}".format(res.total) }} {{ t('results') }}</p>
+<p class="count tnum">{{ "{:,}".format(res.total) }} {{ t('result') if res.total == 1 else t('results') }}</p>
 {% if res.rows %}
 <div class="cards">{% for c in res.rows %}{{ m.commitment_card(c) }}{% endfor %}</div>
 {% else %}<p class="card empty">{{ t('empty') }}</p>{% endif %}

@@ -43,6 +43,7 @@ from jinja2 import Environment, FileSystemLoader, pass_context, select_autoescap
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel
 
+from .. import answer as answer_mod
 from .. import config
 from ..records import Records, reflow, slug
 from . import present
@@ -196,7 +197,9 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
 
     env.filters["hdate"] = hdate
     env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug,
-                       site_name=config.SITE_NAME, examples=EXAMPLES)
+                       site_name=config.SITE_NAME, examples=EXAMPLES,
+                       # the answer's own closing line; the page shows it once, in the answer foot
+                       advice_lines=[answer_mod.NOT_ADVICE, answer_mod.NOT_ADVICE_MS])
     engine = _Engine(searcher)
     app.state.engine = engine
     limits = limits or Limits()
@@ -323,6 +326,8 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         r = rec()
         acts: dict[str, dict | None] = {}
         sittings: dict[tuple, dict | None] = {}
+        units: dict[str, dict | None] = {}
+        page_lang = hl(request)
         passages = []
         for p, seq in zip(trace.passages, seqs):
             if p.kind == "law":
@@ -335,9 +340,20 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                 sp = r.speech(p.unit, seq)
                 url, pdf = debate_url(p.unit, seq), pdf_page((s or {}).get("pdf", ""), (sp or {}).get("page_start"))
             draft = p.kind != "law" and bool((s or {}).get("draft"))
-            passages.append({"cite": p.cite, "header": p.header, "text": p.text, "kind": p.kind, "url": url,
-                             "pdf": pdf, "via": p.via, "score": round(p.score, 4), "draft": draft})
+            if p.kind == "law":
+                act_title = present.tcase((a or {}).get("title_bi" if p.lang == "BI" else "title_bm", "")) or f"Act {p.act}"
+                title = f"{act_title}, {t('section', page_lang).lower()} {p.section}"
+                meta = f"{t('as_at', page_lang)} {present.hdate(p.date, page_lang)}"
+            else:
+                unit = units.setdefault(p.unit, r.unit(p.unit))
+                title = present.tcase((unit or {}).get("title", "")) or p.unit
+                meta = f"{'Dewan Rakyat' if p.chamber == 'DR' else t('chamber_KK', page_lang)} · {present.hdate(p.date, page_lang)}"
+            passages.append({"cite": p.cite, "title": title, "meta": meta, "header": p.header, "text": p.text,
+                             "kind": p.kind, "url": url, "pdf": pdf, "via": p.via, "score": round(p.score, 4),
+                             "draft": draft})
         sources = [{"n": s.n, "cite": s.cite, "quotes": s.quotes,
+                    "title": passages[s.index]["title"] if 0 <= s.index < len(passages) else s.cite,
+                    "meta": passages[s.index]["meta"] if 0 <= s.index < len(passages) else "",
                     "url": passages[s.index]["url"] if 0 <= s.index < len(passages) else "",
                     "pdf": passages[s.index]["pdf"] if 0 <= s.index < len(passages) else "",
                     "draft": passages[s.index]["draft"] if 0 <= s.index < len(passages) else False}
@@ -487,9 +503,14 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     # ---------- MPs, bills, topics ----------
 
     @app.get("/mp", response_class=HTMLResponse)
-    def members(request: Request, parliament: str = "15"):
+    def members(request: Request, parliament: str = "15", q: str = ""):
         p = int(parliament) if parliament in ("14", "15") else 15
-        return page(request, "members.html", members=rec().members(p), parliament=p)
+        q = q.strip()[:80]
+        rows = rec().members(p)
+        if q:
+            needle = q.casefold()
+            rows = [m for m in rows if needle in f"{m['code']} {m['seat']} {m['name']}".casefold()]
+        return page(request, "members.html", members=rows, parliament=p, q=q)
 
     @app.get("/mp/{member}", response_class=HTMLResponse)
     def member(request: Request, member: str):

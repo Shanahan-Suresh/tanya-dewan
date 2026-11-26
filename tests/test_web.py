@@ -326,3 +326,10 @@ def test_float16_scores_match_float32():
     s = search.Searcher.__new__(search.Searcher)
     s._vectors = vec
     assert np.array_equal(s.scores(q), vec.astype(np.float32) @ q)
+
+
+def test_mp_list_filters_by_name_or_seat(client):
+    page = client.get("/mp", params={"q": "zzzz-no-such-mp"}).text
+    assert "0 " in page and 'name="q"' in page
+    full = client.get("/mp").text
+    assert full.count("/mp/") > page.count("/mp/")
