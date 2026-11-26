@@ -29,15 +29,18 @@
     }).join("");
   }
 
+  // A debate from a sitting whose text Parliament has not revised yet carries a draft mark.
+  const draft = (x) => x.draft ? ` <span class="draft-mark">${esc(S.draft)}</span>` : "";
+
   function render(r) {
     const sources = r.sources.map((s) => `
-      <li id="src-${s.n}"><strong>[${s.n}]</strong> <a href="${esc(s.url)}">${esc(s.cite)}</a>
+      <li id="src-${s.n}"><strong>[${s.n}]</strong> <a href="${esc(s.url)}">${esc(s.cite)}</a>${draft(s)}
         ${s.pdf ? ` · <a href="${esc(s.pdf)}" rel="noopener">${esc(S.pdf)}</a>` : ""}
         ${s.quotes.map((q) => `<blockquote class="verbatim">${esc(q)}</blockquote>`).join("")}
       </li>`).join("");
     const passages = r.passages.map((p, i) => `
       <div class="passage">
-        <div class="head">${i + 1}. <a href="${esc(p.url)}">${esc(p.cite)}</a>${p.via ? " · " + esc(p.via) : ""}
+        <div class="head">${i + 1}. <a href="${esc(p.url)}">${esc(p.cite)}</a>${draft(p)}${p.via ? " · " + esc(p.via) : ""}
           ${p.pdf ? ` · <a href="${esc(p.pdf)}" rel="noopener">${esc(S.pdf)}</a>` : ""}</div>
         <div class="small muted">${esc(p.header)}</div>
         <div class="body">${esc(p.text)}</div>
@@ -46,11 +49,14 @@
     const stages = r.stages.map((s) => `
       <tr><td>${esc(S[s.name] || s.name)}</td><td>${s.hits} ${esc(S.hits)}</td>
         <td>${s.ms} ms</td><td><span class="bar" style="width:${Math.max(2, Math.round(120 * s.ms / most))}px"></span></td></tr>`).join("");
+    // Past the day's answer budget the page shows the passages found, open, with no answer.
+    const answer = r.budget_out
+      ? `<p class="budget-note">${esc(S.budget_out)}</p>`
+      : `<p class="ai-note">${esc(S.ai)}</p><div class="answer">${markdown(r.answer)}</div>`;
     out.innerHTML = `
-      <p class="ai-note">${esc(S.ai)}</p>
-      <div class="answer">${markdown(r.answer)}</div>
+      ${answer}
       ${sources ? `<h2>${esc(S.sources)}</h2><ol class="plain sources">${sources}</ol>` : ""}
-      <details><summary>${esc(S.passages)} (${r.passages.length})</summary>${passages}</details>
+      <details${r.budget_out ? " open" : ""}><summary>${esc(S.passages)} (${r.passages.length})</summary>${passages}</details>
       <details><summary>${esc(S.how)}</summary>
         <table class="stages">${stages}</table>
         <p class="small muted">${esc(r.filters)} · ${r.total_ms} ms · ${esc(S.cost)} US$${r.usd.toFixed(4)}</p>

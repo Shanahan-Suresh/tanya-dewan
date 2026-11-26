@@ -3,12 +3,14 @@ no network."""
 import json
 import sqlite3
 
+import fakeredis
 import pytest
 from fastapi.testclient import TestClient
 
 from parlimen.answer import Answer, Source
 from parlimen.index import db_path
 from parlimen.web.app import create_app, question_lang
+from parlimen.web.limits import Limits
 
 from tests.test_records import recs  # noqa: F401
 from tests.test_search import build
@@ -32,7 +34,9 @@ def client(recs, tmp_path):  # noqa: F811
     s.con.execute("UPDATE chunks SET seq_first = 1, seq_last = 2 WHERE unit = 'DR-2022-03-01-001'")
     s.con.commit()
     s.search = lambda q, f=None, **kw: type(s).search(s, q, f, mode="hybrid")
-    return TestClient(create_app(recs, usable_from_any_thread(s), fake_answer, tmp_path / "corrections.jsonl"))
+    limits = Limits(fakeredis.FakeRedis(decode_responses=True), hourly=3, daily_usd=0.001)
+    return TestClient(create_app(recs, usable_from_any_thread(s), fake_answer, tmp_path / "corrections.jsonl",
+                                 limits=limits, question_log=tmp_path / "questions.jsonl", site_url="https://example.my"))
 
 
 def test_question_language():
@@ -150,3 +154,64 @@ def test_a_gpu_engine_leaves_the_embedder_cold_and_unloads_it_when_idle(client):
     assert engine.warmed and emb.queries == 0
     assert not engine.unload_if_idle(engine.last_used + 1)
     assert engine.unload_if_idle(engine.last_used + 10_000) and emb.unloads == 1
+
+
+def test_a_visitor_past_the_hourly_limit_is_refused_with_a_reason(client):
+    for _ in range(3):
+        assert client.post("/api/ask", json={"question": "hours of employment"}).status_code == 200
+    r = client.post("/api/ask", json={"question": "hours of employment"})
+    assert r.status_code == 429 and "3 questions in the last hour" in r.json()["error"]
+    client.cookies.set("hl", "ms")
+    assert "3 soalan" in client.post("/api/ask", json={"question": "x"}).json()["error"]
+
+
+def test_the_visitor_key_holds_no_address_and_expires_with_its_hour():
+    r = fakeredis.FakeRedis(decode_responses=True)
+    lim = Limits(r, hourly=1, clock=lambda: 1_800_000_000)
+    assert lim.take("203.0.113.9") and not lim.take("203.0.113.9") and lim.take("198.51.100.1")
+    keys = [k for k in r.keys("q:*")]
+    assert keys and not any("203.0.113.9" in k for k in keys)
+    assert all(0 < r.ttl(k) <= 3600 for k in keys)
+
+
+def test_past_the_budget_the_page_gets_passages_and_no_answer(client, tmp_path):
+    first = client.post("/api/ask", json={"question": "hours of employment"}).json()
+    assert first["answer"] and not first["budget_out"]
+    second = client.post("/api/ask", json={"question": "hours of employment"}).json()
+    assert second["budget_out"] and second["answer"] == "" and second["sources"] == [] and second["passages"]
+    log = [json.loads(line) for line in open(tmp_path / "questions.jsonl", encoding="utf-8")]
+    assert [x["answered"] for x in log] == [True, False]
+    assert set(log[0]) == {"at", "question", "lang", "filters", "answered", "usd", "ms"}
+
+
+def test_a_draft_sitting_is_marked_on_its_pages(client):
+    assert "Unrevised draft" in client.get("/hansard/DR/2024-05-02").text
+    assert "Unrevised draft" in client.get("/debate/DR-2024-05-02-001").text
+    assert "Unrevised draft" not in client.get("/hansard/DR/2022-03-01").text
+    assert "unrevised draft" in client.get("/hansard?parliament=15").text
+
+
+def test_robots_and_sitemaps_list_the_record_pages(client):
+    robots = client.get("/robots.txt").text
+    assert "Disallow: /api/" in robots and "Sitemap: https://example.my/sitemap.xml" in robots
+    index = client.get("/sitemap.xml").text
+    assert "https://example.my/sitemap-law.xml" in index and "https://example.my/sitemap-hansard-2024.xml" in index
+    assert "<loc>https://example.my/law/265/BI</loc>" in client.get("/sitemap-law.xml").text
+    year = client.get("/sitemap-hansard-2024.xml").text
+    assert "/hansard/DR/2024-05-02</loc>" in year and "/debate/DR-2024-05-02-001</loc>" in year
+    assert client.get("/sitemap-nothing.xml").status_code == 404
+
+
+def test_pages_carry_share_previews_and_the_form_is_not_indexed(client):
+    page = client.get("/law/265/BI").text
+    assert '<meta property="og:title" content="' in page and 'content="https://example.my/static/og.png"' in page
+    assert 'content="https://example.my/law/265/BI"' in page
+    assert 'name="robots" content="noindex"' in client.get("/correction").text
+    assert 'name="robots"' not in page
+
+
+def test_a_question_while_the_index_loads_gets_a_wait_message(client):
+    client.app.state.engine.warmed = False
+    r = client.post("/api/ask", json={"question": "hours of employment"})
+    assert r.status_code == 503 and r.headers["retry-after"] == "60" and "still loading" in r.json()["error"]
+    assert client.app.state.limits.r.keys("q:*") == []  # a refused question does not count

@@ -1,6 +1,6 @@
 import json
 
-from parlimen import enrich, hansard, index, ingest, links
+from parlimen import drafts, enrich, hansard, index, ingest, links
 from parlimen.chunk import Chunk
 from parlimen.sittings import Sitting
 
@@ -40,7 +40,7 @@ def call(params, job):
 
 def test_a_new_sitting_ingests_with_no_manual_step(tmp_path, monkeypatch):
     for mod, name in [(hansard, "SPEECHES_OUT"), (hansard, "REPORT_OUT"), (enrich, "UNITS"), (enrich, "RAW"),
-                      (enrich, "ENRICHED"), (enrich, "CHECKS"), (links, "OUT")]:
+                      (enrich, "ENRICHED"), (enrich, "CHECKS"), (links, "OUT"), (drafts, "OUT")]:
         monkeypatch.setattr(mod, name, tmp_path / getattr(mod, name).name)
     hansard.REPORT_OUT.write_text(",".join(hansard.REPORT_FIELDS) + "\nDR,2024-03-01,,,0,0,0,0,0,0,,\n", encoding="utf-8")
     old = Chunk("debate", "debate:DR-2024-03-01-001", 0, "Dewan Rakyat, 2024-03-01.", "Tuan C: Ya.", 3,

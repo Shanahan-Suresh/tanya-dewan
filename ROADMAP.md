@@ -213,8 +213,9 @@ avenue at a time; this one opens after release 1 launches.
 | Search | novel-rag's pipeline: BM25, Qwen3-Embedding-0.6B (multilingual, Malay measured in phase 5), RRF, neighbour expansion. The reranker is Haiku 5.5 through the Messages API, reading the top 20 fused hits (`parlimen/llm_rerank.py`): Qwen3-Reranker-0.6B takes about 29 s a search on a 2-thread CPU (phase 5). Filters replace the spoiler limit |
 | Answers | Claude with `search_result` citations, as novel-rag's chat. Haiku 5.5 for the public demo, a better model locally |
 | Front ends | The chat page, static MP, bill and topic pages, the commitments page, an MCP server, a CLI |
+| Background jobs | Redis for the rate limit, the answer budget and the answer cache; systemd timers run the nightly ingest and the weekly draft re-check (phase 7 step 4) |
 
-Stack: Python 3.12+, FastAPI, SQLite FTS5, NumPy, PyTorch for the search models. Hosting: a CPU
+Stack: Python 3.12+, FastAPI, SQLite FTS5, NumPy, PyTorch for the search models, Redis for the counters, systemd timers for the background jobs. Hosting: a CPU
 VPS (phase 7), since the daily ingest writes to the data the site reads. Licence: MIT for the code; the
 structured records under a non-commercial licence with a paid commercial option (Track B).
 
@@ -412,33 +413,60 @@ meeting, public code at launch, the working name until the trial, and the anonym
    Claude fixes them and reshoots the pages (`tools/site_shots.py`). The site's files stay on the
    D: hard disk (owner's choice), so each restart warms for about 2.5 minutes.
 2. **Gaps before launch (Claude).**
-   - Draft flag: every sitting and record shows when its text is the unrevised draft ("BELUM
-     DISEMAK"), read from the PDF.
-   - Revised sittings: the ingest re-checks draft sittings each week and re-processes one whose
-     PDF changed (about [amount removed] a sitting).
-   - Rate limit per visitor (20 questions an hour) and a daily answer budget ([amount removed]). Past the budget, the ask page shows the found passages without a written
-     answer, and says so.
-   - An anonymous question log (question, filters, cost; no IP address), for which topics people
+   - ~~Draft flag: every sitting and record shows when its text is the unrevised draft ("BELUM
+     DISEMAK"), read from the PDF.~~
+   - ~~Revised sittings: the ingest re-checks draft sittings each week and re-processes one whose
+     PDF changed (about [amount removed] a sitting).~~ Its weekly systemd timer is step 4.
+   - ~~Rate limit per visitor (20 questions an hour) and a daily answer budget ([amount removed]), both counted
+     in Redis (step 4). Past the budget, the ask page shows the found passages without a written
+     answer, and says so.~~
+   - ~~An anonymous question log (question, filters, cost; no IP address), for which topics people
      ask about. The About page states what is stored, including the optional contact on the
-     correction form.
-   - `sitemap.xml`, `robots.txt`, page titles and descriptions, share previews, so MP, bill and
-     topic pages reach search engines.
-   - The Sepang seat's two MP pages checked against the record.
-   - The site reloads its data after an ingest (a nightly restart is enough).
+     correction form.~~
+   - ~~`sitemap.xml`, `robots.txt`, page titles and descriptions, share previews, so MP, bill and
+     topic pages reach search engines.~~
+   - ~~The Sepang seat's two MP pages checked against the record.~~
+   - The site reloads its data after an ingest: the nightly job restarts the site service as its
+     last step (step 4). ~~While the index loads after a restart, the Ask page answers "still
+     loading, ask again in a minute" (HTTP 503, Retry-After 60); record pages serve as usual.~~
+     The owner chose a restart over a swap with no downtime: a swap holds two copies of the
+     vectors (about 1.2 GB more) on an 8 GB host. Revisit only if the warm-up on the VPS is long.
 3. **Host: a small VPS, 4 vCPU, 8 GB RAM (Hetzner CX33; CPX32 if the CX33 is sold out).** The site needs about 4 GB of data
    (only the "h" vectors), about 3.5 GB of RAM, and no GPU. A VPS at about [amount removed] a month
    (Hetzner, after its June 2026 price rise) keeps the warm process up all day. Cloud Run with one
    warm instance costs about [amount removed] a month idle; with none, every first visitor waits through a
    cold load, and the daily ingest would have to rebuild and redeploy the image, since a Cloud Run
-container keeps no files. HTTPS through Caddy, the site as a systemd service, a health check and an uptime
-   monitor. A deploy pilot checks RAM, answer time and that the host can reach parlimen.gov.my.
-4. **Ingest on the host.** A daily job during Parliament's meetings: fetch new sittings, enrich
-   them (about [amount removed] a sitting day, so about [amount removed] a 37-day meeting), embed on the CPU, rebuild
-   the page database, restart the site. A failed run leaves the site as it was and logs why.
-5. **Launch materials.** README with the eval results table and a GIF of the ask page; the
+container keeps no files. HTTPS through Caddy, the site and Redis as systemd services, the
+   timers of step 4, a health check and an uptime monitor. A deploy pilot checks RAM, answer
+   time, the warm-up time after a restart and that the host can reach parlimen.gov.my.
+4. **Redis and systemd timers on the host.** The site runs as one uvicorn process, since each
+   process loads the 3.5 GB index. The owner's choice: Redis for the counters and no task queue,
+   since a daily job and a weekly job need a timer, not a queue.
+   - Redis runs on the VPS, bound to localhost, with a memory limit, and the site reads it at
+     `PARLIMEN_REDIS_URL`. It holds the rate limit and the daily budget (`parlimen/web/limits.py`,
+     built), so both survive the nightly restart. Still to build: an answer cache keyed by the
+     question and its filters, so a repeated question costs nothing.
+   - A nightly timer during Parliament's meetings runs the ingest of step 5, then
+     `python -m parlimen.records build`, then `systemctl restart` of the site. A later step runs
+     only when the one before it succeeds, so a failed run leaves the site as it was. The ingest
+     resumes where it stopped, so the next night's run finishes a failed one.
+   - A weekly timer runs `python -m parlimen.drafts recheck`, then the same rebuild and restart
+     when a sitting changed.
+   - The jobs load Qwen3-Embedding-0.6B beside the site's 3.5 GB. The deploy pilot (step 3)
+     measures peak RAM with the site, Redis and a job up. The two timers must not overlap.
+   - Local development on Windows: the in-process `fakeredis` stands in when
+     `PARLIMEN_REDIS_URL` is unset.
+   - Phase 8 alert emails fit a timer after the nightly ingest. Add a task queue only if alerts
+     must go out at once for each user. No alert code exists before the Track A gate (CLAUDE.md
+     rule 10).
+5. **Ingest on the host.** The nightly job of step 4 during Parliament's meetings: fetch new
+   sittings, enrich them (about [amount removed] a sitting day, so about [amount removed] a 37-day meeting), embed on
+   the CPU, rebuild the page database, restart the site. A failed run leaves the site as it was
+   and logs why.
+6. **Launch materials.** README with the eval results table and a GIF of the ask page; the
    public repository (code only; `data/` stays out); a write-up for the personal site, LinkedIn
    and dev.to on structured extraction at corpus scale.
-6. **Launch and outreach (owner).** At the first Parliament meeting of 2027. The current meeting
+7. **Launch and outreach (owner).** At the first Parliament meeting of 2027. The current meeting
    ends 8 December 2026; the 15th Parliament dissolves by December 2027 at the latest, so the general
    election brings the largest interest in what MPs said. Outreach: Sinar Project, r/malaysia,
    Lowyat forum, university law and politics societies, civic tech meetups, journalists who cover
@@ -448,7 +476,7 @@ container keeps no files. HTTPS through Caddy, the site as a systemd service, a 
 
 ### Phase 8: paid pilot (only after the Track A gate passes)
 
-- Accounts, saved searches, alert emails, the weekly digest, a privacy notice, invoicing by hand
+- Accounts, saved searches, alert emails (a timer job after the nightly ingest, phase 7 step 4), the weekly digest, a privacy notice, invoicing by hand
   for the first customers.
 - Sized and planned when the gate passes, from what the pilot customers ask for.
 

@@ -111,6 +111,9 @@ def make_sources(tmp_path) -> Sources:
         {"parliament": "14", "code": "P070", "seat": "Tapah", "member": "M. Saravanan", "party": "MIC", "from": "", "to": "",
          "from_text": "", "to_text": ""},
     ])
+    write_csv(tmp_path / "drafts.csv", [
+        {"chamber": "DR", "date": "2024-05-02", "draft": "1", "sha1": "x", "checked": "2026-11-26", "redo_from": ""},
+    ])
     write_csv(tmp_path / "bill_links.csv", [
         {"heading": heading, "title": "KERJA (PINDAAN) 2022", "base": "KERJA", "year": "2022", "change": "amend",
          "act": "265", "act_title_bi": "EMPLOYMENT ACT 1955", "act_title_bm": "AKTA KERJA 1955", "result": "linked"},
@@ -118,7 +121,8 @@ def make_sources(tmp_path) -> Sources:
     return Sources(acts=tmp_path / "acts.csv", sections=tmp_path / "act_sections.jsonl",
                    sittings=tmp_path / "sittings.csv", speeches=tmp_path / "speeches.jsonl",
                    units=tmp_path / "units.jsonl", enriched=tmp_path / "enriched.jsonl",
-                   members=tmp_path / "members.csv", parties=tmp_path / "parties.csv", bills=tmp_path / "bill_links.csv")
+                   members=tmp_path / "members.csv", parties=tmp_path / "parties.csv", bills=tmp_path / "bill_links.csv",
+                   drafts=tmp_path / "drafts.csv")
 
 
 @pytest.fixture
@@ -215,3 +219,8 @@ def test_bills_and_topics(recs):
     assert {t["topic"]: t["name"] for t in recs.topics()}["sabah-and-sarawak"] == "Sabah and Sarawak"
     assert recs.topic_units("labour-and-jobs").total == 1
     assert [u["id"] for u in recs.units_between("2024-01-01", "2024-12-31", ["agriculture-and-food"])] == ["DR-2024-05-02-001"]
+
+
+def test_a_sitting_carries_its_draft_flag(recs):
+    assert recs.sitting("DR", "2024-05-02")["draft"] == 1
+    assert recs.sitting("DR", "2022-03-01")["draft"] == 0

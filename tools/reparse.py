@@ -18,20 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from parlimen import enrich, hansard, sittings  # noqa: E402
-
-
-def replace(path: Path, keep, new_rows: list[dict]) -> None:
-    """Rewrite a JSONL file with the rows `keep` rejects swapped for `new_rows`, at the first one's place."""
-    tmp = path.with_suffix(".jsonl.tmp")
-    placed = False
-    with open(path, encoding="utf-8") as src, open(tmp, "w", encoding="utf-8") as out:
-        for line in src:
-            if keep(json.loads(line)):
-                out.write(line)
-            elif not placed:
-                out.writelines(json.dumps(r, ensure_ascii=False) + "\n" for r in new_rows)
-                placed = True
-    tmp.replace(path)
+from parlimen.drafts import replace_rows as replace  # noqa: E402
 
 
 def main() -> None:

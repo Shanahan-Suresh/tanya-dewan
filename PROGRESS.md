@@ -297,16 +297,43 @@ Scope and exit are in ROADMAP Phase 6.
 ## Phase 7: launch plan confirmed, owner's refinement passes next
 
 The owner confirmed the plan in ROADMAP Phase 7 on its review page; the data stays on D:.
-Owed: the owner's refinement notes on the local site, then the gaps in Phase 7 step 2. Nothing
-goes public until the owner gives the word (CLAUDE.md rules 1 and 8).
+Owed: the owner's refinement notes on the local site; the host (step 3); the systemd timers of
+step 4 (nightly ingest, rebuild and restart; weekly `drafts recheck`) and the Redis answer cache.
+The owner chose Redis with systemd timers and no Celery, and a nightly restart over a swap with no
+downtime (ROADMAP Phase 7 steps 2 and 4). Nothing goes public until the owner gives the word
+(CLAUDE.md rules 1 and 8).
 
-Open: the Sepang seat shows two MP pages; each question is answered alone, with no memory of the
-previous one.
+Open: each question is answered alone, with no memory of the previous one.
+
+- Draft flag (`parlimen/drafts.py`): `python -m parlimen.drafts scan` reads page 1 of every cached
+  sitting PDF for "Naskhah belum disemak" into `data/drafts.csv`; an ingest adds each new
+  sitting's row. Measured 2026-11-26: 54 of 1,036 sittings are drafts, all Dewan Rakyat, from DR
+  2019-11-06 (still a draft on the site) to DR 2026-10-22. The Special Chamber's PDFs never print
+  the line, so they carry no flag. Sitting, debate and sitting-list pages and the ask page's
+  sources show the mark.
+- Re-check: `python -m parlimen.drafts recheck [--all] [--dry-run]` fetches each draft PDF of the
+  last 365 days again; changed bytes replace the cache and the sitting is processed again
+  (parse, rows put in place, old records dropped, chunks retired with `index.retire`, then
+  `ingest.index_pending` enriches, checks, chunks and embeds). Retired rows keep their ids and
+  vectors and leave search; a rebuild drops them. Rebuild `site.db` and restart the site after
+  it. Not run on the real data yet.
+- Limits (`parlimen/web/limits.py`): 20 questions per visitor an hour and [amount removed] a day of Claude
+  spend (rerank plus answer), in Redis at `PARLIMEN_REDIS_URL`, else an in-process fakeredis.
+  Past the budget the ask page shows the fused passages with no rerank and no answer. While the
+  index loads after a restart, a question gets HTTP 503 and "ask again in a minute". Each
+  question that runs goes to `data/questions.jsonl` with no IP address. The About page says
+  what is stored.
+- Search engines: `/robots.txt`, `/sitemap.xml` (an index of pages, law, MPs, bills, topics and
+  one sitemap per year of sittings), page descriptions, Open Graph tags with
+  `static/og.png`; the correction form and the 404 page are noindex. Absolute URLs come from
+  `PARLIMEN_SITE_URL`.
+- Sepang: one MP, "Raj Munni Sabu @ Aiman Athirah" in the 2022 results; `records.RENAMED` merges
+  her two name keys under the name she uses now.
 
 - Page database: `python -m parlimen.records build|stats` writes `data/site.db` (about 620 MB)
   from the corpus and enrichment files. Stop the site first: Windows refuses to replace an open
-  file. Last build (measured 2026-10-25, 100 s): 30,091 extracts, 361,676 speeches, 31,767
-  question-answer pairs, 18,523 commitments (98.7% with an office), 342 MPs. Rebuild after
+  file. Last build (measured 2026-11-26, 73 s): 30,091 extracts, 361,676 speeches, 31,767
+  question-answer pairs, 18,523 commitments, 341 MPs, 54 draft sittings. Rebuild after
   every ingest, so the pages show the new sittings.
 - Site: `python -m parlimen.web [--port 8780]` (`parlimen/web/`). Record pages need no model and
   load in 0.02 to 0.6 s. At start the server loads the index, the vectors and the embedder on
@@ -330,13 +357,39 @@ previous one.
 - Ingest of DR and KK 2026-10-22 (log `data/ingest-2026-10-22.log`): 444 speeches, 58 extracts
   enriched, [amount removed]. October spend logged (measured 2026-10-25): [amount removed].
 - Tests: `tests/test_records.py`, `tests/test_web.py`, `tests/test_mcp_server.py`,
-  `tests/test_digest.py`; suite 103 pass.
+  `tests/test_digest.py`, `tests/test_drafts.py`; suite 118 pass.
 
 Open:
-- The Sepang seat keeps two MP pages (`raj-munni-sabu`, `aiman-athirah-sabu`), not checked
-  against the record; the other seats with two MPs are real by-elections.
 - The D: hard disk holds the venv, the model and the index, so every cold start is slow. Moving
   `data/index` and the HF cache to the NVMe C: drive would cut it; that is the owner's call.
+
+## Site redesign (Phase 7 step 1): design directions in progress
+
+The owner finds the site far too plain and approved every richer item (2026-11-26): a design
+system (Tailwind standalone CLI), the answer streamed word by word, htmx filters and paging,
+richer record pages (MP activity over time, bill timeline, topic trend by year), and a better
+Ask page (suggested questions, filter chips, sources beside the answer). The stack stays
+FastAPI with server-rendered Jinja; no framework change. A small React island only if the Ask
+page later grows into an app.
+
+- Brief: `docs/design/BRIEF.md`. Real content: `docs/design/data.json`, built by
+  `python docs/design/build_data.py [--no-ask]` (MP Dzulkefly Ahmad, debate DR-2026-10-22-017
+  from a draft sitting, bill KERJA (PINDAAN) 2021, one real answer about targeted diesel
+  subsidies: [amount removed], 93 s on the cold D: disk).
+- Three directions, one folder each under `docs/design/<direction>/` (home, MP and debate
+  prototypes, shots at 1440 and 390 px, NOTES.md), built by three subagents from the brief:
+  `gazette` (editorial broadsheet, chamber green), `console` (dark analyst instrument, Plex,
+  amber and teal), `civic` (warm public-service app, navy and yellow, songket motif). Shots come
+  from `python docs/design/shoot.py <direction> [--dark]`.
+- Generators: `gazette/gen.py` and `civic/build.py` wrote those pages from `data.json`; the
+  console pages have no generator, so edit their HTML directly.
+- Showcase: https://claude.ai/artifact/KWLv7EmBCyYXLt1XbJK4d8, source `docs/design/showcase/`
+  (index.html plus WebP shots; the three prototype folders publish beside it and run live in
+  the page). The owner picks a design in chat. A Design canvas
+  artifact made first (https://claude.ai/artifact/XbvPXQXhyvKmcWg3SjxjX1) is empty and unused:
+  delete it only if the owner asks.
+- Next: the owner picks a design, then build the chosen
+  design into `parlimen/web/` (templates, Tailwind build, htmx, streaming answer endpoint).
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking
 

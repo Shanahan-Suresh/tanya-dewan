@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}{{ t('correction') }}{% endblock %}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
 {% block main %}
 <h1>{{ t('correction') }}</h1>
 {% if sent %}

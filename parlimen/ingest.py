@@ -12,8 +12,10 @@ each, in order:
 5. chunk the extracts, append the chunks to index.db, and embed the new rows for every vector
    set on disk ("h" before "hn", so "hn" copies the rows with no note).
 
-Steps 3 to 5 run on every extract whose sitting index.db does not hold yet, so a run that stops
-part way resumes where it stopped. An extract whose enrichment fails is indexed without its note
+Each new sitting also gets its draft flag in data/drafts.csv (parlimen/drafts.py). Steps 3 to 5
+run on every extract whose sitting index.db does not hold yet (`index_pending`), so a run that
+stops part way resumes where it stopped; the weekly re-check of draft sittings uses the same steps
+for a revised sitting. An extract whose enrichment fails is indexed without its note
 and listed in the run's summary; `python -m parlimen.enrich submit` sends it again.
 
 Run:  python -m parlimen.ingest [--dates ISO ...] [--no-refresh] [--dry-run]
@@ -30,7 +32,7 @@ from typing import Callable
 
 import anthropic
 
-from . import chunk, commit_check, config, enrich, fetch, hansard, index, links, sittings
+from . import chunk, commit_check, config, drafts, enrich, fetch, hansard, index, links, sittings
 from .sittings import Sitting
 
 Call = Callable[[dict, str], dict]  # (request params, usage-log job) -> enrich.call's answer
@@ -86,9 +88,11 @@ def pending_units(root: Path = config.INDEX) -> list[dict]:
     return out
 
 
-def enrich_units(units: list[dict], call: Call, workers: int = 6) -> dict[str, dict]:
-    """Step 3: each extract's finished record, its commitments checked."""
-    done = enrich._done()
+def enrich_units(units: list[dict], call: Call, workers: int = 6,
+                 fresh_from: dict[str, int] | None = None) -> dict[str, dict]:
+    """Step 3: each extract's finished record, its commitments checked. A revised sitting's
+    extracts (`fresh_from`) are asked again even when an older answer exists."""
+    done = enrich._done(fresh_from)
 
     def ask(params: dict, job: str) -> dict:
         try:
@@ -102,7 +106,7 @@ def enrich_units(units: list[dict], call: Call, workers: int = 6) -> dict[str, d
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         list(pool.map(one, [u for u in units if u["id"] not in done]))
-    done = enrich._done()
+    done = enrich._done(fresh_from)
     first = {u["id"]: enrich.finish(u, done[u["id"]]["result"]) for u in units if u["id"] in done}
 
     checked = enrich._checks()
@@ -162,9 +166,29 @@ def index_units(units: list[dict], records: dict[str, dict], bills: dict[str, di
     return start, end
 
 
+def index_pending(call: Call | None = None, party=None, count=None, by_name=None, root: Path = config.INDEX,
+                  embedder=None, fresh_from: dict[str, int] | None = None) -> str:
+    """Steps 3 to 5 for every extract whose sitting index.db does not hold yet."""
+    units = pending_units(root)
+    if not units:
+        return "nothing to index"
+    if call is None:
+        client = enrich._client()
+        call = lambda params, job: enrich.call(client, params, job)  # noqa: E731
+    records = enrich_units(units, call, fresh_from=fresh_from)
+    bills = link_bills(units, by_name if by_name is not None else links.acts_by_name())
+    if party is None:
+        from . import parties
+        party = parties.lookup()
+    start, end = index_units(units, records, bills, party, count or chunk.qwen_counter(), root, embedder)
+    failed = [u["id"] for u in units if u["id"] not in records]
+    return (f"{len(units)} extracts, {len(records)} enriched; chunks {start} to {end - 1} indexed"
+            + (f"; no record yet for {', '.join(failed)}" if failed else ""))
+
+
 def ingest(listing: list[Sitting], dates: list[str] | None = None, parse=None, call: Call | None = None,
            party=None, count=None, by_name=None, root: Path = config.INDEX, embedder=None,
-           dry_run: bool = False) -> str:
+           dry_run: bool = False, drafts_path: Path | None = None) -> str:
     new = new_sittings(listing, dates)
     if dry_run:
         return f"{len(new)} new sittings: " + ", ".join(f"{s.chamber} {s.date}" for s in new)
@@ -172,22 +196,11 @@ def ingest(listing: list[Sitting], dates: list[str] | None = None, parse=None, c
         registers = hansard.read_registers()
         parse = lambda s: default_parse(s, registers)  # noqa: E731
     reports = parse_new(new, parse)
-    units = pending_units(root)
-    if not units:
+    drafts.record(new, path=drafts_path)
+    if not pending_units(root):
         return f"{len(new)} new sittings, nothing to index"
-    if call is None:
-        client = enrich._client()
-        call = lambda params, job: enrich.call(client, params, job)  # noqa: E731
-    records = enrich_units(units, call)
-    bills = link_bills(units, by_name if by_name is not None else links.acts_by_name())
-    if party is None:
-        from . import parties
-        party = parties.lookup()
-    start, end = index_units(units, records, bills, party, count or chunk.qwen_counter(), root, embedder)
-    failed = [u["id"] for u in units if u["id"] not in records]
-    return (f"{len(new)} new sittings ({sum(r.speeches for r in reports)} speeches); {len(units)} extracts, "
-            f"{len(records)} enriched; chunks {start} to {end - 1} indexed"
-            + (f"; no record yet for {', '.join(failed)}" if failed else ""))
+    done = index_pending(call, party, count, by_name, root, embedder)
+    return f"{len(new)} new sittings ({sum(r.speeches for r in reports)} speeches); {done}"
 
 
 def main() -> None:

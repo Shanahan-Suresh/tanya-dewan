@@ -11,6 +11,7 @@
   --ai-ink: #2e4682;
   --record-line: #b9b29c;
   --routine: #8a6a1f;
+  --draft: #8a4b12;
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -28,6 +29,7 @@
     --ai-ink: #a9bbef;
     --record-line: #6c6656;
     --routine: #d4b061;
+    --draft: #e3a56b;
   }
 }
 * { box-sizing: border-box; }
@@ -130,6 +132,10 @@ tr.dim td { color: var(--muted); }
 .ai-card h2 { margin: .1em 0 .4em; font-size: 1rem; }
 .ai-note { display: flex; align-items: flex-start; gap: 6px; color: var(--ai-ink); font-size: .84rem; margin: .5em 0; }
 .ai-note svg { flex: none; margin-top: 3px; }
+.draft-note { display: flex; align-items: flex-start; gap: 6px; color: var(--draft); font-size: .88rem; margin: .5em 0; }
+.draft-note svg { flex: none; margin-top: 3px; }
+.draft-mark { display: inline-flex; align-items: center; gap: 3px; color: var(--draft); font-size: .8rem; white-space: nowrap; }
+.budget-note { color: var(--draft); margin: .4em 0 1em; }
 
 /* debates */
 .debate-layout { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 28px; align-items: start; }

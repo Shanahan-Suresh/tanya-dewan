@@ -3,7 +3,8 @@
 `data/site.db` is built from the files the pipeline writes and holds no model output that the
 pipeline did not already check:
 - `acts`, `sections`: each Act's titles, reprint date, official PDFs and its sections in order;
-- `sittings`, `units`, `speeches`: each sitting, its agenda extracts (with the AI summaries and
+- `sittings`, `units`, `speeches`: each sitting (with `draft` = 1 while Parliament's PDF is the
+  unrevised draft, from `data/drafts.csv`), its agenda extracts (with the AI summaries and
   topics) and the verbatim speeches with speaker, seat, party on the day, page and time;
 - `qa`, `commitments`: the question-answer pairs and the checked commitments, each with the office
   of the minister who spoke (`office`, read from the speech label, or from the same person's label
@@ -33,7 +34,7 @@ from pathlib import Path
 from typing import Iterator
 from urllib.parse import quote
 
-from . import config, enrich, hansard, links, parties
+from . import config, drafts, enrich, hansard, links, parties
 
 SITE_DB = config.DATA / "site.db"
 PAGE_SIZE = 50
@@ -43,6 +44,10 @@ OFFICE_DAYS = 400  # an office seen on another sitting holds for a commitment th
 # One MP whose two name keys share a seat but not their words (checked against the seat's record).
 SAME_PERSON = {"mohd najib abd razak": "mohd najib abdul razak", "p prabakaran": "prabakaran m parameswaran",
                "r sivarasa": "sivarasa rasiah", "wong kah who": "wong kah woh"}
+# One MP under a new name: the record and the page use the name she goes by now. Sepang's MP is
+# "Raj Munni Sabu @ Aiman Athirah" in the 2022 election results (data/raw/wikipedia); Hansard
+# labels her Raj Munni to March 2025 and Aiman Athirah from then, in the same deputy minister post.
+RENAMED = {"raj munni sabu": "aiman athirah sabu"}
 
 SCHEMA = """
 CREATE TABLE acts (number TEXT PRIMARY KEY, title_bi TEXT, title_bm TEXT, status TEXT, as_at TEXT,
@@ -51,7 +56,7 @@ CREATE TABLE sections (act TEXT, lang TEXT, number TEXT, ord INTEGER, heading TE
                        part_title TEXT, chapter TEXT, chapter_title TEXT, text TEXT, notes TEXT,
                        page_start INTEGER, page_end INTEGER, source TEXT, PRIMARY KEY (act, lang, number));
 CREATE TABLE sittings (chamber TEXT, date TEXT, parliament INTEGER, term TEXT, meeting TEXT, pdf TEXT,
-                       PRIMARY KEY (chamber, date));
+                       draft INTEGER, PRIMARY KEY (chamber, date));
 CREATE TABLE units (id TEXT PRIMARY KEY, chamber TEXT, date TEXT, parliament INTEGER, ord INTEGER,
                     business TEXT, summary_en TEXT, summary_ms TEXT, topics TEXT, entities TEXT,
                     bill TEXT, act TEXT, speeches INTEGER, page_start INTEGER);
@@ -189,6 +194,7 @@ class Sources:
     members: Path = hansard.MEMBERS_OUT
     parties: Path = parties.OUT
     bills: Path = links.OUT
+    drafts: Path = drafts.OUT
 
 
 class Offices:
@@ -281,9 +287,11 @@ def build(src: Sources | None = None, path: Path = SITE_DB, log=print) -> dict:
     log(f"law: {len(acts)} Acts, {sum(order.values())} sections ({time.time() - t0:.0f} s)")
 
     # Sittings, bills, members.
+    draft = {k for k, r in drafts.read(src.drafts).items() if r["draft"] == "1"}
     for r in _csv(src.sittings):
-        con.execute("INSERT OR IGNORE INTO sittings VALUES (?,?,?,?,?,?)",
-                    (r["chamber"], r["date"], int(r["parliament"]), r["term"], r["meeting"], pdf_url(r["pdf_path"])))
+        con.execute("INSERT OR IGNORE INTO sittings VALUES (?,?,?,?,?,?,?)",
+                    (r["chamber"], r["date"], int(r["parliament"]), r["term"], r["meeting"], pdf_url(r["pdf_path"]),
+                     int((r["chamber"], r["date"]) in draft)))
     heading_bill: dict[str, tuple[str, str]] = {}
     for r in _csv(src.bills):
         b = slug(r["title"])
@@ -372,7 +380,7 @@ def build(src: Sources | None = None, path: Path = SITE_DB, log=print) -> dict:
     for (k, p), seat in seats.items():
         by_seat.setdefault(parties._seat_key(seat), set()).add(k)
     spoken = {k: sum(f.values()) for k, f in names.items()}
-    alias.update({a: b for a, b in SAME_PERSON.items() if a in names and b in names})
+    alias.update({a: b for a, b in {**SAME_PERSON, **RENAMED}.items() if a in names and b in names})
     for keys in by_seat.values():
         for a in keys:
             for b in keys:
@@ -395,6 +403,8 @@ def build(src: Sources | None = None, path: Path = SITE_DB, log=print) -> dict:
     spells = _csv(src.parties)
     for key, forms in names.items():
         s = slug(key)
+        if key in RENAMED.values():  # the most used form of the new name, not of the old one
+            forms = {n: c for n, c in forms.items() if name_key(n) == key} or forms
         con.execute("INSERT OR IGNORE INTO members VALUES (?,?,?)", (s, key, max(forms, key=forms.get)))
         done: set[int] = set()
         for (k, p), seat in seats.items():
@@ -646,6 +656,16 @@ class Records:
             sql += f" AND id IN (SELECT unit FROM unit_topics WHERE topic IN ({','.join('?' * len(topics))}))"
             args += topics
         return self._all(sql + " ORDER BY date, chamber, ord", args)
+
+    def unit_ids(self, year: str) -> list[str]:
+        return [r["id"] for r in self._all("SELECT id FROM units WHERE substr(date, 1, 4) = ? ORDER BY id", (year,))]
+
+    def sitting_years(self) -> list[str]:
+        return [r["y"] for r in self._listed("sitting_years", "SELECT DISTINCT substr(date, 1, 4) AS y FROM sittings "
+                                                              "ORDER BY y")]
+
+    def member_slugs(self) -> list[str]:
+        return [r["slug"] for r in self._all("SELECT slug FROM members ORDER BY slug")]
 
     def speech(self, unit_id: str, seq: int) -> dict | None:
         return self._one("SELECT * FROM speeches WHERE unit = ? AND seq = ?", (unit_id, seq))

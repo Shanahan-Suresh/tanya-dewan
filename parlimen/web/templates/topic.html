@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block title %}{{ topic_name }}{% endblock %}
+{% block description %}Dewan Rakyat debates and ministers' commitments on {{ topic_name }}, newest first.{% endblock %}
 {% block main %}
 <div class="doc-head">
   <p class="eyebrow">{{ t('nav_topics') }}</p>

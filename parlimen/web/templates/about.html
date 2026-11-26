@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}{{ t('nav_about') }}{% endblock %}
+{% block description %}What parlimen-search holds, what AI wrote and how answers are checked, how well it works, and what the site stores.{% endblock %}
 {% block main %}
 <article class="prose">
 {% if lang == 'ms' %}
@@ -15,6 +16,17 @@
 <p>Ringkasan, gabungan soalan dan jawapan, serta nota komitmen ditulis oleh model Claude dan dilabel "AI". Ia sentiasa dipaparkan di sebelah teks verbatim. Penghurai, bukan model, menentukan siapa yang bercakap. Petikan komitmen yang tidak sepadan dengan teks Hansard dibuang.</p>
 <h2>Cara jawapan ditulis</h2>
 <p>Carian kata kunci dan carian makna mencari petikan, Claude Haiku menyusunnya semula, dan Claude Haiku menulis jawapan daripada lapan petikan terbaik. Setiap ayat jawapan mesti memetik sumber; ayat tanpa petikan dibuang.</p>
+<h2>Naskhah belum disemak</h2>
+<p>Parlimen menerbitkan setiap persidangan Dewan Rakyat dahulu sebagai naskhah belum disemak, kemudian menggantikannya dengan teks yang disemak. Persidangan yang teksnya masih naskhah belum disemak ditanda begitu. Laman ini memuat turun semula naskhah itu setiap minggu dan memproses semula persidangan apabila teksnya berubah. Fail Dewan Khas tidak menyatakan status ini, jadi persidangannya tidak ditanda.</p>
+<h2>Had soalan</h2>
+<p>Setiap pelawat boleh bertanya {{ limits.hourly }} soalan sejam. Jawapan bertulis mempunyai bajet harian. Selepas bajet habis, halaman Tanya menunjukkan petikan yang ditemui tanpa jawapan bertulis sehingga esok.</p>
+<h2>Apa yang laman ini simpan</h2>
+<ul>
+  <li>Setiap soalan yang dijawab: teks soalan, penapis, bahasa, kos dan masa. Alamat IP tidak disimpan bersamanya. Kami membacanya untuk mengetahui topik yang dicari orang.</li>
+  <li>Untuk had soalan: satu kiraan bagi setiap pelawat, di bawah cincangan bergaram alamat IP. Kiraan itu dipadam selepas sejam, dan garam itu bertukar setiap hari.</li>
+  <li>Laporan pembetulan: teks laporan, halaman yang dilaporkan, dan alamat hubungan hanya jika anda memberikannya.</li>
+  <li>Pilihan bahasa anda dalam kuki <code>hl</code>. Tiada kuki lain dan tiada penjejak.</li>
+</ul>
 <h2>Bukan nasihat undang-undang</h2>
 <p>{{ t('not_advice') }} Teks Akta ialah cetakan semula yang dipaparkan oleh portal Laws of Malaysia Online pada tarikh yang ditunjukkan.</p>
 {% else %}
@@ -32,6 +44,17 @@
 <p>Keyword search and meaning search find passages, Claude Haiku reorders them, and Claude Haiku writes the answer from the best eight. Every sentence of an answer must cite a source; a sentence with no citation is removed.</p>
 <h2>How well it works</h2>
 <p>Measured on fixed test questions: the right Act section is in the top 10 results for 91% of law questions, and the right speech for 73% of debate questions. A blind judge graded 77% of answers correct and 82% fully backed by their citations.</p>
+<h2>Unrevised drafts</h2>
+<p>Parliament publishes each Dewan Rakyat sitting first as an unrevised draft, then replaces it with the revised text. A sitting whose text is still the draft is marked so. The site downloads each draft again every week and processes the sitting again when its text changes. The Special Chamber's files do not state this, so its sittings carry no mark.</p>
+<h2>Question limits</h2>
+<p>Each visitor can ask {{ limits.hourly }} questions an hour. Written answers have a daily budget. When the budget is used up, the Ask page shows the passages found, without a written answer, until the next day.</p>
+<h2>What the site stores</h2>
+<ul>
+  <li>Each question that is answered: the question text, the filters, the language, the cost and the time. No IP address is stored with it. We read it to learn which topics people look for.</li>
+  <li>For the question limit: one count for each visitor, under a salted hash of the IP address. The count is deleted after one hour, and the salt changes every day.</li>
+  <li>Correction reports: the report text, the page it is about, and a contact address only if you give one.</li>
+  <li>Your language choice in the <code>hl</code> cookie. There are no other cookies and no trackers.</li>
+</ul>
 <h2>Not legal advice</h2>
 <p>{{ t('not_advice') }} Act texts are the reprints Laws of Malaysia Online shows, at the date given on each page.</p>
 {% endif %}

@@ -6,9 +6,17 @@ chosen search (parlimen/search.py, Haiku reranking) and the answer step (parlime
 Searcher's SQLite connection may only be used on the thread that opened it, so the searcher is
 built on one worker thread and every search runs there; Claude calls run on the request's thread.
 At start the server loads the index, the vectors and the embedder in the background (`_Engine`):
-the embedder runs on the CPU, so the shared GPU is never held.
+the embedder runs on the CPU, so the shared GPU is never held. A question asked before the load
+ends gets HTTP 503 and a message to ask again in a minute; record pages serve meanwhile.
+
+Questions are limited per visitor an hour, and the day's Claude spend has a budget (`limits.py`);
+past the budget the ask page shows the passages found, with no rerank and no written answer. Each
+question that runs is logged to data/questions.jsonl with its filters, cost and time, and no IP
+address.
 
 Interface text follows the `hl` cookie (en or ms); record text shows as the source prints it.
+`robots.txt` and `sitemap.xml` (an index of one sitemap per kind of page, and per year of
+sittings) take their absolute URLs from PARLIMEN_SITE_URL, else from the request.
 Run:  python -m parlimen.web [--port 8780]
 """
 from __future__ import annotations
@@ -23,9 +31,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 from urllib.parse import quote, urlencode
+from xml.sax.saxutils import escape
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pydantic import BaseModel
@@ -33,9 +42,12 @@ from pydantic import BaseModel
 from .. import config
 from ..records import Records, reflow, slug
 from .i18n import LANGS, t
+from .limits import Limits
 
 HERE = Path(__file__).resolve().parent
 CORRECTIONS = config.DATA / "corrections.jsonl"
+QUESTIONS = config.DATA / "questions.jsonl"
+SITE_URL = os.environ.get("PARLIMEN_SITE_URL", "").rstrip("/")
 IDLE_MINUTES = 10
 DEVICE = os.environ.get("PARLIMEN_SITE_DEVICE", "cpu")
 EXAMPLES = {
@@ -82,7 +94,7 @@ class _Engine:
         self.device = device
         self.last_used = time.monotonic()
         self.unloaded = False
-        self.warmed = False
+        self.warmed = searcher is not None  # a given Searcher is ready; one built here waits for warm()
         self._worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="parlimen-search")
 
     def _built(self):
@@ -141,7 +153,8 @@ def pdf_page(url: str, page: int | None) -> str:
 
 
 def create_app(records: Records | None = None, searcher=None, answer_fn: Callable | None = None,
-               corrections: Path = CORRECTIONS) -> FastAPI:
+               corrections: Path = CORRECTIONS, limits: Limits | None = None, question_log: Path = QUESTIONS,
+               site_url: str = SITE_URL) -> FastAPI:
     app = FastAPI(title="parlimen-search", docs_url=None, redoc_url=None)
     app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
     env = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]),
@@ -151,6 +164,9 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug)
     engine = _Engine(searcher)
     app.state.engine = engine
+    limits = limits or Limits()
+    app.state.limits = limits
+    write_lock = threading.Lock()
     holder: dict = {"records": records}
 
     def rec() -> Records:
@@ -168,6 +184,9 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         v = request.cookies.get("hl", "en")
         return v if v in LANGS else "en"
 
+    def base_url(request: Request) -> str:
+        return site_url or str(request.base_url).rstrip("/")
+
     def page(request: Request, template: str, status: int = 200, **ctx) -> HTMLResponse:
         lang = hl(request)
         args = dict(request.query_params)
@@ -178,7 +197,7 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         html = env.get_template(template).render(
             lang=lang, t=lambda k, **kw: t(k, lang).format(**kw) if kw else t(k, lang), path=request.url.path,
             full_path=str(request.url.path) + (f"?{request.url.query}" if request.url.query else ""),
-            args=args, with_page=with_page, **ctx)
+            args=args, with_page=with_page, base_url=base_url(request), **ctx)
         return HTMLResponse(html, status)
 
     def missing(request: Request) -> HTMLResponse:
@@ -208,7 +227,7 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                     sittings=r.sittings(limit=6), commitments=r.commitments(size=5).rows)
 
     @app.post("/api/ask")
-    def api_ask(body: AskRequest):
+    def api_ask(request: Request, body: AskRequest):
         from ..search import Filters
 
         q = body.question.strip()
@@ -216,6 +235,11 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
             return JSONResponse({"error": "empty question"}, 400)
         if len(q) > 500:
             return JSONResponse({"error": "question too long (500 characters at most)"}, 400)
+        if not engine.warmed:  # after the nightly restart the index loads for a few minutes
+            return JSONResponse({"error": t("warming", hl(request))}, 503, headers={"Retry-After": "60"})
+        if not limits.take(request.client.host if request.client else ""):
+            return JSONResponse({"error": t("limit_hour", hl(request)).format(n=limits.hourly)}, 429)
+        budget = limits.budget_left()
         f = Filters(kind=body.kind or None, act=body.act.strip() or None, lang=body.lang or None,
                     date_from=body.date_from or None, date_to=body.date_to or None,
                     parliament=int(body.parliament) if body.parliament.isdigit() else None,
@@ -224,14 +248,18 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         t0 = time.perf_counter()
 
         def search(s):
-            trace = s.search(q, f)
+            before = getattr(s.reranker, "usd", 0.0)
+            # Past the day's budget nothing calls Claude: the fused order stands and no answer is written.
+            trace = s.search(q, f) if budget else s.search(q, f, mode="hybrid")
             seqs = [s.row(p.ids[0]).seq_first for p in trace.passages]
-            return trace, seqs
+            return trace, seqs, getattr(s.reranker, "usd", 0.0) - before
 
-        trace, seqs = engine.run(search)
+        trace, seqs, rerank_usd = engine.run(search)
         search_ms = (time.perf_counter() - t0) * 1000
         lang = question_lang(q)
-        ans = answer_fn(q, trace.passages, lang)
+        ans = answer_fn(q, trace.passages, lang) if budget else None
+        usd = rerank_usd + (ans.usd if ans else 0.0)
+        limits.spend(usd)
         r = rec()
         acts: dict[str, dict | None] = {}
         sittings: dict[tuple, dict | None] = {}
@@ -246,16 +274,25 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                 s = sittings.setdefault((p.chamber, p.date), r.sitting(p.chamber, p.date))
                 sp = r.speech(p.unit, seq)
                 url, pdf = debate_url(p.unit, seq), pdf_page((s or {}).get("pdf", ""), (sp or {}).get("page_start"))
+            draft = p.kind != "law" and bool((s or {}).get("draft"))
             passages.append({"cite": p.cite, "header": p.header, "text": p.text, "kind": p.kind, "url": url,
-                             "pdf": pdf, "via": p.via, "score": round(p.score, 4)})
+                             "pdf": pdf, "via": p.via, "score": round(p.score, 4), "draft": draft})
         sources = [{"n": s.n, "cite": s.cite, "quotes": s.quotes,
                     "url": passages[s.index]["url"] if 0 <= s.index < len(passages) else "",
-                    "pdf": passages[s.index]["pdf"] if 0 <= s.index < len(passages) else ""}
-                   for s in ans.sources]
+                    "pdf": passages[s.index]["pdf"] if 0 <= s.index < len(passages) else "",
+                    "draft": passages[s.index]["draft"] if 0 <= s.index < len(passages) else False}
+                   for s in (ans.sources if ans else [])]
         stages = [{"name": st.name, "hits": len(st.hits), "ms": round(st.ms)} for st in trace.stages]
-        return {"question": q, "lang": lang, "filters": trace.filters.describe(), "answer": ans.text,
-                "sources": sources, "passages": passages, "stages": stages, "usd": round(ans.usd, 5),
-                "search_ms": round(search_ms), "total_ms": round((time.perf_counter() - t0) * 1000)}
+        total_ms = round((time.perf_counter() - t0) * 1000)
+        with write_lock:
+            question_log.parent.mkdir(parents=True, exist_ok=True)
+            with open(question_log, "a", encoding="utf-8") as fh:
+                fh.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "question": q,
+                                     "lang": lang, "filters": trace.filters.describe(), "answered": ans is not None,
+                                     "usd": round(usd, 5), "ms": total_ms}, ensure_ascii=False) + "\n")
+        return {"question": q, "lang": lang, "filters": trace.filters.describe(), "answer": ans.text if ans else "",
+                "budget_out": ans is None, "sources": sources, "passages": passages, "stages": stages,
+                "usd": round(usd, 5), "search_ms": round(search_ms), "total_ms": total_ms}
 
     # ---------- the law ----------
 
@@ -410,7 +447,51 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
 
     @app.get("/about", response_class=HTMLResponse)
     def about(request: Request):
-        return page(request, "about.html", meta=rec().meta())
+        return page(request, "about.html", meta=rec().meta(), limits=limits)
+
+    # ---------- search engines ----------
+
+    def xml(body: str) -> Response:
+        return Response('<?xml version="1.0" encoding="UTF-8"?>\n' + body, media_type="application/xml")
+
+    def urlset(request: Request, paths: list[str]) -> Response:
+        base = base_url(request)
+        locs = "".join(f"<url><loc>{escape(base + p)}</loc></url>\n" for p in paths)
+        return xml(f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{locs}</urlset>\n')
+
+    @app.get("/robots.txt", response_class=PlainTextResponse)
+    def robots(request: Request):
+        return ("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /hl/\nDisallow: /correction\n"
+                f"Disallow: /*?q=\n\nSitemap: {base_url(request)}/sitemap.xml\n")
+
+    @app.get("/sitemap.xml")
+    def sitemap_index(request: Request):
+        base = base_url(request)
+        names = ["pages", "law", "mps", "bills", "topics"] + [f"hansard-{y}" for y in rec().sitting_years()]
+        maps = "".join(f"<sitemap><loc>{escape(base)}/sitemap-{n}.xml</loc></sitemap>\n" for n in names)
+        return xml(f'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{maps}</sitemapindex>\n')
+
+    @app.get("/sitemap-{name}.xml")
+    def sitemap(request: Request, name: str):
+        r = rec()
+        if name == "pages":
+            paths = ["/", "/law", "/hansard", "/hansard?parliament=14", "/questions", "/commitments", "/mp",
+                     "/mp?parliament=14", "/bills", "/topics", "/about"]
+        elif name == "law":
+            paths = [law_url(a["number"], lang) for a in r.acts() for lang in a["langs"].split(",") if lang]
+        elif name == "mps":
+            paths = [f"/mp/{quote(m)}" for m in r.member_slugs()]
+        elif name == "bills":
+            paths = [f"/bill/{quote(b['slug'])}" for b in r.bills()]
+        elif name == "topics":
+            paths = [f"/topic/{slug(x['topic'])}" for x in r.topics()]
+        elif name.startswith("hansard-") and name[8:] in r.sitting_years():
+            year = name[8:]
+            paths = [f"/hansard/{s['chamber']}/{s['date']}" for s in r.sittings() if s["date"].startswith(year)]
+            paths += [debate_url(u) for u in r.unit_ids(year)]
+        else:
+            return missing(request)
+        return urlset(request, paths)
 
     @app.get("/api/health")
     def health():

@@ -8,6 +8,7 @@
   <h1>{{ m.chamber(sitting.chamber) }}, {{ sitting.date }}</h1>
   <p class="meta">{% if sitting.pdf %}<a href="{{ sitting.pdf }}" rel="noopener">{{ t('official_pdf') }}</a> · {% endif %}{{ units|length }} {{ t('items') }}</p>
 </div>
+{% if sitting.draft %}{{ m.draft_note() }}{% endif %}
 {{ m.ai_note(t('ai_label')) }}
 <ol class="units">
   {% for u in units %}{{ m.unit_row(u) }}{% endfor %}

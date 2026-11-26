@@ -151,6 +151,29 @@ def append(chunks: Iterable[Chunk], path: Path | None = None) -> tuple[int, int]
     return start, end
 
 
+def retire(chamber: str, date: str, path: Path | None = None) -> int:
+    """Take a sitting's debate chunks out of search, for a revised text that `append` adds again.
+    Ids must not move (the vector files are in id order), so each row stays with kind "retired",
+    its key prefixed and its text emptied; its FTS entries, speakers and topics go. A rebuild drops
+    the rows. Returns the rows retired."""
+    con = connect(path)
+    old = con.execute("SELECT id, header, note, text FROM chunks WHERE kind = 'debate' AND chamber = ? AND date = ?",
+                      (chamber, date)).fetchall()
+    for r in old:
+        con.execute("INSERT INTO fts_h(fts_h, rowid, header, text) VALUES ('delete', ?, ?, ?)",
+                    (r["id"], r["header"], r["text"]))
+        con.execute("INSERT INTO fts_hn(fts_hn, rowid, header, note, text) VALUES ('delete', ?, ?, ?, ?)",
+                    (r["id"], r["header"], r["note"], r["text"]))
+    ids = [r["id"] for r in old]
+    for t in ("speakers", "topics"):
+        con.executemany(f"DELETE FROM {t} WHERE chunk = ?", [(i,) for i in ids])
+    con.executemany("UPDATE chunks SET kind = 'retired', key = 'retired:' || key, header = '', note = '', text = '' "
+                    "WHERE id = ?", [(i,) for i in ids])
+    con.commit()
+    con.close()
+    return len(ids)
+
+
 @dataclass
 class Row:
     id: int

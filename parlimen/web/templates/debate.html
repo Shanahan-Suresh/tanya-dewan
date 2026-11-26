@@ -12,6 +12,7 @@
     {% if bill %} · <a href="/bill/{{ bill.slug }}">{{ bill.title }}</a>{% endif %}
     {% if act %} · <a href="/law/{{ act.number }}">{{ act.title_bi }} (Act {{ act.number }})</a>{% endif %}
   </p>
+  {% if sitting and sitting.draft %}{{ m.draft_note() }}{% endif %}
   <p class="neighbours">{% if prev %}<a href="{{ debate_url(prev.id) }}">← {{ prev.business|truncate(50) }}</a>{% endif %}{% if next %}<a href="{{ debate_url(next.id) }}">{{ next.business|truncate(50) }} →</a>{% endif %}</p>
 </div>
 <div class="debate-layout">

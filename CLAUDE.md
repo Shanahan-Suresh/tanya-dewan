@@ -13,7 +13,9 @@ read that project's `CLAUDE.md` and `README.md` before changing search, eval or 
    sign-off. Until then, downloaded texts and everything built from them stay in the git-ignored
    `data/`.
 2. **Crawl politely:** cache every file once, rate-limit, send an identifying user agent, follow
-   each site's `robots.txt` and terms. Never re-download what the cache holds.
+   each site's `robots.txt` and terms. Never re-download what the cache holds, except the weekly
+   re-check of draft sittings (`parlimen/drafts.py`), which fetches each draft PDF of the last year
+   once a week.
 3. **Not legal advice.** Every answer cites its sources, shows the Act's reprint date or the
    sitting date, and carries the not-legal-advice line. The answer path refuses advice on a
    reader's own case.

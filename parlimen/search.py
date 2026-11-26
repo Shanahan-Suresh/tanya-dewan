@@ -160,9 +160,11 @@ class Searcher:
         self.con = connect(db_path(root))
         self.root, self.size, self.variant = root, size, variant
         cols = list(zip(*self.con.execute(
-            "SELECT kind = 'law', act, lang, REPLACE(date, '-', ''), parliament, chamber FROM chunks ORDER BY id")))
-        cols = cols or [()] * 6
+            "SELECT kind = 'law', act, lang, REPLACE(date, '-', ''), parliament, chamber, kind != 'retired' "
+            "FROM chunks ORDER BY id")))
+        cols = cols or [()] * 7
         self.is_law = np.array(cols[0], dtype=bool)
+        self.live = np.array(cols[6], dtype=bool)  # a revised sitting's old rows are retired (index.retire)
         self.act = np.array(cols[1], dtype=str)
         self.lang = np.array(cols[2], dtype=str)
         self.date = np.array([int(d or 0) for d in cols[3]], dtype=np.int64)
@@ -231,7 +233,7 @@ class Searcher:
         return np.fromiter(ids or (), dtype=np.int64)
 
     def mask(self, f: Filters) -> np.ndarray:
-        keep = np.ones(len(self.is_law), dtype=bool)
+        keep = self.live.copy()
         if f.kind:
             keep &= self.is_law == (f.kind == "law")
         if f.act:

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block title %}{{ t('nav_hansard') }}, {{ t('f_parliament') }} {{ parliament }}{% endblock %}
+{% block description %}Every sitting of the Dewan Rakyat and its Special Chamber in the {{ parliament }}th Parliament, by meeting, with each day's agenda items.{% endblock %}
 {% block main %}
 <h1>{{ t('nav_hansard') }}</h1>
 <p class="tabs">{% for p in (15, 14) %}<a href="?parliament={{ p }}" {% if p == parliament %}aria-current="page"{% endif %}>{{ t('f_parliament') }} {{ p }}</a>{% endfor %}</p>
@@ -8,7 +9,7 @@
 <section class="meeting">
   <h2>{{ meeting }}</h2>
   <ul class="days">
-    {% for s in rows %}<li><a href="/hansard/{{ s.chamber }}/{{ s.date }}">{{ s.date }}</a> <span class="muted small">{{ m.chamber(s.chamber) }} · {{ s.units }} {{ t('items') }}</span></li>{% endfor %}
+    {% for s in rows %}<li><a href="/hansard/{{ s.chamber }}/{{ s.date }}">{{ s.date }}</a> <span class="muted small">{{ m.chamber(s.chamber) }} · {{ s.units }} {{ t('items') }}</span>{% if s.draft %} {{ m.draft_mark() }}{% endif %}</li>{% endfor %}
   </ul>
 </section>
 {% endfor %}

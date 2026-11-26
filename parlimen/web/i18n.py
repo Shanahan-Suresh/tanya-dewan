@@ -163,6 +163,23 @@ TEXT = {
     "examples": ("Try", "Cuba"),
     "latest_sittings": ("Latest sittings", "Persidangan terkini"),
     "latest_commitments": ("Latest commitments", "Komitmen terkini"),
+    "draft_note": ("Unrevised draft: Parliament has not yet revised this sitting's text. Words may change in the "
+                   "revised record.",
+                   "Naskhah belum disemak: Parlimen belum menyemak teks persidangan ini. Perkataan mungkin berubah "
+                   "dalam rekod yang disemak."),
+    "draft_short": ("unrevised draft", "naskhah belum disemak"),
+    "warming": ("The search is still loading after a restart. Please ask again in a minute. Every record "
+                "page works meanwhile.",
+                "Carian masih dimuatkan selepas dimulakan semula. Sila tanya lagi dalam seminit. Semua halaman "
+                "rekod boleh dibaca sementara itu."),
+    "limit_hour": ("You have asked {n} questions in the last hour, the most one visitor can ask. Please try "
+                   "again in the next hour. Every record page still works.",
+                   "Anda telah bertanya {n} soalan dalam sejam yang lalu, had untuk seorang pelawat. Sila cuba "
+                   "lagi dalam jam berikutnya. Semua halaman rekod masih boleh dibaca."),
+    "budget_out": ("Today's budget for written answers is used up, so this page shows the passages the search "
+                   "found, without a written answer. Written answers start again tomorrow (Malaysia time).",
+                   "Bajet jawapan bertulis hari ini telah habis, jadi halaman ini menunjukkan petikan yang ditemui, "
+                   "tanpa jawapan bertulis. Jawapan bertulis bermula semula esok (waktu Malaysia)."),
 }
 
 

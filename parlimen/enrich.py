@@ -266,9 +266,12 @@ def _read(path: Path) -> list[dict]:
     return [json.loads(line) for line in open(path, encoding="utf-8")] if path.exists() else []
 
 
-def _done() -> dict[str, dict]:
-    """The latest raw answer per extract; an extract whose answer failed counts as not done."""
-    return {r["unit"]: r for r in _read(RAW) if "result" in r and r.get("prompt", 1) == PROMPT_VERSION}
+def _done(fresh_from: dict[str, int] | None = None) -> dict[str, dict]:
+    """The latest raw answer per extract; an extract whose answer failed counts as not done. An
+    extract in `fresh_from` (a revised sitting's) counts only answers from that line of RAW on."""
+    fresh_from = fresh_from or {}
+    return {r["unit"]: r for i, r in enumerate(_read(RAW))
+            if "result" in r and r.get("prompt", 1) == PROMPT_VERSION and i >= fresh_from.get(r["unit"], 0)}
 
 
 # ---------- checks ----------
