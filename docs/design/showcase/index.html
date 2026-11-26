@@ -1,0 +1,251 @@
+<title>Parlimen Search Redesign</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* Layout: one centred column; a tab row picks a design; a live preview frame with page and width switches, then notes and pictures. */
+:root {
+  --bg: #f4f5f7; --surface: #ffffff; --fg: #15181d; --muted: #565d68; --line: #dde1e7;
+  --accent: #1f4fd1; --accent-ink: #ffffff; --frame: #e7eaef;
+  --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111317; --surface: #191c22; --fg: #e9ebef; --muted: #a2a9b5; --line: #2c313a;
+  --accent: #8fb0ff; --accent-ink: #0c1530; --frame: #0b0d10; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111317; --surface: #191c22; --fg: #e9ebef; --muted: #a2a9b5; --line: #2c313a;
+  --accent: #8fb0ff; --accent-ink: #0c1530; --frame: #0b0d10; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px }
+.wrap { max-width: 1480px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px }
+h1, h2, h3 { font-family: var(--font-head); text-wrap: balance; margin: 0; font-weight: 600 }
+h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -0.01em }
+h2 { font-size: 22px } h3 { font-size: 15px; font-family: var(--font-body) }
+p { margin: 0 }
+.intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: end }
+.intro p { color: var(--muted); max-width: 62ch; margin-top: 12px }
+.steps { margin: 0; padding: 18px 20px 18px 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; display: grid; gap: 6px }
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px }
+.tab { text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 16px; cursor: pointer; display: flex; gap: 14px; align-items: center; min-height: 44px }
+.tab:hover { border-color: var(--muted) }
+.tab[aria-selected="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent) }
+.tab img { width: 84px; height: 56px; object-fit: cover; object-position: top; border-radius: 6px; border: 1px solid var(--line); flex: none }
+.tab b { display: block; font-family: var(--font-head); font-size: 17px; font-weight: 600 }
+.tab span { color: var(--muted); font-size: 13px }
+.panel { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; min-width: 0 }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--line) }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden }
+.seg button { font: inherit; font-size: 14px; background: transparent; color: var(--fg); border: 0; padding: 0 14px; min-height: 40px; cursor: pointer }
+.seg button + button { border-left: 1px solid var(--line) }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink) }
+.bar .label { font-size: 12px; color: var(--muted); margin-right: 6px }
+.bar .grow { flex: 1 }
+.btn { font: inherit; font-size: 14px; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; min-height: 40px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center }
+.btn:hover { border-color: var(--muted) }
+.screen { background: var(--frame); height: 760px; position: relative; overflow: hidden; display: flex; justify-content: center }
+.screen iframe { border: 0; background: #fff; transform-origin: top left; position: absolute; top: 0; left: 0 }
+.screen.phone iframe { position: static; transform: none; width: 390px; height: 100%; max-width: 100%; border-left: 1px solid var(--line); border-right: 1px solid var(--line) }
+.hint { font-size: 13px; color: var(--muted); padding: 10px 12px; border-top: 1px solid var(--line) }
+.side { display: flex; flex-direction: column; gap: 22px; min-width: 0 }
+.side section { display: grid; gap: 8px }
+.side p, .side li { color: var(--muted); font-size: 14px }
+.side ul { margin: 0; padding-left: 18px; display: grid; gap: 6px }
+.side .lead { color: var(--fg); font-size: 15px }
+.pics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px }
+.pic { font: inherit; color: var(--muted); font-size: 12px; text-align: left; background: none; border: 0; padding: 0; cursor: zoom-in; display: grid; gap: 6px }
+.pic img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid var(--line); background: var(--surface) }
+.pic:hover img { border-color: var(--muted) }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px }
+details summary { cursor: pointer; font-weight: 600 }
+details p { color: var(--muted); margin-top: 10px; max-width: 80ch }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.full { position: fixed; inset: 0; z-index: 20; background: var(--bg); display: flex; flex-direction: column;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px) }
+.full .stage { flex: 1; display: flex; flex-direction: column; border-radius: 0; border: 0 }
+.full .screen { flex: 1; height: auto }
+.viewer { position: fixed; inset: 0; z-index: 30; background: rgba(8, 10, 14, .92); display: flex; flex-direction: column }
+.viewer .vbar { display: flex; gap: 10px; align-items: center; padding: calc(10px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px)); color: #e9ebef }
+.viewer .vbar .btn { color: #e9ebef; border-color: #3a404a }
+.viewer .vbar span { flex: 1; font-size: 14px }
+.viewer .vimg { flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 0 16px 24px }
+.viewer img { max-width: min(100%, 1440px); height: auto; cursor: zoom-out; border-radius: 4px }
+@media (max-width: 1100px) { .panel { grid-template-columns: minmax(0, 1fr) } }
+@media (max-width: 760px) {
+  .intro { grid-template-columns: minmax(0, 1fr) }
+  .tabs { grid-template-columns: minmax(0, 1fr) }
+  .screen { height: 640px }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div>
+      <h1>Which look should Parlimen Search use?</h1>
+      <p>I built three complete designs for the site. Each one shows the same three pages with real records: the Ask page with a real answer, an MP's page and one debate. The site keeps its current engine; only the look and the page features change.</p>
+    </div>
+    <ol class="steps">
+      <li>Pick a design in the row below.</li>
+      <li>Try the live page: press Ask, open the MP and debate pages, switch to phone width.</li>
+      <li>Tell me in chat which design you want, and anything to borrow from the others.</li>
+    </ol>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Designs" id="tabs"></div>
+
+  <div class="panel" id="panel">
+    <div class="stage" id="stage">
+      <div class="bar">
+        <span><span class="label">Page</span><span class="seg" id="pages"></span></span>
+        <span><span class="label">Width</span><span class="seg" id="widths"></span></span>
+        <span class="grow"></span>
+        <button class="btn" id="fullBtn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+          <span id="fullLabel">Fill the window</span>
+        </button>
+      </div>
+      <div class="screen" id="screen"><iframe id="frame" title="Live design preview"></iframe></div>
+      <p class="hint" id="hint">Desktop pages are drawn at 1440 px wide and shrunk to fit. Links inside the page work.</p>
+    </div>
+    <aside class="side" id="side"></aside>
+  </div>
+
+  <details>
+    <summary>How these were made</summary>
+    <p>A shared brief fixed the content and the rules for all three: real records only, every AI-written line labelled, the unrevised-draft mark as an icon with coloured text, phone width and dark mode designed. Each design was then built by its own agent as plain HTML and CSS, so whichever you pick moves straight into the site's templates.</p>
+    <p>The answer on each Ask page is one real answer from the site, about targeted diesel subsidies. Every example question replays that same answer. The debate is item 17 of the 22 October 2026 sitting, which is still an unrevised draft. That debate belongs to no bill, so each design shows the Employment (Amendment) 2021 bill as its sample timeline.</p>
+    <p>Each design follows your device's light or dark setting. The pictures include a dark version of each Ask page.</p>
+  </details>
+</div>
+
+<div class="viewer" id="viewer" hidden>
+  <div class="vbar">
+    <span id="vcap"></span>
+    <button class="btn" id="vprev" type="button" aria-label="Previous picture">Previous</button>
+    <button class="btn" id="vnext" type="button" aria-label="Next picture">Next</button>
+    <button class="btn" id="vclose" type="button">Close</button>
+  </div>
+  <div class="vimg"><img id="vimg" alt=""></div>
+</div>
+
+<script>
+const DESIGNS = [
+  { id: "gazette", name: "Newspaper of record", short: "Serif headlines, chamber green, sources as margin footnotes.",
+    lead: "The site reads like a serious newspaper for Parliament. The answer is set as a lead article, and its sources fill the right margin as numbered footnotes while the text streams in.",
+    good: ["The most distinctive and calm of the three; it says “public record” at a glance.",
+      "The MP page opens like a profile feature, with a real commitment as a pull quote.",
+      "Charts are drawn in a print style: ink bars, the busiest month in green."],
+    hard: ["The margin footnotes must stay beside the answer on desktop and fall under it on a phone.",
+      "The debate page reorders three blocks between desktop and phone.",
+      "Interface type is small and quiet, which suits reading more than fast scanning."] },
+  { id: "console", name: "Analyst console", short: "Dark first, data forward, split answer and sources.",
+    lead: "The site works like a research tool for people who follow Parliament for a living. One search bar takes typed filters and a Ctrl K palette, and the answer sits in a split view beside its sources.",
+    good: ["Pointing at a citation mark lights up its source on the right.",
+      "The MP page is a dashboard: a month-by-year activity grid, big counts, topic bars.",
+      "The debate page has a speaker map that follows your scroll, and J and K keys to step through speeches."],
+    hard: ["Typed filters must turn into the site's search address and back.",
+      "It opens dark, which can feel heavy for casual readers; a designed light mode is included.",
+      "It is the densest of the three, so first-time visitors may need a moment."] },
+  { id: "civic", name: "Public-service app", short: "Navy and yellow, friendly cards, phone first.",
+    lead: "The site feels like a well-made public app for everyday Malaysians. A navy search panel with a quiet songket pattern opens the page, and answers come as cards whose citation marks preview their source.",
+    good: ["Tapping a citation mark shows the quoted passage right there.",
+      "On a phone it has a bottom menu bar, like an app.",
+      "The debate page opens with a labelled “What happened” card in English or Malay."],
+    hard: ["Source previews need each quoted passage in the page or fetched per mark.",
+      "The bill steps need reading stages (first, second, third reading, assent) that the data does not hold yet.",
+      "It is the most conventional of the three; its strength is warmth and polish, not surprise."] },
+];
+const PAGES = [["home", "Ask"], ["mp", "MP"], ["debate", "Debate"]];
+const PICS = [
+  ["home-answer-1440", "Ask page with an answer, desktop"], ["home-answer-1440-dark", "Ask page with an answer, desktop, dark"],
+  ["mp-1440", "MP page, desktop"], ["debate-1440", "Debate page, desktop"],
+  ["home-answer-390", "Ask page with an answer, phone"], ["mp-390", "MP page, phone"], ["debate-390-dark", "Debate page, phone, dark"],
+];
+const st = { d: 0, page: "home", phone: false, full: false };
+const $ = (id) => document.getElementById(id);
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+$("tabs").innerHTML = DESIGNS.map((d, i) =>
+  `<button class="tab" role="tab" id="tab-${d.id}" aria-selected="false" data-i="${i}">
+     <img src="shots/${d.id}-home-answer-1440.webp" alt="">
+     <span><b>${esc(d.name)}</b><span>${esc(d.short)}</span></span></button>`).join("");
+$("pages").innerHTML = PAGES.map(([k, l]) => `<button type="button" data-page="${k}">${l}</button>`).join("");
+$("widths").innerHTML = `<button type="button" data-w="0">Desktop</button><button type="button" data-w="1">Phone</button>`;
+
+function fit() {
+  const scr = $("screen"), fr = $("frame");
+  if (st.phone) { fr.style.width = ""; fr.style.height = ""; fr.style.transform = ""; return; }
+  const s = Math.min(1, scr.clientWidth / 1440);
+  fr.style.width = "1440px";
+  fr.style.height = (scr.clientHeight / s) + "px";
+  fr.style.transform = `scale(${s})`;
+  fr.style.left = Math.max(0, (scr.clientWidth - 1440 * s) / 2) + "px";
+}
+function renderSide() {
+  const d = DESIGNS[st.d];
+  $("side").innerHTML = `
+    <section><h2>${esc(d.name)}</h2><p class="lead">${esc(d.lead)}</p></section>
+    <section><h3>What it does best</h3><ul>${d.good.map((g) => `<li>${esc(g)}</li>`).join("")}</ul></section>
+    <section><h3>What to weigh</h3><ul>${d.hard.map((g) => `<li>${esc(g)}</li>`).join("")}</ul></section>
+    <section><h3>Pictures at full size</h3><div class="pics">${PICS.map(([f, c], i) =>
+      `<button class="pic" type="button" data-pic="${i}"><img src="shots/${d.id}-${f}.webp" alt="" loading="lazy">${esc(c)}</button>`).join("")}</div></section>`;
+}
+function render(reload = true) {
+  const d = DESIGNS[st.d];
+  document.querySelectorAll(".tab").forEach((t, i) => t.setAttribute("aria-selected", String(i === st.d)));
+  document.querySelectorAll("[data-page]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.page === st.page)));
+  document.querySelectorAll("[data-w]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.w === +st.phone)));
+  $("screen").classList.toggle("phone", st.phone);
+  $("hint").textContent = st.phone ? "Drawn at 390 px wide, the width of a typical phone. Links inside the page work."
+    : "Desktop pages are drawn at 1440 px wide and shrunk to fit. Links inside the page work.";
+  if (reload) $("frame").src = `${d.id}/${st.page}.html`;
+  fit();
+}
+$("tabs").addEventListener("click", (e) => {
+  const t = e.target.closest(".tab"); if (!t) return;
+  st.d = +t.dataset.i; st.page = "home"; renderSide(); render();
+  try { localStorage.setItem("design", st.d); } catch (_) {}
+});
+$("pages").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; st.page = b.dataset.page; render(); });
+$("widths").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; st.phone = b.dataset.w === "1"; render(false); });
+$("frame").addEventListener("load", () => {
+  try { const p = $("frame").contentWindow.location.pathname.split("/").pop().replace(".html", "");
+    if (PAGES.some(([k]) => k === p) && p !== st.page) { st.page = p; render(false); } } catch (_) {}
+});
+$("fullBtn").addEventListener("click", () => {
+  st.full = !st.full;
+  $("panel").classList.toggle("full", st.full);
+  $("fullLabel").textContent = st.full ? "Back to the page" : "Fill the window";
+  fit();
+});
+new ResizeObserver(fit).observe($("screen"));
+
+let vi = 0;
+function showPic(i) {
+  vi = (i + PICS.length) % PICS.length;
+  const d = DESIGNS[st.d];
+  $("vimg").src = `shots/${d.id}-${PICS[vi][0]}.webp`;
+  $("vimg").alt = PICS[vi][1];
+  $("vcap").textContent = `${d.name}: ${PICS[vi][1]} (${vi + 1} of ${PICS.length})`;
+  $("viewer").hidden = false;
+  $("vclose").focus();
+}
+function closePic() { $("viewer").hidden = true; }
+$("side").addEventListener("click", (e) => { const b = e.target.closest("[data-pic]"); if (b) showPic(+b.dataset.pic); });
+$("vprev").addEventListener("click", () => showPic(vi - 1));
+$("vnext").addEventListener("click", () => showPic(vi + 1));
+$("vclose").addEventListener("click", closePic);
+$("vimg").addEventListener("click", closePic);
+$("viewer").addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closePic();
+  else if (e.key === "ArrowLeft") showPic(vi - 1);
+  else if (e.key === "ArrowRight") showPic(vi + 1);
+});
+
+try { const s = +localStorage.getItem("design"); if (s >= 0 && s < DESIGNS.length) st.d = s; } catch (_) {}
+renderSide(); render();
+</script>
