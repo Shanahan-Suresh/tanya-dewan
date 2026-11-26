@@ -396,10 +396,9 @@ page later grows into an app.
   design runs, new `Records` member and topic-trend queries, `config.SITE_NAME`. The template and
   CSS port to every page is done (all 17 templates, `ask.js`, `debate.js`, `shell.js`, vendored
   htmx 2.0.4, self-hosted Geist and Literata with licences; `tools/site_shots.py --dark --full`;
-  125 tests pass). Owed: a polish round from shots (unread: questions, commitments, Act, topics,
-  MPs list, bill page, Malay pages), "1 speeches" plural, the citation popover covering the
-  answer on phone, dark heat-grid level 0 too faint, then restart the site on 8780 and ask one
-  real question through the stream.
+  125 tests pass). One real question through the stream (2026-11-26): answered in 7.8 s warm,
+  [amount removed]. Owed: the owner's own read of the local site; the Malay pages have not been looked
+  at by eye.
 - Name: the owner wants a better name than parlimen-search. Shortlist page
   https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE (source `docs/design/names/`); my pick is
   Tanya Dewan. The rename is `config.SITE_NAME` plus docs, OG image and the MCP description.
