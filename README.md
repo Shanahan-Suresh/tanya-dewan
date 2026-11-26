@@ -37,6 +37,7 @@ From the repo root, with the `.venv` (Python 3.14):
 .venv\Scripts\python.exe -m parlimen.ingest            # bring new sittings into the index
 .venv\Scripts\python.exe -m parlimen.records build     # the page database, after each ingest (site stopped)
 .venv\Scripts\python.exe -m parlimen.web               # the site on http://127.0.0.1:8780
+.venv\Scripts\python.exe tools\make_og.py              # redraw the share image (static/og.png)
 .venv\Scripts\python.exe -m parlimen.digest --sector energy --from 2026-10-19 --to 2026-10-23
 .venv\Scripts\python.exe tools\check_phase6.py         # click-through check against the running site
 .venv\Scripts\python.exe -m parlimen.evaluate run      # retrieval eval, all arms (Haiku arms: about [amount removed])

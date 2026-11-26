@@ -404,6 +404,10 @@ page later grows into an app.
   image (`tools/make_og.py`), the docs' titles and the published review pages. The Python
   package and the repo folder keep `parlimen`. Owed: a trademark (MyIPO) and social handle check,
   and registering tanyadewan.my (the owner's step; all three addresses were free on 2026-11-26).
+  Logo: five concepts on https://claude.ai/artifact/Ub2MRtJRcswidYHisSDPi5 (source and SVGs in
+  `docs/design/logo/`, `build.py`); my pick L2 (seats in a speech bubble). The owner picks in
+  chat; then the mark goes into `base.html`, a favicon set, the phone icon and `tools/make_og.py`.
+  A UI/UX polish pass is with an agent (audit in `data/ux-audit.md`, changes uncommitted).
   Shortlist page
   https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE (source `docs/design/names/`); my pick is
   Tanya Dewan. The rename is `config.SITE_NAME` plus docs, OG image and the MCP description.
