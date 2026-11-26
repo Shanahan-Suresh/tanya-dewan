@@ -1,63 +1,65 @@
 {% extends "base.html" %}
 {% block title %}{{ t('nav_about') }}{% endblock %}
-{% block description %}What Tanya Dewan holds, what AI wrote and how answers are checked, how well it works, and what the site stores.{% endblock %}
+{% block description %}What the site holds, what AI writes, how answers are checked, and what data the site keeps.{% endblock %}
 {% block main %}
 <article class="prose">
 {% if lang == 'ms' %}
-<h1>Perihal Tanya Dewan</h1>
-<p>Tanya Dewan mencari Akta utama Malaysia dan perbahasan Dewan Rakyat (Parlimen ke-14 dan ke-15, termasuk Dewan Khas) bersama-sama, dalam bahasa Melayu dan Inggeris.</p>
-<h2>Apa yang ada di dalamnya</h2>
+<h1>Tentang Tanya Dewan</h1>
+<p>Tanya Dewan mencari Akta utama Malaysia dan perbahasan Dewan Rakyat sekali gus, dalam bahasa Melayu dan Inggeris. Ia meliputi Parlimen ke-14 dan ke-15, termasuk Dewan Khas.</p>
+<h2>Kandungan laman</h2>
 <ul>
-  <li>{{ "{:,}".format(meta.units) }} urusan persidangan dengan {{ "{:,}".format(meta.speeches) }} ucapan verbatim.</li>
-  <li>{{ "{:,}".format(meta.qa) }} soalan lisan yang digabung dengan jawapan menteri.</li>
-  <li>{{ "{:,}".format(meta.commitments) }} komitmen menteri, setiap satu dengan petikan yang disemak oleh kod.</li>
+  <li>{{ "{:,}".format(meta.units) }} perbahasan dengan {{ "{:,}".format(meta.speeches) }} ucapan verbatim.</li>
+  <li>{{ "{:,}".format(meta.qa) }} soalan lisan, setiap satu dipadankan dengan jawapan menteri.</li>
+  <li>{{ "{:,}".format(meta.commitments) }} komitmen menteri, setiap satu dengan petikan yang disemak oleh kod berbanding teks Hansard.</li>
 </ul>
 <h2>Apa yang ditulis oleh AI</h2>
-<p>Ringkasan, gabungan soalan dan jawapan, serta nota komitmen ditulis oleh model Claude dan dilabel "AI". Ia sentiasa dipaparkan di sebelah teks verbatim. Penghurai, bukan model, menentukan siapa yang bercakap. Petikan komitmen yang tidak sepadan dengan teks Hansard dibuang.</p>
+<p>Claude, sebuah model AI, menulis ringkasan, padanan soalan dan jawapan, serta nota komitmen. Setiap satu dilabel "AI" dan dipaparkan di sebelah teks verbatim, iaitu rekod sebenar. Penghurai, bukan model, yang menentukan siapa yang berucap. Komitmen dibuang jika petikannya tidak sepadan dengan teks Hansard.</p>
 <h2>Cara jawapan ditulis</h2>
-<p>Carian kata kunci dan carian makna mencari petikan, Claude Haiku menyusunnya semula, dan Claude Haiku menulis jawapan daripada lapan petikan terbaik. Setiap ayat jawapan mesti memetik sumber; ayat tanpa petikan dibuang.</p>
-<h2>Naskhah belum disemak</h2>
-<p>Parlimen menerbitkan setiap persidangan Dewan Rakyat dahulu sebagai naskhah belum disemak, kemudian menggantikannya dengan teks yang disemak. Persidangan yang teksnya masih naskhah belum disemak ditanda begitu. Laman ini memuat turun semula naskhah itu setiap minggu dan memproses semula persidangan apabila teksnya berubah. Fail Dewan Khas tidak menyatakan status ini, jadi persidangannya tidak ditanda.</p>
+<p>Carian kata kunci dan carian makna mencari petikan. Claude Haiku menyusunnya semula, kemudian menulis jawapan daripada lapan petikan terbaik. Setiap ayat jawapan mesti memetik sumber, dan ayat tanpa petikan dibuang.</p>
+<h2>Sejauh mana ia tepat</h2>
+<p>Kami menguji dengan set soalan tetap. Bagi 91% soalan undang-undang, seksyen Akta yang betul berada dalam 10 hasil teratas, dan bagi 73% soalan perbahasan, ucapan yang betul juga begitu. Seorang penilai buta menilai 77% jawapan sebagai betul dan 82% disokong sepenuhnya oleh petikannya.</p>
+<h2>Draf belum disemak</h2>
+<p>Parlimen mula-mula menerbitkan setiap persidangan Dewan Rakyat sebagai draf belum disemak, kemudian menggantikannya dengan teks yang disemak. Persidangan yang teksnya masih draf ditandakan. Laman ini memuat turun semula setiap draf setiap minggu dan memproses semula persidangan apabila teksnya berubah. Fail Dewan Khas tidak menyatakan status ini, jadi persidangannya tidak ditandakan.</p>
 <h2>Had soalan</h2>
-<p>Setiap pelawat boleh bertanya {{ limits.hourly }} soalan sejam. Jawapan bertulis mempunyai bajet harian. Selepas bajet habis, halaman Tanya menunjukkan petikan yang ditemui tanpa jawapan bertulis sehingga esok.</p>
-<h2>Apa yang laman ini simpan</h2>
+<p>Setiap pelawat boleh bertanya {{ limits.hourly }} soalan sejam. Jawapan bertulis juga ada bajet harian. Apabila bajet habis, halaman Tanya menunjukkan petikan yang ditemui tanpa jawapan bertulis sehingga esok.</p>
+<h2>Data yang disimpan</h2>
 <ul>
   <li>Setiap soalan yang dijawab: teks soalan, penapis, bahasa, kos dan masa. Alamat IP tidak disimpan bersamanya. Kami membacanya untuk mengetahui topik yang dicari orang.</li>
-  <li>Untuk had soalan: satu kiraan bagi setiap pelawat, di bawah cincangan bergaram alamat IP. Kiraan itu dipadam selepas sejam, dan garam itu bertukar setiap hari.</li>
-  <li>Laporan pembetulan: teks laporan, halaman yang dilaporkan, dan alamat hubungan hanya jika anda memberikannya.</li>
-  <li>Pilihan bahasa anda dalam kuki <code>hl</code>. Tiada kuki lain dan tiada penjejak.</li>
+  <li>Untuk had soalan: satu kiraan bagi setiap pelawat, disimpan di bawah cincangan (hash) bergaram alamat IP. Kiraan itu dipadam selepas sejam, dan garamnya ditukar setiap hari.</li>
+  <li>Laporan pembetulan: teks laporan, halaman berkenaan, dan alamat hubungan hanya jika anda memberikannya.</li>
+  <li>Pilihan bahasa anda dalam kuki <code>hl</code>. Laman ini tidak menetapkan kuki lain dan tidak menggunakan penjejak.</li>
 </ul>
 <h2>Bukan nasihat undang-undang</h2>
-<p>{{ t('not_advice') }} Teks Akta ialah cetakan semula yang dipaparkan oleh portal Laws of Malaysia Online pada tarikh yang ditunjukkan.</p>
+<p>{{ t('not_advice') }} Teks Akta ialah cetakan semula yang dipaparkan di Laws of Malaysia Online, setakat tarikh yang tertera pada setiap halaman.</p>
 {% else %}
 <h1>About Tanya Dewan</h1>
-<p>Tanya Dewan searches Malaysia's principal Acts and the Dewan Rakyat debates (the 14th and 15th Parliaments, with the Special Chamber) together, in Malay and English.</p>
-<h2>What it holds</h2>
+<p>Tanya Dewan searches Malaysia's principal Acts and Dewan Rakyat debates together, in English and Malay. It covers the 14th and 15th Parliaments, including the Special Chamber.</p>
+<h2>What the site holds</h2>
 <ul>
-  <li>{{ "{:,}".format(meta.units) }} agenda items with {{ "{:,}".format(meta.speeches) }} verbatim speeches.</li>
-  <li>{{ "{:,}".format(meta.qa) }} oral questions joined to the minister's answer.</li>
-  <li>{{ "{:,}".format(meta.commitments) }} ministers' commitments, each with a quote that code checks against the Hansard text.</li>
+  <li>{{ "{:,}".format(meta.units) }} debates, with {{ "{:,}".format(meta.speeches) }} verbatim speeches.</li>
+  <li>{{ "{:,}".format(meta.qa) }} oral questions, each matched to the minister's answer.</li>
+  <li>{{ "{:,}".format(meta.commitments) }} commitments by ministers, each with a quote that code checks against the Hansard text.</li>
 </ul>
-<h2>What AI wrote</h2>
-<p>Summaries, question-answer joins and commitment notes are written by Claude models and labelled "AI". They always show beside the verbatim text. The parser, not the model, decides who spoke. A commitment whose quote does not match the Hansard text is dropped.</p>
+<h2>What AI writes</h2>
+<p>Claude, an AI model, writes the summaries, the question and answer matches and the commitment notes. Each is labelled "AI" and sits beside the verbatim text, which is the record. A parser, not the model, decides who spoke. A commitment is dropped if its quote does not match the Hansard text.</p>
 <h2>How an answer is written</h2>
-<p>Keyword search and meaning search find passages, Claude Haiku reorders them, and Claude Haiku writes the answer from the best eight. Every sentence of an answer must cite a source; a sentence with no citation is removed.</p>
+<p>Keyword search and meaning search find passages. Claude Haiku reorders them, then writes the answer from the best eight. Every sentence in the answer must cite a source, and a sentence without one is removed.</p>
 <h2>How well it works</h2>
-<p>Measured on fixed test questions: the right Act section is in the top 10 results for 91% of law questions, and the right speech for 73% of debate questions. A blind judge graded 77% of answers correct and 82% fully backed by their citations.</p>
+<p>We tested it on a fixed set of questions. For 91% of law questions the right Act section was in the top 10 results, and for 73% of debate questions so was the right speech. A blind judge rated 77% of answers correct and 82% fully supported by their citations.</p>
 <h2>Unrevised drafts</h2>
-<p>Parliament publishes each Dewan Rakyat sitting first as an unrevised draft, then replaces it with the revised text. A sitting whose text is still the draft is marked so. The site downloads each draft again every week and processes the sitting again when its text changes. The Special Chamber's files do not state this, so its sittings carry no mark.</p>
+<p>Parliament first publishes each Dewan Rakyat sitting as an unrevised draft, then replaces it with the revised text. Sittings still on the draft are marked. The site downloads each draft again every week and reprocesses the sitting when its text changes. The Special Chamber's files do not give this status, so its sittings are not marked.</p>
 <h2>Question limits</h2>
-<p>Each visitor can ask {{ limits.hourly }} questions an hour. Written answers have a daily budget. When the budget is used up, the Ask page shows the passages found, without a written answer, until the next day.</p>
+<p>Each visitor can ask {{ limits.hourly }} questions an hour. Written answers also have a daily budget. When it runs out, the Ask page shows the passages found, without a written answer, until the next day.</p>
 <h2>What the site stores</h2>
 <ul>
-  <li>Each question that is answered: the question text, the filters, the language, the cost and the time. No IP address is stored with it. We read it to learn which topics people look for.</li>
-  <li>For the question limit: one count for each visitor, under a salted hash of the IP address. The count is deleted after one hour, and the salt changes every day.</li>
-  <li>Correction reports: the report text, the page it is about, and a contact address only if you give one.</li>
-  <li>Your language choice in the <code>hl</code> cookie. There are no other cookies and no trackers.</li>
+  <li>Each answered question: the question, the filters, the language, the cost and the time. No IP address is stored with it. We read these to see which topics people look for.</li>
+  <li>For the question limit: a count for each visitor, kept under a salted hash of the IP address. The count is deleted after an hour, and the salt changes every day.</li>
+  <li>Correction reports: the report, the page it is about, and a contact address only if you give one.</li>
+  <li>Your language choice, in the <code>hl</code> cookie. The site sets no other cookies and has no trackers.</li>
 </ul>
 <h2>Not legal advice</h2>
-<p>{{ t('not_advice') }} Act texts are the reprints Laws of Malaysia Online shows, at the date given on each page.</p>
+<p>{{ t('not_advice') }} Act texts are the reprints shown on Laws of Malaysia Online, as at the date on each page.</p>
 {% endif %}
-<p class="muted small">Built {{ meta.built }}.</p>
+<p class="muted small">{{ 'Dibina' if lang == 'ms' else 'Built' }} {{ meta.built }}.</p>
 </article>
 {% endblock %}

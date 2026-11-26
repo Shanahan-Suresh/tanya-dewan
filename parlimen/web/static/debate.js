@@ -13,7 +13,7 @@
 
   // Fold speeches taller than about 15 lines; a button opens the rest. A link to a speech opens it.
   const more = document.documentElement.lang === "ms" ? "Baca seluruh ucapan" : "Read the whole speech";
-  const less = document.documentElement.lang === "ms" ? "Tutup" : "Show less";
+  const less = document.documentElement.lang === "ms" ? "Papar kurang" : "Show less";
   turns.forEach((t) => {
     const rec = t.querySelector(".rec");
     if (!rec || t.classList.contains("chair")) return;

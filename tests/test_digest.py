@@ -74,4 +74,4 @@ def test_unknown_ids_are_dropped_and_quotes_come_from_the_record(recs, monkeypat
     page = digest.render(d, units, "Agriculture", "2024-04-29", "2024-05-03", "http://site")
     assert "menyalurkan RM50 juta sebelum Disember 2024" in page
     assert f'href="http://site/debate/DR-2024-05-02-001#seq-{c["seq"]}"' in page
-    assert "Invented" not in page and "Written by Claude" in page
+    assert "Invented" not in page and "Written by AI (Claude)" in page

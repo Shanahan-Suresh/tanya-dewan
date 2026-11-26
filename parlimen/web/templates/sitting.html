@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block title %}{{ m.chamber(sitting.chamber) }}, {{ sitting.date|hdate }}{% endblock %}
-{% block description %}Hansard of the {{ m.chamber(sitting.chamber) }}, {{ sitting.date }}: every agenda item with its speeches.{% endblock %}
+{% block description %}Hansard of the {{ m.chamber(sitting.chamber) }} for {{ sitting.date }}, with every debate and its speeches.{% endblock %}
 {% block main %}
 <header class="ph">
   <p class="eyebrow"><a href="/hansard">{{ t('nav_hansard') }}</a> · {{ t('f_parliament') }} {{ sitting.parliament }} · {{ sitting.meeting }}</p>

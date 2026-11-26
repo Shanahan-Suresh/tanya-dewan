@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block title %}{{ t('nav_commitments') }}{% endblock %}
-{% block description %}Ministers' commitments in the Dewan Rakyat since 2018, each with the verbatim quote, the minister, the date and the ministry.{% endblock %}
+{% block description %}What ministers have committed to in the Dewan Rakyat since 2018, each with the verbatim quote from the Hansard.{% endblock %}
 {% block main %}
 <header class="ph"><p class="eyebrow">{{ t("from_hansard") }}</p><h1>{{ t("nav_commitments") }}</h1><p class="lead">{{ t('commitments_intro') }}</p></header>
 <form class="card filter-bar" method="get" action="/commitments" hx-get="{{ path }}" hx-target="#results" hx-push-url="true" hx-trigger="submit, change" hx-swap="innerHTML show:#results:top">

@@ -2,7 +2,7 @@
 {% import "_macros.html" as m with context %}
 {% set title = (act.title_bi if lang_code == 'BI' else act.title_bm)|tcase %}
 {% block title %}{{ title }} (Act {{ act.number }}){% endblock %}
-{% block description %}{{ title }}, Act {{ act.number }}: every section, with the Dewan Rakyat debates on its bills.{% endblock %}
+{% block description %}The full text of {{ title }} (Act {{ act.number }}), section by section, with Dewan Rakyat debates on its bills.{% endblock %}
 {% block main %}
 <header class="ph">
   <p class="eyebrow"><a href="/law">{{ t('nav_law') }}</a> · {{ t('act') }} {{ act.number }} · {{ t('in_force') if act.status == 'in force' else t('repealed') }}</p>

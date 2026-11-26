@@ -178,11 +178,11 @@ details {{ margin-top:24px; }}
 <h1>Parliament this week: {_when(date_from)} to {_when(date_to)}</h1>
 <p class="headline">{esc(d["headline"])}</p>
 <p>{esc(d["intro"])}</p>
-<p class="ai">Written by Claude from the week's Hansard records. Quotes are verbatim and checked against the Hansard text; every item links to the speeches it rests on.</p>
+<p class="ai">Written by AI (Claude) from this week's Hansard. Quotes are verbatim and checked against the Hansard text. Each item links to the speeches it rests on.</p>
 {items}
 {f'<h2>Commitments to watch</h2><ul>{watch}</ul>' if watch else ''}
-<details><summary>Every item on this sector this week ({len(units)})</summary><ul class="src">{index}</ul></details>
-<p class="foot">Source: Hansard of the Dewan Rakyat, Parliament of Malaysia. This is a summary of the published record, not advice.</p>
+<details><summary>All debates on this sector this week ({len(units)})</summary><ul class="src">{index}</ul></details>
+<p class="foot">Source: Hansard of the Dewan Rakyat, Parliament of Malaysia. This is general information from the published record, not legal advice.</p>
 </main></body></html>
 """
 

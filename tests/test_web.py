@@ -160,7 +160,7 @@ def test_a_visitor_past_the_hourly_limit_is_refused_with_a_reason(client):
     for _ in range(3):
         assert client.post("/api/ask", json={"question": "hours of employment"}).status_code == 200
     r = client.post("/api/ask", json={"question": "hours of employment"})
-    assert r.status_code == 429 and "3 questions in the last hour" in r.json()["error"]
+    assert r.status_code == 429 and "3 questions in the past hour" in r.json()["error"]
     client.cookies.set("hl", "ms")
     assert "3 soalan" in client.post("/api/ask", json={"question": "x"}).json()["error"]
 
@@ -213,7 +213,7 @@ def test_pages_carry_share_previews_and_the_form_is_not_indexed(client):
 def test_a_question_while_the_index_loads_gets_a_wait_message(client):
     client.app.state.engine.warmed = False
     r = client.post("/api/ask", json={"question": "hours of employment"})
-    assert r.status_code == 503 and r.headers["retry-after"] == "60" and "still loading" in r.json()["error"]
+    assert r.status_code == 503 and r.headers["retry-after"] == "60" and "starting up" in r.json()["error"]
     assert client.app.state.limits.r.keys("q:*") == []  # a refused question does not count
 
 

@@ -34,7 +34,7 @@ h1 span { color: #F5B800 }
 <div class="top">
   <div class="lock"><div class="mark"><svg viewBox="0 0 64 64"><path d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/><path d="M32 19 L45 32 L32 45 L19 32 Z" fill="none" stroke="#0A1F5C" stroke-width="3"/><path d="M32 26 L38 32 L32 38 L26 32 Z" fill="#F5B800"/></svg></div>
   <div class="name">NAME</div></div>
-  <h1>Ask Parliament. <span>Get answers with receipts.</span></h1>
+  <h1>Ask about Malaysian law and Parliament. <span>Every answer cites its source.</span></h1>
 </div>
 <div class="bottom"><span>Malaysia's Acts and Dewan Rakyat debates</span><span>English &middot; Bahasa Melayu</span></div>
 """
