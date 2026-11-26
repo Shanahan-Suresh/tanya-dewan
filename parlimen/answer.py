@@ -10,7 +10,9 @@ with the not-legal-advice line, and the system prompt refuses advice on a reader
 """
 
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from types import SimpleNamespace
 from typing import Sequence
 
 from . import enrich
@@ -156,18 +158,39 @@ def parse(message, passages: Sequence[Passage]) -> tuple[str, list[Source], list
     return text, sorted(numbers.values(), key=lambda s: s.n), dropped
 
 
+def _streamed(client, request: dict, passages: Sequence[Passage], on_text: Callable[[str], None]):
+    """Run the request as a stream and report the cited answer so far after each finished text block."""
+    blocks, shown = [], ""
+    with client.messages.stream(**request) as stream:
+        for event in stream:
+            if event.type == "content_block_stop" and getattr(event.content_block, "type", "") == "text":
+                blocks.append(event.content_block)
+                text = parse(SimpleNamespace(content=blocks), passages)[0]
+                if text and text != shown:
+                    shown = text
+                    on_text(text)
+        return stream.get_final_message()
+
+
 def ask(question: str, passages: Sequence[Passage], lang: str = "en", client=None, job: str = "answer",
-        effort: str | None = EFFORT) -> Answer:
+        effort: str | None = EFFORT, on_text: Callable[[str], None] | None = None) -> Answer:
     """`effort` sets Haiku's output_config effort (None leaves Haiku's own default, medium);
-    thinking counts toward max_tokens, hence the 16,000 cap."""
+    thinking counts toward max_tokens, hence the 16,000 cap.
+
+    With `on_text` the answer streams: after each finished text block, `on_text` gets the answer so
+    far, already passed through `parse` (cited sentences only, with [n] marks). The returned Answer
+    is the same as without streaming."""
     line = NOT_ADVICE_MS if lang == "ms" else NOT_ADVICE
     if not passages:
         return Answer(f"No passage matched the question, so there is nothing to answer from.\n\n{line}", [], "empty", 0.0)
     client = client or enrich._client()
     extra = {"output_config": {"effort": effort}} if effort else {}
-    message = client.messages.create(
-        model=MODEL, max_tokens=16000, system=SYSTEM, **extra,
-        messages=[{"role": "user", "content": documents(passages) + [{"type": "text", "text": question}]}])
+    request = dict(model=MODEL, max_tokens=16000, system=SYSTEM, **extra,
+                   messages=[{"role": "user", "content": documents(passages) + [{"type": "text", "text": question}]}])
+    if on_text is None:
+        message = client.messages.create(**request)
+    else:
+        message = _streamed(client, request, passages, on_text)
     usd = enrich._log(job, MODEL, "messages", message.usage)
     if message.stop_reason == "refusal":
         return Answer(f"Claude declined to answer from these passages.\n\n{line}", [], "refusal", usd)

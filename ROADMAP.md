@@ -412,6 +412,12 @@ meeting, public code at launch, the working name until the trial, and the anonym
 1. **Refinement passes (owner, then Claude).** The owner reads the local site and sends notes;
    Claude fixes them and reshoots the pages (`tools/site_shots.py`). The site's files stay on the
    D: hard disk (owner's choice), so each restart warms for about 2.5 minutes.
+   - ~~Redesign: the owner picked the Civic direction from three prototypes (`docs/design/`), with
+     three Console features (citation hover lights its source, MP month-by-year grid, debate
+     speaker map with J and K). Built on every page in hand-written token CSS with self-hosted
+     fonts, htmx for list filters and paging, and the answer streamed (`/api/ask/stream`).~~
+   - A new public name, picked from `docs/design/names/`; the rename is `config.SITE_NAME`, the
+     docs, the share image and the MCP server's description.
 2. **Gaps before launch (Claude).**
    - ~~Draft flag: every sitting and record shows when its text is the unrevised draft ("BELUM
      DISEMAK"), read from the PDF.~~

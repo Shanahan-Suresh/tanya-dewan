@@ -3,41 +3,81 @@
 {% block title %}{{ m.name }}{% endblock %}
 {% block description %}{{ m.name }}: seat, party by date, debates spoken in, questions asked in the Dewan Rakyat.{% endblock %}
 {% block main %}
-<div class="doc-head">
-  <p class="eyebrow">{{ t('nav_mps') }}</p>
-  <h1>{{ m.name }}</h1>
-  <p class="meta">{% for s in m.seats %}{{ t('f_parliament') }} {{ s.parliament }}: {{ s.code }} {{ s.seat }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
-</div>
-<div class="two-col">
-  <section>
-    <h2>{{ t('party_history') }}</h2>
-    {% if m.parties %}
-    <ul class="plain">
-      {% for p in m.parties %}<li><strong>{{ p.party }}</strong> <span class="muted">{{ t('f_parliament') }} {{ p.parliament }}, {{ p.date_from or t('term_start') }} – {{ p.date_to or (t('now') if p.parliament == parliament_now else t('term_end')) }}</span></li>{% endfor %}
-    </ul>
-    {% else %}<p class="muted">—</p>{% endif %}
-    <p class="muted small">{{ t('party_from_seat') }}</p>
-    <p class="muted small">{{ t('no_rank') }}</p>
-  </section>
-  <section>
-    {% if made %}
-    <h2>{{ t('commitments_made') }}</h2>
-    {% for c in made %}{{ mac.commitment_card(c) }}{% endfor %}
-    <p><a href="/commitments?q={{ m.name|urlencode }}">{{ t('nav_commitments') }} →</a></p>
-    {% endif %}
-    {% if asked %}
-    <h2>{{ t('questions_asked') }}</h2>
-    {% for q in asked %}{{ mac.qa_card(q) }}{% endfor %}
-    {% endif %}
-  </section>
-</div>
-<section>
-  <h2>{{ t('debates_spoken') }}</h2>
-  <ol class="units">
-    {% for u in units.rows %}
-    <li class="unit-row"><a href="{{ debate_url(u.id, u.seq) }}">{{ u.business or u.id }}</a> <span class="muted small">{{ mac.chamber(u.chamber) }} {{ u.date }}</span></li>
-    {% endfor %}
-  </ol>
-  {{ mac.pager(units) }}
+<nav class="crumbs" aria-label="{{ t('breadcrumb') }}"><a href="/mp">{{ t('nav_mps') }}</a></nav>
+<section class="card profile" aria-labelledby="mp-h">
+  <svg class="divider band" aria-hidden="true"><rect width="100%" height="16" fill="url(#songket)"/></svg>
+  <div class="inner">
+    {{ mac.avatar(m.name) }}
+    <div>
+      <h1 id="mp-h">{{ m.name }}</h1>
+      <p class="facts">{% for s in m.seats %}<span><b>{{ s.code }} {{ s.seat }}</b>, {{ t('f_parliament') }} {{ s.parliament }}</span>{% endfor %}</p>
+    </div>
+  </div>
 </section>
+{{ mac.stats([(counts['items'], t('mp_items')), (counts.answered, t('mp_answered')), (counts.asked, t('mp_asked')), (counts.commitments, t('mp_commitments'))]) }}
+
+<div class="two">
+  <div class="stack-col">
+    <section class="card box" aria-labelledby="act-h">
+      <h2 id="act-h">{{ t('mp_activity') }}</h2>
+      <p class="sub">{{ t('mp_activity_sub') }}</p>
+      <div class="body">{{ mac.heat_grid(activity) }}</div>
+    </section>
+    {% if top_topics %}
+    <section class="card box" aria-labelledby="tt-h">
+      <h2 id="tt-h">{{ t('mp_topics') }}</h2>
+      <ul class="topic-bars body">
+        {% for x in top_topics %}<li><a href="/topic/{{ x.topic }}"><span>{{ x.name }}</span><span class="muted tnum">{{ "{:,}".format(x.n) }}</span></a><i style="width:{{ (x.n / top_topics[0].n * 100)|round|int }}%"></i></li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </div>
+  <div class="stack-col">
+    <section class="card box" aria-labelledby="party-h">
+      <h2 id="party-h">{{ t('party_history') }}</h2>
+      {% if m.parties %}
+      <ul class="party-list body">
+        {% for p in m.parties %}<li><strong>{{ p.party }}</strong> <span class="muted">{{ t('f_parliament') }} {{ p.parliament }}, {{ p.date_from or t('term_start') }} – {{ p.date_to or (t('now') if p.parliament == parliament_now else t('term_end')) }}</span></li>{% endfor %}
+      </ul>
+      {% else %}<p class="muted body">—</p>{% endif %}
+      <p class="muted small" style="margin-top:12px">{{ t('party_from_seat') }}</p>
+    </section>
+    {% if offices %}
+    <section class="card box" aria-labelledby="off-h">
+      <h2 id="off-h">{{ t('mp_offices') }}</h2>
+      <ul class="office-list body">
+        {% for o in offices %}<li><strong>{{ o.office }}</strong> <span class="muted tnum">{{ o.first }}{% if o.last != o.first %} – {{ o.last }}{% endif %} · {{ o.n }}</span></li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+    <p class="muted small">{{ t('no_rank') }}</p>
+  </div>
+</div>
+
+{% if made %}
+<h2 class="section-title" id="commitments">{{ t('commitments_made') }}</h2>
+<div class="cards">{% for c in made %}{{ mac.commitment_card(c) }}{% endfor %}</div>
+<p style="margin-top:12px"><a class="linkbtn" href="/commitments?q={{ m.name|urlencode }}">{{ t('nav_commitments') }} {{ mac.icon('arrow', 'sm') }}</a></p>
+{% endif %}
+{% if answered %}
+<h2 class="section-title">{{ t('questions_answered') }}</h2>
+<div class="cards">{% for q in answered %}{{ mac.qa_card(q) }}{% endfor %}</div>
+{% endif %}
+{% if asked %}
+<h2 class="section-title">{{ t('questions_asked') }}</h2>
+<div class="cards">{% for q in asked %}{{ mac.qa_card(q) }}{% endfor %}</div>
+{% endif %}
+
+<h2 class="section-title">{{ t('debates_spoken') }}</h2>
+<div id="results" aria-live="polite">
+{% block results %}
+{% import "_macros.html" as mac with context %}
+<ol class="units">
+  {% for u in units.rows %}
+  <li class="unit-row"><a href="{{ debate_url(u.id, u.seq) }}">{{ u.business or u.id }}</a> <span class="muted small tnum">{{ mac.chamber(u.chamber) }} {{ u.date }}</span></li>
+  {% endfor %}
+</ol>
+{{ mac.pager(units) }}
+{% endblock %}
+</div>
 {% endblock %}

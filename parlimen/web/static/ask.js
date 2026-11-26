@@ -1,22 +1,31 @@
-// The ask page: sends the question and filters to /api/ask and shows the cited answer, its
-// sources, the passages it read and how the search found them.
+// The Ask page. Sends the question and filters to /api/ask/stream and reads the server-sent events:
+// `stage` (live progress), `text` (the cited answer so far: replace, never append), then `done`
+// (the final /api/ask body) or `error`. A ?q= link only fills the box; the reader presses Ask.
 (function () {
   const S = JSON.parse(document.getElementById("strings").textContent);
-  const form = document.getElementById("ask");
-  const out = document.getElementById("result");
-  const button = form.querySelector("button[type=submit]");
+  const $ = (id) => document.getElementById(id);
+  const form = $("ask"), input = $("q"), go = form.querySelector(".ask-go");
+  const answer = $("answer"), text = $("answer-text"), notice = $("notice"), progress = $("progress");
+  const peek = $("peek");
+  let sources = [], lastQuestion = "", token = 0;
 
-  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const ico = (d, cls) => `<svg class="i ${cls || ""}" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+  const I = {
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>', ring: '<circle cx="12" cy="12" r="5"/>', arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    alert: '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>', info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+    pencil: '<path d="M16 3l5 5L8 21H3v-5z"/><path d="M13 6l5 5"/>',
+    sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
+  };
+  const draft = (x) => x.draft ? `<span class="draft" title="${esc(S.draft_note)}">${ico(I.pencil, "sm")}${esc(S.draft)}</span>` : "";
+  const secs = (ms) => ms < 1000 ? `${ms} ms` : `${(ms / 1000).toFixed(ms < 10000 ? 1 : 0)} s`;
 
-  // A shared link (?q=...) fills the box; the reader presses Ask, so a crawler spends nothing.
-  // The answer is short Markdown: paragraphs, "-" lists, **bold** and [n] citation marks.
-  // A block may open with a lead-in line ("... said:") and go on as a list, so each run of list
-  // lines and each run of other lines becomes its own element.
-  function markdown(text) {
+  // ---- the answer text: short Markdown with [n] marks ----
+  function markdown(src) {
     const inline = (s) => s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\[(\d+)\]/g, '<sup><a href="#src-$1">[$1]</a></sup>');
+      .replace(/\[(\d+)\]/g, (_, n) => `<button type="button" class="cite" data-n="${n}" aria-label="${esc(S.source_n)} ${n}" aria-expanded="false">${n}</button>`);
     const item = /^\s*[-*] /;
-    return esc(text).split(/\n{2,}/).map((b) => {
+    return esc(src).split(/\n{2,}/).map((b) => {
       const runs = [];
       for (const l of b.split("\n")) {
         const list = item.test(l);
@@ -29,72 +38,223 @@
     }).join("");
   }
 
-  // A debate from a sitting whose text Parliament has not revised yet carries a draft mark.
-  const draft = (x) => x.draft ? ` <span class="draft-mark">${esc(S.draft)}</span>` : "";
-
-  function render(r) {
-    const sources = r.sources.map((s) => `
-      <li id="src-${s.n}"><strong>[${s.n}]</strong> <a href="${esc(s.url)}">${esc(s.cite)}</a>${draft(s)}
-        ${s.pdf ? ` · <a href="${esc(s.pdf)}" rel="noopener">${esc(S.pdf)}</a>` : ""}
-        ${s.quotes.map((q) => `<blockquote class="verbatim">${esc(q)}</blockquote>`).join("")}
-      </li>`).join("");
-    const passages = r.passages.map((p, i) => `
-      <div class="passage">
-        <div class="head">${i + 1}. <a href="${esc(p.url)}">${esc(p.cite)}</a>${draft(p)}${p.via ? " · " + esc(p.via) : ""}
-          ${p.pdf ? ` · <a href="${esc(p.pdf)}" rel="noopener">${esc(S.pdf)}</a>` : ""}</div>
-        <div class="small muted">${esc(p.header)}</div>
-        <div class="body">${esc(p.text)}</div>
-      </div>`).join("");
-    const most = Math.max(1, ...r.stages.map((s) => s.ms));
-    const stages = r.stages.map((s) => `
-      <tr><td>${esc(S[s.name] || s.name)}</td><td>${s.hits} ${esc(S.hits)}</td>
-        <td>${s.ms} ms</td><td><span class="bar" style="width:${Math.max(2, Math.round(120 * s.ms / most))}px"></span></td></tr>`).join("");
-    // Past the day's answer budget the page shows the passages found, open, with no answer.
-    const answer = r.budget_out
-      ? `<p class="budget-note">${esc(S.budget_out)}</p>`
-      : `<p class="ai-note">${esc(S.ai)}</p><div class="answer">${markdown(r.answer)}</div>`;
-    out.innerHTML = `
-      ${answer}
-      ${sources ? `<h2>${esc(S.sources)}</h2><ol class="plain sources">${sources}</ol>` : ""}
-      <details${r.budget_out ? " open" : ""}><summary>${esc(S.passages)} (${r.passages.length})</summary>${passages}</details>
-      <details><summary>${esc(S.how)}</summary>
-        <table class="stages">${stages}</table>
-        <p class="small muted">${esc(r.filters)} · ${r.total_ms} ms · ${esc(S.cost)} US$${r.usd.toFixed(4)}</p>
-      </details>
-      <p class="small muted">${esc(S.each)}</p>`;
+  // ---- live progress ----
+  const STEPS = [
+    { keys: ["bm25", "dense", "fused"], label: S.step_search },
+    { keys: ["reranked"], label: S.step_rank },
+    { keys: ["answer"], label: S.step_write },
+  ];
+  let state = [], stageMs = {};
+  function drawProgress() {
+    progress.innerHTML = STEPS.map((st, i) => {
+      const ms = st.keys.reduce((a, k) => a + (stageMs[k] || 0), 0);
+      const icon = state[i] === "done" ? ico(I.check, "sm") : state[i] === "active" ? ico(I.arrow, "sm") : ico(I.ring, "sm");
+      return `<li data-s="${state[i]}">${icon}<span>${esc(st.label)}${state[i] === "active" ? "…" : ""}</span>${ms ? `<span class="t">${secs(ms)}</span>` : ""}</li>`;
+    }).join("");
+  }
+  function startStage(name) {
+    const at = STEPS.findIndex((s) => s.keys.includes(name));
+    if (at < 0) return;
+    state = STEPS.map((_, i) => (i < at ? "done" : i === at ? "active" : "wait"));
+    drawProgress();
   }
 
-  async function ask(question) {
-    const body = Object.fromEntries(new FormData(form).entries());
-    body.question = question;
-    button.disabled = true;
-    out.hidden = false;
-    out.innerHTML = `<p class="muted">${esc(S.busy)}</p>`;
+  // ---- popover and linked highlight between marks and source cards ----
+  const lit = (n, on) => document.querySelectorAll(`.cite[data-n="${n}"], .src[data-n="${n}"]`).forEach((el) => el.classList.toggle("lit", on));
+  const target = (e) => e.target.closest && e.target.closest(".cite, .src");
+  document.addEventListener("mouseover", (e) => { const t = target(e); if (t && sources.length) lit(t.dataset.n, true); });
+  document.addEventListener("mouseout", (e) => { const t = target(e); if (t) lit(t.dataset.n, false); });
+  document.addEventListener("focusin", (e) => { const t = target(e); if (t && sources.length) lit(t.dataset.n, true); });
+  document.addEventListener("focusout", (e) => { const t = target(e); if (t) lit(t.dataset.n, false); });
+
+  let openMark = null;
+  function closePeek() { peek.hidden = true; if (openMark) { openMark.setAttribute("aria-expanded", "false"); openMark = null; } }
+  function openPeek(mark) {
+    const s = sources.find((x) => String(x.n) === mark.dataset.n);
+    if (!s) return;
+    closePeek();
+    openMark = mark; mark.setAttribute("aria-expanded", "true");
+    peek.querySelector(".num").textContent = s.n;
+    peek.querySelector(".cl-t").textContent = s.cite;
+    peek.querySelector("blockquote").textContent = (s.quotes && s.quotes[0]) || "";
+    peek.dataset.n = s.n;
+    peek.hidden = false;
+    const r = mark.getBoundingClientRect(), w = peek.offsetWidth, h = peek.offsetHeight;
+    peek.style.left = Math.max(12, Math.min(r.left - 12, innerWidth - w - 12)) + "px";
+    peek.style.top = (r.bottom + 8 + h > innerHeight - 12 ? Math.max(12, r.top - h - 8) : r.bottom + 8) + "px";
+  }
+  document.addEventListener("click", (e) => {
+    const mark = e.target.closest(".cite");
+    if (mark) { if (openMark === mark) closePeek(); else openPeek(mark); return; }
+    if (e.target.closest(".peek .go")) {
+      const card = $("src-" + peek.dataset.n); closePeek();
+      if (card) { card.scrollIntoView({ block: "center" }); card.focus({ preventScroll: true }); lit(peek.dataset.n, true); setTimeout(() => lit(peek.dataset.n, false), 1800); }
+      return;
+    }
+    if (!e.target.closest(".peek")) closePeek();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !peek.hidden) { const m = openMark; closePeek(); if (m) m.focus(); } });
+  addEventListener("scroll", closePeek, { passive: true });
+
+  // ---- final state ----
+  function sourceCard(s) {
+    return `<li class="card src" id="src-${s.n}" data-n="${s.n}" tabindex="-1">
+      <div class="top"><span class="num">${s.n}</span><div class="cl"><a href="${esc(s.url)}">${esc(s.cite)}</a></div></div>
+      ${draft(s)}
+      <div class="quotes">${(s.quotes || []).map((q) => `<blockquote class="rec" lang="ms">${esc(q)}</blockquote>`).join("")}</div>
+      ${s.pdf ? `<div class="links"><a href="${esc(s.pdf)}" rel="noopener">${esc(S.pdf)}</a></div>` : ""}
+    </li>`;
+  }
+  function render(r) {
+    sources = r.sources || [];
+    const answered = !!(r.answer && r.answer.trim()) && !r.budget_out;
+    $("answer-state").textContent = answered ? S.done : "";
+    if (answered) {
+      text.innerHTML = markdown(r.answer);
+      $("answer-foot").hidden = false;
+    } else {
+      text.innerHTML = `<p class="wait">${esc(S.no_answer)}</p>`;
+      $("answer-foot").hidden = false;
+    }
+    if (r.budget_out) notice.innerHTML = `<p class="notice" role="status">${ico(I.info)}<span>${esc(S.budget_out)}</span></p>`;
+    $("src-count").textContent = sources.length ? `(${sources.length})` : "";
+    $("src-list").innerHTML = sources.length ? sources.map(sourceCard).join("") : `<li class="card src hold">${esc(S.no_answer)}</li>`;
+    // How it was found
+    const most = Math.max(1, ...(r.stages || []).map((s) => s.ms || 0));
+    $("how-body").innerHTML = `<div style="overflow-x:auto"><table class="stages"><thead><tr><th>${esc(S.stage)}</th><th class="r">${esc(S.hits)}</th><th class="r">${esc(S.time)}</th><th aria-hidden="true"></th></tr></thead><tbody>${
+      (r.stages || []).map((s) => `<tr><td>${esc(S[s.name] || s.name)}</td><td class="r">${s.hits}</td><td class="r">${secs(s.ms)}</td><td style="width:22%"><span class="stage-bar" style="width:${Math.max(2, Math.round(100 * s.ms / most))}%"></span></td></tr>`).join("")
+    }</tbody></table></div>`;
+    const bits = [];
+    if (r.search_ms != null) bits.push(`${secs(r.search_ms)} ${S.search}`);
+    if (r.usd != null) bits.push(`${S.cost} US$${Number(r.usd).toFixed(4)}`);
+    $("how-meta").textContent = bits.join(", ");
+    $("how").hidden = false;
+    // Passages
+    const ps = r.passages || [];
+    $("passages-n").textContent = ps.length ? `(${ps.length})` : "";
+    $("passages-body").innerHTML = ps.map((p, i) => `<div class="passage">
+      <div class="head">${i + 1}. <a href="${esc(p.url)}">${esc(p.cite)}</a>${p.via ? " · " + esc(p.via) : ""}</div>
+      ${draft(p)}
+      <div class="muted small">${esc(p.header)}</div>
+      <blockquote class="rec" lang="ms">${esc(p.text)}</blockquote>
+      ${p.pdf ? `<div><a href="${esc(p.pdf)}" rel="noopener">${esc(S.pdf)}</a></div>` : ""}
+    </div>`).join("");
+    $("passages").hidden = !ps.length;
+    $("passages").open = !!r.budget_out;
+    state = STEPS.map(() => "done"); drawProgress();
+  }
+  function fail(msg) {
+    notice.innerHTML = `<p class="notice err" role="alert">${ico(I.alert)}<span>${esc(msg || S.error)}</span></p>`;
+    text.innerHTML = ""; progress.innerHTML = "";
+    $("src-list").innerHTML = "";
+  }
+
+  // ---- ask ----
+  function body(q) {
+    const o = { question: q };
+    new FormData(form).forEach((v, k) => { if (k !== "q" && String(v).trim()) o[k] = String(v).trim(); });
+    return o;
+  }
+  async function ask(q) {
+    const mine = ++token;
+    lastQuestion = q;
+    go.disabled = true; go.setAttribute("aria-busy", "true");
+    answer.hidden = false;
+    $("q-echo").textContent = q;
+    notice.innerHTML = ""; sources = []; closePeek();
+    text.innerHTML = `<p class="wait">${esc(S.asking)}</p>`;
+    $("answer-state").textContent = "";
+    $("answer-foot").hidden = true; $("how").hidden = true; $("passages").hidden = true;
+    $("src-count").textContent = "";
+    $("src-list").innerHTML = `<li class="card src hold">${esc(S.sources_wait)}</li>`;
+    state = STEPS.map(() => "wait"); stageMs = {}; drawProgress();
+    try { history.replaceState(null, "", "/?q=" + encodeURIComponent(q)); } catch (e) { /* the link is a convenience */ }
+    answer.scrollIntoView({ block: "start" }); answer.focus({ preventScroll: true });
     try {
-      const resp = await fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-      const r = await resp.json();
-      if (!resp.ok) throw new Error(r.error || resp.statusText);
-      render(r);
-      history.replaceState(null, "", "?q=" + encodeURIComponent(question));
+      const res = await fetch("/api/ask/stream", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body(q)) });
+      if (!res.ok) { let m = ""; try { m = (await res.json()).error; } catch (e) { /* no body */ } fail(m); return; }
+      const reader = res.body.getReader(), dec = new TextDecoder();
+      let buf = "", finished = false;
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let cut;
+        while ((cut = buf.indexOf("\n\n")) >= 0) {
+          const block = buf.slice(0, cut); buf = buf.slice(cut + 2);
+          let ev = "message", data = "";
+          for (const line of block.split("\n")) {
+            if (line.startsWith("event:")) ev = line.slice(6).trim();
+            else if (line.startsWith("data:")) data += line.slice(5).trim();
+          }
+          if (mine !== token || !data) continue;
+          const d = JSON.parse(data);
+          if (ev === "stage") {
+            if (d.hits == null) startStage(d.name); else { stageMs[d.name] = d.ms; drawProgress(); }
+          } else if (ev === "text") {
+            text.innerHTML = markdown(d.text) + '<span class="caret" aria-hidden="true"></span>';
+          } else if (ev === "done") { render(d); finished = true; }
+          else if (ev === "error") { fail(d.error); finished = true; }
+        }
+      }
+      if (!finished && mine === token) fail(S.error);
     } catch (e) {
-      out.innerHTML = `<p><strong>${esc(S.error)}:</strong> ${esc(e.message)}</p>`;
+      if (mine === token) fail(S.error);
     } finally {
-      button.disabled = false;
+      if (mine === token) { go.disabled = false; go.removeAttribute("aria-busy"); }
     }
   }
-
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const q = form.question.value.trim();
-    if (q) ask(q);
+    const q = input.value.trim();
+    if (q && !go.disabled) ask(q);
   });
-  form.question.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
+
+  // ---- copy link ----
+  $("copy-link").addEventListener("click", async () => {
+    const url = location.origin + "/?q=" + encodeURIComponent(lastQuestion || input.value.trim());
+    try { await navigator.clipboard.writeText(url); } catch (e) {
+      const t = document.createElement("textarea"); t.value = url; document.body.appendChild(t); t.select();
+      try { document.execCommand("copy"); } catch (x) { /* nothing more to try */ } t.remove();
+    }
+    const label = $("copy-link").querySelector("span");
+    label.textContent = S.copied; $("copy-status").textContent = S.copied;
+    setTimeout(() => { label.textContent = S.copy; $("copy-status").textContent = ""; }, 2500);
   });
-  form.querySelectorAll(".example").forEach((b) => b.addEventListener("click", () => {
-    form.question.value = b.textContent;
-    ask(b.textContent);
-  }));
-  const q = new URLSearchParams(location.search).get("q");
-  if (q) form.question.value = q;
+
+  // ---- more filters ----
+  const more = $("more-filters"), extra = $("extra-filters");
+  more.addEventListener("click", () => {
+    const open = extra.hidden;
+    extra.hidden = !open; more.setAttribute("aria-expanded", String(open));
+    more.querySelector(".mf-t").textContent = open ? S.less : S.more;
+  });
+
+  // ---- example questions: three at a time, both languages, rotating while nobody is using them ----
+  const other = S.lang === "ms" ? "en" : "ms";
+  const pool = [];
+  const a = S.examples[S.lang] || [], b = S.examples[other] || [];
+  for (let i = 0; i < Math.max(a.length, b.length); i++) { if (a[i]) pool.push([S.lang, a[i]]); if (b[i]) pool.push([other, b[i]]); }
+  const tryBox = $("try");
+  let at = 0;
+  function drawTry() {
+    tryBox.querySelectorAll("button").forEach((x) => x.remove());
+    for (let k = 0; k < Math.min(3, pool.length); k++) {
+      const [lg, q] = pool[(at + k) % pool.length];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.innerHTML = `<span class="lg">${lg.toUpperCase() === "MS" ? "BM" : "EN"}</span>${esc(q)}`;
+      btn.addEventListener("click", () => { input.value = q; form.requestSubmit(); });
+      tryBox.appendChild(btn);
+    }
+  }
+  if (pool.length) {
+    drawTry();
+    let busy = false;
+    tryBox.addEventListener("mouseenter", () => { busy = true; });
+    tryBox.addEventListener("mouseleave", () => { busy = false; });
+    tryBox.addEventListener("focusin", () => { busy = true; });
+    tryBox.addEventListener("focusout", () => { busy = false; });
+    setInterval(() => { if (!busy && document.visibilityState === "visible") { at = (at + 1) % pool.length; drawTry(); } }, 9000);
+  }
 })();

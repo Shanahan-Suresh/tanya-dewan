@@ -2,8 +2,8 @@
 {% block title %}{{ t('nav_topics') }}{% endblock %}
 {% block description %}Topics of the Dewan Rakyat debates since 2018, from agriculture to transport, with the agenda items on each.{% endblock %}
 {% block main %}
-<h1>{{ t('nav_topics') }}</h1>
+<header class="ph"><p class="eyebrow">{{ t('nav_hansard') }}</p><h1>{{ t('nav_topics') }}</h1><p class="lead">{{ t('topics_intro') }}</p></header>
 <ul class="topic-grid">
-  {% for x in topics %}<li><a href="/topic/{{ x.topic }}">{{ x.name }}</a> <span class="muted small">{{ "{:,}".format(x.n) }} {{ t('items') }}</span></li>{% endfor %}
+  {% for x in topics %}<li><a href="/topic/{{ x.topic }}"><span>{{ x.name }}</span> <span class="muted tnum">{{ "{:,}".format(x.n) }} {{ t('items') }}</span></a></li>{% endfor %}
 </ul>
 {% endblock %}

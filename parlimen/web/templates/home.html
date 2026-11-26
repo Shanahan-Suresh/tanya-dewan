@@ -2,67 +2,135 @@
 {% import "_macros.html" as m with context %}
 {% block title %}{{ t('nav_ask') }}{% endblock %}
 {% block main %}
-<section class="hero">
-  <h1>{{ t('tagline') }}</h1>
-  <form id="ask" class="ask" autocomplete="off">
-    <div class="ask-row">
-      <textarea name="question" rows="2" maxlength="500" placeholder="{{ t('ask_placeholder') }}" required></textarea>
-      <button type="submit">{{ t('ask_button') }}</button>
+<section class="hero" aria-labelledby="hero-h">
+  <svg class="texture" aria-hidden="true"><rect width="100%" height="100%" fill="url(#songket-inv)"/></svg>
+  <span class="eyebrow">{{ t('hero_eyebrow') }}</span>
+  <h1 id="hero-h">{{ t('hero_title') }}</h1>
+  <p class="sub">{{ t('hero_sub') }}</p>
+  <form id="ask" class="ask" action="/" method="get" autocomplete="off" role="search">
+    <div class="ask-field">
+      {{ m.icon('search') }}
+      <label class="sr-only" for="q">{{ t('ask_placeholder') }}</label>
+      <input id="q" name="q" type="text" value="{{ q }}" maxlength="500" placeholder="{{ t('ask_short') }}" enterkeyhint="search" required>
+      <button class="ask-go" type="submit"><span class="go-text">{{ t('ask_button') }}</span>{{ m.icon('arrow') }}<span class="sr-only go-sr">{{ t('ask_button') }}</span></button>
     </div>
-    <details class="filters">
-      <summary>{{ t('filters') }}</summary>
-      <div class="grid">
-        <label>{{ t('f_kind') }}
-          <select name="kind"><option value="">{{ t('f_kind_all') }}</option><option value="law">{{ t('f_kind_law') }}</option><option value="debate">{{ t('f_kind_debate') }}</option></select>
-        </label>
-        <label>{{ t('f_act') }} <input name="act" inputmode="numeric" placeholder="265"></label>
-        <label>{{ t('f_lang') }}
-          <select name="lang"><option value="">{{ t('f_lang_any') }}</option><option value="BI">{{ t('lang_BI') }}</option><option value="BM">{{ t('lang_BM') }}</option></select>
-        </label>
-        <label>{{ t('f_from') }} <input type="date" name="date_from" min="2018-07-16"></label>
-        <label>{{ t('f_to') }} <input type="date" name="date_to" min="2018-07-16"></label>
-        {{ m.select('parliament', t('f_parliament'), [(15, '15'), (14, '14')], '', t('f_any')) }}
-        {{ m.select('chamber', t('f_chamber'), [('DR', t('chamber_DR')), ('KK', t('chamber_KK'))], '', t('f_any')) }}
-        <label>{{ t('f_speaker') }} <input name="speaker" placeholder="Anwar"></label>
-        <label>{{ t('f_party') }}
-          <select name="party"><option value="">{{ t('f_any') }}</option>{% for p in parties %}<option>{{ p }}</option>{% endfor %}</select>
-        </label>
-        <label>{{ t('f_topic') }}
-          <select name="topic"><option value="">{{ t('f_any') }}</option>{% for x in topics %}<option value="{{ x.name }}">{{ x.name }}</option>{% endfor %}</select>
-        </label>
+    <div class="try" id="try" aria-label="{{ t('examples') }}"><span class="k">{{ t('examples') }}</span></div>
+    <div class="filters" role="group" aria-label="{{ t('filters') }}">
+      {{ m.fchip_select('kind', t('f_kind'), [('law', t('f_kind_law')), ('debate', t('f_kind_debate'))], t('f_kind_all')) }}
+      {{ m.fchip_select('parliament', t('f_parliament'), [('15', '15'), ('14', '14')], t('f_any')) }}
+      {{ m.fchip_select('chamber', t('f_chamber'), [('DR', t('chamber_DR')), ('KK', t('chamber_KK'))], t('f_any')) }}
+      <button type="button" class="more-filters" id="more-filters" aria-expanded="false" aria-controls="extra-filters"><span class="mf-t">{{ t('more_filters') }}</span>{{ m.icon('chev', 'sm') }}</button>
+      <div class="extra" id="extra-filters" hidden>
+        {{ m.fchip_input('date_from', t('f_from'), 'date') }}
+        {{ m.fchip_input('date_to', t('f_to'), 'date') }}
+        {{ m.fchip_input('speaker', t('f_speaker'), 'text', 'Anwar') }}
+        {{ m.fchip_flat('party', t('f_party'), parties, t('f_any')) }}
+        {{ m.fchip_flat('topic', t('f_topic'), topics|map(attribute='name')|list, t('f_any')) }}
+        {{ m.fchip_input('act', t('f_act'), 'text', '265') }}
+        {{ m.fchip_select('lang', t('f_lang'), [('BI', t('lang_BI')), ('BM', t('lang_BM'))], t('f_lang_any')) }}
       </div>
-    </details>
-    <p class="muted small">{{ t('examples') }}:
-      {% for e in examples %}<button type="button" class="example">{{ e }}</button>{% endfor %}
-    </p>
+    </div>
   </form>
 </section>
 
-<section id="result" class="result" hidden aria-live="polite"></section>
+<section id="answer" hidden tabindex="-1" aria-label="{{ t('answer_region') }}">
+  <div class="q-echo">
+    {{ m.ai_label(t('ai_answer')) }}<q id="q-echo"></q>
+    <button type="button" class="linkbtn" id="copy-link">{{ m.icon('link', 'sm') }}<span>{{ t('copy_link') }}</span></button>
+    <span class="sr-only" id="copy-status" role="status"></span>
+  </div>
+  <ol class="progress" id="progress" aria-label="{{ t('progress') }}"></ol>
+  <div id="notice"></div>
+  <div class="answer-grid">
+    <div class="card pad answer-card" id="answer-card">
+      <div class="head">{{ m.ai_label(t('ai_answer')) }}<span class="label-rec" id="answer-state"></span></div>
+      <div class="answer-text" id="answer-text" lang="{{ lang }}"></div>
+      <div class="answer-foot" id="answer-foot" hidden>
+        <p>{{ m.icon('info', 'sm') }}<span>{{ t('answer_ai') }}</span></p>
+        <p>{{ m.icon('scales', 'sm') }}<span>{{ t('not_advice') }}</span></p>
+      </div>
+    </div>
+    <aside class="sources" aria-labelledby="src-h">
+      <h3 id="src-h">{{ t('sources') }} <span id="src-count"></span></h3>
+      <ol class="src-list" id="src-list"><li class="card src hold">{{ t('sources_wait') }}</li></ol>
+    </aside>
+  </div>
+  <details class="card fold" id="how" hidden>
+    <summary>{{ m.icon('search') }}{{ t('how_found') }} <span class="meta tnum" id="how-meta"></span>{{ m.icon('chev', 'chev') }}</summary>
+    <div class="body" id="how-body"></div>
+  </details>
+  <details class="card fold" id="passages" hidden>
+    <summary>{{ m.icon('doc') }}{{ t('passages') }} <span class="meta tnum" id="passages-n"></span>{{ m.icon('chev', 'chev') }}</summary>
+    <div class="body" id="passages-body"></div>
+  </details>
+</section>
 
-<section class="browse">
-  <h2>{{ t('browse') }}</h2>
-  <div class="browse-grid">
-    <div>
-      <h3>{{ t('latest_sittings') }}</h3>
-      <ul class="plain">
-        {% for s in sittings %}<li><a href="/hansard/{{ s.chamber }}/{{ s.date }}">{{ m.chamber(s.chamber) }}, {{ s.date }}</a> <span class="muted small">{{ s.units }} {{ t('items') }}</span></li>{% endfor %}
-      </ul>
-    </div>
-    <div>
-      <h3>{{ t('latest_commitments') }}</h3>
-      <ul class="plain">
-        {% for c in commitments %}<li><a href="{{ debate_url(c.unit, c.seq) }}">“{{ c.quote|truncate(110) }}”</a> <span class="muted small">{{ c.speaker|truncate(40) }}, {{ c.date }}</span></li>{% endfor %}
-      </ul>
-      <p><a href="/commitments">{{ t('nav_commitments') }} →</a></p>
-    </div>
+<section class="section" aria-labelledby="rec-h">
+  <div class="section-head"><div><h2 id="rec-h">{{ t('browse') }}</h2><p>{{ t('browse_sub') }}</p></div></div>
+  {{ m.stats([(meta.units, t('stat_units')), (meta.speeches, t('stat_speeches')), (meta.qa, t('stat_qa')), (meta.commitments, t('stat_commitments'))]) }}
+</section>
+
+<section class="section" id="sittings" aria-labelledby="sit-h">
+  <div class="section-head"><div><h2 id="sit-h">{{ t('latest_sittings') }}</h2><p>{{ t('sittings_sub') }}</p></div><a class="linkbtn" href="/hansard">{{ t('all_sittings') }} {{ m.icon('arrow', 'sm') }}</a></div>
+  <div class="grid c3">
+    {% for s in sittings %}
+    <a class="card sit" href="/hansard/{{ s.chamber }}/{{ s.date }}">
+      <span class="ch">{{ m.chamber(s.chamber) }}</span>
+      <span class="d tnum">{{ s.date }}</span>
+      <span class="row"><span class="tnum">{{ s.units }} {{ t('items') }}</span>{% if s.draft %}{{ m.draft_mark() }}{% endif %}</span>
+    </a>
+    {% endfor %}
   </div>
 </section>
+
+<section class="section" id="commitments" aria-labelledby="com-h">
+  <div class="section-head"><div><h2 id="com-h">{{ t('latest_commitments') }}</h2><p>{{ t('commitments_sub') }}</p></div><a class="linkbtn" href="/commitments">{{ t('nav_commitments') }} {{ m.icon('arrow', 'sm') }}</a></div>
+  <div class="grid c3">
+    {% for c in commitments %}
+    <article class="card commit-mini">
+      {{ m.verbatim('“' ~ (c.quote|truncate(200)) ~ '”') }}
+      <p>{{ m.ai_label(t('promise_ai')) }} {{ c.promise|truncate(160) }}</p>
+      <p class="who"><a href="{{ debate_url(c.unit, c.seq) }}">{{ c.speaker|truncate(50) }}</a> · {{ c.date }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% if topic_trend %}
+<section class="section" id="topics" aria-labelledby="top-h">
+  <div class="section-head"><div><h2 id="top-h">{{ t('topic_trend') }}</h2><p>{{ t('topic_trend_sub') }}</p></div><a class="linkbtn" href="/topics">{{ t('nav_topics') }} {{ m.icon('arrow', 'sm') }}</a></div>
+  <div class="charts">
+    {% for g in topic_trend|groupby('topic') %}
+    {% set pts = g.list|sort(attribute='year') %}
+    <div class="card chart-card">
+      <h3><a href="/topic/{{ g.grouper }}">{{ pts[0].name[:1]|upper }}{{ pts[0].name[1:] }}</a></h3>
+      <div class="sub tnum">{{ "{:,}".format(pts|sum(attribute='n')) }} {{ t('items') }}, {{ pts[0].year }} {{ t('to') }} {{ pts[-1].year }}</div>
+      {{ m.bar_chart(pts, 'year', 'n', pts[0].name ~ ': ' ~ t('items_by_year')) }}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="chips" style="margin-top:18px">
+    {% for x in topics %}<a class="chip" href="/topic/{{ x.topic }}">{{ x.name }}</a>{% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<div class="peek" id="peek" role="dialog" aria-label="{{ t('source_preview') }}" hidden>
+  <div class="cl"><span class="num"></span><span class="cl-t"></span></div>
+  <blockquote class="rec" lang="ms"></blockquote>
+  <button type="button" class="linkbtn go">{{ t('jump_to_source') }} {{ m.icon('arrow', 'sm') }}</button>
+</div>
+
 <script id="strings" type="application/json">{{ {
-  'busy': t('ask_busy'), 'sources': t('sources'), 'passages': t('passages'), 'how': t('how_found'),
+  'lang': lang, 'examples': examples,
+  'step_search': t('step_search'), 'step_rank': t('step_rank'), 'step_write': t('step_write'),
+  'sources': t('sources'), 'sources_wait': t('sources_wait'), 'passages': t('passages'),
   'bm25': t('stage_bm25'), 'dense': t('stage_dense'), 'fused': t('stage_fused'), 'reranked': t('stage_reranked'),
-  'hits': t('hits'), 'cost': t('cost'), 'ai': t('answer_ai'), 'pdf': t('official_pdf'), 'error': t('error'),
-  'each': t('ask_each'), 'draft': t('draft_short'), 'budget_out': t('budget_out')
+  'hits': t('hits'), 'cost': t('cost'), 'search': t('search_word'), 'pdf': t('official_pdf'), 'error': t('error'),
+  'draft': t('draft_short'), 'draft_note': t('draft_note'), 'budget_out': t('budget_out'), 'writing': t('step_write'),
+  'done': t('answer_done'), 'copy': t('copy_link'), 'copied': t('link_copied'), 'more': t('more_filters'), 'less': t('fewer_filters'),
+  'asking': t('asking'), 'no_answer': t('no_answer'), 'stage': t('stage_word'), 'time': t('time_word'), 'try': t('examples'),
+  'ask': t('ask_button'), 'source_n': t('source_n')
 }|tojson }}</script>
 {% endblock %}
 {% block scripts %}<script src="/static/ask.js" defer></script>{% endblock %}

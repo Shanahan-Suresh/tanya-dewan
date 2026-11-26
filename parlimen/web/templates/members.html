@@ -2,13 +2,12 @@
 {% block title %}{{ t('nav_mps') }}, {{ t('f_parliament') }} {{ parliament }}{% endblock %}
 {% block description %}Members of the Dewan Rakyat, by seat and party, with the debates they spoke in and the questions they asked.{% endblock %}
 {% block main %}
-<h1>{{ t('nav_mps') }}</h1>
-<p class="tabs">{% for p in (15, 14) %}<a href="?parliament={{ p }}" {% if p == parliament %}aria-current="page"{% endif %}>{{ t('f_parliament') }} {{ p }}</a>{% endfor %}</p>
-<p class="muted">{{ t('no_rank') }}</p>
-<table class="list">
-  <thead><tr><th></th><th>{{ t('seat') }}</th><th>{{ t('nav_mps') }}</th></tr></thead>
+<header class="ph"><p class="eyebrow">{{ t('f_parliament') }} {{ parliament }}</p><h1>{{ t('nav_mps') }}</h1><p class="lead">{{ t('no_rank') }}</p></header>
+<p class="tabs" role="group" aria-label="{{ t('f_parliament') }}">{% for p in (15, 14) %}<a href="?parliament={{ p }}" {% if p == parliament %}aria-current="page"{% endif %}>{{ t('f_parliament') }} {{ p }}</a>{% endfor %}</p>
+<div class="list-wrap"><table class="list">
+  <thead><tr><th>{{ t('seat_code') }}</th><th>{{ t('seat') }}</th><th>{{ t('nav_mps') }}</th></tr></thead>
   <tbody>
-  {% for m in members %}<tr><td class="muted">{{ m.code }}</td><td>{{ m.seat }}</td><td><a href="/mp/{{ m.slug }}">{{ m.name }}</a></td></tr>{% endfor %}
+  {% for m in members %}<tr><td class="muted tnum">{{ m.code }}</td><td>{{ m.seat }}</td><td><a href="/mp/{{ m.slug }}">{{ m.name }}</a></td></tr>{% endfor %}
   </tbody>
-</table>
+</table></div>
 {% endblock %}

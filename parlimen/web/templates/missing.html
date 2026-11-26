@@ -2,6 +2,5 @@
 {% block title %}{{ t('not_found') }}{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
 {% block main %}
-<h1>{{ t('not_found') }}</h1>
-<p>{{ t('not_found_body') }} <a href="/">{{ t('nav_ask') }}</a></p>
+<header class="ph"><p class="eyebrow">404</p><h1>{{ t('not_found') }}</h1><p class="lead">{{ t('not_found_body') }}</p><p><a class="btn" href="/">{{ t('nav_ask') }}</a></p></header>
 {% endblock %}

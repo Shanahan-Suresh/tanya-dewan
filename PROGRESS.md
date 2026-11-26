@@ -388,7 +388,22 @@ page later grows into an app.
   the page). The owner picks a design in chat. A Design canvas
   artifact made first (https://claude.ai/artifact/XbvPXQXhyvKmcWg3SjxjX1) is empty and unused:
   delete it only if the owner asks.
-- Next: the owner picks a design, then build the chosen
+- The owner picked Civic with three Console features (citation hover lights its source, MP
+  month-by-year grid, debate speaker map with J/K). Plan: no Tailwind (Civic is token CSS), fonts
+  self-hosted, htmx for list filters and paging. Backend built and tested: `POST /api/ask/stream`
+  (stage, text, done, error events; `answer.ask(on_text=)` streams; `Searcher.search(on_stage=)`),
+  htmx partials (`results` block on `HX-Request`), `--replay docs/design/data.json` for no-spend
+  design runs, new `Records` member and topic-trend queries, `config.SITE_NAME`. The template and
+  CSS port to every page is done (all 17 templates, `ask.js`, `debate.js`, `shell.js`, vendored
+  htmx 2.0.4, self-hosted Geist and Literata with licences; `tools/site_shots.py --dark --full`;
+  125 tests pass). Owed: a polish round from shots (unread: questions, commitments, Act, topics,
+  MPs list, bill page, Malay pages), "1 speeches" plural, the citation popover covering the
+  answer on phone, dark heat-grid level 0 too faint, then restart the site on 8780 and ask one
+  real question through the stream.
+- Name: the owner wants a better name than parlimen-search. Shortlist page
+  https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE (source `docs/design/names/`); my pick is
+  Tanya Dewan. The rename is `config.SITE_NAME` plus docs, OG image and the MCP description.
+- Next: the owner picks a name; finish the port, then build the chosen
   design into `parlimen/web/` (templates, Tailwind build, htmx, streaming answer endpoint).
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking

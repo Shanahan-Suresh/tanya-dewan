@@ -215,3 +215,88 @@ def test_a_question_while_the_index_loads_gets_a_wait_message(client):
     r = client.post("/api/ask", json={"question": "hours of employment"})
     assert r.status_code == 503 and r.headers["retry-after"] == "60" and "still loading" in r.json()["error"]
     assert client.app.state.limits.r.keys("q:*") == []  # a refused question does not count
+
+
+def stream_events(text: str) -> list[tuple[str, dict]]:
+    out = []
+    for block in text.strip().split("\n\n"):
+        name, data = block.split("\n", 1)
+        out.append((name.removeprefix("event: "), json.loads(data.removeprefix("data: "))))
+    return out
+
+
+def test_ask_stream_sends_stages_then_the_answer_so_far_then_the_whole_body(recs, tmp_path):  # noqa: F811
+    s = build(tmp_path / "index")
+    s.search = lambda q, f=None, **kw: type(s).search(s, q, f, mode="hybrid", on_stage=kw.get("on_stage"))
+
+    def streaming_answer(question, passages, lang, on_text=None):
+        if on_text:
+            on_text("Forty-five hours a week.[1]")
+        return fake_answer(question, passages, lang)
+
+    limits = Limits(fakeredis.FakeRedis(decode_responses=True), hourly=3, daily_usd=1)
+    c = TestClient(create_app(recs, usable_from_any_thread(s), streaming_answer, tmp_path / "c.jsonl",
+                              limits=limits, question_log=tmp_path / "q.jsonl"))
+    r = c.post("/api/ask/stream", json={"question": "hours of employment", "kind": "law"})
+    assert r.headers["content-type"].startswith("text/event-stream")
+    events = stream_events(r.text)
+    stages = [(d["name"], d["hits"] is None) for n, d in events if n == "stage"]
+    assert stages == [("bm25", True), ("bm25", False), ("dense", True), ("dense", False),
+                      ("fused", True), ("fused", False), ("answer", True)]
+    assert ("text", {"text": "Forty-five hours a week.[1]"}) in events
+    name, body = events[-1]
+    assert name == "done" and body["answer"].startswith("Forty-five hours") and body["sources"][0]["n"] == 1
+
+
+def test_ask_stream_reports_refusals_as_an_error_event(client):
+    events = stream_events(client.post("/api/ask/stream", json={"question": " "}).text)
+    assert events == [("error", {"error": "empty question", "status": 400})]
+
+
+def test_replay_serves_a_saved_answer_with_no_model(recs, tmp_path):  # noqa: F811
+    saved = {"answer": {"question": "q", "answer": "Line one.[1]\n\nLine two.[1]", "sources": [], "passages": [],
+                        "stages": [{"name": "bm25", "hits": 3, "ms": 1}], "budget_out": False}}
+    path = tmp_path / "saved.json"
+    path.write_text(json.dumps(saved), encoding="utf-8")
+    c = TestClient(create_app(recs, replay=path, question_log=tmp_path / "q.jsonl"))
+    assert c.post("/api/ask", json={"question": "anything"}).json()["answer"].startswith("Line one")
+    events = stream_events(c.post("/api/ask/stream", json={"question": "anything"}).text)
+    assert [n for n, _ in events] == ["stage", "stage", "stage", "text", "done"]
+
+
+def test_a_list_page_asked_by_htmx_returns_only_its_results_block(client):
+    full = client.get("/questions?q=rice")
+    part = client.get("/questions?q=rice", headers={"HX-Request": "true"})
+    assert "<html" in full.text and 'id="results"' in full.text and 'hx-target="#results"' in full.text
+    assert "<html" not in part.text and "<form" not in part.text and "When will the rice subsidy arrive?" in part.text
+    assert part.headers["vary"] == "HX-Request"
+    for path in ("/commitments", "/law?q=employment", "/topic/sabah-and-sarawak"):
+        assert "<html" not in client.get(path, headers={"HX-Request": "true"}).text, path
+        assert "<html" in client.get(path).text, path
+    # Without the header every filter form is a plain GET form.
+    assert 'method="get"' in full.text and 'action="/questions"' in full.text
+
+
+def test_every_page_loads_only_its_own_assets_and_carries_the_shell(client):
+    import re
+    for path in ("/", "/law/265/BI", "/debate/DR-2024-05-02-001", "/mp/hannah-yeoh-tseow-suan", "/questions"):
+        text = client.get(path).text
+        assert not re.findall(r'(?:src|href)="https?://(?!lom\.example|www\.parlimen)[^"]*\.(?:js|css|woff2?)"', text), path
+        assert 'class="skip"' in text and 'id="more-sheet"' in text and "Not legal advice." in text, path
+        assert 'href="/about"' in text and "/correction?back=" in text, path
+    assert 'src="/static/htmx.min.js"' in client.get("/").text
+
+
+def test_the_debate_page_has_a_speaker_map_and_the_member_page_a_heat_grid(client):
+    d = client.get("/debate/DR-2024-05-02-001").text
+    assert 'id="smap"' in d and 'src="/static/debate.js"' in d and 'data-seq="2"' in d
+    assert 'class="stepper"' not in d
+    m = client.get("/mp/hannah-yeoh-tseow-suan").text
+    assert "heat-grid-missing" not in m  # the heat grid shows only with activity; its markup is the table.hm
+    assert 'class="avatar"' in m
+
+
+def test_the_ask_page_prefills_q_and_never_runs_it(client):
+    page = client.get("/?q=rice+prices").text
+    assert 'value="rice prices"' in page and 'id="answer" hidden' in page
+    assert 'name="parliament"' in page and 'name="date_from"' in page and "Copy link" in page

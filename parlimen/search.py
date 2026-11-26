@@ -23,7 +23,7 @@ import sys
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Sequence
+from typing import Callable, Sequence
 
 import numpy as np
 
@@ -359,15 +359,21 @@ class Searcher:
 
     def search(self, question: str, f: Filters | None = None, mode: str = "full", top_k: int = config.TOP_K,
                candidates: int = config.CANDIDATES, xrefs: int = config.XREFS,
-               pool: int = config.RERANK_POOL) -> Trace:
+               pool: int = config.RERANK_POOL, on_stage: Callable[[str, Stage | None], None] | None = None) -> Trace:
+        """`on_stage(name, None)` runs as each stage starts and `on_stage(name, stage)` as it ends, so the
+        site can show the reader the search's progress."""
         f = f or Filters()
         trace = Trace(question, f, mode)
         keep = self.mask(f)
 
         def timed(name, fn, *args):
+            if on_stage:
+                on_stage(name, None)
             t = time.perf_counter()
             hits = fn(*args)
             trace.stages.append(Stage(name, hits, (time.perf_counter() - t) * 1000))
+            if on_stage:
+                on_stage(name, trace.stages[-1])
             return hits
 
         lists = []

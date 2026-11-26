@@ -2,13 +2,15 @@
 {% block title %}{{ t('nav_law') }}{% endblock %}
 {% block description %}Every principal Act of Malaysia in force, in English and Malay, section by section, with the reprint date and the official PDF.{% endblock %}
 {% block main %}
-<h1>{{ t('nav_law') }}</h1>
-<form class="inline-filter" method="get">
-  <label>{{ t('search_title') }} <input name="q" value="{{ q }}" placeholder="employment / kerja"></label>
-  <button type="submit">{{ t('apply') }}</button>
+<header class="ph"><p class="eyebrow">{{ t('nav_law') }}</p><h1>{{ t('nav_law') }}</h1><p class="lead">{{ t('acts_intro') }}</p></header>
+<form class="inline-filter" method="get" action="/law" hx-get="/law" hx-target="#results" hx-push-url="true" hx-trigger="submit, input changed delay:300ms from:find input" hx-swap="innerHTML">
+  <label>{{ t('search_title') }} <input name="q" value="{{ q }}" placeholder="employment / kerja" type="search"></label>
+  <button class="btn" type="submit">{{ t('apply') }}</button>
 </form>
-<p class="muted">{{ acts|length }} {{ t('results') }}</p>
-<table class="list">
+<div id="results" aria-live="polite">
+{% block results %}
+<p class="count tnum">{{ acts|length }} {{ t('results') }}</p>
+<div class="list-wrap"><table class="list">
   <thead><tr><th>{{ t('act') }}</th><th>English</th><th>Bahasa Melayu</th><th>{{ t('as_at') }}</th></tr></thead>
   <tbody>
   {% for a in acts %}
@@ -20,5 +22,7 @@
   </tr>
   {% endfor %}
   </tbody>
-</table>
+</table></div>
+{% endblock %}
+</div>
 {% endblock %}

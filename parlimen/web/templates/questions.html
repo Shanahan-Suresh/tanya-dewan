@@ -3,19 +3,23 @@
 {% block title %}{{ t('nav_questions') }}{% endblock %}
 {% block description %}Oral questions in the Dewan Rakyat since 2018, each joined to the minister's answer, with the verbatim record beside it.{% endblock %}
 {% block main %}
-<h1>{{ t('nav_questions') }}</h1>
-<p class="lead">{{ t('questions_intro') }}</p>
-<form class="filter-bar" method="get">
-  <label>{{ t('f_words') }} <input name="q" value="{{ f.q }}" placeholder="banjir / flood"></label>
+<header class="ph"><p class="eyebrow">{{ t("from_hansard") }}</p><h1>{{ t("nav_questions") }}</h1><p class="lead">{{ t('questions_intro') }}</p></header>
+<form class="card filter-bar" method="get" action="/questions" hx-get="{{ path }}" hx-target="#results" hx-push-url="true" hx-trigger="submit, change" hx-swap="innerHTML show:#results:top">
+  <label>{{ t('f_words') }} <input name="q" value="{{ f.q }}" placeholder="banjir / flood" type="search"></label>
   {{ m.select('year', t('f_year'), opts.years, f.year, t('f_any')) }}
   {{ m.select('ministry', t('f_ministry'), opts.ministries, f.ministry, t('f_any')) }}
   {{ m.select('topic', t('f_topic'), opts.topics, f.topic, t('f_any')) }}
   {{ m.select('parliament', t('f_parliament'), [('15', '15'), ('14', '14')], f.parliament, t('f_any')) }}
-  <button type="submit">{{ t('apply') }}</button>
+  <button class="btn" type="submit">{{ t('apply') }}</button>
 </form>
-<p class="muted">{{ "{:,}".format(res.total) }} {{ t('results') }}</p>
+<div id="results" aria-live="polite">
+{% block results %}
+{% import "_macros.html" as m with context %}
+<p class="count tnum">{{ "{:,}".format(res.total) }} {{ t('results') }}</p>
 {% if res.rows %}
 <div class="cards">{% for q in res.rows %}{{ m.qa_card(q) }}{% endfor %}</div>
-{% else %}<p>{{ t('empty') }}</p>{% endif %}
+{% else %}<p class="card empty">{{ t('empty') }}</p>{% endif %}
 {{ m.pager(res) }}
+{% endblock %}
+</div>
 {% endblock %}

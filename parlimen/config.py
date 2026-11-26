@@ -22,6 +22,9 @@ USER_AGENT = "parlimen-search/0.1 (civic research crawler; one request at a time
 MIN_INTERVAL_S = 1.5  # seconds between two requests to the same host
 TIMEOUT_S = 60
 
+# The site's public name, in one place: page titles, the header, share previews, the MCP server.
+SITE_NAME = "parlimen-search"
+
 PARLIAMENT_SITE = "https://www.parlimen.gov.my"
 # Hansard archive per chamber: the Dewan Rakyat itself and its Special Chamber (Dewan Khas,
 # file names KKDR-...). Both pages serve the same tree.

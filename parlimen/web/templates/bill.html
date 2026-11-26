@@ -3,11 +3,22 @@
 {% block title %}{{ bill.title }}{% endblock %}
 {% block description %}The Dewan Rakyat debates on the {{ bill.title }} bill{% if act %} and the Act it {{ 'changed' if bill.change != 'new' else 'became' }}{% endif %}.{% endblock %}
 {% block main %}
-<div class="doc-head">
-  <p class="eyebrow">{{ t('nav_bills') }}</p>
+<header class="ph">
+  <p class="eyebrow"><a href="/bills">{{ t('nav_bills') }}</a></p>
   <h1>{{ bill.title }}</h1>
   {% if act %}<p class="meta">{{ t('change_' ~ bill.change) }}: <a href="/law/{{ act.number }}">{{ act.title_bi }} (Act {{ act.number }})</a></p>{% endif %}
-</div>
+</header>
 {{ m.ai_note(t('ai_label')) }}
-<ol class="units">{% for u in bill.units %}{{ m.unit_row(u) }}{% endfor %}</ol>
+<ol class="timeline">
+  {% for u in bill.units|sort(attribute='date,id') %}
+  <li>
+    <p class="when tnum">{{ u.date }} · {{ m.chamber(u.chamber) }}</p>
+    <div class="unit-row">
+      <a href="{{ debate_url(u.id) }}">{{ u.business or u.id }}</a>
+      {% set s = u.summary_ms if lang == 'ms' and u.summary_ms else u.summary_en %}
+      {% if s %}<p class="ai-line">{{ m.ai_label() }}<span>{{ s|truncate(260) }}</span></p>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ol>
 {% endblock %}

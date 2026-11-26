@@ -2,19 +2,18 @@
 {% block title %}{{ t('correction') }}{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
 {% block main %}
-<h1>{{ t('correction') }}</h1>
-{% if sent %}
-<p class="lead">{{ t('thanks') }}</p>
-{% if back %}<p><a href="{{ back }}">{{ t('back_to_record') }}</a></p>{% endif %}
-{% else %}
-<p class="lead">{{ t('correction_intro') }}</p>
-<form class="stack" method="post" action="/correction">
+<header class="ph"><h1>{{ t('correction') }}</h1>
+{% if sent %}<p class="lead">{{ t('thanks') }}</p>{% if back %}<p><a class="btn" href="{{ back }}">{{ t('back_to_record') }}</a></p>{% endif %}
+{% else %}<p class="lead">{{ t('correction_intro') }}</p>{% endif %}
+</header>
+{% if not sent %}
+<form class="stack card pad" method="post" action="/correction">
   <input type="hidden" name="back" value="{{ back }}">
   <label>{{ t('correction_record') }} <input name="record" value="{{ record }}"></label>
   <label>{{ t('correction_text') }} <textarea name="text" rows="6" maxlength="4000" required></textarea></label>
   <label>{{ t('correction_contact') }} <input name="contact" maxlength="200"></label>
-  <button type="submit">{{ t('send') }}</button>
+  <div><button class="btn" type="submit">{{ t('send') }}</button></div>
 </form>
-{% if back %}<p><a href="{{ back }}">{{ t('back_to_record') }}</a></p>{% endif %}
+{% if back %}<p style="margin-top:16px"><a class="linkbtn" href="{{ back }}">{{ t('back_to_record') }}</a></p>{% endif %}
 {% endif %}
 {% endblock %}

@@ -3,12 +3,17 @@
 {% block title %}{{ topic_name }}{% endblock %}
 {% block description %}Dewan Rakyat debates and ministers' commitments on {{ topic_name }}, newest first.{% endblock %}
 {% block main %}
-<div class="doc-head">
-  <p class="eyebrow">{{ t('nav_topics') }}</p>
+<header class="ph">
+  <p class="eyebrow"><a href="/topics">{{ t('nav_topics') }}</a></p>
   <h1>{{ topic_name[:1]|upper }}{{ topic_name[1:] }}</h1>
-  <p class="meta"><a href="/commitments?topic={{ topic }}">{{ t('nav_commitments') }}</a> · <a href="/questions?topic={{ topic }}">{{ t('nav_questions') }}</a></p>
-</div>
+  <p class="chips"><a class="chip" href="/commitments?topic={{ topic }}">{{ t('nav_commitments') }}</a><a class="chip" href="/questions?topic={{ topic }}">{{ t('nav_questions') }}</a></p>
+</header>
 {{ m.ai_note(t('ai_label')) }}
+<div id="results" aria-live="polite">
+{% block results %}
+{% import "_macros.html" as m with context %}
 <ol class="units">{% for u in units.rows %}{{ m.unit_row(u) }}{% endfor %}</ol>
 {{ m.pager(units) }}
+{% endblock %}
+</div>
 {% endblock %}

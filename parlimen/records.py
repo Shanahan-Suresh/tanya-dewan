@@ -631,6 +631,39 @@ class Records:
                           "SELECT u.*, x.seq FROM ({q}) x JOIN units u ON u.id = x.unit "
                           "ORDER BY substr(x.unit, 4) DESC, x.unit")
 
+    def member_counts(self, s: str) -> dict:
+        one = lambda sql: self.con.execute(sql, (s,)).fetchone()[0]  # noqa: E731
+        return {"items": one("SELECT COUNT(DISTINCT unit) FROM speeches WHERE member = ? AND chars >= 200"),
+                "answered": one("SELECT COUNT(*) FROM qa WHERE answerer_member = ?"),
+                "asked": one("SELECT COUNT(*) FROM qa WHERE asker_member = ?"),
+                "commitments": one("SELECT COUNT(*) FROM commitments WHERE member = ?")}
+
+    def member_activity(self, s: str) -> list[dict]:
+        """Agenda items the MP spoke in (200 characters or more), by month: [{month: "2023-03", items}]."""
+        return self._all("SELECT substr(u.date, 1, 7) AS month, COUNT(DISTINCT u.id) AS items FROM speeches x "
+                         "JOIN units u ON u.id = x.unit WHERE x.member = ? AND x.chars >= 200 "
+                         "GROUP BY month ORDER BY month", (s,))
+
+    def member_topics(self, s: str, limit: int = 8) -> list[dict]:
+        return self._all("SELECT topic, MIN(name) AS name, COUNT(DISTINCT unit) AS n FROM unit_topics WHERE unit IN "
+                         "(SELECT DISTINCT unit FROM speeches WHERE member = ? AND chars >= 200) "
+                         "GROUP BY topic ORDER BY n DESC, topic LIMIT ?", (s, limit))
+
+    def member_offices(self, s: str) -> list[dict]:
+        """Offices the MP spoke from when making commitments, with the first and last date seen."""
+        return self._all("SELECT office, MIN(date) AS first, MAX(date) AS last, COUNT(*) AS n FROM commitments "
+                         "WHERE member = ? AND office != '' GROUP BY office ORDER BY first", (s,))
+
+    def member_answers(self, s: str, size: int = 10) -> list[dict]:
+        return self._all("SELECT * FROM qa WHERE answerer_member = ? ORDER BY date DESC, id LIMIT ?", (s, size))
+
+    def topic_trend(self, top: int = 6) -> list[dict]:
+        """Agenda items a year for the `top` biggest topics: [{topic, name, year, n}]."""
+        return self._listed(f"topic_trend_{top}",
+                            "SELECT topic, MIN(name) AS name, substr(date, 1, 4) AS year, COUNT(*) AS n "
+                            "FROM unit_topics WHERE topic IN (SELECT topic FROM unit_topics GROUP BY topic "
+                            f"ORDER BY COUNT(*) DESC LIMIT {int(top)}) GROUP BY topic, year ORDER BY topic, year")
+
     def bills(self) -> list[dict]:
         return self._all("SELECT b.*, MIN(u.date) AS first, MAX(u.date) AS last, COUNT(u.id) AS units FROM bills b "
                          "JOIN units u ON u.bill = b.slug GROUP BY b.slug ORDER BY last DESC")

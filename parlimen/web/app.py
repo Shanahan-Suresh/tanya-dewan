@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import os
+import queue
 import re
 import threading
 import time
@@ -34,7 +35,8 @@ from urllib.parse import quote, urlencode
 from xml.sax.saxutils import escape
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response
+from fastapi.responses import (HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response,
+                               StreamingResponse)
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pydantic import BaseModel
@@ -152,16 +154,38 @@ def pdf_page(url: str, page: int | None) -> str:
     return f"{url}#page={page}" if url and page else url
 
 
+def play(saved: dict, events: queue.Queue, pace: float = 1.0) -> None:
+    """Replay a saved answer as the stream would send it: each search stage starts and ends, then
+    the answer grows line by line, then the whole body."""
+    done = saved["done"]
+    for st in done["stages"]:
+        events.put(("stage", {"name": st["name"], "hits": None, "ms": None}))
+        time.sleep(min(st["ms"], 1500) / 1000 * pace)
+        events.put(("stage", st))
+    events.put(("stage", {"name": "answer", "hits": None, "ms": None}))
+    lines = done["answer"].split("\n")
+    for i in range(1, len(lines)):
+        if lines[i - 1].strip():
+            time.sleep(0.45 * pace)
+            events.put(("text", {"text": "\n".join(lines[:i]).strip()}))
+    events.put(("done", done))
+
+
 def create_app(records: Records | None = None, searcher=None, answer_fn: Callable | None = None,
                corrections: Path = CORRECTIONS, limits: Limits | None = None, question_log: Path = QUESTIONS,
-               site_url: str = SITE_URL) -> FastAPI:
-    app = FastAPI(title="parlimen-search", docs_url=None, redoc_url=None)
+               site_url: str = SITE_URL, replay: Path | None = None) -> FastAPI:
+    """`replay` names a JSON file holding one saved /api/ask body under "answer" (as
+    docs/design/data.json does): the ask routes then serve it with no model and no spend, for
+    design work and screenshots."""
+    app = FastAPI(title=config.SITE_NAME, docs_url=None, redoc_url=None)
+    replay = {"done": json.loads(replay.read_text(encoding="utf-8"))["answer"]} if replay else None
     app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
     env = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]),
                       trim_blocks=True, lstrip_blocks=True)
     env.filters["loads"] = json.loads
     env.filters["reflow"] = reflow
-    env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug)
+    env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug,
+                       site_name=config.SITE_NAME, examples=EXAMPLES)
     engine = _Engine(searcher)
     app.state.engine = engine
     limits = limits or Limits()
@@ -177,8 +201,8 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     if answer_fn is None:
         from ..answer import ask
 
-        def answer_fn(question, passages, lang):
-            return ask(question, passages, lang, job="site-answer")
+        def answer_fn(question, passages, lang, on_text=None):
+            return ask(question, passages, lang, job="site-answer", on_text=on_text)
 
     def hl(request: Request) -> str:
         v = request.cookies.get("hl", "en")
@@ -194,11 +218,18 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         def with_page(n: int) -> str:
             return "?" + urlencode({**args, "page": n})
 
-        html = env.get_template(template).render(
-            lang=lang, t=lambda k, **kw: t(k, lang).format(**kw) if kw else t(k, lang), path=request.url.path,
-            full_path=str(request.url.path) + (f"?{request.url.query}" if request.url.query else ""),
-            args=args, with_page=with_page, base_url=base_url(request), **ctx)
-        return HTMLResponse(html, status)
+        tpl = env.get_template(template)
+        values = dict(lang=lang, t=lambda k, **kw: t(k, lang).format(**kw) if kw else t(k, lang),
+                      path=request.url.path,
+                      full_path=str(request.url.path) + (f"?{request.url.query}" if request.url.query else ""),
+                      args=args, with_page=with_page, base_url=base_url(request), **ctx)
+        # htmx asks for a filtered or paged list with the HX-Request header: send only the page's
+        # `results` block, which it swaps in place; a plain request gets the whole page.
+        if request.headers.get("HX-Request") and "results" in tpl.blocks:
+            html = "".join(tpl.blocks["results"](tpl.new_context(values)))
+        else:
+            html = tpl.render(**values)
+        return HTMLResponse(html, status, headers={"Vary": "HX-Request"})
 
     def missing(request: Request) -> HTMLResponse:
         return page(request, "missing.html", 404)
@@ -223,22 +254,25 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     @app.get("/", response_class=HTMLResponse)
     def home(request: Request):
         r = rec()
-        return page(request, "home.html", examples=EXAMPLES[hl(request)], topics=r.topics(), parties=PARTIES,
-                    sittings=r.sittings(limit=6), commitments=r.commitments(size=5).rows)
+        return page(request, "home.html", topics=r.topics(), parties=PARTIES, meta=r.meta(),
+                    sittings=r.sittings(limit=6), commitments=r.commitments(kind="promise", size=6).rows,
+                    topic_trend=r.topic_trend(6), q=request.query_params.get("q", "")[:500])
 
-    @app.post("/api/ask")
-    def api_ask(request: Request, body: AskRequest):
+    def run_question(request: Request, body: AskRequest, on_stage: Callable | None = None,
+                     on_text: Callable | None = None) -> tuple[int, dict, dict]:
+        """One question, start to end: checks, limits, search, answer, links, question log.
+        Returns (HTTP status, body, headers). `on_stage` and `on_text` feed the streamed page."""
         from ..search import Filters
 
         q = body.question.strip()
         if not q:
-            return JSONResponse({"error": "empty question"}, 400)
+            return 400, {"error": "empty question"}, {}
         if len(q) > 500:
-            return JSONResponse({"error": "question too long (500 characters at most)"}, 400)
+            return 400, {"error": "question too long (500 characters at most)"}, {}
         if not engine.warmed:  # after the nightly restart the index loads for a few minutes
-            return JSONResponse({"error": t("warming", hl(request))}, 503, headers={"Retry-After": "60"})
+            return 503, {"error": t("warming", hl(request))}, {"Retry-After": "60"}
         if not limits.take(request.client.host if request.client else ""):
-            return JSONResponse({"error": t("limit_hour", hl(request)).format(n=limits.hourly)}, 429)
+            return 429, {"error": t("limit_hour", hl(request)).format(n=limits.hourly)}, {}
         budget = limits.budget_left()
         f = Filters(kind=body.kind or None, act=body.act.strip() or None, lang=body.lang or None,
                     date_from=body.date_from or None, date_to=body.date_to or None,
@@ -250,14 +284,22 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         def search(s):
             before = getattr(s.reranker, "usd", 0.0)
             # Past the day's budget nothing calls Claude: the fused order stands and no answer is written.
-            trace = s.search(q, f) if budget else s.search(q, f, mode="hybrid")
+            kw = {"on_stage": on_stage} if on_stage else {}
+            trace = s.search(q, f, **kw) if budget else s.search(q, f, mode="hybrid", **kw)
             seqs = [s.row(p.ids[0]).seq_first for p in trace.passages]
             return trace, seqs, getattr(s.reranker, "usd", 0.0) - before
 
         trace, seqs, rerank_usd = engine.run(search)
         search_ms = (time.perf_counter() - t0) * 1000
         lang = question_lang(q)
-        ans = answer_fn(q, trace.passages, lang) if budget else None
+        if on_stage:
+            on_stage("answer", None)
+        if not budget:
+            ans = None
+        elif on_text:
+            ans = answer_fn(q, trace.passages, lang, on_text=on_text)
+        else:
+            ans = answer_fn(q, trace.passages, lang)
         usd = rerank_usd + (ans.usd if ans else 0.0)
         limits.spend(usd)
         r = rec()
@@ -290,9 +332,51 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                 fh.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "question": q,
                                      "lang": lang, "filters": trace.filters.describe(), "answered": ans is not None,
                                      "usd": round(usd, 5), "ms": total_ms}, ensure_ascii=False) + "\n")
-        return {"question": q, "lang": lang, "filters": trace.filters.describe(), "answer": ans.text if ans else "",
-                "budget_out": ans is None, "sources": sources, "passages": passages, "stages": stages,
-                "usd": round(usd, 5), "search_ms": round(search_ms), "total_ms": total_ms}
+        return 200, {"question": q, "lang": lang, "filters": trace.filters.describe(),
+                     "answer": ans.text if ans else "", "budget_out": ans is None, "sources": sources,
+                     "passages": passages, "stages": stages, "usd": round(usd, 5), "search_ms": round(search_ms),
+                     "total_ms": total_ms}, {}
+
+    @app.post("/api/ask")
+    def api_ask(request: Request, body: AskRequest):
+        if replay is not None:
+            return replay["done"]
+        status, payload, headers = run_question(request, body)
+        return payload if status == 200 else JSONResponse(payload, status, headers=headers)
+
+    @app.post("/api/ask/stream")
+    def api_ask_stream(request: Request, body: AskRequest):
+        """The same answer as /api/ask, as server-sent events: `stage` (a search stage starts, with no
+        hits yet, or ends, with its hits and time), `text` (the cited answer so far), then `done`
+        (the /api/ask body) or `error` (its message and HTTP status)."""
+        events: queue.Queue = queue.Queue()
+
+        def stage(name, st):
+            events.put(("stage", {"name": name, "hits": len(st.hits) if st else None,
+                                  "ms": round(st.ms) if st else None}))
+
+        def work():
+            try:
+                if replay is not None:
+                    play(replay, events)
+                    return
+                status, payload, _ = run_question(request, body, on_stage=stage,
+                                                  on_text=lambda text: events.put(("text", {"text": text})))
+                events.put(("done", payload) if status == 200 else ("error", {**payload, "status": status}))
+            except Exception as e:  # noqa: BLE001 - the reader gets a message instead of a hung page
+                events.put(("error", {"error": f"The answer failed: {type(e).__name__}.", "status": 500}))
+            finally:
+                events.put(None)
+
+        threading.Thread(target=work, daemon=True).start()
+
+        def sse():
+            while (item := events.get()) is not None:
+                name, data = item
+                yield f"event: {name}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+        return StreamingResponse(sse(), media_type="text/event-stream",
+                                 headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"})
 
     # ---------- the law ----------
 
@@ -398,7 +482,10 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         n = num(request.query_params.get("page", "1"))
         return page(request, "member.html", m=m, units=r.member_units(member, n), parliament_now=r.parliament_now(),
                     asked=r.questions(member=member, size=20).rows,
-                    made=r.commitments(member=member, size=20).rows)
+                    answered=r.member_answers(member, 10),
+                    made=r.commitments(member=member, size=20).rows,
+                    counts=r.member_counts(member), activity=r.member_activity(member),
+                    top_topics=r.member_topics(member, 8), offices=r.member_offices(member))
 
     @app.get("/bills", response_class=HTMLResponse)
     def bills(request: Request):
@@ -517,8 +604,11 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="parlimen-search site")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8780)
+    ap.add_argument("--replay", type=Path, help="serve this saved answer on the ask page, with no model or spend "
+                                                "(for design work; docs/design/data.json holds one)")
     a = ap.parse_args()
-    app = create_app()
-    app.state.engine.warm()
+    app = create_app(replay=a.replay)
+    if not a.replay:
+        app.state.engine.warm()
     threading.Thread(target=_watch_idle, args=(app.state.engine,), daemon=True).start()
     uvicorn.run(app, host=a.host, port=a.port, log_level="info")

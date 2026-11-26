@@ -3,20 +3,24 @@
 {% block title %}{{ t('nav_commitments') }}{% endblock %}
 {% block description %}Ministers' commitments in the Dewan Rakyat since 2018, each with the verbatim quote, the minister, the date and the ministry.{% endblock %}
 {% block main %}
-<h1>{{ t('nav_commitments') }}</h1>
-<p class="lead">{{ t('commitments_intro') }}</p>
-<form class="filter-bar" method="get">
-  <label>{{ t('f_words') }} <input name="q" value="{{ f.q }}" placeholder="RM / 2027 / sekolah"></label>
+<header class="ph"><p class="eyebrow">{{ t("from_hansard") }}</p><h1>{{ t("nav_commitments") }}</h1><p class="lead">{{ t('commitments_intro') }}</p></header>
+<form class="card filter-bar" method="get" action="/commitments" hx-get="{{ path }}" hx-target="#results" hx-push-url="true" hx-trigger="submit, change" hx-swap="innerHTML show:#results:top">
+  <label>{{ t('f_words') }} <input name="q" value="{{ f.q }}" placeholder="RM / 2027 / sekolah" type="search"></label>
   {{ m.select('year', t('f_year'), opts.years, f.year, t('f_any')) }}
   {{ m.select('ministry', t('f_ministry'), opts.ministries, f.ministry, t('f_any')) }}
   {{ m.select('topic', t('f_topic'), opts.topics, f.topic, t('f_any')) }}
   {{ m.select('parliament', t('f_parliament'), [('15', '15'), ('14', '14')], f.parliament, t('f_any')) }}
   {{ m.select('kind', t('f_kind_commit'), [('promise', t('f_kind_promise')), ('routine', t('f_kind_routine'))], kind, t('f_any')) }}
-  <button type="submit">{{ t('apply') }}</button>
+  <button class="btn" type="submit">{{ t('apply') }}</button>
 </form>
-<p class="muted">{{ "{:,}".format(res.total) }} {{ t('results') }}</p>
+<div id="results" aria-live="polite">
+{% block results %}
+{% import "_macros.html" as m with context %}
+<p class="count tnum">{{ "{:,}".format(res.total) }} {{ t('results') }}</p>
 {% if res.rows %}
 <div class="cards">{% for c in res.rows %}{{ m.commitment_card(c) }}{% endfor %}</div>
-{% else %}<p>{{ t('empty') }}</p>{% endif %}
+{% else %}<p class="card empty">{{ t('empty') }}</p>{% endif %}
 {{ m.pager(res) }}
+{% endblock %}
+</div>
 {% endblock %}

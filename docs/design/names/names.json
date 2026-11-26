@@ -1,0 +1,201 @@
+{
+ "names": [
+  {
+   "name": "Tanya Dewan",
+   "meaning": "'Ask the House' (Dewan = the chamber/hall)",
+   "in_use": "Cuba tanya Dewan dulu",
+   "best": "Says exactly what the site does; verb-first, imperative like Jom/Cuba; all three domains free.",
+   "catch": "'Dewan' alone also means any hall, and 'Dewan Rakyat' is the official chamber, so a little official-sounding; two words.",
+   "domains": {
+    "tanyadewan.my": "free",
+    "tanyadewan.com.my": "free",
+    "tanyadewan.com": "free"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Rekod Rakyat",
+   "meaning": "'The People's Record'",
+   "in_use": "Check Rekod Rakyat",
+   "best": "Neutral, civic, names the record idea; all three domains free.",
+   "catch": "Less of a verb, so it is harder to say 'I Rekod-Rakyat-ed it'; 'Rekod' alone suggests health records (Ministry of Health app RekodSaya exists) or criminal records; 'Rakyat' appears in many government apps (Respons Rakyat, Rakyat App).",
+   "domains": {
+    "rekodrakyat.my": "free",
+    "rekodrakyat.com.my": "free",
+    "rekodrakyat.com": "free"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Bukti",
+   "meaning": "'Proof, evidence'",
+   "in_use": "Mana buktinya? / I got it on Bukti",
+   "best": "Short, punchy, matches 'receipts' hero line.",
+   "catch": "Sounds like a fact-check or expose site; .com taken.",
+   "domains": {
+    "bukti.my": "free",
+    "bukti.com.my": "free",
+    "bukti.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Semak",
+   "meaning": "'Check, review'",
+   "in_use": "Semak kat Semak",
+   "best": "Very short, a real everyday verb for checking.",
+   "catch": "Slang 'semak' = cluttered/annoying; semak.com taken; MySPR Semak (election commission voter-check app) exists, so semantically close to an official service.",
+   "domains": {
+    "semak.my": "taken",
+    "semak.com.my": "free",
+    "semak.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Rujuk",
+   "meaning": "'Refer to, consult'",
+   "in_use": "Rujuk je kat Rujuk",
+   "best": "Everyday word for looking something up, ideal for students/journalists; .my and .com.my free.",
+   "catch": "In Malay family law 'rujuk' = reconciling with a divorced spouse (religious connotation); generic; rujuk.com taken.",
+   "domains": {
+    "rujuk.my": "free",
+    "rujuk.com.my": "free",
+    "rujuk.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Petik",
+   "meaning": "'Quote, cite' (also to pick/pluck)",
+   "in_use": "Petik dari Petik",
+   "best": "Nails the cite-every-sentence idea.",
+   "catch": "Also means 'to pluck/pick' and appears in many small business names; petik.my and petik.com taken.",
+   "domains": {
+    "petik.my": "taken",
+    "petik.com.my": "free",
+    "petik.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Dewanku",
+   "meaning": "'My House/Hall'",
+   "in_use": "Aku tengok kat Dewanku",
+   "best": "Warm, personal, 'the House' idea; all three domains free.",
+   "catch": "Could read as an official parliament app (the official app is 'Parlimen Malaysia'); 'dewan' also means wedding/event hall so SEO noise; no meaning of asking.",
+   "domains": {
+    "dewanku.my": "free",
+    "dewanku.com.my": "free",
+    "dewanku.com": "free"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Lantai",
+   "meaning": "'The floor' (as in 'on the floor of the House'; 'lantai' = floor)",
+   "in_use": "Apa dia cakap kat Lantai?",
+   "best": "Short, evocative of the debating floor; .my free.",
+   "catch": "Mostly known as plain 'floor' (tiles/flooring businesses), so confusing; lantai.com taken; says nothing about asking.",
+   "domains": {
+    "lantai.my": "free",
+    "lantai.com.my": "free",
+    "lantai.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Bicara",
+   "meaning": "'Speak, discuss, hear (a case)'",
+   "in_use": "Cari kat Bicara",
+   "best": "Short, pleasant, covers debate.",
+   "catch": "Very common word; 'bicara' also means a court trial/hearing (legal tone) and there are many Bicara-named talk shows/podcasts/brands; bicara.com taken.",
+   "domains": {
+    "bicara.my": "free",
+    "bicara.com.my": "free",
+    "bicara.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Catat",
+   "meaning": "'Note down, record'",
+   "in_use": "Catat dalam Catat",
+   "best": "Short, 'the record' idea.",
+   "catch": "Meaning is writing things down, not asking; catat.my and catat.com taken (existing brand likely).",
+   "domains": {
+    "catat.my": "taken",
+    "catat.com.my": "free",
+    "catat.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Soalan",
+   "meaning": "'Question'",
+   "in_use": "Hantar soalan kat Soalan",
+   "best": "Instantly clear to everyone; .my and .com.my free.",
+   "catch": "Generic and confused with exam question banks (soalan SPM sites) and with Parliament's own 'soalan lisan'; soalan.com taken.",
+   "domains": {
+    "soalan.my": "free",
+    "soalan.com.my": "free",
+    "soalan.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Ask Hansard",
+   "meaning": "Plain-English 'ask the parliamentary record'",
+   "in_use": "I asked Ask Hansard",
+   "best": "Clear in English; Hansard is the word journalists and students know.",
+   "catch": "English-only and longer; 'Hansard' may confuse casual Malay readers; askhansard.com and askhansard.my are taken (.com.my free), so the clean .my is gone.",
+   "domains": {
+    "askhansard.my": "free",
+    "askhansard.com.my": "free",
+    "askhansard.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Tanya Hansard",
+   "meaning": "'Ask the Hansard'",
+   "in_use": "Cuba Tanya Hansard",
+   "best": "Blend of Malay verb and the English term; all three domains free; stronger tie to the record than Tanya Dewan.",
+   "catch": "Three-plus syllables heavier; 'Hansard' reads as official; the official Digital Hansard portal (hansard.parlimen.gov.my, relaunched June 2026) is similar-sounding so mistaking is possible.",
+   "domains": {
+    "tanyahansard.my": "free",
+    "tanyahansard.com.my": "free",
+    "tanyahansard.com": "free"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  },
+  {
+   "name": "Cakna",
+   "meaning": "'Care about, be aware'",
+   "in_use": "Kena cakna sikit",
+   "best": "Warm, distinctly Malaysian, good tone.",
+   "catch": "Does not say asking or the record; used widely as a word and brand (cakna.com taken; Cakna campaigns exist); weak link to function.",
+   "domains": {
+    "cakna.my": "taken",
+    "cakna.com.my": "free",
+    "cakna.com": "taken"
+   },
+   "clash_notes": "Web search (standard) found no exact-name Malaysian app/site/party for it; search tool is weak, so treat as not verified, not as cleared."
+  }
+ ],
+ "top3": [
+  {
+   "name": "Tanya Dewan",
+   "why": "It is the only name that is a verb plus the House, people can say 'cuba tanya Dewan', and .my, .com.my and .com are all free."
+  },
+  {
+   "name": "Rekod Rakyat",
+   "why": "Neutral, civic and about the record itself, with all three domains free, though it is a noun rather than a verb."
+  },
+  {
+   "name": "Dewanku",
+   "why": "Short, warm and easy to say with all three domains free, but it needs a tagline to carry the asking idea and could pass as an official app."
+  }
+ ],
+ "method": "Run 2026-11-26. .com: Verisign RDAP (rdap.verisign.com/com/v1/domain/<name>.com), 200 = taken, 404 = free. .my and .com.my: whois over port 43 to whois.mynic.my ('is available for registration' = free; a 'Domain Name:' record = taken), because rdap.org has no .my service and rdap.mynic.my is a web page, not RDAP; tested with google.com.my (taken) and a nonsense name (free). Hyphenated variants not checked (none needed). Nothing registered or reserved, no forms. Clash research: a handful of standard web searches (the tool returned few exact matches), so absence of clashes is unverified; trademark (MyIPO) and social handles not checked. Dropped from the 16 checked: Jejak and Sumber (both taken on all three domains)."
+}

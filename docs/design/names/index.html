@@ -1,0 +1,153 @@
+<title>Site Name Shortlist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;650;700&display=swap">
+<style>
+/* Layout: a centred intro, then a grid of name cards; each card shows the name as it would sit in the site header. */
+:root { --bg:#FBFAF6; --surface:#FFFFFF; --ink:#0C1433; --muted:#46506E; --line:#E4E1D5; --brand:#0A1F5C; --accent:#F5B800;
+  --ok:#1D6B3A; --no:#8A2F1C; --soft:#F4F2EA; --font:"Geist", "Inter", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#060A1C; --surface:#0D1430; --ink:#EEF0FA; --muted:#A8B1D0;
+  --line:#1E2850; --brand:#2B4AA8; --ok:#6FD08F; --no:#F29A85; --soft:#131B3D; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg:#060A1C; --surface:#0D1430; --ink:#EEF0FA; --muted:#A8B1D0; --line:#1E2850; --brand:#2B4AA8;
+  --ok:#6FD08F; --no:#F29A85; --soft:#131B3D; color-scheme: dark; }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--font);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px }
+.wrap { max-width: 1280px; margin: 0 auto; display: grid; gap: 28px }
+h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -0.03em; margin: 0; font-weight: 700; text-wrap: balance }
+.intro p { color: var(--muted); max-width: 70ch; margin: 12px 0 0 }
+.intro p b { color: var(--ink) }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 10px; align-content: start }
+.card.top { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand) }
+.lockup { display: flex; align-items: center; gap: 10px }
+.lockup b { font-size: 24px; font-weight: 650; letter-spacing: -0.02em }
+.mark svg { width: 34px; height: 34px; display: block }
+.mark rect { fill: var(--brand) } .mark path { fill: none; stroke: var(--accent); stroke-width: 2.5 }
+.rank { margin: 0; font-size: 13px; font-weight: 650; color: var(--brand); letter-spacing: .04em; text-transform: uppercase }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .rank { color: var(--accent) } }
+:root[data-theme="dark"] .rank { color: var(--accent) }
+.meaning { margin: 0; font-weight: 500 }
+.say { margin: 0; color: var(--muted); font-style: italic }
+dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 15px }
+dt { font-weight: 650; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; padding-top: 2px }
+dd { margin: 0 }
+.doms { list-style: none; margin: 4px 0 0; padding: 10px 12px; background: var(--soft); border-radius: 8px; display: grid; gap: 4px; font-size: 14px; font-variant-numeric: tabular-nums }
+.doms li { display: flex; align-items: center; gap: 8px }
+.doms svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.5; flex: none }
+.doms em { margin-left: auto; font-style: normal; font-weight: 650 }
+.doms .free { color: var(--ok) } .doms .taken { color: var(--no) }
+.doms span { color: var(--ink) }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px }
+summary { cursor: pointer; font-weight: 650; min-height: 28px }
+details p { color: var(--muted); max-width: 80ch }
+</style>
+<div class="wrap">
+  <header class="intro">
+    <h1>Which name should the site use?</h1>
+    <p>Here are 14 names, each shown as it would look in the site header. The three outlined cards are my shortlist. My pick is still <b>Tanya Dewan</b>: people can say it as a verb, and all three web addresses are free.</p>
+    <p>Tell me in chat which name you want. I can also mix ideas, for example a name plus a tagline.</p>
+  </header>
+  <div class="grid"><article class="card top">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Tanya Dewan</b></div>
+  <p class="rank">Shortlist pick 1 of 3</p>
+  <p class="meaning">&#x27;Ask the House&#x27; (Dewan = the chamber/hall)</p>
+  <p class="say">“Cuba tanya Dewan dulu”</p>
+  <dl><dt>Good</dt><dd>Says exactly what the site does; verb-first, imperative like Jom/Cuba; all three domains free.</dd><dt>Catch</dt><dd>&#x27;Dewan&#x27; alone also means any hall, and &#x27;Dewan Rakyat&#x27; is the official chamber, so a little official-sounding; two words.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 3 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>tanyadewan.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>tanyadewan.com.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>tanyadewan.com</span><em>free</em></li></ul>
+</article><article class="card top">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Rekod Rakyat</b></div>
+  <p class="rank">Shortlist pick 2 of 3</p>
+  <p class="meaning">&#x27;The People&#x27;s Record&#x27;</p>
+  <p class="say">“Check Rekod Rakyat”</p>
+  <dl><dt>Good</dt><dd>Neutral, civic, names the record idea; all three domains free.</dd><dt>Catch</dt><dd>Less of a verb, so it is harder to say &#x27;I Rekod-Rakyat-ed it&#x27;; &#x27;Rekod&#x27; alone suggests health records (Ministry of Health app RekodSaya exists) or criminal records; &#x27;Rakyat&#x27; appears in many government apps (Respons Rakyat, Rakyat App).</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 3 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>rekodrakyat.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>rekodrakyat.com.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>rekodrakyat.com</span><em>free</em></li></ul>
+</article><article class="card top">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Dewanku</b></div>
+  <p class="rank">Shortlist pick 3 of 3</p>
+  <p class="meaning">&#x27;My House/Hall&#x27;</p>
+  <p class="say">“Aku tengok kat Dewanku”</p>
+  <dl><dt>Good</dt><dd>Warm, personal, &#x27;the House&#x27; idea; all three domains free.</dd><dt>Catch</dt><dd>Could read as an official parliament app (the official app is &#x27;Parlimen Malaysia&#x27;); &#x27;dewan&#x27; also means wedding/event hall so SEO noise; no meaning of asking.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 3 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>dewanku.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>dewanku.com.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>dewanku.com</span><em>free</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Bukti</b></div>
+  
+  <p class="meaning">&#x27;Proof, evidence&#x27;</p>
+  <p class="say">“Mana buktinya? / I got it on Bukti”</p>
+  <dl><dt>Good</dt><dd>Short, punchy, matches &#x27;receipts&#x27; hero line.</dd><dt>Catch</dt><dd>Sounds like a fact-check or expose site; .com taken.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 2 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>bukti.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>bukti.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>bukti.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Semak</b></div>
+  
+  <p class="meaning">&#x27;Check, review&#x27;</p>
+  <p class="say">“Semak kat Semak”</p>
+  <dl><dt>Good</dt><dd>Very short, a real everyday verb for checking.</dd><dt>Catch</dt><dd>Slang &#x27;semak&#x27; = cluttered/annoying; semak.com taken; MySPR Semak (election commission voter-check app) exists, so semantically close to an official service.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 1 of 3 free"><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>semak.my</span><em>taken</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>semak.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>semak.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Rujuk</b></div>
+  
+  <p class="meaning">&#x27;Refer to, consult&#x27;</p>
+  <p class="say">“Rujuk je kat Rujuk”</p>
+  <dl><dt>Good</dt><dd>Everyday word for looking something up, ideal for students/journalists; .my and .com.my free.</dd><dt>Catch</dt><dd>In Malay family law &#x27;rujuk&#x27; = reconciling with a divorced spouse (religious connotation); generic; rujuk.com taken.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 2 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>rujuk.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>rujuk.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>rujuk.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Petik</b></div>
+  
+  <p class="meaning">&#x27;Quote, cite&#x27; (also to pick/pluck)</p>
+  <p class="say">“Petik dari Petik”</p>
+  <dl><dt>Good</dt><dd>Nails the cite-every-sentence idea.</dd><dt>Catch</dt><dd>Also means &#x27;to pluck/pick&#x27; and appears in many small business names; petik.my and petik.com taken.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 1 of 3 free"><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>petik.my</span><em>taken</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>petik.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>petik.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Lantai</b></div>
+  
+  <p class="meaning">&#x27;The floor&#x27; (as in &#x27;on the floor of the House&#x27;; &#x27;lantai&#x27; = floor)</p>
+  <p class="say">“Apa dia cakap kat Lantai?”</p>
+  <dl><dt>Good</dt><dd>Short, evocative of the debating floor; .my free.</dd><dt>Catch</dt><dd>Mostly known as plain &#x27;floor&#x27; (tiles/flooring businesses), so confusing; lantai.com taken; says nothing about asking.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 2 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>lantai.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>lantai.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>lantai.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Bicara</b></div>
+  
+  <p class="meaning">&#x27;Speak, discuss, hear (a case)&#x27;</p>
+  <p class="say">“Cari kat Bicara”</p>
+  <dl><dt>Good</dt><dd>Short, pleasant, covers debate.</dd><dt>Catch</dt><dd>Very common word; &#x27;bicara&#x27; also means a court trial/hearing (legal tone) and there are many Bicara-named talk shows/podcasts/brands; bicara.com taken.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 2 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>bicara.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>bicara.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>bicara.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Catat</b></div>
+  
+  <p class="meaning">&#x27;Note down, record&#x27;</p>
+  <p class="say">“Catat dalam Catat”</p>
+  <dl><dt>Good</dt><dd>Short, &#x27;the record&#x27; idea.</dd><dt>Catch</dt><dd>Meaning is writing things down, not asking; catat.my and catat.com taken (existing brand likely).</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 1 of 3 free"><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>catat.my</span><em>taken</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>catat.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>catat.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Soalan</b></div>
+  
+  <p class="meaning">&#x27;Question&#x27;</p>
+  <p class="say">“Hantar soalan kat Soalan”</p>
+  <dl><dt>Good</dt><dd>Instantly clear to everyone; .my and .com.my free.</dd><dt>Catch</dt><dd>Generic and confused with exam question banks (soalan SPM sites) and with Parliament&#x27;s own &#x27;soalan lisan&#x27;; soalan.com taken.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 2 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>soalan.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>soalan.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>soalan.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Ask Hansard</b></div>
+  
+  <p class="meaning">Plain-English &#x27;ask the parliamentary record&#x27;</p>
+  <p class="say">“I asked Ask Hansard”</p>
+  <dl><dt>Good</dt><dd>Clear in English; Hansard is the word journalists and students know.</dd><dt>Catch</dt><dd>English only and longer. “Hansard” may puzzle casual Malay readers.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 2 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>askhansard.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>askhansard.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>askhansard.com</span><em>taken</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Tanya Hansard</b></div>
+  
+  <p class="meaning">&#x27;Ask the Hansard&#x27;</p>
+  <p class="say">“Cuba Tanya Hansard”</p>
+  <dl><dt>Good</dt><dd>Blend of Malay verb and the English term; all three domains free; stronger tie to the record than Tanya Dewan.</dd><dt>Catch</dt><dd>Three-plus syllables heavier; &#x27;Hansard&#x27; reads as official; the official Digital Hansard portal (hansard.parlimen.gov.my, relaunched June 2026) is similar-sounding so mistaking is possible.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 3 of 3 free"><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>tanyahansard.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>tanyahansard.com.my</span><em>free</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>tanyahansard.com</span><em>free</em></li></ul>
+</article><article class="card">
+  <div class="lockup"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M16 7l9 9-9 9-9-9z"/></svg></span><b>Cakna</b></div>
+  
+  <p class="meaning">&#x27;Care about, be aware&#x27;</p>
+  <p class="say">“Kena cakna sikit”</p>
+  <dl><dt>Good</dt><dd>Warm, distinctly Malaysian, good tone.</dd><dt>Catch</dt><dd>Does not say asking or the record; used widely as a word and brand (cakna.com taken; Cakna campaigns exist); weak link to function.</dd></dl>
+  <ul class="doms" aria-label="Web addresses, 1 of 3 free"><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>cakna.my</span><em>taken</em></li><li class="free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>cakna.com.my</span><em>free</em></li><li class="taken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>cakna.com</span><em>taken</em></li></ul>
+</article></div>
+  <details><summary>How the names were checked</summary>
+    <p>Web addresses were checked on 26 November 2026. The .com addresses were checked with Verisign's lookup service. The .my and .com.my addresses were checked with MYNIC, which runs Malaysian domains. Nothing was registered or reserved.</p>
+    <p>A few web searches looked for Malaysian apps, sites or groups with the same name and found none. That search was light, so treat it as a first look, not a clearance. Trademarks and social media handles are not checked yet; I check them for the name you pick.</p>
+  </details>
+</div>

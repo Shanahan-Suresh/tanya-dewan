@@ -1,66 +1,110 @@
+{# Shared pieces. Icons are inline stroke SVG on a 24 grid. #}
+{% set ICONS = {
+  'ask': '<path d="M4 5h16v11H9l-5 4z"/>',
+  'law': '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',
+  'sittings': '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  'questions': '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>',
+  'commitments': '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',
+  'mps': '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5M16 5a3.2 3.2 0 0 1 0 6M18 14.8c2 .6 3.2 2.3 3.5 5"/>',
+  'bills': '<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/>',
+  'topics': '<path d="M3 12l9-9h8v8l-9 9z"/><circle cx="16" cy="8" r="1.2"/>',
+  'more': '<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>',
+  'info': '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+  'sparkle': '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>',
+  'doc': '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',
+  'scales': '<path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z"/>',
+  'search': '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  'chev': '<path d="M6 9l6 6 6-6"/>',
+  'pencil': '<path d="M16 3l5 5L8 21H3v-5z"/><path d="M13 6l5 5"/>',
+  'check': '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  'dot': '<circle cx="12" cy="12" r="5"/>',
+  'arrow': '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  'back': '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+  'link': '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  'alert': '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+} %}
+{% macro icon(name, cls='') %}<svg class="i {{ cls }}" viewBox="0 0 24 24" aria-hidden="true">{{ ICONS[name]|safe }}</svg>{% endmacro %}
+
 {% macro chamber(code) %}{{ t('chamber_' ~ code) }}{% endmacro %}
 
-{% macro ai_note(text) %}
-<p class="ai-note"><svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path d="M8 1l1.6 4.4L14 7l-4.4 1.6L8 13l-1.6-4.4L2 7l4.4-1.6z" fill="currentColor"/></svg>{{ text }}</p>
+{% macro ai_label(text='AI') %}<span class="label-ai">{{ icon('sparkle') }}{{ text }}</span>{% endmacro %}
+
+{% macro ai_note(text) %}<p class="ai-note">{{ icon('sparkle', 'sm') }}<span>{{ text }}</span></p>{% endmacro %}
+
+{% macro draft_mark() %}<span class="draft" title="{{ t('draft_note') }}">{{ icon('pencil', 'sm') }}{{ t('draft_short') }}</span>{% endmacro %}
+
+{% macro draft_note() %}<p class="draft-note">{{ icon('pencil') }}<span>{{ t('draft_note') }}</span></p>{% endmacro %}
+
+{% macro verbatim(text, lang_attr='ms', quote=False) %}
+<div class="rec{% if quote %} rec-quote{% endif %}" lang="{{ lang_attr }}">{% if quote %}<span>{{ text }}</span>{% else %}{{ text }}{% endif %}</div>
 {% endmacro %}
 
-{% macro draft_note() %}
-<p class="draft-note"><svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path d="M11.5 1.5l3 3-8.5 8.5H3v-3z M9.5 3.5l3 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>{{ t('draft_note') }}</p>
-{% endmacro %}
+{% macro correction(record) %}<a class="fix" href="/correction?record={{ record|urlencode }}&back={{ full_path|urlencode }}">{{ t('correction') }}</a>{% endmacro %}
 
-{% macro draft_mark() %}<span class="draft-mark" title="{{ t('draft_note') }}"><svg aria-hidden="true" viewBox="0 0 16 16" width="12" height="12"><path d="M11.5 1.5l3 3-8.5 8.5H3v-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>{{ t('draft_short') }}</span>{% endmacro %}
+{# Two letters from a name or a speaker label: the bracketed name when there is one, titles skipped. #}
+{% macro initials(name) %}{% set raw = (name.split('[')[1].split(']')[0] if '[' in name else name) %}{% set ns = namespace(w=[]) %}{% for w in raw.replace('.', ' ').replace("'", ' ').split() if w[0].isalpha() and w|lower not in ('yb', 'yab', 'tuan', 'puan', 'dato', 'datuk', 'datin', 'seri', 'sri', 'dr', 'ir', 'tan', 'tun', 'tengku', 'haji', 'hajah', 'ts', 'prof', 'datoʼ', 'dato’') %}{% set ns.w = ns.w + [w] %}{% endfor %}{% if ns.w|length >= 2 %}{{ ns.w[0][0]|upper }}{{ ns.w[-1][0]|upper }}{% elif ns.w %}{{ ns.w[0][:2]|upper }}{% else %}?{% endif %}{% endmacro %}
 
-{% macro correction(record) %}
-<a class="fix" href="/correction?record={{ record|urlencode }}&back={{ full_path|urlencode }}">{{ t('correction') }}</a>
-{% endmacro %}
+{% macro avatar(name, cls='avatar') %}<span class="{{ cls }}" aria-hidden="true">{{ initials(name)|trim }}</span>{% endmacro %}
 
-{% macro pager(res) %}
+{% macro pager(res, target='results') %}
 {% if res.pages > 1 %}
-<nav class="pager" aria-label="Pages">
-  {% if res.page > 1 %}<a href="{{ with_page(res.page - 1) }}">← {{ t('prev') }}</a>{% endif %}
-  <span>{{ t('page_of', page=res.page, pages=res.pages) }}</span>
-  {% if res.page < res.pages %}<a href="{{ with_page(res.page + 1) }}">{{ t('next') }} →</a>{% endif %}
+<nav class="pager" aria-label="{{ t('pages') }}">
+  {% if res.page > 1 %}<a href="{{ with_page(res.page - 1) }}" hx-get="{{ with_page(res.page - 1) }}" hx-target="#{{ target }}" hx-push-url="true" hx-swap="innerHTML show:#{{ target }}:top">{{ icon('back', 'sm') }}{{ t('prev') }}</a>{% else %}<span></span>{% endif %}
+  <span class="tnum">{{ t('page_of', page=res.page, pages=res.pages) }}</span>
+  {% if res.page < res.pages %}<a href="{{ with_page(res.page + 1) }}" hx-get="{{ with_page(res.page + 1) }}" hx-target="#{{ target }}" hx-push-url="true" hx-swap="innerHTML show:#{{ target }}:top">{{ t('next') }}{{ icon('arrow', 'sm') }}</a>{% else %}<span></span>{% endif %}
 </nav>
 {% endif %}
 {% endmacro %}
 
+{% macro stats(items) %}
+<div class="stats">{% for n, label in items %}<div><b>{{ "{:,}".format(n) }}</b><span>{{ label }}</span></div>{% endfor %}</div>
+{% endmacro %}
+
 {% macro commitment_card(c, show_unit=True) %}
 <article class="card commit {% if c.kind == 'routine' %}routine{% endif %}" id="{{ c.id }}">
-  <blockquote class="verbatim">“{{ c.quote }}”</blockquote>
-  <p class="who"><a href="{{ debate_url(c.unit, c.seq) }}">{{ c.speaker }}</a>{% if c.office and c.office not in c.speaker %}, {{ c.office }}{% if c.office_inferred %} <span class="muted" title="{{ t('office_inferred') }}">*</span>{% endif %}{% endif %}
+  {{ verbatim('“' ~ c.quote ~ '”') }}
+  <p class="who"><a href="{{ debate_url(c.unit, c.seq) }}">{{ c.speaker }}</a>{% if c.office and c.office not in c.speaker %}, {{ c.office }}{% if c.office_inferred %} <span title="{{ t('office_inferred') }}">*</span>{% endif %}{% endif %}
     · <a href="/hansard/{{ c.chamber }}/{{ c.date }}">{{ c.date }}</a></p>
   <div class="ai">
-    <p><span class="ai-tag">{{ t('promise_ai') }}</span> {{ c.promise }}</p>
-    {% if c.deadline or c.amount %}<p class="facts">{% if c.deadline %}<span>{{ t('deadline') }}: {{ c.deadline }}</span>{% endif %}{% if c.amount %}<span>{{ t('amount') }}: {{ c.amount }}</span>{% endif %}</p>{% endif %}
-    {% if c.kind == 'routine' %}<p class="facts"><span>{{ t('routine') }}</span></p>{% endif %}
+    <p>{{ ai_label(t('promise_ai')) }} {{ c.promise }}</p>
+    {% if c.deadline or c.amount %}<p class="facts-row">{% if c.deadline %}<span>{{ t('deadline') }}: <b>{{ c.deadline }}</b></span>{% endif %}{% if c.amount %}<span>{{ t('amount') }}: <b>{{ c.amount }}</b></span>{% endif %}</p>{% endif %}
+    {% if c.kind == 'routine' %}<p class="facts-row"><span>{{ t('routine') }}</span></p>{% endif %}
   </div>
   {% if show_unit and c.business %}<p class="muted small">{{ c.business|truncate(140) }}</p>{% endif %}
   <p class="card-foot">{{ correction(c.id) }}</p>
 </article>
 {% endmacro %}
 
-{% macro qa_card(q, show_unit=True) %}
-<article class="card qa" id="{{ q.id }}">
-  <p class="who">{{ t('asked_by') }} <a href="{{ debate_url(q.unit, q.asker_seq) }}">{{ q.asker }}</a></p>
-  <div class="ai"><p><span class="ai-tag">Q (AI)</span> {{ q.question }}</p></div>
-  <p class="who">{{ t('answered_by') }} <a href="{{ debate_url(q.unit, q.answerer_seq) }}">{{ q.answerer }}</a>{% if q.office and q.office not in q.answerer %}, {{ q.office }}{% endif %}</p>
-  <div class="ai"><p><span class="ai-tag">A (AI)</span> {{ q.answer }}</p>
+{% macro qa_card(q, show_unit=True, wide=True) %}
+<article class="card qa {% if wide %}wide{% endif %}" id="{{ q.id }}">
+  <div class="pair">
+    <div>
+      <p class="k">{{ ai_label('Q (AI)') }}</p>
+      <p>{{ q.question }}</p>
+      <p class="who">{{ t('asked_by') }} <a href="{{ debate_url(q.unit, q.asker_seq) }}">{{ q.asker }}</a></p>
+    </div>
+    <div>
+      <p class="k">{{ ai_label('A (AI)') }}</p>
+      <p>{{ q.answer }}</p>
+      <p class="who">{{ t('answered_by') }} <a href="{{ debate_url(q.unit, q.answerer_seq) }}">{{ q.answerer }}</a>{% if q.office and q.office not in q.answerer %}, {{ q.office }}{% endif %}</p>
+    </div>
+  </div>
   {% set figs = q.figures|loads %}
   {% if figs %}<details><summary>{{ t('figures') }} ({{ figs|length }})</summary><ul class="figs">{% for f in figs %}<li><strong>{{ f.value }}</strong> {{ f.meaning }}</li>{% endfor %}</ul></details>{% endif %}
-  </div>
-  <p class="card-foot"><a href="/hansard/{{ q.chamber }}/{{ q.date }}">{{ q.date }}</a>{% if show_unit and q.business %} · {{ q.business|truncate(100) }}{% endif %} · {{ correction(q.id) }}</p>
+  <p class="card-foot"><a href="/hansard/{{ q.chamber }}/{{ q.date }}">{{ q.date }}</a>{% if show_unit and q.business %}<span>{{ q.business|truncate(100) }}</span>{% endif %}{{ correction(q.id) }}</p>
 </article>
 {% endmacro %}
 
 {% macro unit_row(u) %}
 <li class="unit-row">
-  <a href="{{ debate_url(u.id) }}">{{ u.business or u.id }}</a>
+  <a href="{{ debate_url(u.id, u.seq) if u.seq else debate_url(u.id) }}">{{ u.business or u.id }}</a>
   <span class="muted small">{{ t('chamber_' ~ u.chamber) if u.chamber else '' }} {{ u.date }}</span>
   {% set s = u.summary_ms if lang == 'ms' and u.summary_ms else u.summary_en %}
-  {% if s %}<p class="ai-line"><span class="ai-tag">AI</span> {{ s|truncate(260) }}</p>{% endif %}
+  {% if s %}<p class="ai-line">{{ ai_label() }}<span>{{ s|truncate(260) }}</span></p>{% endif %}
 </li>
 {% endmacro %}
 
+{# A select with a label. `extra` adds attributes (the htmx ones on a live form). #}
 {% macro select(name, label, options, current, any_label) %}
 <label>{{ label }}
   <select name="{{ name }}">
@@ -68,4 +112,104 @@
     {% for value, text in options %}<option value="{{ value }}" {% if value|string == current|string %}selected{% endif %}>{{ text }}</option>{% endfor %}
   </select>
 </label>
+{% endmacro %}
+
+{# Filter chips on the Ask hero. #}
+{% macro fchip_select(name, label, options, any_label) %}
+<label class="fchip"><span class="k">{{ label }}</span>
+  <select name="{{ name }}"><option value="">{{ any_label }}</option>{% for value, text in options %}<option value="{{ value }}">{{ text }}</option>{% endfor %}</select>
+</label>
+{% endmacro %}
+{% macro fchip_flat(name, label, values, any_label) %}
+<label class="fchip"><span class="k">{{ label }}</span>
+  <select name="{{ name }}"><option value="">{{ any_label }}</option>{% for v in values %}<option>{{ v }}</option>{% endfor %}</select>
+</label>
+{% endmacro %}
+{% macro fchip_input(name, label, type='text', placeholder='') %}
+<label class="fchip"><span class="k">{{ label }}</span><input name="{{ name }}" type="{{ type }}" placeholder="{{ placeholder }}"{% if type == 'date' %} min="2018-07-16"{% endif %}></label>
+{% endmacro %}
+
+{# Bars from rows: `lab` and `val` name the label and value attributes. The tallest bar takes the accent. #}
+{% macro bar_chart(rows, lab, val, aria) %}
+{% set top = (rows|map(attribute=val)|max) or 1 %}
+{% set w = 240 %}{% set h = 96 %}{% set base = 78 %}
+{% set step = w / (rows|length) %}
+<svg viewBox="0 0 {{ w }} {{ h }}" role="img" aria-label="{{ aria }}">
+  <line x1="0" x2="{{ w }}" y1="{{ base }}" y2="{{ base }}" style="stroke:var(--line-strong)"/>
+  {% for r in rows %}
+  {% set v = r[val] %}{% set bh = (v / top * 60)|round(1) %}
+  <rect class="bar {% if v == top %}peak{% endif %}" x="{{ (loop.index0 * step + step * 0.15)|round(1) }}" y="{{ (base - bh)|round(1) }}" width="{{ (step * 0.7)|round(1) }}" height="{{ bh }}" rx="2"><title>{{ r[lab] }}: {{ "{:,}".format(v) }}</title></rect>
+  {% endfor %}
+  <text x="0" y="92">{{ rows[0][lab] }}</text><text x="{{ w }}" y="92" text-anchor="end">{{ rows[-1][lab] }}</text>
+</svg>
+{% endmacro %}
+
+{# Years down, months across, shaded by items spoken in. activity: [{month: 'YYYY-MM', items}]. #}
+{% macro heat_grid(activity) %}
+{% set by = {} %}{% for a in activity %}{% set _ = by.update({a.month: a['items']}) %}{% endfor %}
+{% set years = [] %}{% for a in activity %}{% set _ = years.append(a.month[:4]|int) %}{% endfor %}{% set years = years|unique|sort %}
+{% set top = (activity|map(attribute='items')|max) or 1 %}
+{% if years %}
+{% set first = years|first %}{% set last = years|last %}
+<div class="heat"><table class="hm"><caption class="sr-only">{{ t('heat_caption') }}</caption>
+<thead><tr><td></td>{% for mo in t('months_short').split(',') %}<th scope="col" aria-label="{{ loop.index }}">{{ mo }}</th>{% endfor %}<th scope="col" class="tot">{{ t('total') }}</th></tr></thead>
+<tbody>
+{% for y in range(first, last + 1) %}
+{% set ns = namespace(sum=0) %}
+<tr><th scope="row">{{ y }}</th>
+{% for mo in range(1, 13) %}
+{% set key = '%d-%02d'|format(y, mo) %}{% set v = by.get(key, 0) %}{% set ns.sum = ns.sum + v %}
+{% set r = v / top %}{% set lvl = 0 if v == 0 else (1 if r <= 0.15 else (2 if r <= 0.4 else (3 if r <= 0.7 else 4))) %}
+<td class="cell" data-l="{{ lvl }}" title="{{ key }}: {{ v }}"><span class="sr-only">{{ key }}: {{ v }}</span></td>
+{% endfor %}
+<td class="tot">{{ "{:,}".format(ns.sum) }}</td></tr>
+{% endfor %}
+</tbody></table></div>
+<p class="legend" aria-hidden="true">{{ t('legend_few') }} <i></i><i></i><i></i><i></i><i></i> {{ t('legend_many') }}</p>
+{% endif %}
+{% endmacro %}
+
+{# The bill's debates as steps; the current one is marked. Long bills show a window of five. #}
+{% macro bill_stepper(bill, current) %}
+{% set units = bill.units|sort(attribute='date,id') %}
+{% set n = units|length %}
+{% set idx = namespace(i=0) %}{% for u in units if u.id == current %}{% set idx.i = loop.index0 %}{% endfor %}
+{% set lo = [0, [idx.i - 2, n - 5]|min]|max %}
+<section class="bill card" id="bill" aria-label="{{ t('bill_journey') }}">
+  <div class="headcard">
+    <p class="eyebrow">{{ t('bill_journey') }}</p>
+    <h2><a href="/bill/{{ bill.slug }}" style="color:inherit">{{ bill.title }}</a></h2>
+    <ol class="stepper">
+      {% for u in units[lo:lo + 5] %}
+      {% set i = lo + loop.index0 %}
+      <li class="{{ 'now' if u.id == current else ('done' if i < idx.i else '') }}" {% if u.id == current %}aria-current="step"{% endif %}>
+        <span class="node" aria-hidden="true">{{ i + 1 }}</span>
+        <h3>{% if u.id == current %}{{ u.business|truncate(70) }}{% else %}<a href="{{ debate_url(u.id) }}">{{ u.business|truncate(70) }}</a>{% endif %}</h3>
+        <p class="when tnum">{{ u.date }} · {{ chamber(u.chamber) }}</p>
+        {% if u.id == current %}<span class="here">{{ t('you_are_here') }}</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+    {% if n > 5 %}<p style="margin-top:18px"><a class="linkbtn" href="/bill/{{ bill.slug }}">{{ t('all_n_debates', n=n) }} {{ icon('arrow', 'sm') }}</a></p>{% endif %}
+  </div>
+</section>
+{% endmacro %}
+
+{# One speech. `idx` is the speaker's colour slot in the map. #}
+{% macro speaker_turn(s, sitting, slot) %}
+{% set low = s.label|lower %}
+<article class="turn {{ 'chair' if 'pertua' in low else ('gov' if 'menteri' in low else '') }}" id="seq-{{ s.seq }}" data-seq="{{ s.seq }}" data-sp="{{ slot }}" data-who="{{ s.member or s.label }}" tabindex="-1">
+  <span class="av" aria-hidden="true">{{ initials(s.label)|trim }}</span>
+  <div class="body">
+    <div class="who">
+      <b>{% if s.member %}<a href="/mp/{{ s.member }}">{{ s.label }}</a>{% else %}{{ s.label }}{% endif %}</b>
+      {% if s.party %}<span class="party">{{ s.party }}</span>{% endif %}
+      <span class="tm tnum">{% if s.time %}<span>{{ s.time[:2] }}.{{ s.time[2:] }}</span>{% endif %}
+        {% if sitting and sitting.pdf %}<a href="{{ pdf_page(sitting.pdf, s.page_start) }}" rel="noopener">{{ t('page') }} {{ s.page_start }}</a>{% else %}<span>{{ t('page') }} {{ s.page_start }}</span>{% endif %}
+        {% if s.question_no %}<span>Q{{ s.question_no }}</span>{% endif %}
+        <a href="#seq-{{ s.seq }}" aria-label="{{ t('link_to_speech') }}">#</a></span>
+    </div>
+    <div class="rec" lang="ms">{{ s.text | reflow }}</div>
+  </div>
+</article>
 {% endmacro %}
