@@ -4,6 +4,9 @@ Current state and what is owed. `ROADMAP.md` is the plan; `docs/sources.md` is t
 
 ## Decisions the owner has made
 
+- The code stays public under MIT (2026-11-27). The value is the built data and its upkeep,
+  not the code; a future paid part would live in a private repo.
+- No money figures in the repo, its demo or its history (2026-11-27).
 - The project is a public portfolio piece with a free static demo; there is no paid tier
   (2026-11-27; the evidence is in ROADMAP, "Why there is no paid tier"). The repository is
   `tanya-dewan` on GitHub.
@@ -379,6 +382,30 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
   the Malay home page.
 - Tests: 136 pass, including `tests/test_static_demo.py` (link rewriting and the checker) and
   `tests/test_config.py` (`ANTHROPIC_API_KEY` before the key file).
+
+## Phase 8: the seven upgrades
+
+The owner picked all seven upgrades on the mockup page (2026-11-27; mockups in
+`docs/design/enhancements/`, untracked). Each item is done when it works on the live site and in
+the static demo, in English and Malay, light and dark, at desktop and 390 px.
+
+- [x] 1. Watch it search: a live funnel on the ask page; the server sends a `passages` event
+  when ranking ends; a fold shows the raw events. The demo makes the `passages` event from the
+  recording.
+- [x] 2. Citation reader: a citation mark opens the whole passage beside the answer, quotes
+  marked; J, K and Esc.
+- [x] 3. Jump to anything: Ctrl K on every page; `/jump.json` index (MPs, Acts, bills, topics,
+  sittings); the demo writes its own index of the pages it holds.
+- [x] 4. Seat map: the 15th Parliament in a half circle on the home page, the MP page and the
+  debate page.
+- [x] 5. Debate timeline: speeches in lanes at the top of a debate page; coalition lanes in the
+  15th Parliament, lanes of the five parties that spoke most before it.
+- [x] 6. Topic explorer: monthly lines on the topics page, zoom, events marked; a month links
+  to the topic's debates that month.
+- [x] 7. How it works page, a light and dark switch, page transitions, a `?` list of keys.
+- [x] Tests (144 pass), demo rebuilt (666 pages, 0 broken links), README text and shots, page
+  shots checked at 1828 and 390 px, light and dark, English and Malay.
+- [ ] Commit, push and deploy the demo to gh-pages: waits for the owner.
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking
 

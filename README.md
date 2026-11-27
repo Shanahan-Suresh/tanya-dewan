@@ -17,10 +17,17 @@ It reads two public records:
   2026), with its Special Chamber: 361,676 speeches, each with its speaker, seat, party on the
   day, time and page.
 
-An answer quotes the Act and section, or the sitting, date, speaker and page. Hover a citation to
-read the source text; click it to open the record.
+An answer quotes the Act and section, or the sitting, date, speaker and page. Click a citation to
+read the whole passage beside the answer, with the quoted words marked; J and K step through the
+sources.
 
-![An answer about salary deductions: each claim carries a numbered citation, and the cited section of the Employment Act opens in a preview](docs/readme/answer.webp)
+![An answer about salary deductions: each claim carries a numbered citation, and the cited section of the Employment Act opens beside it with the quoted words marked](docs/readme/answer.webp)
+
+While the model writes, the page shows what the search went through: how many passages each
+step kept, with its time, and the passages found. A fold shows the raw server-sent events as they
+arrive.
+
+![The search at work: the steps with their times, a chart of how many passages each step kept, and the passages found before the answer is written](docs/readme/search.webp)
 
 ## What it does that a keyword search does not
 
@@ -32,7 +39,14 @@ read the source text; click it to open the record.
   questions joined to the minister's answer, 18,523 ministers' commitments (each with a quote that
   code checks against the Hansard text), topic and entity tags, and a summary in both languages.
 - **A page for every MP, bill and topic.** An MP page shows their activity by month, their party
-  history with dates, the offices they held and their commitments.
+  history with dates, the offices they held, their commitments and their seat in the chamber.
+- **Shows a debate at a glance.** A strip at the top of a debate page shows every speech in order,
+  its length and the speaker's coalition. The home page draws the 15th Parliament seat by seat,
+  and the topics page charts debates a month on the six biggest topics, 2018 to 2026.
+- **Gets you anywhere fast.** Ctrl K jumps to any MP, Act, bill, topic or sitting; `?` lists the
+  keys. Light and dark themes follow the device or a switch in the header.
+
+![A debate page: a strip of every speech in order, coloured by coalition, above the summary](docs/readme/debate.webp)
 
 ![An MP page: debates spoken in, questions answered, a month-by-year activity grid and party history](docs/readme/mp.webp)
 
