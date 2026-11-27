@@ -105,7 +105,7 @@ embedding step runs best on a GPU.
 2. Set your Claude API key: `export ANTHROPIC_API_KEY=sk-ant-...` (or write it to
    `~/.claude/anthropic-api-key.txt`). Every call logs its cost to `data/api-usage.jsonl`.
 3. Try the site with no data and no spend. It replays one recorded answer from
-   `docs/design/data.json`:
+   `docs/design/data.json`, and the record pages stay empty until you build the data:
    ```
    python -m parlimen.web --replay docs/design/data.json
    ```
