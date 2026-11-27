@@ -1,8 +1,30 @@
 {% extends "base.html" %}
 {% block title %}{{ t('nav_topics') }}{% endblock %}
+{% block scripts %}{% if months %}<script src="/static/topics.js" defer></script>{% endif %}{% endblock %}
 {% block description %}Topics debated in the Dewan Rakyat since 2018, with the debates on each.{% endblock %}
 {% block main %}
 <header class="ph"><p class="eyebrow">{{ t('from_hansard') }}</p><h1>{{ t('nav_topics') }}</h1><p class="lead">{{ t('topics_intro') }}</p></header>
+{% if months %}
+<section class="card pad te" id="te" aria-labelledby="te-h">
+  <h2 id="te-h">{{ t('te_title') }}</h2>
+  <div class="te-tools">
+    <div class="te-legend" role="group" aria-label="{{ t('te_toggle') }}">
+      {% for s in months %}<button type="button" aria-pressed="true" data-i="{{ loop.index0 }}" class="t{{ loop.index }}"><i aria-hidden="true"></i>{{ s.name|cap }}</button>{% endfor %}
+    </div>
+    <button type="button" class="btn ghost" id="te-reset" hidden>{{ t('te_reset') }}</button>
+  </div>
+  <div class="te-chart"><svg viewBox="0 0 1000 340" role="img" aria-labelledby="te-h"></svg><div class="te-tip" hidden></div></div>
+  <p class="muted small">{{ t('te_hint') }}</p>
+  <p class="te-said" aria-live="polite"></p>
+  <div hidden>{% for s in months %}<a class="te-link" data-topic="{{ s.topic }}" href="/topic/{{ s.topic }}">{{ s.name }}</a>{% endfor %}</div>
+  <details class="te-table"><summary>{{ t('te_table') }}</summary>
+    <div class="stream-wrap"><table class="stages"><thead><tr><th>{{ t('te_month') }}</th>{% for s in months %}<th class="r">{{ s.name|cap }}</th>{% endfor %}</tr></thead>
+    <tbody>{% set ns = namespace(ms=[]) %}{% for s in months %}{% for p in s.points %}{% if p[0] not in ns.ms %}{% set ns.ms = ns.ms + [p[0]] %}{% endif %}{% endfor %}{% endfor %}
+    {% for mo in ns.ms|sort|reverse %}<tr><td class="tnum">{{ mo }}</td>{% for s in months %}{% set hit = s.points|selectattr(0, 'equalto', mo)|first %}<td class="r tnum">{{ hit[1] if hit else 0 }}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div>
+  </details>
+  <script type="application/json" id="te-data">{{ {'series': months, 'events': [['2020-03', t('te_mco')], ['2022-11', t('te_ge15')]], 'showing': t('te_showing'), 'lang': lang, 'demo': demo is not none}|tojson }}</script>
+</section>
+{% endif %}
 <ul class="topic-grid">
   {% for x in topics %}<li><a href="/topic/{{ x.topic }}"><span>{{ x.name|cap }}</span> <span class="muted tnum">{{ "{:,}".format(x.n) }} {{ t('items') }}</span></a></li>{% endfor %}
 </ul>

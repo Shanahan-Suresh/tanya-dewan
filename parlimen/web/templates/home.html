@@ -39,7 +39,14 @@
     <button type="button" class="linkbtn" id="copy-link">{{ m.icon('link', 'sm') }}<span>{{ t('copy_link') }}</span></button>
     <span class="sr-only" id="copy-status" role="status"></span>
   </div>
+  <div class="run">
   <ol class="progress" id="progress" aria-label="{{ t('progress') }}"></ol>
+  <section class="funnel" id="funnel" aria-labelledby="fn-h" hidden>
+    <h3 id="fn-h">{{ t('fn_title') }} <span class="meta tnum" id="how-meta"></span></h3>
+    <ol id="fn-rows"></ol>
+    <p class="fn-note">{{ t('fn_note') }}</p>
+  </section>
+  </div>
   <div id="notice"></div>
   <div class="answer-grid">
     <div class="card pad answer-card" id="answer-card">
@@ -56,8 +63,11 @@
     </aside>
   </div>
   <details class="card fold" id="how" hidden>
-    <summary>{{ m.icon('search') }}{{ t('how_found') }} <span class="meta tnum" id="how-meta"></span>{{ m.icon('chev', 'chev') }}</summary>
-    <div class="body" id="how-body"></div>
+    <summary>{{ m.icon('stream') }}{{ t('stream_title') }} <span class="meta tnum" id="stream-n"></span>{{ m.icon('chev', 'chev') }}</summary>
+    <div class="body">
+      <p class="muted small">{{ t('stream_sub') }}{% if demo %} {{ t('stream_demo') }}{% endif %}</p>
+      <div class="stream-wrap"><table class="stream"><thead><tr><th class="r">{{ t('ev_at') }}</th><th>{{ t('ev_event') }}</th><th>{{ t('ev_data') }}</th></tr></thead><tbody id="stream-body"></tbody></table></div>
+    </div>
   </details>
   <details class="card fold" id="passages" hidden>
     <summary>{{ m.icon('doc') }}{{ t('passages') }} <span class="meta tnum" id="passages-n"></span>{{ m.icon('chev', 'chev') }}</summary>
@@ -69,6 +79,13 @@
   <div class="section-head"><div><h2 id="rec-h">{{ t('browse') }}</h2><p>{{ t('browse_sub') }}</p></div></div>
   {{ m.stats([(meta.units, t('stat_units')), (meta.speeches, t('stat_speeches')), (meta.qa, t('stat_qa')), (meta.commitments, t('stat_commitments'))]) }}
 </section>
+
+{% if seat_map and seat_map.seats %}
+<section class="section" id="seats" aria-labelledby="seats-h">
+  <div class="section-head"><div><h2 id="seats-h">{{ t('sm_title') }}</h2><p>{{ t('sm_sub') }}</p></div><a class="linkbtn" href="/mp">{{ t('nav_mps') }} {{ m.icon('arrow', 'sm') }}</a></div>
+  <div class="card pad">{{ m.seat_map(seat_map, find=True) }}</div>
+</section>
+{% endif %}
 
 <section class="section" id="sittings" aria-labelledby="sit-h">
   <div class="section-head"><div><h2 id="sit-h">{{ t('latest_sittings') }}</h2><p>{{ t('sittings_sub') }}</p></div><a class="linkbtn" href="/hansard">{{ t('all_sittings') }} {{ m.icon('arrow', 'sm') }}</a></div>
@@ -115,11 +132,19 @@
 </section>
 {% endif %}
 
-<div class="peek" id="peek" role="dialog" aria-label="{{ t('source_preview') }}" hidden>
-  <div class="cl"><span class="num"></span><span class="cl-t"></span></div>
-  <blockquote class="rec" lang="ms"></blockquote>
-  <button type="button" class="linkbtn go">{{ t('jump_to_source') }} {{ m.icon('arrow', 'sm') }}</button>
-</div>
+<aside class="reader" id="reader" role="dialog" aria-modal="false" aria-labelledby="rd-t" hidden>
+  <div class="rd-head">
+    <span class="num" id="rd-n"></span>
+    <div class="rd-tt"><h3 id="rd-t"></h3><p class="meta" id="rd-meta"></p></div>
+    <button type="button" class="icon-btn" id="rd-close" aria-label="{{ t('reader_close') }}" title="{{ t('reader_close') }}">{{ m.icon('close') }}</button>
+  </div>
+  <div class="rd-body" id="rd-body" tabindex="0"></div>
+  <div class="rd-foot">
+    <div class="rd-step"><button type="button" class="icon-btn" id="rd-prev" aria-label="{{ t('reader_prev') }}" title="{{ t('reader_prev') }}">{{ m.icon('back') }}</button><span class="tnum" id="rd-pos"></span><button type="button" class="icon-btn" id="rd-next" aria-label="{{ t('reader_next') }}" title="{{ t('reader_next') }}">{{ m.icon('arrow') }}</button></div>
+    <div class="rd-links"><a id="rd-rec" href="#">{{ t('reader_record') }}</a><a id="rd-pdf" href="#" rel="noopener">{{ t('official_pdf') }}</a></div>
+  </div>
+  <p class="rd-keys">{{ t('reader_keys') }}</p>
+</aside>
 
 <script id="strings" type="application/json">{{ {
   'lang': lang, 'examples': examples, 'advice_lines': advice_lines,
@@ -129,8 +154,11 @@
   'hits': t('hits'), 'search': t('search_word'), 'pdf': t('official_pdf'), 'error': t('error'),
   'draft': t('draft_short'), 'draft_note': t('draft_note'), 'budget_out': t('budget_out'), 'writing': t('step_write'),
   'done': t('answer_done'), 'copy': t('copy_link'), 'copied': t('link_copied'), 'more': t('more_filters'), 'less': t('fewer_filters'),
-  'asking': t('asking'), 'no_answer': t('no_answer'), 'stage': t('stage_word'), 'time': t('time_word'), 'try': t('examples'),
-  'ask': t('ask_button'), 'source_n': t('source_n'),
+  'asking': t('asking'), 'asking_write': t('asking_write'), 'no_answer': t('no_answer'), 'stage': t('stage_word'), 'time': t('time_word'), 'try': t('examples'),
+  'ask': t('ask_button'), 'source_n': t('source_n'), 'corpus': corpus,
+  'fn_all': t('fn_all'), 'fn_bm25': t('fn_bm25'), 'fn_dense': t('fn_dense'), 'fn_fused': t('fn_fused'),
+  'fn_reranked': t('fn_reranked'), 'fn_cited': t('fn_cited'), 'found_label': t('found_label'), 'found_n': t('found_n'),
+  'read_here': t('read_here'), 'reader_quoted': t('reader_quoted'), 'reader_noquote': t('reader_noquote'), 'n_of_m': t('n_of_m'),
   'demo': demo.answers if demo else None, 'demo_only': t('demo_only') if demo else ''
 }|tojson }}</script>
 {% endblock %}

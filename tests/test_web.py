@@ -244,6 +244,11 @@ def test_ask_stream_sends_stages_then_the_answer_so_far_then_the_whole_body(recs
     assert stages == [("bm25", True), ("bm25", False), ("dense", True), ("dense", False),
                       ("fused", True), ("fused", False), ("answer", True)]
     assert ("text", {"text": "Forty-five hours a week.[1]"}) in events
+    # The ranked passages go out once ranking ends, before the answer starts.
+    names = [n if n != "stage" else f"stage:{d['name']}" for n, d in events]
+    at = names.index("passages")
+    assert names[at - 1] == "stage:fused" and names[at + 1] == "stage:answer"
+    assert events[at][1]["passages"][0]["url"].startswith("/law/265/BI")
     name, body = events[-1]
     assert name == "done" and body["answer"].startswith("Forty-five hours") and body["sources"][0]["n"] == 1
 
@@ -261,7 +266,7 @@ def test_replay_serves_a_saved_answer_with_no_model(recs, tmp_path):  # noqa: F8
     c = TestClient(create_app(recs, replay=path, question_log=tmp_path / "q.jsonl"))
     assert c.post("/api/ask", json={"question": "anything"}).json()["answer"].startswith("Line one")
     events = stream_events(c.post("/api/ask/stream", json={"question": "anything"}).text)
-    assert [n for n, _ in events] == ["stage", "stage", "stage", "text", "done"]
+    assert [n for n, _ in events] == ["stage", "stage", "passages", "stage", "text", "done"]
 
 
 def test_a_list_page_asked_by_htmx_returns_only_its_results_block(client):
@@ -333,3 +338,84 @@ def test_mp_list_filters_by_name_or_seat(client):
     assert "0 " in page and 'name="q"' in page
     full = client.get("/mp").text
     assert full.count("/mp/") > page.count("/mp/")
+
+
+def test_the_seat_map_lights_the_mp_and_the_speakers(client):
+    home = client.get("/").text
+    assert 'class="seatmap"' in home and home.count('href="/mp/') >= 2 and 'id="sm-q"' in home
+    mp = client.get("/mp/hannah-yeoh-tseow-suan").text
+    assert '<a href="/mp/hannah-yeoh-tseow-suan" class="b-PH on"' in mp and ">P117<" in mp
+    assert 'class="seatmap' not in client.get("/mp/m-saravanan").text  # no seat in the 15th Parliament
+    d = client.get("/debate/DR-2024-05-02-001").text
+    assert 'id="sm-d"' in d and 'class="b-PH on"' in d
+
+
+def test_the_debate_page_draws_its_speeches_in_bloc_lanes(client):
+    d = client.get("/debate/DR-2024-05-02-001").text
+    assert 'class="lanes"' in d and 'href="#seq-1" class="b-PH"' in d and 'tabindex="0"' in d
+    assert ">10.10<" in d and ">10.12<" in d
+
+
+def test_jump_index_lists_every_kind_and_each_link_opens(client):
+    rows = client.get("/jump.json").json()
+    kinds = {r["k"] for r in rows}
+    assert kinds == {"mp", "act", "bill", "topic", "sitting"}
+    for k in kinds:
+        r = next(x for x in rows if x["k"] == k)
+        assert client.get(r["u"]).status_code == 200, r
+
+
+def test_topics_page_charts_months_and_a_topic_filters_by_month(client):
+    page = client.get("/topics").text
+    assert 'id="te-data"' in page and '"2024-05"' in page and 'src="/static/topics.js"' in page
+    one = client.get("/topic/agriculture-and-food?month=2024-05").text
+    none = client.get("/topic/agriculture-and-food?month=2019-01").text
+    assert "Debates in May 2024" in one and 'class="units"><li' in one.replace("\n", "")
+    assert 'class="units"></ol>' in none.replace("\n", "")
+    assert "Debates in" not in client.get("/topic/agriculture-and-food?month=garbage").text
+
+
+def test_how_it_works_page_links_real_files_and_shows_the_evals(client):
+    from pathlib import Path
+
+    from parlimen.web import how
+    page = client.get("/how-it-works").text
+    assert "Five of six targets met" in page and "0.727" in page and 'aria-pressed="true"' in page
+    root = Path(__file__).resolve().parent.parent
+    for n in how.NODES:
+        for f in n["f"]:
+            assert (root / f).exists(), f
+            assert how.REPO_BLOB + f in page
+    client.cookies.set("hl", "ms")
+    assert "Lima daripada enam" in client.get("/how-it-works").text
+
+
+def test_every_dark_style_also_answers_the_theme_switch():
+    import re
+    from pathlib import Path
+    css = (Path(__file__).resolve().parent.parent / "parlimen/web/static/site.css").read_text(encoding="utf-8")
+    dark = css.count("@media (prefers-color-scheme: dark)")
+    # Each dark block is guarded against a light choice and repeated for a dark choice.
+    assert dark > 5 and len(re.findall(r'(?m)^:root\[data-theme="dark"\]', css)) == dark
+    assert len(re.findall(r'\(prefers-color-scheme: dark\) \{\s*:root:not\(\[data-theme="light"\]\)', css)) == dark
+
+
+def test_the_shell_has_the_jump_box_keys_list_and_theme_switch(client):
+    page = client.get("/law").text
+    assert 'id="jump"' in page and 'id="keys"' in page and 'id="theme-btn"' in page
+    assert 'localStorage.getItem("theme")' in page.split("</head>")[0]
+    assert 'href="/how-it-works"' in page
+
+
+def test_timeline_lanes_follow_coalitions_in_the_15th_parliament_and_parties_before():
+    from parlimen.web import present
+    sp = [{"seq": 1, "party": "BERSATU", "member": "a", "chars": 300, "time": "1010", "name": "A"},
+          {"seq": 2, "party": "", "member": "", "chars": 100, "time": "1012", "label": "Tuan Yang di-Pertua"},
+          {"seq": 3, "party": "PKR", "member": "b", "chars": 600, "time": "1015", "name": "B"}]
+    p15 = present.timeline(sp)
+    assert [(k, cls) for k, cls, _ in p15["lanes"]] == [("PH", "b-PH"), ("PN", "b-PN"), ("Chair", "b-Chair")]
+    assert p15["start"] == "10.10" and p15["end"] == "10.15"
+    [bar] = p15["lanes"][0][2]
+    assert (bar["x"], bar["w"]) == (40.0, 60.0)
+    p14 = present.timeline(sp, by_party=True)
+    assert [k for k, _, _ in p14["lanes"]] == ["BERSATU", "PKR", "Chair"]

@@ -17,6 +17,7 @@
 <meta property="og:locale" content="{{ 'ms_MY' if lang == 'ms' else 'en_MY' }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
+<script>try { var th = localStorage.getItem("theme"); if (th === "dark" || th === "light") document.documentElement.dataset.theme = th; } catch (e) {}</script>
 <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
@@ -55,6 +56,10 @@
   <nav class="nav" aria-label="{{ t('nav_main') }}">
     {% for href, key, icon, match in nav %}<a href="{{ href }}" {% if ((path == '/') if href == '/' else path.startswith(match)) %}aria-current="page"{% endif %}>{{ t(key) }}</a>{% endfor %}
   </nav>
+  <div class="tools">
+    <button type="button" class="jump-btn" id="jump-btn" aria-haspopup="dialog" aria-controls="jump">{{ ui.icon('search', 'sm') }}<span class="jt">{{ t('jump_open') }}</span><kbd class="jk">Ctrl K</kbd></button>
+    <button type="button" class="icon-btn theme-btn" id="theme-btn" aria-label="{{ t('theme_system') }}" title="{{ t('theme_system') }}">{{ ui.icon('device') }}</button>
+  </div>
   <div class="lang" role="group" aria-label="{{ t('language') }}">
     {% for code, label, name in (('en', 'EN', 'English'), ('ms', 'BM', 'Bahasa Melayu')) %}
     {% if code == lang %}<span aria-current="true" lang="{{ code }}" title="{{ name }}">{{ label }}</span>
@@ -72,7 +77,7 @@
     <p>{{ ui.icon('doc') }}<span><b>{{ t('foot_sources') }}</b> {{ t('footer_sources') }}</span></p>
     <p>{{ ui.icon('sparkle') }}<span><b>AI.</b> {{ t('footer_ai') }}</span></p>
     <p>{{ ui.icon('scales') }}<span><b>{{ t('foot_legal') }}</b> {{ t('not_advice') }}</span></p>
-    <div class="links"><a href="/about">{{ t('nav_about') }}</a>{% if not demo %}<a href="/correction?back={{ full_path|urlencode }}">{{ t('correction') }}</a>{% endif %}</div>
+    <div class="links"><a href="/about">{{ t('nav_about') }}</a><a href="/how-it-works">{{ t('nav_how') }}</a><button type="button" class="linkbtn keys-btn" data-keys>{{ ui.icon('keys', 'sm') }}{{ t('keys_open') }}</button>{% if not demo %}<a href="/correction?back={{ full_path|urlencode }}">{{ t('correction') }}</a>{% endif %}</div>
   </div>
 </footer>
 <nav class="bottom-nav" aria-label="{{ t('nav_phone') }}">
@@ -83,8 +88,33 @@
 </nav>
 <div class="sheet" id="more-sheet" hidden>
   {% for href, key, icon, match in nav %}<a href="{{ href }}" {% if ((path == '/') if href == '/' else path.startswith(match)) %}aria-current="page"{% endif %}>{{ ui.icon(icon) }}{{ t(key) }}</a>{% endfor %}
+  <a href="/how-it-works">{{ ui.icon('cog') }}{{ t('nav_how') }}</a>
   <a href="/about">{{ ui.icon('info') }}{{ t('nav_about') }}</a>
 </div>
+<dialog class="jump" id="jump" aria-labelledby="jump-h">
+  <h2 class="sr-only" id="jump-h">{{ t('jump_label') }}</h2>
+  <div class="jump-field">{{ ui.icon('search') }}<input id="jump-q" type="text" role="combobox" aria-expanded="true" aria-controls="jump-list" aria-autocomplete="list" aria-label="{{ t('jump_ph') }}" placeholder="{{ t('jump_ph') }}" autocomplete="off" spellcheck="false"><kbd>Esc</kbd></div>
+  <ul id="jump-list" role="listbox" aria-label="{{ t('jump_label') }}"></ul>
+  <p class="jump-foot"><span id="jump-status" role="status"></span><span class="hint">{{ t('jump_hint') }}</span></p>
+</dialog>
+<dialog class="keysheet" id="keys" aria-labelledby="keys-h">
+  <div class="keys-head"><h2 id="keys-h">{{ t('keys_title') }}</h2><button type="button" class="icon-btn" id="keys-close" aria-label="{{ t('keys_close') }}" title="{{ t('keys_close') }}">{{ ui.icon('close') }}</button></div>
+  <dl>
+    <div><dt><kbd>Ctrl</kbd> <kbd>K</kbd></dt><dd>{{ t('k_jump') }}</dd></div>
+    <div><dt><kbd>?</kbd></dt><dd>{{ t('k_keys') }}</dd></div>
+    <div><dt><kbd>J</kbd> <kbd>K</kbd></dt><dd>{{ t('k_speech') }}</dd></div>
+    <div><dt><kbd>J</kbd> <kbd>K</kbd></dt><dd>{{ t('k_source') }}</dd></div>
+    <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>{{ t('k_lanes') }}</dd></div>
+    <div><dt><kbd>Esc</kbd></dt><dd>{{ t('k_close') }}</dd></div>
+  </dl>
+</dialog>
+<script id="shell-strings" type="application/json">{{ {
+  'lang': lang, 'demo': demo is not none, 'none': t('jump_none'), 'loading': t('jump_loading'), 'failed': t('jump_failed'),
+  'kinds': {'mp': t('jk_mp'), 'act': t('jk_act'), 'bill': t('jk_bill'), 'topic': t('jk_topic'), 'sitting': t('jk_sitting')},
+  'themes': [t('theme_system'), t('theme_dark'), t('theme_light')],
+  'icons': [ui.icon('device')|trim, ui.icon('moon')|trim, ui.icon('sun')|trim],
+  'chambers': {'DR': t('chamber_DR'), 'KK': t('chamber_KK')}
+}|tojson }}</script>
 {% block scripts %}{% endblock %}
 </body>
 </html>

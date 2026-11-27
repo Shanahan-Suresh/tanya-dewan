@@ -31,7 +31,8 @@ MISSING = "not-in-demo.html"
 LANG_DIR = {"en": "", "ms": "ms/"}
 
 # Pages every visitor reaches from the menu; the rest come from the answers and the home page.
-MENU = ["/", "/about", "/law", "/hansard", "/questions", "/commitments", "/mp", "/bills", "/topics", "/not-in-demo"]
+MENU = ["/", "/about", "/how-it-works", "/law", "/hansard", "/questions", "/commitments", "/mp", "/bills", "/topics",
+        "/not-in-demo"]
 ATTR = re.compile(r'\b(href|src|action)="([^"]*)"')
 HX = re.compile(r'\s+hx-[a-z-]+="[^"]*"')
 MISSES: Counter = Counter()  # site paths that went to not-in-demo.html, for the build report
@@ -99,6 +100,11 @@ def check(out: Path) -> list[str]:
             target = (f.parent / url.split("#")[0].split("?")[0]).resolve()
             if not target.exists():
                 bad.append(f"{f.relative_to(out)}: {url}")
+    jump = out / "jump.json"
+    for x in json.loads(jump.read_text(encoding="utf-8")) if jump.exists() else []:
+        for lang_dir in LANG_DIR.values():
+            if not (out / lang_dir / x["u"]).exists():
+                bad.append(f"jump.json: {lang_dir}{x['u']}")
     for f in out.rglob("answers/*.json"):
         home = f.parent.parent
         done = json.loads(f.read_text(encoding="utf-8"))["events"][-1]["data"]
@@ -182,6 +188,9 @@ def build(out: Path, base: str) -> None:
     for u in links_in(texts["/mp"]):                 # every MP of the current Parliament
         if u.startswith("/mp/"):
             add(u.split("#")[0])
+    for u in links_in(texts["/topics"]):             # every topic, for the topics chart and the jump box
+        if u.startswith("/topic/"):
+            add(u.split("#")[0])
     for u in links_in(texts["/bills"]):
         if u.startswith("/bill/") and sum(p.startswith("/bill/") for p in pages) < 2:
             add(u.split("#")[0])
@@ -215,6 +224,10 @@ def build(out: Path, base: str) -> None:
                             item["url"] = (target + (f"#{frag}" if frag else "")) if target else MISSING
             (out / prefix / "answers" / f.name).write_text(json.dumps(a, ensure_ascii=False), encoding="utf-8")
 
+    # The jump box's index: only the pages the demo holds, as file paths inside a language root.
+    jump = [dict(x, u=pages[x["u"]]) for x in clients["en"].get("/jump.json").json() if x["u"] in pages]
+    (out / "jump.json").write_text(json.dumps(jump, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
     shutil.copytree(STATIC, out / "static")
     css = out / "static" / "site.css"
     css.write_text(css.read_text(encoding="utf-8").replace('url("/static/fonts/', 'url("fonts/'), encoding="utf-8")
@@ -228,6 +241,7 @@ def build(out: Path, base: str) -> None:
         kinds[k.split("?")[0].split("/")[1] + ("?" if "?" in k else "")] += n
     print("links to not-in-demo, by kind:", ", ".join(f"{k} {n}" for k, n in kinds.most_common(10)), flush=True)
     print("distinct missing /mp/ pages:", len({k for k in MISSES if k.startswith("/mp/")}), flush=True)
+    print(f"jump box: {len(jump)} pages", flush=True)
     print(f"{rendered} pages ({len(pages) - len(redirect)} per language), {len(answers)} answers, "
           f"{size / 1e6:.1f} MB in {out}", flush=True)
 

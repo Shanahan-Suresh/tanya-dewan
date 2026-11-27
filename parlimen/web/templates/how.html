@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}{{ t('nav_how') }}{% endblock %}
+{% block description %}{{ t('how_intro') }}{% endblock %}
+{% block main %}
+<header class="ph"><p class="eyebrow">{{ site_name }}</p><h1>{{ t('nav_how') }}</h1><p class="lead">{{ t('how_intro') }}</p></header>
+
+<section class="arch" aria-labelledby="arch-h">
+  <h2 class="sr-only" id="arch-h">{{ t('how_parts') }}</h2>
+  <div class="flow">
+    {% for g, gname in groups %}
+    <div class="flow-g">
+      <span class="lbl">{{ gname }}</span>
+      {% for n in nodes if n.g == g %}
+      <button type="button" class="node{% if n.ai %} ai{% endif %}" data-id="{{ n.id }}" aria-pressed="{{ 'true' if n.id == 'parse' else 'false' }}" aria-controls="hd-{{ n.id }}">
+        <b>{{ n.b }}</b><span class="n tnum">{{ n.n }}</span><span class="s">{{ n.s }}</span>
+        {% if n.ai %}<span class="ai-mark">{{ m.icon('sparkle', 'sm') }}<span class="sr-only">{{ t('how_uses_ai') }}</span></span>{% endif %}
+      </button>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="details">
+    {% for n in nodes %}
+    <div class="card detail" id="hd-{{ n.id }}" data-id="{{ n.id }}" {% if n.id != 'parse' %}hidden{% endif %}>
+      <p class="eyebrow">{% for g, gname in groups if g == n.g %}{{ gname }}{% endfor %}</p>
+      <h3>{{ n.b }}{% if n.ai %} {{ m.ai_label(t('how_uses_ai')) }}{% endif %}</h3>
+      <ul>{% for d in n.d %}<li>{{ d }}</li>{% endfor %}</ul>
+      <p class="eyebrow">{{ t('how_code') }}</p>
+      <div class="files">{% for f, url in n.f %}<a href="{{ url }}" rel="noopener"><code>{{ f }}</code></a>{% endfor %}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="ev-h">
+  <div class="section-head"><div><h2 id="ev-h">{{ t('how_evals') }}</h2><p>{{ t('how_evals_sub') }}</p></div><a class="linkbtn" href="{{ repo }}" rel="noopener">{{ t('how_repo') }} {{ m.icon('arrow', 'sm') }}</a></div>
+  <div class="card evals"><table class="stages">
+    <thead><tr><th>{{ t('ev_what') }}</th><th>{{ t('ev_target') }}</th><th class="r">{{ t('ev_result') }}</th><th>{{ t('ev_met') }}</th></tr></thead>
+    <tbody>{% for e in evals %}<tr><td>{{ e.what }}</td><td>{{ e.target }}</td><td class="r tnum">{{ e.result }}</td><td>{% if e.met %}<span class="pass">{{ m.icon('check', 'sm') }}{{ t('yes') }}</span>{% else %}<span class="miss">{{ m.icon('alert', 'sm') }}{{ t('missed') }}</span>{% endif %}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</section>
+
+<section class="section" aria-labelledby="small-h">
+  <div class="section-head"><div><h2 id="small-h">{{ t('how_small') }}</h2></div></div>
+  <div class="grid c3">
+    <div class="card pad small-card"><h3>{{ m.icon('moon') }}{{ t('hp_theme') }}</h3><p>{{ t('hp_theme_d') }}</p></div>
+    <div class="card pad small-card"><h3>{{ m.icon('search') }}{{ t('hp_jump') }}</h3><p>{{ t('hp_jump_d') }}</p></div>
+    <div class="card pad small-card"><h3>{{ m.icon('keys') }}{{ t('hp_keys') }}</h3><p>{{ t('hp_keys_d') }}</p><button type="button" class="btn ghost" data-keys>{{ t('keys_open') }}</button></div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script>
+(function () {
+  const nodes = document.querySelectorAll(".node"), details = document.querySelectorAll(".detail");
+  nodes.forEach((b) => b.addEventListener("click", () => {
+    nodes.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    details.forEach((d) => { d.hidden = d.dataset.id !== b.dataset.id; });
+  }));
+})();
+</script>{% endblock %}

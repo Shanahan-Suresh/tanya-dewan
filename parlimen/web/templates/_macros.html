@@ -22,6 +22,13 @@
   'back': '<path d="M19 12H5M11 6l-6 6 6 6"/>',
   'link': '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
   'alert': '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+  'moon': '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
+  'sun': '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  'device': '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  'keys': '<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>',
+  'close': '<path d="M6 6l12 12M18 6L6 18"/>',
+  'stream': '<path d="M4 6h10M4 12h16M4 18h7"/>',
+  'cog': '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
 } %}
 {% macro icon(name, cls='') %}<svg class="i {{ cls }}" viewBox="0 0 24 24" aria-hidden="true">{{ ICONS[name]|safe }}</svg>{% endmacro %}
 
@@ -212,4 +219,41 @@
     <div class="rec" lang="ms">{{ s.text | reflow }}</div>
   </div>
 </article>
+{% endmacro %}
+
+
+{# The 15th Parliament as a half circle of seats (present.seat_layout). `lit` is a set of member
+   slugs to light; the others dim. `big` and `small` are the words in the middle. #}
+{% macro seat_map(sm, lit=None, big='', small='', find=False, id='sm') %}
+<figure class="seatmap{% if lit %} has-lit{% endif %}" id="{{ id }}" data-n="{{ sm.seats|length }}">
+  <div class="sm-wrap">
+    <svg viewBox="0 0 1000 515" role="group" aria-label="{{ t('sm_title') }}">
+      {% for s in sm.seats %}<a href="/mp/{{ s.member }}" class="b-{{ s.bloc }}{% if lit and s.member in lit %} on{% endif %}" tabindex="-1"><circle cx="{{ s.x }}" cy="{{ s.y }}" r="{{ sm.r }}"/><title>{{ s.name }}, {{ s.code }} {{ s.seat }}, {{ s.party }}</title></a>{% endfor %}
+    </svg>
+    <p class="sm-mid"><b class="tnum" data-big>{{ big or sm.seats|length }}</b><span data-small>{{ small or t('sm_seats') }}</span></p>
+  </div>
+  <figcaption>
+    <ul class="sm-legend">{% for k, name, n in sm.blocs %}<li><i class="sw b-{{ k }}" aria-hidden="true"></i>{{ name or t('sm_other') }} <b class="tnum">{{ n }}</b></li>{% endfor %}</ul>
+    {% if find %}
+    <div class="sm-find"><label for="{{ id }}-q">{{ t('sm_find') }}</label><input id="{{ id }}-q" type="search" placeholder="{{ t('sm_find_ph') }}" autocomplete="off" data-match="{{ t('sm_match') }}" data-matches="{{ t('sm_matches') }}" data-seats="{{ t('sm_seats') }}"></div>
+    <p class="sm-said" aria-live="polite"></p>
+    {% endif %}
+    <p class="sm-note">{{ t('sm_note') }}</p>
+  </figcaption>
+</figure>
+{% endmacro %}
+
+{# A debate's speeches as bars in coalition lanes (present.timeline). #}
+{% macro debate_timeline(tl) %}
+<section class="card dt" aria-labelledby="dt-h">
+  <div class="dt-head"><h2 id="dt-h">{{ t('tl_title') }}</h2><p class="sub">{{ t('tl_sub') }}</p></div>
+  <div class="lanes" role="group" aria-label="{{ t('tl_keys') }}">
+    {% for k, cls, bars in tl.lanes %}
+    <div class="lane"><span class="ln">{{ t('chair') if k == 'Chair' else (t('other') if k == 'Other' else k) }}</span><div class="track">
+      {% for b in bars %}<a href="#seq-{{ b.seq }}" class="{{ cls }}" style="left:{{ b.x }}%;width:{{ b.w }}%" data-i="{{ b.i }}" tabindex="{{ 0 if b.i == 0 else -1 }}" title="{{ b.label }}{% if b.time %}, {{ b.time }}{% endif %}"><span class="sr-only">{{ b.i + 1 }}. {{ b.label }}{% if b.time %}, {{ b.time }}{% endif %}</span></a>{% endfor %}
+    </div></div>
+    {% endfor %}
+    {% if tl.start %}<div class="axis tnum" aria-hidden="true"><span>{{ tl.start }}</span><span>{{ tl.end }}</span></div>{% endif %}
+  </div>
+</section>
 {% endmacro %}

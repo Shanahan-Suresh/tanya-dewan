@@ -24,6 +24,8 @@
   {% if sitting and sitting.draft %}{{ m.draft_note() }}{% endif %}
 </header>
 
+{% if timeline %}{{ m.debate_timeline(timeline) }}{% endif %}
+
 {% if summary %}
 <section class="card happened" aria-labelledby="happened-h">
   {{ m.ai_label(t('ai_summary')) }}
@@ -55,6 +57,15 @@
   </section>
 
   <aside class="aside" aria-label="{{ t('beside_record') }}">
+    {% if seat_map %}
+    {% set n_spoke = seat_map.seats|selectattr('member', 'in', spoke)|list|length %}
+    {% if n_spoke %}
+    <section class="card aside-box" aria-labelledby="sm-d-h">
+      <h2 id="sm-d-h">{{ t('sm_spoke_title') }}</h2>
+      {{ m.seat_map(seat_map, lit=spoke, big=n_spoke, small=t('sm_spoke'), id='sm-d') }}
+    </section>
+    {% endif %}
+    {% endif %}
     {% if speeches|length > 1 %}
     <section class="card aside-box smap" id="smap" data-of="{{ t('n_of_m') }}" aria-labelledby="smap-h">
       <h2 id="smap-h">{{ t('who_spoke') }}</h2>

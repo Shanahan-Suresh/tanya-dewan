@@ -690,10 +690,62 @@ class Records:
         return self._listed("topics", "SELECT topic, MIN(name) AS name, COUNT(*) AS n FROM unit_topics "
                                       "GROUP BY topic ORDER BY topic")
 
-    def topic_units(self, topic: str, page: int = 1, size: int = PAGE_SIZE) -> Page:
-        return self._page("SELECT unit, date FROM unit_topics WHERE topic = ?", [topic], page, size,
-                          "ORDER BY date DESC, unit", "SELECT u.* FROM ({q}) x JOIN units u ON u.id = x.unit "
-                          "ORDER BY x.date DESC, x.unit")
+    def topic_units(self, topic: str, page: int = 1, size: int = PAGE_SIZE, month: str = "") -> Page:
+        """The topic's agenda items, newest first; `month` ("2020-03") keeps one month's."""
+        sql, args = "SELECT unit, date FROM unit_topics WHERE topic = ?", [topic]
+        if re.fullmatch(r"\d{4}-\d{2}", month or ""):
+            sql += " AND substr(date, 1, 7) = ?"
+            args.append(month)
+        return self._page(sql, args, page, size, "ORDER BY date DESC, unit",
+                          "SELECT u.* FROM ({q}) x JOIN units u ON u.id = x.unit ORDER BY x.date DESC, x.unit")
+
+    def topic_months(self, top: int = 6, skip: tuple = ("parliament-procedure",)) -> list[dict]:
+        """Agenda items a month for the `top` biggest topics, leaving out `skip`:
+        [{topic, name, points: [["2018-07", n], ...]}], biggest topic first."""
+        marks = ",".join("?" * len(skip)) or "''"
+        tops = self._all(f"SELECT topic, MIN(name) AS name FROM unit_topics WHERE topic NOT IN ({marks}) "
+                         "GROUP BY topic ORDER BY COUNT(*) DESC LIMIT ?", (*skip, int(top)))
+        out = []
+        for x in tops:
+            rows = self.con.execute("SELECT substr(date, 1, 7) AS m, COUNT(*) FROM unit_topics WHERE topic = ? "
+                                    "GROUP BY m ORDER BY m", (x["topic"],)).fetchall()
+            out.append({"topic": x["topic"], "name": x["name"], "points": [[m, n] for m, n in rows]})
+        return out
+
+    def seats(self, parliament: int = 15) -> list[dict]:
+        """One row a seat: its code and name, and the member and party the records hold last for it
+        in that Parliament: [{code, seat, member, name, party}], by code."""
+        seats: dict[str, dict] = {}
+        for r in self._all("SELECT ms.code, mp.seat, mp.party, mp.member, m.name FROM member_parties mp "
+                           "JOIN member_seats ms ON ms.member = mp.member AND ms.parliament = mp.parliament "
+                           "JOIN members m ON m.slug = mp.member WHERE mp.parliament = ? "
+                           "ORDER BY mp.date_from, mp.member", (parliament,)):
+            seats[r["code"]] = r
+        return sorted(seats.values(), key=lambda s: s["code"])
+
+    def corpus_size(self) -> int:
+        """Speeches plus Act sections: what one search reads."""
+        return int(self.meta().get("speeches", 0)) + self.con.execute("SELECT COUNT(*) FROM sections").fetchone()[0]
+
+    def jump_index(self) -> list[dict]:
+        """Every page a reader can jump to by name: [{k: kind, t: title, s: detail, u: path}].
+        Kinds are mp, act, bill, topic and sitting."""
+        out = []
+        for r in self._all("SELECT m.slug, m.name, s.code, s.seat FROM members m LEFT JOIN member_seats s "
+                           "ON s.member = m.slug AND s.parliament = (SELECT MAX(parliament) FROM member_seats "
+                           "WHERE member = m.slug) ORDER BY m.name"):
+            out.append({"k": "mp", "t": r["name"], "s": f"{r['code'] or ''} {r['seat'] or ''}".strip(),
+                        "u": f"/mp/{r['slug']}"})
+        for a in self.acts():
+            out.append({"k": "act", "t": a["title_bi"] or a["title_bm"], "s": f"Act {a['number']}",
+                        "u": f"/law/{a['number']}"})
+        for b in self._all("SELECT slug, title FROM bills ORDER BY title"):
+            out.append({"k": "bill", "t": b["title"], "s": "", "u": f"/bill/{b['slug']}"})
+        for x in self.topics():
+            out.append({"k": "topic", "t": x["name"], "s": f"{x['n']:,}", "u": f"/topic/{x['topic']}"})
+        for s in self._all("SELECT chamber, date FROM sittings ORDER BY date DESC, chamber"):
+            out.append({"k": "sitting", "t": s["date"], "s": s["chamber"], "u": f"/hansard/{s['chamber']}/{s['date']}"})
+        return out
 
     def units_between(self, date_from: str, date_to: str, topics: list[str] | None = None) -> list[dict]:
         sql, args = "SELECT * FROM units WHERE date >= ? AND date <= ?", [date_from, date_to]

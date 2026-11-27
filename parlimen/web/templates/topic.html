@@ -6,6 +6,7 @@
 <header class="ph">
   <p class="eyebrow"><a href="/topics">{{ t('nav_topics') }}</a></p>
   <h1>{{ topic_name|cap }}</h1>
+  {% if month %}<p class="lead">{{ t('topic_month', m=(month ~ '-01')|hdate|replace('1 ', '', 1)) }} · <a href="/topic/{{ topic }}">{{ t('topic_all_months') }}</a></p>{% endif %}
   <p class="chips"><a class="chip" href="/commitments?topic={{ topic }}">{{ t('nav_commitments') }}</a><a class="chip" href="/questions?topic={{ topic }}">{{ t('nav_questions') }}</a></p>
 </header>
 {{ m.ai_note(t('ai_label')) }}

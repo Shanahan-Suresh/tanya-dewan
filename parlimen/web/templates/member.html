@@ -33,6 +33,13 @@
     {% endif %}
   </div>
   <div class="stack-col">
+    {% if seat_map %}
+    {% set mine = seat_map.seats|selectattr('member', 'equalto', m.slug)|first %}
+    <section class="card box" aria-labelledby="seat-h">
+      <h2 id="seat-h">{{ t('sm_mp_title') }}</h2>
+      <div class="body">{{ mac.seat_map(seat_map, lit=[m.slug], big=mine.code, small=mine.seat, id='sm-mp') }}</div>
+    </section>
+    {% endif %}
     <section class="card box" aria-labelledby="party-h">
       <h2 id="party-h">{{ t('party_history') }}</h2>
       {% if m.parties %}

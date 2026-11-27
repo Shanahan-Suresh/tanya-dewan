@@ -46,7 +46,7 @@ from pydantic import BaseModel
 from .. import answer as answer_mod
 from .. import config
 from ..records import SITE_DB, Records, build_empty, reflow, slug
-from . import present
+from . import how, present
 from .i18n import LANGS, t
 from .limits import Limits
 
@@ -159,13 +159,14 @@ def pdf_page(url: str, page: int | None) -> str:
 
 
 def play(saved: dict, events: queue.Queue, pace: float = 1.0) -> None:
-    """Replay a saved answer as the stream would send it: each search stage starts and ends, then
-    the answer grows line by line, then the whole body."""
+    """Replay a saved answer as the stream would send it: each search stage starts and ends, the
+    ranked passages arrive, then the answer grows line by line, then the whole body."""
     done = saved["done"]
     for st in done["stages"]:
         events.put(("stage", {"name": st["name"], "hits": None, "ms": None}))
         time.sleep(min(st["ms"], 1500) / 1000 * pace)
         events.put(("stage", st))
+    events.put(("passages", {"passages": done["passages"]}))
     events.put(("stage", {"name": "answer", "hits": None, "ms": None}))
     lines = done["answer"].split("\n")
     for i in range(1, len(lines)):
@@ -198,6 +199,7 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         return present.hdate(iso, ctx.get("lang", "en"))
 
     env.filters["hdate"] = hdate
+    env.filters["hhmm"] = present.hhmm
     env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug,
                        site_name=config.SITE_NAME, examples=EXAMPLES,
                        # the answer's own closing line; the page shows it once, in the answer foot
@@ -213,6 +215,12 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         if holder["records"] is None:
             holder["records"] = Records()
         return holder["records"]
+
+    def seat_map() -> dict:
+        """The 15th Parliament's seats placed for the seat map, built once."""
+        if "seats" not in holder:
+            holder["seats"] = present.seat_layout(rec().seats(15))
+        return holder["seats"]
 
     if answer_fn is None:
         from ..answer import ask
@@ -278,13 +286,15 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     def home(request: Request):
         r = rec()
         return page(request, "home.html", topics=r.topics(), parties=PARTIES, meta=r.meta(),
+                    seat_map=seat_map(), corpus=r.corpus_size(),
                     sittings=r.sittings(limit=6), commitments=r.commitments(kind="promise", size=6).rows,
                     topic_trend=r.topic_trend(6), q=request.query_params.get("q", "")[:500])
 
     def run_question(request: Request, body: AskRequest, on_stage: Callable | None = None,
-                     on_text: Callable | None = None) -> tuple[int, dict, dict]:
-        """One question, start to end: checks, limits, search, answer, links, question log.
-        Returns (HTTP status, body, headers). `on_stage` and `on_text` feed the streamed page."""
+                     on_text: Callable | None = None, on_passages: Callable | None = None) -> tuple[int, dict, dict]:
+        """One question, start to end: checks, limits, search, links, answer, question log.
+        Returns (HTTP status, body, headers). `on_stage`, `on_passages` and `on_text` feed the
+        streamed page; the passages go out before the answer starts."""
         from ..search import Filters
 
         q = body.question.strip()
@@ -315,16 +325,6 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         trace, seqs, rerank_usd = engine.run(search)
         search_ms = (time.perf_counter() - t0) * 1000
         lang = question_lang(q)
-        if on_stage:
-            on_stage("answer", None)
-        if not budget:
-            ans = None
-        elif on_text:
-            ans = answer_fn(q, trace.passages, lang, on_text=on_text)
-        else:
-            ans = answer_fn(q, trace.passages, lang)
-        usd = rerank_usd + (ans.usd if ans else 0.0)
-        limits.spend(usd)
         r = rec()
         acts: dict[str, dict | None] = {}
         sittings: dict[tuple, dict | None] = {}
@@ -353,6 +353,18 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
             passages.append({"cite": p.cite, "title": title, "meta": meta, "header": p.header, "text": p.text,
                              "kind": p.kind, "url": url, "pdf": pdf, "via": p.via, "score": round(p.score, 4),
                              "draft": draft})
+        if on_passages:
+            on_passages(passages)
+        if on_stage:
+            on_stage("answer", None)
+        if not budget:
+            ans = None
+        elif on_text:
+            ans = answer_fn(q, trace.passages, lang, on_text=on_text)
+        else:
+            ans = answer_fn(q, trace.passages, lang)
+        usd = rerank_usd + (ans.usd if ans else 0.0)
+        limits.spend(usd)
         sources = [{"n": s.n, "cite": s.cite, "quotes": s.quotes,
                     "title": passages[s.index]["title"] if 0 <= s.index < len(passages) else s.cite,
                     "meta": passages[s.index]["meta"] if 0 <= s.index < len(passages) else "",
@@ -383,8 +395,9 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     @app.post("/api/ask/stream")
     def api_ask_stream(request: Request, body: AskRequest):
         """The same answer as /api/ask, as server-sent events: `stage` (a search stage starts, with no
-        hits yet, or ends, with its hits and time), `text` (the cited answer so far), then `done`
-        (the /api/ask body) or `error` (its message and HTTP status)."""
+        hits yet, or ends, with its hits and time), `passages` (the ranked passages, once ranking
+        ends and before the answer starts), `text` (the cited answer so far), then `done` (the
+        /api/ask body) or `error` (its message and HTTP status)."""
         events: queue.Queue = queue.Queue()
 
         def stage(name, st):
@@ -397,7 +410,8 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                     play(replay, events)
                     return
                 status, payload, _ = run_question(request, body, on_stage=stage,
-                                                  on_text=lambda text: events.put(("text", {"text": text})))
+                                                  on_text=lambda text: events.put(("text", {"text": text})),
+                                                  on_passages=lambda ps: events.put(("passages", {"passages": ps})))
                 events.put(("done", payload) if status == 200 else ("error", {**payload, "status": status}))
             except Exception as e:  # noqa: BLE001 - the reader gets a message instead of a hung page
                 events.put(("error", {"error": f"The answer failed: {type(e).__name__}.", "status": 500}))
@@ -471,8 +485,12 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
             return missing(request)
         prev, nxt = r.neighbours(u)
         bill = r.bill(u["bill"]) if u["bill"] else None
+        speeches = r.speeches(unit_id)
+        spoke = {s["member"] for s in speeches if s["member"]}
         return page(request, "debate.html", unit=u, sitting=r.sitting(u["chamber"], u["date"]),
-                    speeches=r.speeches(unit_id), qa=r.unit_qa(unit_id), commitments=r.unit_commitments(unit_id),
+                    speeches=speeches, qa=r.unit_qa(unit_id), commitments=r.unit_commitments(unit_id),
+                    timeline=present.timeline(speeches, by_party=u["parliament"] != 15) if len(speeches) > 1 else None,
+                    seat_map=seat_map() if u["parliament"] == 15 and spoke else None, spoke=spoke,
                     prev=prev, next=nxt, bill=bill, act=r.act(u["act"]) if u["act"] else None)
 
     # ---------- records with filters ----------
@@ -521,7 +539,9 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         if not m:
             return missing(request)
         n = num(request.query_params.get("page", "1"))
+        seats = seat_map()
         return page(request, "member.html", m=m, units=r.member_units(member, n), parliament_now=r.parliament_now(),
+                    seat_map=seats if any(s["member"] == member for s in seats["seats"]) else None,
                     asked=r.questions(member=member, size=20).rows,
                     answered=r.member_answers(member, 10),
                     made=r.commitments(member=member, size=20).rows,
@@ -542,7 +562,8 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
 
     @app.get("/topics", response_class=HTMLResponse)
     def topics(request: Request):
-        return page(request, "topics.html", topics=rec().topics())
+        r = rec()
+        return page(request, "topics.html", topics=r.topics(), months=r.topic_months(6))
 
     @app.get("/topic/{topic}", response_class=HTMLResponse)
     def topic(request: Request, topic: str):
@@ -551,8 +572,30 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
         if topic not in names:
             return missing(request)
         n = num(request.query_params.get("page", "1"))
-        return page(request, "topic.html", topic=topic, topic_name=names[topic]["name"], units=r.topic_units(topic, n),
+        month = request.query_params.get("month", "")
+        month = month if re.fullmatch(r"(19|20)\d\d-(0[1-9]|1[0-2])", month) else ""
+        return page(request, "topic.html", topic=topic, topic_name=names[topic]["name"], month=month,
+                    units=r.topic_units(topic, n, month=month),
                     commitments=r.commitments(topic=topic, size=10).rows)
+
+    @app.get("/jump.json")
+    def jump():
+        """Every page a reader can jump to by name, for the Ctrl K box: [{k, t, s, u}]."""
+        if "jump" not in holder:
+            holder["jump"] = json.dumps(rec().jump_index(), ensure_ascii=False, separators=(",", ":"))
+        return Response(holder["jump"], media_type="application/json",
+                        headers={"Cache-Control": "public, max-age=3600"})
+
+    @app.get("/how-it-works", response_class=HTMLResponse)
+    def how_it_works(request: Request):
+        r = rec()
+        m = r.meta()
+        counts = {k: m.get(k, 0) for k in ("units", "speeches", "qa", "commitments", "members")}
+        counts["acts"] = r.con.execute("SELECT COUNT(*) FROM acts").fetchone()[0]
+        counts["sections"] = r.con.execute("SELECT COUNT(*) FROM sections").fetchone()[0]
+        lang = hl(request)
+        return page(request, "how.html", nodes=how.nodes(lang, counts), groups=how.groups(lang),
+                    evals=how.evals(lang), repo=how.REPO_BLOB.rsplit("/blob/", 1)[0])
 
     # ---------- corrections and about ----------
 
