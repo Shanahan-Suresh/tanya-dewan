@@ -20,7 +20,7 @@ from .search import Passage
 
 MODEL = "claude-haiku-5-5"
 # Chosen by the phase 5 answer judging: high met both answer targets (77% correct, 82% backed)
-# where Haiku's default, medium, gave 72% and 78%, for about 2.7 s and [amount removed] more an answer.
+# where Haiku's default, medium, gave 72% and 78%, for about 2.7 s more an answer.
 EFFORT = "high"
 NOT_ADVICE = "This is general information from the published record, not legal advice."
 NOT_ADVICE_MS = "Ini maklumat umum daripada rekod yang diterbitkan, bukan nasihat undang-undang."

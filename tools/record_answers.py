@@ -4,7 +4,7 @@ Each question goes through the site's own /api/ask/stream, and every server-sent
 with the milliseconds since the question was sent, so the demo can play the answer back at the
 pace it was written. The questions are the site's example questions (parlimen/web/app.py EXAMPLES).
 
-Run, with the full site up on port 8780 (each answer costs about [amount removed], logged as usual):
+Run, with the full site up on port 8780 (each answer's usage is logged as usual):
     .venv\\Scripts\\python.exe tools\\record_answers.py [--site http://127.0.0.1:8780] [--only SLUG ...]
 Writes docs/demo/answers/<slug>.json: {"question", "lang", "recorded", "events": [{"t", "event", "data"}]}.
 """
@@ -71,7 +71,7 @@ def main() -> None:
                 {"question": q, "lang": lang, "recorded": date.today().isoformat(), "events": events},
                 ensure_ascii=False, indent=1), encoding="utf-8")
             print(f"{s}: {len(events)} events, {len(done.get('sources') or [])} sources, "
-                  f"{events[-1]['t'] / 1000:.1f} s, US${done.get('usd') or 0:.4f}", flush=True)
+                  f"{events[-1]['t'] / 1000:.1f} s", flush=True)
 
 
 if __name__ == "__main__":

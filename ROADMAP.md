@@ -40,7 +40,7 @@ Targets for release 1, fixed before the first measurement:
 | Commitments whose quote matches the Hansard text exactly | 100 % (checked by code) |
 | Commitments that a human agrees are real commitments (sample of 100) | 85 % or more |
 | Search latency on the public container, 95th percentile | under 3 seconds |
-| Hosting cost of the public demo | [amount removed]: a static demo on GitHub Pages that plays recorded answers |
+| Hosting of the public demo | Free: a static demo on GitHub Pages that plays recorded answers |
 
 ## Who it is for
 
@@ -150,9 +150,8 @@ on 2026-11-27, on this evidence, checked that day:
 - **A small market, sold by meetings.** An estimated 50 to 150 organisations (consultancies,
   chambers of commerce, corporate affairs teams, newsrooms). Selling to them needs sales
   conversations, which the owner rules out.
-- **A low local price.** myDewan (seat maps and a news feed per seat, no Hansard) sells its plan at
-  [amount removed] a month by card. A realistic result was 1 to 5 firms at about [amount removed] so [amount removed] a
-  month.
+- **A low local price.** myDewan (seat maps and a news feed per seat, no Hansard) sells a low-priced
+  plan by card. A realistic result was 1 to 5 firms at a similar price.
 - **No speed edge.** Drafts appear a median of 1.5 days after a sitting (creation dates inside 197
   cached Dewan Rakyat PDFs since 2024; most of the October 2026 meeting the next day, the slowest
   13 days). News reports the same day. Revised texts replace the drafts 80 to 100 days later.
@@ -255,14 +254,14 @@ the data the site reads. Licence: MIT for the code. The data is not in the repos
 
 - Write the enrichment schema and prompt; structured output; every call logs its usage.
 - Model: Haiku 5.5 with adaptive thinking. The quick benchmark (`tools/bench_enrich.py`, 24
-  extracts, blind Opus 5.5 audit, measured 2026-10-22) found it as good as Sonnet 5.5 at about a
-  tenth of the cost; Haiku without thinking fell short:
+  extracts, blind Opus 5.5 audit, measured 2026-10-22) found it as good as Sonnet 5.5 at a
+  fraction of the cost; Haiku without thinking fell short:
 
-  | Arm | Publishable as is | Major defects | Quotes word for word | Full corpus, Batch API |
-  |---|---|---|---|---|
-  | Haiku 5.5, no thinking | 15 of 24 | 16 | 17 of 24 | about [amount removed] |
-  | Haiku 5.5, adaptive thinking | 23 of 24 | 1 | 22 of 22 | about [amount removed] |
-  | Sonnet 5.5, no thinking | 22 of 24 | 3 | 26 of 26 | about [amount removed] |
+  | Arm | Publishable as is | Major defects | Quotes word for word |
+  |---|---|---|---|
+  | Haiku 5.5, no thinking | 15 of 24 | 16 | 17 of 24 |
+  | Haiku 5.5, adaptive thinking | 23 of 24 | 1 | 22 of 22 |
+  | Sonnet 5.5, no thinking | 22 of 24 | 3 | 26 of 26 |
 
 - Pilot: 5 parsed sitting days through Haiku with thinking, the same blind audit, and 20 records
   read by the owner. Speech ids in the schema become an enum of the request's ids, since every
@@ -274,10 +273,10 @@ the data the site reads. Licence: MIT for the code. The data is not in the repos
 - [x] Commitment checks in code: the quote must match the Hansard text; a record without a match
   is dropped and counted.
 - [x] Full run on the Batch API (measured 2026-10-22): 29,971 records, 31,668 question-answer
-  pairs, 19,866 commitments kept and 89 dropped; [amount removed] with the pilots.
+  pairs, 19,866 commitments kept and 89 dropped.
 - [x] Sonnet 5.5 checks every kept commitment against its speech (`parlimen/commit_check.py`,
   measured 2026-10-22): 1,397 dropped as not a real promise, 2,519 paraphrases corrected,
-  18,469 kept; [amount removed]. On the exit sample it agrees with the hand check on 93 of 100.
+  18,469 kept. On the exit sample it agrees with the hand check on 93 of 100.
 - [x] **Exit:** every speech enriched; the question-answer and commitment targets measured on
   hand-checked samples. Measured 2026-10-22 (`tools/exit_samples.py`, checked by Claude in
   place of the owner): 99 of 100 oral questions joined to their answer (target 95%); 92 of 100
@@ -298,7 +297,7 @@ the data the site reads. Licence: MIT for the code. The data is not in the repos
 - [x] Exit checks (`tools/check_phase4.py`, all pass): the Employment Act, Penal Code and Road
   Transport Act bills, searched by name, return their bill debates; a section's heading searched
   inside its Act brings the sections it names. DR and KK 2026-10-21 ingested in one command
-  (421 speeches, 62 extracts, [amount removed]).
+  (421 speeches, 62 extracts).
 - **Exit:** a search for a known Act returns its debates; a search inside an Act follows its
   cross-references; a new sitting ingests without manual steps.
 
@@ -345,8 +344,7 @@ The chosen setup is hybrid search with Haiku 5.5 reranking the top 20 hits:
   sentence (s. 32(2) read as "or" where the Act says "and"; a Deputy Speaker called a Deputy
   Minister) or led with the wrong Act, faults a code check cannot see.
 - Haiku answers at effort high (`answer.EFFORT`): 77% correct and 82% backed, against 72% and
-  78% at medium, for 9.9 s against 7.2 s per answer (search included) and [amount removed] against
-  [amount removed]. Thirteen of 30 questions changed grade between the two runs, in both directions,
+  78% at medium, for 9.9 s against 7.2 s per answer (search included). Thirteen of 30 questions changed grade between the two runs, in both directions,
   so part of the gain is judge noise on a set of 30.
 
 ### Phase 6: the pages and the MCP server
@@ -360,7 +358,7 @@ The chosen setup is hybrid search with Haiku 5.5 reranking the top 20 hits:
 - [x] MCP server (`parlimen/mcp_server.py`, registered in `.mcp.json`): `search_law`,
   `search_debates`, `read_section`, `read_sitting`, `list_commitments`.
 - [x] A sample weekly digest (`parlimen/digest.py`): energy, water and climate, 19 to 22 October
-  2026, 7 items and 8 commitments to watch, [amount removed].
+  2026, 7 items and 8 commitments to watch.
 - [x] Exit check (`tools/check_phase6.py`, 4 of 4 pass in English and Malay): a reader clicks from
   the Acts search to a section, to its bill debate, from the questions page to a deputy finance
   minister's answer, and from the commitments page to the speech that holds the quote.
@@ -393,17 +391,15 @@ The project is a public portfolio piece with a free static demo (owner's decisio
 
 Not built; the code supports it. A live site that answers new questions needs:
 
-- **A host:** a VPS with 4 vCPU and 8 GB of RAM (Hetzner CX33, about [amount removed] a month). The site reads
+- **A host:** a VPS with 4 vCPU and 8 GB of RAM (for example a Hetzner CX33). The site reads
   about 4 GB of data, and its process peaks near 2.7 GB of working set (measured 2026-11-27 after
-  8 questions: 2.69 GB peak working set, 4.05 GB private). Cloud Run with one warm instance costs
-  about [amount removed] a month idle. HTTPS through Caddy, the site and Redis as systemd services, one
+  8 questions: 2.69 GB peak working set, 4.05 GB private). HTTPS through Caddy, the site and Redis as systemd services, one
   uvicorn process.
 - **Redis** at `PARLIMEN_REDIS_URL` for the rate limit and the daily budget, so both survive a
   restart. Without it, the in-process `fakeredis` stands in.
-- **Timers:** a nightly ingest during Parliament's meetings (`python -m parlimen.ingest`, about
-  [amount removed] a sitting day), then `python -m parlimen.records build`, then a restart of the site; a
+- **Timers:** a nightly ingest during Parliament's meetings (`python -m parlimen.ingest`), then `python -m parlimen.records build`, then a restart of the site; a
   weekly `python -m parlimen.drafts recheck`. Each step runs only when the one before it succeeds.
-- **Answers:** about [amount removed] each (Haiku 5.5 rerank and answer), capped by `PARLIMEN_DAILY_USD`.
+- **Answers:** Haiku 5.5 reranks and answers, within a daily budget set by `PARLIMEN_DAILY_USD`.
 
 ### Later
 
@@ -415,30 +411,6 @@ publishes them.
 
 1. No hand review of pilot records or test questions: Claude reviews them in the owner's place.
 2. Find a law-student reviewer for the hand-written questions, if one is available.
-
-## Costs
-
-Claude prices per million tokens, input and output (claude-api skill, cached 2026-10-06): Haiku
-5.5 [amount removed]; Sonnet 5.5 [amount removed]; Opus 5.5 [amount removed]. The Batch API halves
-them.
-
-Corpus, counted in phase 0 (`docs/sources.md`): Malay runs at about 1.9 characters per token, so
-a full sitting day is 160,000 to 210,000 tokens and the 539 days hold about 92 million. The 494
-Special Chamber days add about 8.5 million, for about 100 million in all. Enrichment output is
-estimated at 27 million tokens.
-
-| Item | Expected |
-|---|---|
-| Enrichment, Haiku 5.5 with adaptive thinking on the Batch API (the chosen model) | about [amount removed] expected; measured [amount removed] with the pilots, plus [amount removed] of Opus audits (`PROGRESS.md`) |
-| Enrichment, Sonnet 5.5 on the Batch API (not used) | about [amount removed] |
-| Re-processing a revised sitting | about [amount removed] |
-| Phase 3 pilot | under [amount removed] |
-| Phase 5 eval | about [amount removed] |
-| New sittings each month | under [amount removed] on either model |
-| Demo answers, Haiku 5.5 (about 20,000 tokens in and 700 out per answer) | about [amount removed] per answer; 1,000 answers a day is about [amount removed] a month |
-| Demo rerank, Haiku 5.5 (about 9,000 tokens in and 50 out per search, measured in phase 5) | about [amount removed] per search; 1,000 searches a day is about [amount removed] a month |
-| Static demo on GitHub Pages | [amount removed]; recording its 8 answers cost [amount removed] |
-| Live site hosting | about [amount removed] a month for the VPS |
 
 ## Risks
 

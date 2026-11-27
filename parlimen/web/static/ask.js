@@ -131,7 +131,6 @@
     }</tbody></table></div>`;
     const bits = [];
     if (r.search_ms != null) bits.push(`${secs(r.search_ms)} ${S.search}`);
-    if (r.usd != null) bits.push(`${S.cost} US$${Number(r.usd).toFixed(4)}`);
     $("how-meta").textContent = bits.join(", ");
     $("how").hidden = false;
     // Passages

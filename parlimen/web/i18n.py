@@ -99,8 +99,6 @@ TEXT = {
         "Disusun semula oleh Claude Haiku"),
     "hits": ("Results",
         "Hasil"),
-    "cost": ("cost",
-        "kos"),
     "answer_ai": ("Written by AI from the sources beside it. The verbatim record is the source, so check a claim there before you rely on it.",
         "Ditulis oleh AI daripada sumber di sebelahnya. Rujuk rekod verbatim untuk mengesahkan sesuatu kenyataan sebelum bergantung padanya."),
     "not_advice": ("This is general information from the published record, not legal advice.",

@@ -93,8 +93,8 @@ Geist and Literata.
 ## Run it yourself
 
 The repository holds the code, not the data. Building the data downloads the public PDFs and
-costs about [amount removed] of Claude API use (measured: enrichment [amount removed], the commitment review
-[amount removed], and [amount removed] of OCR for scanned Acts, which is optional). It needs about 6 GB of disk, and the
+runs the Claude enrichment, the commitment review and, optionally, OCR for scanned Acts on the
+Anthropic API; each logs its usage to `data/api-usage.jsonl`. It needs about 6 GB of disk, and the
 embedding step runs best on a GPU.
 
 1. Install Python 3.12 or later and the packages:
@@ -123,8 +123,7 @@ embedding step runs best on a GPU.
    python -m parlimen.records build         # the page database
    ```
 5. Run the full site on http://127.0.0.1:8780 with `python -m parlimen.web`. It loads the index
-   in the background (a few minutes from a hard disk) and serves record pages meanwhile. A
-   question costs about [amount removed]. The process peaks near 2.7 GB of memory.
+   in the background (a few minutes from a hard disk) and serves record pages meanwhile. The process peaks near 2.7 GB of memory.
 6. Keep it current with `python -m parlimen.ingest` after new sittings, then
    `python -m parlimen.records build`.
 
@@ -134,7 +133,7 @@ Other entry points:
 - `python -m parlimen.mcp_server` gives Claude five tools: `search_law`, `search_debates`,
   `read_section`, `read_sitting` and `list_commitments`. It is registered in `.mcp.json`; on Linux
   and macOS, change its command to `.venv/bin/python`.
-- `python -m parlimen.evaluate run` and `python -m parlimen.judge` rerun the eval (about [amount removed]).
+- `python -m parlimen.evaluate run` and `python -m parlimen.judge` rerun the eval.
 - `python tools/static_demo.py` builds the static demo from your own data;
   `tools/record_answers.py` records its answers from a running site.
 - `python -m pytest -q` runs the tests. They need no data.

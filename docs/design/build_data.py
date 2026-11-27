@@ -2,7 +2,7 @@
 
 Each mockup shows true content from data/site.db: one MP (Dzulkefly Ahmad, Kuala Selangor), one
 agenda item from a draft sitting, one bill's timeline, the home page lists, topic trends by year,
-and one real answer from the running site's /api/ask (one Haiku rerank and answer, about [amount removed]).
+and one real answer from the running site's /api/ask (one Haiku rerank and answer).
 
 Run:  python docs/design/build_data.py [--no-ask]
 """

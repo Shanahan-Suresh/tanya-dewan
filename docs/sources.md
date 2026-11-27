@@ -149,8 +149,7 @@ The source is the list of updated Acts (`principal.php?type=updated`), measured 
 - **Scanned files.** `parlimen/act_ocr.py` reads them (method and measurements in its docstring).
   Claude Haiku 5.5 reads each page and Tesseract 5.4 checks it. Where Tesseract gives fewer than
   97% of Haiku's words, Claude Sonnet 5.5 reads the page again and its text is kept. Measured
-  2026-10-22 over 52 files: 1,600 pages, 390 of them read again by Sonnet, [amount removed] in all
-  ([amount removed] Haiku, [amount removed] Sonnet). Five pages, all faded covers or arrangement pages, have
+  2026-10-22 over 52 files: 1,600 pages, 390 of them read again by Sonnet. Five pages, all faded covers or arrangement pages, have
   Sonnet and Haiku disagreeing (`data/act-ocr-report.csv`, flag `check`). Sections from a scan
   carry `source: "ocr"`.
 - **Coverage.** 748 of the 753 in-force Acts have text in at least one language, and 665 in both.
@@ -189,14 +188,6 @@ Malay text runs at about 1.9 characters per token. A full Dewan Rakyat sitting d
 210,000 tokens; at about 170,000 on average, the 539 days hold about 92 million tokens. The 494
 Special Chamber days average about 17,000 tokens and add about 8.5 million. The corpus is about
 100 million tokens. Enrichment output is estimated at 27 million tokens.
-
-| Enrichment model, Batch API | Input | Output | Total |
-|---|---|---|---|
-| Haiku 5.5 | about [amount removed] | about [amount removed] | about [amount removed] |
-| Sonnet 5.5 | about [amount removed] | about [amount removed] | about [amount removed] |
-
-Re-processing a revised sitting costs about [amount removed] on Haiku and
-[amount removed] on Sonnet.
 
 ## Go or no-go
 

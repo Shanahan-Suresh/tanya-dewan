@@ -91,7 +91,7 @@ st = {s["name"]: s for s in A["stages"]}
 maxms = max(s["ms"] for s in A["stages"]) or 1
 labels = {"bm25": "Keyword search (BM25)", "dense": "Meaning search (dense)", "fused": "Fused list", "reranked": "Reranked"}
 stage_html = "".join(f'<div class="stage"><div class="v">{n(s["hits"])}<small>hits</small></div><div class="meta">{labels.get(s["name"], s["name"])}<br>{s["ms"]/1000:.1f} s</div><div class="bar"><i style="width:{max(2, s["ms"]/maxms*100):.0f}%"></i></div></div>' for s in A["stages"])
-stage_html += f'<div class="stage"><div class="v">${A["usd"]:.4f}</div><div class="meta">Cost of this answer<br>search {A["search_ms"]/1000:.0f} s, total {A["total_ms"]/1000:.0f} s</div></div>'
+stage_html += f'<div class="stage"><div class="v">{A["total_ms"]/1000:.0f} s</div><div class="meta">Total time<br>search {A["search_ms"]/1000:.0f} s</div></div>'
 
 demo = {"question": A["question"], "answer": A["answer"], "sources_n": len(A["sources"])}
 examples = [("EN", "What has the government said about targeted diesel subsidies?"),
@@ -180,7 +180,7 @@ home = f"""
     <h2 class="lead-q" id="lead-q"></h2>
     <div class="lead-body"><div class="prose" id="answer-body"></div></div>
     <aside class="marginalia" aria-label="Sources"><span class="label">Sources, verbatim from the record</span><ol id="margin-list" style="list-style:none">{"".join(fn_html(s) for s in A["sources"])}</ol></aside>
-    <details class="how"><summary><span>How it was found, and what it cost</span>{ic("chev","icon chev")}</summary><div class="stages">{stage_html}</div></details>
+    <details class="how"><summary><span>How it was found</span>{ic("chev","icon chev")}</summary><div class="stages">{stage_html}</div></details>
   </div>
 </section>
 

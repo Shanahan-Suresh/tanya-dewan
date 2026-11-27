@@ -2,7 +2,7 @@
 
 Each page is shot at desktop and phone width into data/shots/, with its load time and any width
 past the window. `--ask` also asks one question on the home page and shoots the answer (and its
-citation preview): against a real site that is one real search and answer (about [amount removed]); against
+citation preview): against a real site that is one real search and answer; against
 a site started with `--replay` it costs nothing. `--dark` shoots in the dark colour scheme.
 
 Run:  .venv\\Scripts\\python.exe tools\\site_shots.py [--base http://127.0.0.1:8780] [--ask "question"]

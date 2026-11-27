@@ -231,9 +231,9 @@ def build_home():
 </div>
 <aside class="sources" id="sources" hidden aria-label="Sources"><h3>Sources <span>{len(a["sources"])} passages, verbatim</span></h3><ol class="src-list" id="src-list"></ol></aside>
 </div>
-<details class="card fold" id="how" hidden><summary>{ic("search")}How it was found <span class="meta tnum">{a["search_ms"]/1000:.0f} s search, US${a["usd"]:.4f}</span>{ic("chev","i chev")}</summary>
+<details class="card fold" id="how" hidden><summary>{ic("search")}How it was found <span class="meta tnum">{a["search_ms"]/1000:.0f} s search</span>{ic("chev","i chev")}</summary>
 <div class="body"><div class="scroll-x"><table class="stages"><thead><tr><th>Step</th><th class="r">Passages</th><th class="r">Time</th><th><span class="sr-only">Relative time</span></th></tr></thead><tbody>{rows}</tbody></table></div>
-<p class="meta" style="margin-top:12px">Total {a["total_ms"]/1000:.0f} s, of which searching {a["search_ms"]/1000:.0f} s. Cost of this answer: US${a["usd"]:.4f}. Filters: {E(a["filters"])}.</p></div></details>
+<p class="meta" style="margin-top:12px">Total {a["total_ms"]/1000:.0f} s, of which searching {a["search_ms"]/1000:.0f} s. Filters: {E(a["filters"])}.</p></div></details>
 </section>
 
 <section class="section" id="sittings"><div class="section-head"><div><h2>Latest sittings</h2><p>The newest Hansard on the record. Drafts are unrevised and can change.</p></div><a class="linkbtn" href="debate.html">All sittings {ic("right","i sm")}</a></div>

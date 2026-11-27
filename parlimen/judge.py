@@ -114,14 +114,13 @@ def run(items: list[dict], arm_names: list[str], repeats: int = 2, workers: int 
 
 
 def summary(rows: list[dict]) -> str:
-    lines = ["| Retrieval | Questions | Correct | Every claim backed | Seconds per answer | US$ per answer |",
-             "|---|---:|---:|---:|---:|---:|"]
+    lines = ["| Retrieval | Questions | Correct | Every claim backed | Seconds per answer |",
+             "|---|---:|---:|---:|---:|"]
     for arm in dict.fromkeys(r["arm"] for r in rows):
         rs = [r for r in rows if r["arm"] == arm]
         n = len(rs)
         lines.append(f"| {arm} | {n} | {sum(r['correct'] for r in rs) / n:.0%} | "
-                     f"{sum(r['supported_all'] for r in rs) / n:.0%} | {sum(r['seconds'] for r in rs) / n:.1f} | "
-                     f"{sum(r['answer_usd'] for r in rs) / n:.4f} |")
+                     f"{sum(r['supported_all'] for r in rs) / n:.0%} | {sum(r['seconds'] for r in rs) / n:.1f} |")
     return "\n".join(lines)
 
 

@@ -52,7 +52,7 @@ Check: `tools/check_act_text.py --sample 50 --seed N` compares text-layer sectio
 Tests: `tests/test_act_text.py` (7) and `tests/test_act_ocr.py` (5); suite 21 pass.
 - Measured 2026-10-22: 66,026 of 66,307 listed sections found; 1,356 of 1,420 text files have no
   section missing (1,319 of 1,368 from the text layer, 37 of 52 from OCR); six samples of 50
-  match poppler word for word. OCR cost [amount removed]. File kinds and coverage
+  match poppler word for word. File kinds and coverage
   (748 of 753 in-force Acts have text) are in `docs/sources.md`.
 - How it reads a file, and why, is in the module docstrings: pdfium text (pdfplumber loses
   digits in the 2006 font), letter-spaced words rebuilt from character boxes, running heads
@@ -108,11 +108,11 @@ records `data/enrich/pilot.jsonl`; full records `data/enriched.jsonl`. Tests:
 - Pilot (measured 2026-10-22; DR 2019-07-02, 2020-07-21, 2023-02-28, 2025-12-04, KK 2024-06-27;
   log `data/enrich-pilot.log`): 212 extracts, 0 failures, 207 question-answer pairs, 100
   commitments kept and 1 dropped, 8 figures and 720 entities dropped by the code checks;
-  1,260,545 input and 660,248 output tokens, [amount removed] at standard rates.
+  1,260,545 input and 660,248 output tokens.
 - The entity check searches the speech text, the speaker labels and the agenda heading: 16 of
   3,672 pilot entities fail it.
 - Blind Opus audit of 40 pilot records (`enrich audit`, log `data/enrich-audit.log`, files
-  `data/enrich/audits/`, [amount removed]): 30 publishable, 16 major defects. One is a judge error
+  `data/enrich/audits/`): 30 publishable, 16 major defects. One is a judge error
   (Muhammad Bakhtiar Wan Chik was MP for Balik Pulau, as the parser says), so 31 of 40. The
   real defects are in summaries: a second exchange left out (DR-2019-07-02-006), proposals or
   progress overstated (-003, -025, DR-2023-02-28-028), an exchange misread (DR-2020-07-21-021,
@@ -126,8 +126,7 @@ records `data/enrich/pilot.jsonl`; full records `data/enriched.jsonl`. Tests:
   count as not done; audits go to `data/enrich/audits/prompt<N>/`). The prompt-1 pilot records
   are kept in `data/enrich/pilot-prompt1.jsonl`.
 - Prompt 2 pilot (measured 2026-10-22): 212 records, 0 failures, 192 question-answer pairs, 93
-  commitments kept and 1 dropped, 5 figures and 12 entities dropped; [amount removed] at standard
-  rates, so the full run is about [amount removed] on the Batch API. Blind audit, 40 records, seed 2 (`data/enrich/audits/prompt2/`, [amount removed]): 33 publishable, 8
+  commitments kept and 1 dropped, 5 figures and 12 entities dropped. Blind audit, 40 records, seed 2 (`data/enrich/audits/prompt2/`): 33 publishable, 8
   major defects (5 unsupported_or_wrong, 1 missed_item, 1 false_commitment, 1 malay_quality).
 - Owner review page: https://claude.ai/artifact/YVjbeGgS1Bu28rAtFS9hHc (source
   `docs/enrich-pilot-review.html`, built by `python tools/pilot_review.py` from
@@ -149,11 +148,11 @@ records `data/enrich/pilot.jsonl`; full records `data/enriched.jsonl`. Tests:
 - Batch msgbatch_013RSxm9G8ZMYmWtXy9ELTUp collected: 5,000 of 5,000 ok. `cmd_submit` sends
   again any extract of a collected batch that has no ok answer.
 - After 5 of 6 batches (16:02): 24,969 records, 26,663 question-answer pairs, 16,707
-  commitments kept and 69 dropped, [amount removed] logged so far.
+  commitments kept and 69 dropped.
 - Full run (measured 2026-10-22): 29,971 of 29,971 extracts have a checked record in
   `data/enriched.jsonl`; 31,668 question-answer pairs; 19,866 commitments kept and 89 dropped
   (quote not in the speech); 429 figures and 2,004 entities dropped; 175,434,244 input and
-  137,785,797 output tokens; [amount removed] for pilots and full run, plus [amount removed] of Opus audits.
+  137,785,797 output tokens.
 - Exit samples drawn by `tools/exit_samples.py` (seed 100) into
   `data/enrich/exit-samples.json`: 100 of 17,249 question-time pairs and 100 of 19,866
   commitments. A Sonnet subagent checks them in place of the owner (findings in
@@ -173,10 +172,10 @@ Prompt version `CHECK_VERSION = 3`. Tests: `tests/test_commit_check.py` (4).
 - Pilot on the exit sample (logs `data/commit-check-pilot*.log`): version 1 dropped 15 real
   promises; version 3 agrees with the exit review on 93 of 100, catches 6 of its 8 false ones,
   and found one reviewer error (C 97: a "promise" dated before the sitting). Kept share real
-  about 98% in the sample. [amount removed] per pilot run.
+  about 98% in the sample.
 - Full run (measured 2026-10-22, batches in `data/enrich/commit-check-batches.json`): every one
   of the 19,866 commitments has a verdict: 13,758 promise, 4,718 routine, 672 past or existing,
-  674 vague, 51 not government; 2,519 paraphrases corrected; [amount removed]. `data/enriched.jsonl`
+  674 vague, 51 not government; 2,519 paraphrases corrected. `data/enriched.jsonl`
   keeps 18,469 commitments (89 dropped as not in the speech, 1,397 as not real).
 
 ## Party history (`parlimen/parties.py`): done
@@ -186,7 +185,7 @@ from, to; "" = term start or end, "?" = change with no date in the sources). Sou
 "Members of the Dewan Rakyat, 14th/15th Malaysian Parliament" and "Results of the 2022 Malaysian
 general election by parliamentary constituency", fetched once through Chrome (Wikipedia returns
 403 to the crawler's user agent) into `data/raw/wikipedia/`. Haiku reads only the 98 rows with
-notes or by-elections (`data/parties-llm.jsonl`, [amount removed]); code checks dates and parties against
+notes or by-elections (`data/parties-llm.jsonl`); code checks dates and parties against
 the row text, drops coalition names, bounds by-election members, takes the first party from the
 election result (pendulum's DAP over the results page's PKR logo; Jeli fixed by hand in
 `ELECTED_FIXES`). `parties.lookup()` gives party by (parliament, seat, date). Tests:
@@ -247,13 +246,12 @@ Qwen3-Reranker-0.6B), settings added to `parlimen/config.py` (INDEX = `data/inde
 - Exit checks: `tools/check_phase4.py` all pass (log `data/check-phase4.log`): the bills of Acts
   265, 574 and 333, searched by name over the debates, return their bill debates; a section's
   heading inside Acts 265, 136 and 574 brings the sections it names. Ingest of DR and KK
-  2026-10-21 (log `data/ingest-2026-10-21.log`): 421 speeches, 62 extracts enriched, [amount removed].
+  2026-10-21 (log `data/ingest-2026-10-21.log`): 421 speeches, 62 extracts enriched.
 
 ## Phase 5: the eval: done
 
 The owner closed phase 5 on 2026-10-23 with five of six targets met, accepting Hansard recall
-under target. The results table and their causes are in ROADMAP Phase 5. October spend logged
-(measured 2026-10-23): [amount removed] in `data/api-usage.jsonl`.
+under target. The results table and their causes are in ROADMAP Phase 5. Every call's usage is in `data/api-usage.jsonl`.
 
 The chosen setup (`parlimen/config.py`, `parlimen/answer.py`):
 - Search: BM25 + Qwen3-Embedding-0.6B vectors on "h" (header + text; the notes lower recall
@@ -272,11 +270,10 @@ The chosen setup (`parlimen/config.py`, `parlimen/answer.py`):
 Measured 2026-10-23 on the chosen setup:
 - Retrieval (`results/eval-2026-10-23.md`, runs `data/eval/runs/`, logs `data/eval-run.log`,
   `data/eval-run-haiku.log`): law recall@10 0.907, Hansard 0.727, filters 0.720, language gap 0
-  points; CPU search median 1,758 ms, 95th percentile 2,834 ms (embedder not held to 2 threads);
-  about [amount removed] a search.
+  points; CPU search median 1,758 ms, 95th percentile 2,834 ms (embedder not held to 2 threads).
 - Answers (`results/answers-2026-10-23-effort-high.md`, rows `data/eval/answers-effort-high.json`,
-  log `data/judge-full-effort-high.log`): 77% correct, 82% with every claim backed; 9.9 s and
-  [amount removed] an answer. The medium-effort run with BM25 alongside is
+  log `data/judge-full-effort-high.log`): 77% correct, 82% with every claim backed; 9.9 s an
+  answer. The medium-effort run with BM25 alongside is
   `results/answers-2026-10-23.md` (rows `data/eval/answers.json`); the runs before the drop and
   before the prompt rules are `data/eval/answers-prompt-fix.json` and
   `data/eval/answers-before-fix.json`.
@@ -310,7 +307,7 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
 - Site: `python -m parlimen.web [--port 8780]` (`parlimen/web/`). Record pages need no model and
   load in 0.02 to 0.6 s. At start the server loads the index, the vectors and the embedder on the
   CPU in the background (149 to 162 s measured 2026-10-25 on the D: hard disk); record pages
-  serve during that. A warm question takes 6.8 to 12.7 s and about [amount removed] (Haiku
+  serve during that. A warm question takes 6.8 to 12.7 s (Haiku
   rerank plus answer). Each question is answered alone, with no memory of the previous one.
   Corrections go to `data/corrections.jsonl`.
 - Memory, measured 2026-11-27 after 8 questions: 2.69 GB peak working set, 4.05 GB private. The
@@ -340,8 +337,8 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
   last 365 days again; changed bytes replace the cache and the sitting is processed again
   (retired chunks keep their ids and leave search; a rebuild drops them). Not run on the real
   data yet.
-- Limits for a live host (`parlimen/web/limits.py`): 20 questions per visitor an hour and [amount removed] a
-  day of Claude spend, in Redis at `PARLIMEN_REDIS_URL`, else an in-process fakeredis. Past the
+- Limits for a live host (`parlimen/web/limits.py`): 20 questions per visitor an hour and a daily
+  spend cap (`PARLIMEN_DAILY_USD`), in Redis at `PARLIMEN_REDIS_URL`, else an in-process fakeredis. Past the
   budget the ask page shows the fused passages with no answer. While the index loads, a question
   gets HTTP 503. Each question goes to `data/questions.jsonl` with no IP address.
 - Search engines: `/robots.txt`, `/sitemap.xml`, page descriptions, Open Graph tags with
@@ -361,14 +358,14 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
   both languages (measured 2026-10-25). `tools/site_shots.py [--base URL] [--path ...] [--ask "..."]
   [--lang ms] [--dark] [--full]` shoots pages at desktop and phone width into `data/shots/`.
 - Ingest of DR and KK 2026-10-22 (log `data/ingest-2026-10-22.log`): 444 speeches, 58 extracts
-  enriched, [amount removed].
+  enriched.
 - Not checked by eye: the J and K keys, the More sheet, AA contrast, most dark desktop pages.
 
 ### The static demo
 
 - `tools/record_answers.py` sends the 8 example questions (`EXAMPLES` in `parlimen/web/app.py`)
   through the running full site's stream and saves every event with its time to
-  `docs/demo/answers/<slug>.json`. Recorded 2026-11-27 for [amount removed] in all.
+  `docs/demo/answers/<slug>.json`. Recorded 2026-11-27.
 - `tools/static_demo.py` renders the pages through the app (`create_app(demo=...)`, no model) into
   `build/demo/` (git-ignored): the menu pages, every page an answer cites, the home page's
   sittings, debates and topics, every MP on the MPs list, two bills and the sittings the debates
@@ -387,9 +384,8 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
 
 - Chosen from `tools/bench_enrich.py` (results `data/bench/enrich/`, table in ROADMAP Phase 3).
   The owner's rule: Haiku unless it falls short; never Sonnet only because it costs more.
-  Benchmark spend: [amount removed] for the arms, [amount removed] for the Opus audit.
 - Two flagged defects were checked against the source and hold up.
-- The review page shows the choice and the [amount removed] cost.
+- The review page shows the choice.
 
 The Special Chamber is in `data/sittings.csv` (`chamber` column: DR or KK; 539 and 494 days),
 measured and costed in `docs/sources.md`.

@@ -370,7 +370,7 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                                      "usd": round(usd, 5), "ms": total_ms}, ensure_ascii=False) + "\n")
         return 200, {"question": q, "lang": lang, "filters": trace.filters.describe(),
                      "answer": ans.text if ans else "", "budget_out": ans is None, "sources": sources,
-                     "passages": passages, "stages": stages, "usd": round(usd, 5), "search_ms": round(search_ms),
+                     "passages": passages, "stages": stages, "search_ms": round(search_ms),
                      "total_ms": total_ms}, {}
 
     @app.post("/api/ask")
