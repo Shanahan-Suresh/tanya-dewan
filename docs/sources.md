@@ -1,6 +1,6 @@
 # Sources and legal basis
 
-Phase 0 finding for the owner's sign-off. Measured 2026-10-22 unless a line says otherwise. Raw
+Phase 0 finding, signed off by the owner on 2026-11-27. Measured 2026-10-22 unless a line says otherwise. Raw
 measurements: `data/phase0/sample.json`, the sitting list `data/sittings.csv` (both git-ignored);
 the scripts are `parlimen/sittings.py` and `tools/phase0_sample.py`.
 
@@ -22,7 +22,7 @@ the scripts are `parlimen/sittings.py` and `tools/phase0_sample.py`.
   footers "Copyright Reserved Parliament of Malaysia" and "All Rights Reserved by Attorney
   General's Chambers" cover the sites and their own compilation and layout. Tanya Dewan
   therefore republishes extracted text, never the PDFs' page images, and links each official PDF.
-- Not legal advice; a lawyer's reading is the stronger basis before any paid product.
+- Not legal advice; a lawyer's reading would be the stronger basis.
 
 ## Terms of use
 
@@ -195,12 +195,13 @@ Special Chamber days average about 17,000 tokens and add about 8.5 million. The 
 | Haiku 5.5 | about [amount removed] | about [amount removed] | about [amount removed] |
 | Sonnet 5.5 | about [amount removed] | about [amount removed] | about [amount removed] |
 
-month and the 14th in the next. Re-processing a revised sitting costs about [amount removed] on Haiku and
+Re-processing a revised sitting costs about [amount removed] on Haiku and
 [amount removed] on Sonnet.
 
 ## Go or no-go
 
-- **Hansard: go** for a public demo, on the owner's sign-off of the copyright reading above.
+- **Hansard: go** for public pages and the public repository; the owner signed off the copyright
+  reading above on 2026-11-27.
 - **Acts: go** on the same sign-off. The texts come from the portal in Chrome, as a visitor gets
   them. The LOM terms allow download at no charge and say a print-out is not a Gazette copy, so
   every Act answer shows the date and the not-legal-advice line.

@@ -6,3 +6,6 @@ __pycache__/
 .pytest_cache/
 .claude/settings.local.json
 /build/
+# The owner's private review pages; their published copies stay on claude.ai
+/docs/roadmap-page.html
+/docs/launch-page.html

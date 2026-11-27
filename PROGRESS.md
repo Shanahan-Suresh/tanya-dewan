@@ -1,27 +1,28 @@
-# Tanya Dewan (repo parlimen-search): progress
+# Tanya Dewan (repo tanya-dewan): progress
 
 Current state and what is owed. `ROADMAP.md` is the plan; `docs/sources.md` is the phase 0 finding.
 
 ## Decisions the owner has made
 
-- parlimen-search goes before spoilerless; Acts and Hansard ship together in release 1.
-- Hansard of the 14th and 15th Parliaments, plus the Special Chamber (Dewan Khas) record.
+- The project is a public portfolio piece with a free static demo; there is no paid tier
+  (2026-11-27; the evidence is in ROADMAP, "Why there is no paid tier"). The repository is
+  `tanya-dewan` on GitHub.
+- Hansard of the 14th and 15th Parliaments, plus the Special Chamber (Dewan Khas) record, and the
+  Acts, in one release.
 - Enrichments: question-answer pairs, topic and entity tags, summaries in English and Malay,
   commitments tracker.
-- Money path: Track A (topic alerts and a weekly digest) behind its gate; Track B (data licence)
-  as a by-product.
-- The five choices on the review page are approved (records licence, no scores on MPs,
-  attendance after launch, two-language summaries, launch during a sitting). Page:
-  https://claude.ai/artifact/Y7eboyDpffNvuniLQNU8gh (source `docs/roadmap-page.html`).
+- No scores on MPs, two-language summaries, attendance later. Review page:
+  https://claude.ai/artifact/Y7eboyDpffNvuniLQNU8gh (its source stays local and git-ignored).
 - Act texts come from the Laws of Malaysia portal through the installed Chrome, as a visitor gets
   them. No decryption code of our own.
-  every commitment, phase 5 run before 31 October (so phase 4 comes first), and party history
-  for every MP. October spend logged before them: [amount removed].
+- The site is Tanya Dewan with the L4 logo; the Python package and the local folder keep
+  `parlimen`.
 
 ## Phase 0: done
 
 - The owner signed off the copyright reading in chat on 2026-10-22 ("yess all confirmed"),
-  recorded in the review page db (`verdicts/copyright-signoff`, `verdicts/_confirmed_step0`).
+  recorded in the review page db (`verdicts/copyright-signoff`, `verdicts/_confirmed_step0`), and
+  again for the public repository on 2026-11-27.
 
 ## Phase 1: the law corpus
 
@@ -51,6 +52,7 @@ Check: `tools/check_act_text.py --sample 50 --seed N` compares text-layer sectio
 Tests: `tests/test_act_text.py` (7) and `tests/test_act_ocr.py` (5); suite 21 pass.
 - Measured 2026-10-22: 66,026 of 66,307 listed sections found; 1,356 of 1,420 text files have no
   section missing (1,319 of 1,368 from the text layer, 37 of 52 from OCR); six samples of 50
+  match poppler word for word. OCR cost [amount removed]. File kinds and coverage
   (748 of 753 in-force Acts have text) are in `docs/sources.md`.
 - How it reads a file, and why, is in the module docstrings: pdfium text (pdfplumber loses
   digits in the 2006 font), letter-spaced words rebuilt from character boxes, running heads
@@ -233,8 +235,10 @@ Qwen3-Reranker-0.6B), settings added to `parlimen/config.py` (INDEX = `data/inde
 - Embed: measured rate on this GPU 222 s per 20,000 law rows, about 300-364 s per 20,000 debate
   rows (log `data/embed.log`). A re-run resumes at the first row with no vector; stop it by
   ending the inner `parlimen.index embed` process, so `gpu_run.py` restarts Forge and releases
-  the lease. Launch (swap `embed` for `rebuild` and the log name for a rebuild):
-  `powershell -NoProfile -File D:\Projects\personal\forge-tools\launch-hidden.ps1 -Dir D:\Projects\work\parlimen-search -Command "C:\Python314\python.exe -u tools\gpu_run.py --label parlimen-embed --minutes 90 -- .venv\Scripts\python.exe -u -m parlimen.index embed --variant h hn" -Log D:\Projects\work\parlimen-search\data\embed.log`
+  the lease. On the author's machine, launch it hidden through forge-tools' `launch-hidden.ps1`
+  with `FORGE_TOOLS` set; elsewhere, run the inner command directly:
+  `python -u tools/gpu_run.py --label parlimen-embed --minutes 90 -- python -u -m parlimen.index embed --variant h hn`
+  (swap `embed` for `rebuild` for a rebuild; log `data/embed.log`).
 - Rebuild after a parser or chunk fix: `python -m parlimen.index rebuild --variant h hn` under
   the GPU lease (log `data/rebuild.log`). It moves the old build to `data/index/prev/`, builds
   afresh, keeps the vector of every chunk whose indexed text is unchanged and embeds the rest;
@@ -294,143 +298,94 @@ are the same topic in another sitting.
 
 Scope and exit are in ROADMAP Phase 6.
 
-## Phase 7: launch plan confirmed, owner's refinement passes next
+## Phase 7: public portfolio release
 
-The owner confirmed the plan in ROADMAP Phase 7 on its review page; the data stays on D:.
-Owed: the owner's refinement notes on the local site; the host (step 3); the systemd timers of
-step 4 (nightly ingest, rebuild and restart; weekly `drafts recheck`) and the Redis answer cache.
-The owner chose Redis with systemd timers and no Celery, and a nightly restart over a swap with no
-downtime (ROADMAP Phase 7 steps 2 and 4). Nothing goes public until the owner gives the word
-(CLAUDE.md rules 1 and 8).
+Steps are in ROADMAP Phase 7. Owed: the README as a portfolio page; the public repository, the
+demo on GitHub Pages and the personal-site card.
 
-Open: each question is answered alone, with no memory of the previous one.
+### The site
 
+- Site: `python -m parlimen.web [--port 8780]` (`parlimen/web/`). Record pages need no model and
+  load in 0.02 to 0.6 s. At start the server loads the index, the vectors and the embedder on the
+  CPU in the background (149 to 162 s measured 2026-10-25 on the D: hard disk); record pages
+  serve during that. A warm question takes 6.8 to 12.7 s and about [amount removed] (Haiku
+  rerank plus answer). Each question is answered alone, with no memory of the previous one.
+  Corrections go to `data/corrections.jsonl`.
+- Memory, measured 2026-11-27 after 8 questions: 2.69 GB peak working set, 4.05 GB private. The
+  vectors stay float16 in memory (`Searcher.scores` widens one block at a time).
+  `hold_single_site` refuses a second full site on the machine; stop a site by its PID
+  (`data/site.pid`).
+- Design: the Civic direction (`docs/design/civic/`) with three Console features (citation hover
+  lights its source, the MP month-by-year grid, the debate speaker map with J and K), in
+  hand-written token CSS with self-hosted Geist and Literata, htmx 2.0.4 for list filters and
+  paging, and the answer streamed by `POST /api/ask/stream` (stage, text, done, error events).
+  Showcase of the three directions: https://claude.ai/artifact/KWLv7EmBCyYXLt1XbJK4d8. The
+  prototypes' generators are `docs/design/gazette/gen.py` and `docs/design/civic/build.py`.
+- Name and logo: Tanya Dewan (`config.SITE_NAME`; shortlist page
+  https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE) and the L4 diamond speech bubble (concepts
+  on https://claude.ai/artifact/Ub2MRtJRcswidYHisSDPi5, source `docs/design/logo/`), in the
+  header, the icons (`tools/make_icons.py`) and the share image (`tools/make_og.py`).
+- Copy: one voice in English and Malay (voice guide in `data/copy-pass.md`). Presentation filters
+  in `parlimen/web/present.py` (title case, readable dates). Open: the Malay About page carries
+  the "how well it works" section from the English one, owner to confirm.
 - Draft flag (`parlimen/drafts.py`): `python -m parlimen.drafts scan` reads page 1 of every cached
   sitting PDF for "Naskhah belum disemak" into `data/drafts.csv`; an ingest adds each new
   sitting's row. Measured 2026-11-26: 54 of 1,036 sittings are drafts, all Dewan Rakyat, from DR
-  2019-11-06 (still a draft on the site) to DR 2026-10-22. The Special Chamber's PDFs never print
-  the line, so they carry no flag. Sitting, debate and sitting-list pages and the ask page's
-  sources show the mark.
+  2019-11-06 to DR 2026-10-22. The Special Chamber's PDFs never print the line. Drafts are created
+  a median of 1.5 days after their sitting (197 Dewan Rakyat PDFs since 2024, measured
+  2026-11-27).
 - Re-check: `python -m parlimen.drafts recheck [--all] [--dry-run]` fetches each draft PDF of the
   last 365 days again; changed bytes replace the cache and the sitting is processed again
-  (parse, rows put in place, old records dropped, chunks retired with `index.retire`, then
-  `ingest.index_pending` enriches, checks, chunks and embeds). Retired rows keep their ids and
-  vectors and leave search; a rebuild drops them. Rebuild `site.db` and restart the site after
-  it. Not run on the real data yet.
-- Limits (`parlimen/web/limits.py`): 20 questions per visitor an hour and [amount removed] a day of Claude
-  spend (rerank plus answer), in Redis at `PARLIMEN_REDIS_URL`, else an in-process fakeredis.
-  Past the budget the ask page shows the fused passages with no rerank and no answer. While the
-  index loads after a restart, a question gets HTTP 503 and "ask again in a minute". Each
-  question that runs goes to `data/questions.jsonl` with no IP address. The About page says
-  what is stored.
-- Search engines: `/robots.txt`, `/sitemap.xml` (an index of pages, law, MPs, bills, topics and
-  one sitemap per year of sittings), page descriptions, Open Graph tags with
-  `static/og.png`; the correction form and the 404 page are noindex. Absolute URLs come from
-  `PARLIMEN_SITE_URL`.
-- Sepang: one MP, "Raj Munni Sabu @ Aiman Athirah" in the 2022 results; `records.RENAMED` merges
-  her two name keys under the name she uses now.
-
-- Page database: `python -m parlimen.records build|stats` writes `data/site.db` (about 620 MB)
-  from the corpus and enrichment files. Stop the site first: Windows refuses to replace an open
-  file. Last build (measured 2026-11-26, 73 s): 30,091 extracts, 361,676 speeches, 31,767
-  question-answer pairs, 18,523 commitments, 341 MPs, 54 draft sittings. Rebuild after
-  every ingest, so the pages show the new sittings.
-- Site: `python -m parlimen.web [--port 8780]` (`parlimen/web/`). Record pages need no model and
-  load in 0.02 to 0.6 s. At start the server loads the index, the vectors and the embedder on
-  the CPU in the background (149 to 162 s measured 2026-10-25, while other jobs used the D:
-  hard disk); record pages serve during that. The embedder stays on the CPU (about 90 ms a
-  question, 3.4 GB RAM for the process), so the site holds no GPU; `PARLIMEN_SITE_DEVICE=cuda`
-  puts it on the GPU, unloaded after 10 idle minutes. A warm question takes 6.8 to 12.7 s and
-  about [amount removed] (Haiku rerank plus answer). Corrections go to
-  `data/corrections.jsonl`.
-- MCP server: `python -m parlimen.mcp_server` (stdio), registered in `.mcp.json`. The read tools
-  answer in under 1 s; the search tools load the searcher on the first call (minutes on the
-  cold D: disk) and unload the embedder after `PARLIMEN_IDLE_MINUTES` (10).
+  (retired chunks keep their ids and leave search; a rebuild drops them). Not run on the real
+  data yet.
+- Limits for a live host (`parlimen/web/limits.py`): 20 questions per visitor an hour and [amount removed] a
+  day of Claude spend, in Redis at `PARLIMEN_REDIS_URL`, else an in-process fakeredis. Past the
+  budget the ask page shows the fused passages with no answer. While the index loads, a question
+  gets HTTP 503. Each question goes to `data/questions.jsonl` with no IP address.
+- Search engines: `/robots.txt`, `/sitemap.xml`, page descriptions, Open Graph tags with
+  `static/og.png`; absolute URLs come from `PARLIMEN_SITE_URL`.
+- Sepang: `records.RENAMED` merges the MP's two name keys under the name she uses now.
+- Page database: `python -m parlimen.records build|stats` writes `data/site.db` (595 MB, measured
+  2026-11-27). Stop the site first: Windows refuses to replace an open file. Last build (measured
+  2026-11-26, 73 s): 30,091 extracts, 361,676 speeches, 31,767 question-answer pairs, 18,523
+  commitments, 341 MPs, 54 draft sittings. Rebuild after every ingest.
+- MCP server: `python -m parlimen.mcp_server` (stdio), registered in `.mcp.json` with relative
+  paths. The read tools answer in under 1 s; the search tools load the searcher on the first call
+  and unload the embedder after `PARLIMEN_IDLE_MINUTES` (10).
 - Digest: `python -m parlimen.digest --sector energy --from 2026-10-19 --to 2026-10-23` writes
-  `data/digests/energy-2026-10-19-2026-10-23.html` and `.json` (raw answer, kept items,
-  dropped ids). One Haiku 5.5 call; ids not in the week's records are dropped in code, and
-  every quote on the page comes from the record. Sectors are in `digest.SECTORS`.
-- Exit check: `python tools/check_phase6.py [--lang ms]` against the running site, 4 of 4 pass
-  in both languages (measured 2026-10-25); shots in `data/shots/check-*.png`.
-  `tools/site_shots.py [--ask "..."] [--lang ms]` shoots every page at desktop and phone width
-  with load times and any overflow.
+  `data/digests/<sector>-<from>-<to>.html` and `.json`. One Haiku 5.5 call; ids not in the
+  week's records are dropped in code. Sectors are in `digest.SECTORS`.
+- Exit check: `python tools/check_phase6.py [--lang ms]` against the running site, 4 of 4 pass in
+  both languages (measured 2026-10-25). `tools/site_shots.py [--base URL] [--path ...] [--ask "..."]
+  [--lang ms] [--dark] [--full]` shoots pages at desktop and phone width into `data/shots/`.
 - Ingest of DR and KK 2026-10-22 (log `data/ingest-2026-10-22.log`): 444 speeches, 58 extracts
-  enriched, [amount removed]. October spend logged (measured 2026-10-25): [amount removed].
-- Tests: `tests/test_records.py`, `tests/test_web.py`, `tests/test_mcp_server.py`,
-  `tests/test_digest.py`, `tests/test_drafts.py`; suite 118 pass.
+  enriched, [amount removed].
+- Not checked by eye: the J and K keys, the More sheet, AA contrast, most dark desktop pages.
 
-Open:
-- The D: hard disk holds the venv, the model and the index, so every cold start is slow. Moving
-  `data/index` and the HF cache to the NVMe C: drive would cut it; that is the owner's call.
+### The static demo
 
-## Site redesign (Phase 7 step 1): design directions in progress
-
-The owner finds the site far too plain and approved every richer item (2026-11-26): a design
-system (Tailwind standalone CLI), the answer streamed word by word, htmx filters and paging,
-richer record pages (MP activity over time, bill timeline, topic trend by year), and a better
-Ask page (suggested questions, filter chips, sources beside the answer). The stack stays
-FastAPI with server-rendered Jinja; no framework change. A small React island only if the Ask
-page later grows into an app.
-
-- Brief: `docs/design/BRIEF.md`. Real content: `docs/design/data.json`, built by
-  `python docs/design/build_data.py [--no-ask]` (MP Dzulkefly Ahmad, debate DR-2026-10-22-017
-  from a draft sitting, bill KERJA (PINDAAN) 2021, one real answer about targeted diesel
-  subsidies: [amount removed], 93 s on the cold D: disk).
-- Three directions, one folder each under `docs/design/<direction>/` (home, MP and debate
-  prototypes, shots at 1440 and 390 px, NOTES.md), built by three subagents from the brief:
-  `gazette` (editorial broadsheet, chamber green), `console` (dark analyst instrument, Plex,
-  amber and teal), `civic` (warm public-service app, navy and yellow, songket motif). Shots come
-  from `python docs/design/shoot.py <direction> [--dark]`.
-- Generators: `gazette/gen.py` and `civic/build.py` wrote those pages from `data.json`; the
-  console pages have no generator, so edit their HTML directly.
-- Showcase: https://claude.ai/artifact/KWLv7EmBCyYXLt1XbJK4d8, source `docs/design/showcase/`
-  (index.html plus WebP shots; the three prototype folders publish beside it and run live in
-  the page). The owner picks a design in chat. A Design canvas
-  artifact made first (https://claude.ai/artifact/XbvPXQXhyvKmcWg3SjxjX1) is empty and unused:
-  delete it only if the owner asks.
-- The owner picked Civic with three Console features (citation hover lights its source, MP
-  month-by-year grid, debate speaker map with J/K). Plan: no Tailwind (Civic is token CSS), fonts
-  self-hosted, htmx for list filters and paging. Backend built and tested: `POST /api/ask/stream`
-  (stage, text, done, error events; `answer.ask(on_text=)` streams; `Searcher.search(on_stage=)`),
-  htmx partials (`results` block on `HX-Request`), `--replay docs/design/data.json` for no-spend
-  design runs, new `Records` member and topic-trend queries, `config.SITE_NAME`. The template and
-  CSS port to every page is done (all 17 templates, `ask.js`, `debate.js`, `shell.js`, vendored
-  htmx 2.0.4, self-hosted Geist and Literata with licences; `tools/site_shots.py --dark --full`;
-  125 tests pass). One real question through the stream (2026-11-26): answered in 7.8 s warm,
-  [amount removed]. Owed: the owner's own read of the local site; the Malay pages have not been looked
-  at by eye.
-- Name: the owner chose **Tanya Dewan** (2026-11-26). The rename covers `config.SITE_NAME`,
-  i18n, the About page, the digest, the MCP server name, the crawler user agent, a new share
-  image (`tools/make_og.py`), the docs' titles and the published review pages. The Python
-  package and the repo folder keep `parlimen`. Owed: a trademark (MyIPO) and social handle check,
-  and registering tanyadewan.my (the owner's step; all three addresses were free on 2026-11-26).
-  Logo: the owner chose L4, the diamond speech bubble (concepts on
-  https://claude.ai/artifact/Ub2MRtJRcswidYHisSDPi5, source in `docs/design/logo/`). It is in the
-  header (a light version in dark mode, `--mark` tokens), `static/favicon.svg` and `.ico`, the
-  phone icons (`tools/make_icons.py`) and the share image (`tools/make_og.py`).
-- Copy: one voice across the site in English and Malay (voice guide and every change in
-  `data/copy-pass.md`). Open: the Malay About page gained the "how well it works" section from
-  the English one, owner to confirm.
-- Memory: a full site holds about 3.2 GB (bfloat16 embedder on the CPU, vectors, torch). The
-  vectors stay float16 in memory (`Searcher.scores` widens one block at a time), saving about
-  580 MB; not yet measured on a running site. `hold_single_site` refuses a second full site on
-  the machine. Stop the site by its PID (`data/site.pid`), never by stopping the shell job only.
-  UI/UX polish pass done (ranked audit in `data/ux-audit.md`): title-case labels and readable
-  dates through `parlimen/web/present.py` filters, bill readings on the timeline, phone tables
-  stacked, 44 px touch targets, the site's own 404 page, an MP name or seat search, readable
-  source titles on answers (`title` and `meta` in the answer body), the not-legal-advice line
-  shown once, a hint on the report form. Not checked by eye: J/K keys, citation popover, More
-  sheet, AA contrast, most Malay and dark desktop pages, source titles on a live answer.
-  Shortlist page
-  https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE (source `docs/design/names/`); my pick is
-  Tanya Dewan. The rename is `config.SITE_NAME` plus docs, OG image and the MCP description.
-- Next: the owner picks a name; finish the port, then build the chosen
-  design into `parlimen/web/` (templates, Tailwind build, htmx, streaming answer endpoint).
+- `tools/record_answers.py` sends the 8 example questions (`EXAMPLES` in `parlimen/web/app.py`)
+  through the running full site's stream and saves every event with its time to
+  `docs/demo/answers/<slug>.json`. Recorded 2026-11-27 for [amount removed] in all.
+- `tools/static_demo.py` renders the pages through the app (`create_app(demo=...)`, no model) into
+  `build/demo/` (git-ignored): the menu pages, every page an answer cites, the home page's
+  sittings, debates and topics, every MP on the MPs list, two bills and the sittings the debates
+  link most. English at the root, Malay under `ms/`. Every link becomes a relative file path; a
+  page outside the sample goes to `not-in-demo.html`. `ask.js` plays a recorded answer at its
+  recorded pace; any other question gets a notice. The correction links and list filters are
+  hidden. Last build (2026-11-27): 332 pages per language, 50.1 MB, 0 broken links
+  (`--check-only` reruns the check).
+- Checked by eye on 2026-11-27 under `/tanya-dewan/` at desktop and phone width: the home page,
+  a played answer with its source titles and citation preview, a debate, an MP page, an Act and
+  the Malay home page.
+- Tests: 135 pass, including `tests/test_static_demo.py` (link rewriting and the checker) and
+  `tests/test_config.py` (`ANTHROPIC_API_KEY` before the key file).
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking
 
 - Chosen from `tools/bench_enrich.py` (results `data/bench/enrich/`, table in ROADMAP Phase 3).
   The owner's rule: Haiku unless it falls short; never Sonnet only because it costs more.
+  Benchmark spend: [amount removed] for the arms, [amount removed] for the Opus audit.
 - Two flagged defects were checked against the source and hold up.
 - The review page shows the choice and the [amount removed] cost.
 
@@ -444,4 +399,5 @@ measured and costed in `docs/sources.md`.
   playwright (drives the installed Chrome with `channel="chrome"`; no bundled browser needed).
   torch comes from the user site (see Phase 4).
 - Tesseract 5.4 at `C:\Program Files\Tesseract-OCR`; poppler's `pdftotext` from Git's mingw64.
-- API key: `~/.claude/anthropic-api-key.txt`; usage log `data/api-usage.jsonl`.
+- API key: `ANTHROPIC_API_KEY`, else `~/.claude/anthropic-api-key.txt` (`config.api_key()`);
+  usage log `data/api-usage.jsonl`.

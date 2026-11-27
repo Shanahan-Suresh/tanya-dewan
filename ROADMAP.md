@@ -1,4 +1,4 @@
-# Tanya Dewan (repo parlimen-search): roadmap
+# Tanya Dewan (repo tanya-dewan): roadmap
 
 Ask Malaysian law and Malaysia's Parliament in plain Malay or English. One search covers two
 sources:
@@ -12,8 +12,8 @@ finds the minister's speech that explained it. AI enrichment turns the debates i
 records: each oral question joined to the minister's answer, topic and entity tags, a short
 summary per speech, and a tracker of ministers' commitments.
 
-It reuses the hybrid RAG pipeline of novel-rag (`D:\Projects\personal\novel-rag`): keyword and
-vector search, fusion, a reranker, cited answers and the eval method.
+It reuses the hybrid RAG pipeline of the author's private novel-rag project: keyword and vector
+search, fusion, a reranker, cited answers and the eval method.
 
 ## Goals
 
@@ -23,8 +23,8 @@ vector search, fusion, a reranker, cited answers and the eval method.
    legal text structure, two languages, structured extraction at corpus scale, date and speaker
    filters, and published eval numbers.
 3. **Visible:** a public tool that local press, civic tech groups and universities can point to.
-4. **Income later:** the free tool is the shop window for a paid monitoring product (Money path).
-   Release 1 is portfolio work; the paid tier is built only after its demand gate passes.
+4. **No paid tier.** The project is free portfolio work (owner's decision, 2026-11-27); "Why there
+   is no paid tier" gives the evidence.
 
 Targets for release 1, fixed before the first measurement:
 
@@ -40,17 +40,14 @@ Targets for release 1, fixed before the first measurement:
 | Commitments whose quote matches the Hansard text exactly | 100 % (checked by code) |
 | Commitments that a human agrees are real commitments (sample of 100) | 85 % or more |
 | Search latency on the public container, 95th percentile | under 3 seconds |
+| Hosting cost of the public demo | [amount removed]: a static demo on GitHub Pages that plays recorded answers |
 
 ## Who it is for
 
 **Free users:** law and politics students, journalists, NGO and policy researchers (Sinar Project's
 audience), small business owners with a compliance question, and voters who want to know what
-their MP said.
-
-**Paying buyers, later:** public affairs and government relations consultancies (Vriens & Partners,
-BowerGroupAsia and local firms), chambers of commerce (AmCham Malaysia, EuroCham, the bilateral
-business councils), corporate affairs teams of large companies, embassies, and newsrooms. They pay
-abroad for alerts and digests on their topics (Money path).
+their MP said. Engineers and employers reading the repository see how a RAG system over legal and
+parliamentary text is built and measured.
 
 ## What exists already
 
@@ -60,13 +57,12 @@ Searched 2026-10-18 and 2026-10-22 (GitHub, web).
   word cloud and filters by MP and chamber, 1959 to 2026, Malay and English. No AI answers, no
   links to the Acts, no API or export found. The ministry says it does not replace the official
   Hansard. This is the main rival for plain lookup; Tanya Dewan wins on meaning-based search,
-  cited answers, the Act links, structured records and alerts.
+  cited answers, the Act links and structured records.
 - **Singapore's Pair Search** (GovTech Open Government Products, pilot since 2024): semantic search
   over Hansard, judgments and Acts, with AI trend summaries. It proves the demand, and it shows that
-  Malaysia's government could add AI search too. The paid value therefore sits in monitoring and
-  structured history, not in search alone.
+  Malaysia's government could add AI search too.
 - **Sinar Project:** an archive of written parliamentary replies and Billwatcher, a bill tracker.
-  Partners for data and launch, not rivals.
+  Partners for data, not rivals.
 - **Small AI demos:** ParlimenGPT (a Microsoft demo on Hansard) and Dewan AI (a Product Hunt
   listing, maker and price unknown). No published eval, no structured records.
 - **Datasets:** `malaysia-ai/malaysia-hansard` on Hugging Face (about 157,000 rows of Hansard text,
@@ -86,7 +82,8 @@ well it works.
   bersifat perundangan atau peraturan, atau keputusan kehakiman, atau ucapan politik dan debat
   politik, atau ucapan yang diberikan dalam perjalanan prosiding undang-undang, dan terjemahan
   rasminya". Acts and Hansard debates therefore carry no copyright. Parliament's footer says
-  "Copyright Reserved"; phase 0 records why section 3 still applies and the owner signs it off.
+  "Copyright Reserved"; phase 0 records why section 3 still applies, and the owner signed it off on
+  2026-11-27.
 - **Defamation.** Verbatim Hansard text is the public record. An AI summary is not, and a summary
   that puts words in an MP's mouth is the largest legal risk in the project. The rules:
   - the parser, never the model, decides who spoke;
@@ -101,9 +98,8 @@ well it works.
   factual.
 - **Not legal advice.** Every law answer cites its sources, shows the Act's reprint date and the
   not-legal-advice line, and refuses advice on a reader's own case.
-- **Personal data.** Release 1 stores no accounts. The paid tier stores customer emails and saved
-  topics, which brings in Malaysia's Personal Data Protection Act; its privacy notice is part of
-  that phase.
+- **Personal data.** The site stores no accounts. The question log keeps no IP address, and the
+  correction form's contact field is optional.
 - **Polite downloads.** Cached once, rate-limited, identified by a user agent, within each site's
   `robots.txt` and terms.
 
@@ -146,57 +142,27 @@ well it works.
   Dewan Negara, amendment Acts and point-in-time text, subsidiary legislation, state assemblies,
   attendance.
 
-## Money path
+## Why there is no paid tier
 
-Two tracks, in this order. Neither is built before its gate passes. Escape Velocity runs one paid
-avenue at a time; this one opens after release 1 launches.
+The owner set aside a paid tier (topic alerts and a weekly digest for firms, and a data licence)
+on 2026-11-27, on this evidence, checked that day:
 
-### Track A: topic alerts and a weekly digest (the main bet)
+- **A small market, sold by meetings.** An estimated 50 to 150 organisations (consultancies,
+  chambers of commerce, corporate affairs teams, newsrooms). Selling to them needs sales
+  conversations, which the owner rules out.
+- **A low local price.** myDewan (seat maps and a news feed per seat, no Hansard) sells its plan at
+  [amount removed] a month by card. A realistic result was 1 to 5 firms at about [amount removed] so [amount removed] a
+  month.
+- **No speed edge.** Drafts appear a median of 1.5 days after a sitting (creation dates inside 197
+  cached Dewan Rakyat PDFs since 2024; most of the October 2026 meeting the next day, the slowest
+  13 days). News reports the same day. Revised texts replace the drafts 80 to 100 days later.
+- **A daily duty.** Paid alerts need the nightly ingest to run without fail and the parser to
+  follow every change to Parliament's site.
+- **Rivals.** Isentia and Meltwater sell news monitoring of Parliament, not Hansard search. The
+  free Hansard Digital and politicians.my cover keyword search and attendance. No one sells
+  Hansard alerts in Malaysia.
 
-- **Offer:** a customer saves topics, Acts, bills, ministries or companies. When Parliament
-  mentions them, they get an email alert with the quote and link, and a weekly digest written by
-  Claude from the week's records.
-- **Who pays:** the buyers listed under Who it is for. Abroad, Quorum is about [amount removed] a year
-  (a Vendr estimate) and Politico Pro [amount removed]; PolicyMogul has a free tier and quoted
-  prices. No Malaysian vendor sells a Hansard alert product.
-- **Price hypothesis:** [amount removed] a month per organisation. A guess with no Malaysian price
-  evidence; the pilot tests it.
-- **Size of the prize:** five customers at [amount removed] is [amount removed] a month, about 5 times the
-  [amount removed]-a-month first target of Escape Velocity.
-- **Likelihood:** moderate to low. The buyers exist and the gap is real, but the market is small
-  (an estimated 50 to 150 organisations), B2B sales need trust and relationships, the alerts must
-  arrive fast and reliably, and the government could add alerts to Hansard Digital.
-- **Gate:** three organisations agree to a paid pilot (or sign a letter of intent) after seeing the
-  public tool. Until then, no accounts, billing or alert sending are built.
-
-### Track B: commercial data licence and API (a by-product)
-
-- **Offer:** free for non-commercial use; a paid licence for companies that use the structured
-  records (question-answer pairs, commitments, tags, MP records) or the API. The TheyWorkForYou
-  model.
-- **Likelihood:** low as income. TheyWorkForYou's commercial API tops out at about [amount removed] a month per
-  buyer; Malay AI builders already scrape Hansard free. It costs little to offer once the data
-  exists, so it is offered, not pursued.
-- **Gate:** one paying request arrives unprompted.
-
-### What release 1 builds now so the paid tier is cheap later
-
-- Stable IDs and permanent links for every sitting, speech, question-answer pair, commitment, MP,
-  bill and Act section.
-- An incremental ingest job: a new sitting goes through download, parse, enrichment and indexing
-  on its own.
-- A saved search stored as a query object (topics, entities, filters), even though only the page
-  uses it in release 1.
-- A fixed tag list (topics, ministries, entity types) that alerts can match against.
-- Usage logs: which topics and pages people search, which shows what buyers care about.
-
-### Validation steps (the owner's work, alongside the build)
-
-1. During phases 2 to 5, list 30 named prospects with a contact person (consultancies, chambers,
-   corporate affairs teams, newsrooms).
-2. At launch, send each one the public tool with a sample weekly digest on their sector.
-3. Hold 10 conversations. Ask what they track now, how, at what cost, and what they would pay.
-4. Go or no-go for the paid pilot from the gate above.
+`parlimen/digest.py` (a weekly digest for one sector) stays as a working sample of the idea.
 
 ## Technical plan
 
@@ -215,9 +181,10 @@ avenue at a time; this one opens after release 1 launches.
 | Front ends | The chat page, static MP, bill and topic pages, the commitments page, an MCP server, a CLI |
 | Background jobs | Redis for the rate limit, the answer budget and the answer cache; systemd timers run the nightly ingest and the weekly draft re-check (phase 7 step 4) |
 
-Stack: Python 3.12+, FastAPI, SQLite FTS5, NumPy, PyTorch for the search models, Redis for the counters, systemd timers for the background jobs. Hosting: a CPU
-VPS (phase 7), since the daily ingest writes to the data the site reads. Licence: MIT for the code; the
-structured records under a non-commercial licence with a paid commercial option (Track B).
+Stack: Python 3.12+, FastAPI, SQLite FTS5, NumPy, PyTorch for the search models, Redis for the
+counters, systemd timers for the background jobs. Hosting: the public demo is static files on GitHub
+Pages; a live site needs a CPU VPS ("Running it as a live site"), since the daily ingest writes to
+the data the site reads. Licence: MIT for the code. The data is not in the repository.
 
 ### Data model
 
@@ -231,7 +198,6 @@ structured records under a non-commercial licence with a paid commercial option 
 | Question-answer pair | Question number, asking MP, answering minister, ministry, question text, answer text, figures |
 | Commitment | Minister, ministry, sitting, verbatim quote, what is promised, deadline or amount, topic |
 | Tag | Fixed list: topics, ministries, entity types (Act, bill, company, place, agency) |
-| Saved search | Query text, tags, entities, filters (used by alerts later) |
 
 ## Phases
 
@@ -401,92 +367,45 @@ The chosen setup is hybrid search with Haiku 5.5 reranking the top 20 hits:
 - **Exit:** a reader finds a section, its debate, a minister's answer and a commitment without the
   CLI.
 
-### Phase 7: public demo and launch
+### Phase 7: public portfolio release
 
-Nothing in this phase goes public until the owner says so; the owner's refinement passes come
-first. The owner confirmed the plan on the review page (`docs/launch-page.html`,
-https://claude.ai/artifact/A54eghUEJ1ucrYFh81QvYz, db `verdicts`): the host, the [amount removed] daily
-budget, the limit of 20 questions an hour, the ingest on the host, a launch at the first 2027
-meeting, public code at launch, the working name until the trial, and the anonymous question log.
+The project is a public portfolio piece with a free static demo (owner's decision, 2026-11-27).
 
-1. **Refinement passes (owner, then Claude).** The owner reads the local site and sends notes;
-   Claude fixes them and reshoots the pages (`tools/site_shots.py`). The site's files stay on the
-   D: hard disk (owner's choice), so each restart warms for about 2.5 minutes.
-   - ~~Redesign: the owner picked the Civic direction from three prototypes (`docs/design/`), with
-     three Console features (citation hover lights its source, MP month-by-year grid, debate
-     speaker map with J and K). Built on every page in hand-written token CSS with self-hosted
-     fonts, htmx for list filters and paging, and the answer streamed (`/api/ask/stream`).~~
-   - A new public name, picked from `docs/design/names/`; the rename is `config.SITE_NAME`, the
-     docs, the share image and the MCP server's description.
-2. **Gaps before launch (Claude).**
-   - ~~Draft flag: every sitting and record shows when its text is the unrevised draft ("BELUM
-     DISEMAK"), read from the PDF.~~
-   - ~~Revised sittings: the ingest re-checks draft sittings each week and re-processes one whose
-     PDF changed (about [amount removed] a sitting).~~ Its weekly systemd timer is step 4.
-   - ~~Rate limit per visitor (20 questions an hour) and a daily answer budget ([amount removed]), both counted
-     in Redis (step 4). Past the budget, the ask page shows the found passages without a written
-     answer, and says so.~~
-   - ~~An anonymous question log (question, filters, cost; no IP address), for which topics people
-     ask about. The About page states what is stored, including the optional contact on the
-     correction form.~~
-   - ~~`sitemap.xml`, `robots.txt`, page titles and descriptions, share previews, so MP, bill and
-     topic pages reach search engines.~~
-   - ~~The Sepang seat's two MP pages checked against the record.~~
-   - The site reloads its data after an ingest: the nightly job restarts the site service as its
-     last step (step 4). ~~While the index loads after a restart, the Ask page answers "still
-     loading, ask again in a minute" (HTTP 503, Retry-After 60); record pages serve as usual.~~
-     The owner chose a restart over a swap with no downtime: a swap holds two copies of the
-     vectors (about 1.2 GB more) on an 8 GB host. Revisit only if the warm-up on the VPS is long.
-3. **Host: a small VPS, 4 vCPU, 8 GB RAM (Hetzner CX33; CPX32 if the CX33 is sold out).** The site needs about 4 GB of data
-   (only the "h" vectors), about 3.5 GB of RAM, and no GPU. A VPS at about [amount removed] a month
-   (Hetzner, after its June 2026 price rise) keeps the warm process up all day. Cloud Run with one
-   warm instance costs about [amount removed] a month idle; with none, every first visitor waits through a
-   cold load, and the daily ingest would have to rebuild and redeploy the image, since a Cloud Run
-container keeps no files. HTTPS through Caddy, the site and Redis as systemd services, the
-   timers of step 4, a health check and an uptime monitor. A deploy pilot checks RAM, answer
-   time, the warm-up time after a restart and that the host can reach parlimen.gov.my.
-4. **Redis and systemd timers on the host.** The site runs as one uvicorn process, since each
-   process loads the 3.5 GB index. The owner's choice: Redis for the counters and no task queue,
-   since a daily job and a weekly job need a timer, not a queue.
-   - Redis runs on the VPS, bound to localhost, with a memory limit, and the site reads it at
-     `PARLIMEN_REDIS_URL`. It holds the rate limit and the daily budget (`parlimen/web/limits.py`,
-     built), so both survive the nightly restart. Still to build: an answer cache keyed by the
-     question and its filters, so a repeated question costs nothing.
-   - A nightly timer during Parliament's meetings runs the ingest of step 5, then
-     `python -m parlimen.records build`, then `systemctl restart` of the site. A later step runs
-     only when the one before it succeeds, so a failed run leaves the site as it was. The ingest
-     resumes where it stopped, so the next night's run finishes a failed one.
-   - A weekly timer runs `python -m parlimen.drafts recheck`, then the same rebuild and restart
-     when a sitting changed.
-   - The jobs load Qwen3-Embedding-0.6B beside the site's 3.5 GB. The deploy pilot (step 3)
-     measures peak RAM with the site, Redis and a job up. The two timers must not overlap.
-   - Local development on Windows: the in-process `fakeredis` stands in when
-     `PARLIMEN_REDIS_URL` is unset.
-   - Phase 8 alert emails fit a timer after the nightly ingest. Add a task queue only if alerts
-     must go out at once for each user. No alert code exists before the Track A gate (CLAUDE.md
-     rule 10).
-5. **Ingest on the host.** The nightly job of step 4 during Parliament's meetings: fetch new
-   sittings, enrich them (about [amount removed] a sitting day, so about [amount removed] a 37-day meeting), embed on
-   the CPU, rebuild the page database, restart the site. A failed run leaves the site as it was
-   and logs why.
-6. **Launch materials.** README with the eval results table and a GIF of the ask page; the
-   public repository (code only; `data/` stays out); a write-up for the personal site, LinkedIn
-   and dev.to on structured extraction at corpus scale.
-7. **Launch and outreach (owner).** At the first Parliament meeting of 2027. The current meeting
-   ends 8 December 2026; the 15th Parliament dissolves by December 2027 at the latest, so the general
-   election brings the largest interest in what MPs said. Outreach: Sinar Project, r/malaysia,
-   Lowyat forum, university law and politics societies, civic tech meetups, journalists who cover
-   Parliament, and the 30 prospects.
+1. ~~**Redesign and name.** The Civic design from three prototypes (`docs/design/`), with three
+   Console features (citation hover lights its source, the MP month-by-year grid, the debate
+   speaker map with J and K); the name Tanya Dewan (`config.SITE_NAME`) and the L4 logo.~~
+2. ~~**Site features for a live host.** Draft flag and weekly re-check, the rate limit and daily
+   budget (`parlimen/web/limits.py`), the anonymous question log, sitemaps and share previews,
+   the warm-up notice, the Sepang check, one full site per machine.~~
+3. ~~**Safe to clone.** `ANTHROPIC_API_KEY` (`config.api_key()`), no personal paths, MIT licence.~~
+4. ~~**Static demo.** `tools/record_answers.py` records the example questions from the full site;
+   `tools/static_demo.py` renders a sample of pages in English and Malay with every link made
+   relative; `ask.js` plays the recorded answers.~~
+5. **README as a portfolio page:** screenshots, the demo link, a diagram, the eval table, how to
+   run it, the data and licence terms.
+6. **Public repository** `tanya-dewan`, the demo on GitHub Pages from the `gh-pages` branch, and a
+   card on the author's personal site.
 
-- **Exit:** the demo is public, answers within the budget, and ingests new sittings on its own.
+- **Exit:** the repository is public, the demo loads on GitHub Pages, and the README explains the
+  project to a visitor who is not technical.
 
-### Phase 8: paid pilot (only after the Track A gate passes)
+### Running it as a live site
 
-- Accounts, saved searches, alert emails (a timer job after the nightly ingest, phase 7 step 4), the weekly digest, a privacy notice, invoicing by hand
-  for the first customers.
-- Sized and planned when the gate passes, from what the pilot customers ask for.
+Not built; the code supports it. A live site that answers new questions needs:
 
-### After launch
+- **A host:** a VPS with 4 vCPU and 8 GB of RAM (Hetzner CX33, about [amount removed] a month). The site reads
+  about 4 GB of data, and its process peaks near 2.7 GB of working set (measured 2026-11-27 after
+  8 questions: 2.69 GB peak working set, 4.05 GB private). Cloud Run with one warm instance costs
+  about [amount removed] a month idle. HTTPS through Caddy, the site and Redis as systemd services, one
+  uvicorn process.
+- **Redis** at `PARLIMEN_REDIS_URL` for the rate limit and the daily budget, so both survive a
+  restart. Without it, the in-process `fakeredis` stands in.
+- **Timers:** a nightly ingest during Parliament's meetings (`python -m parlimen.ingest`, about
+  [amount removed] a sitting day), then `python -m parlimen.records build`, then a restart of the site; a
+  weekly `python -m parlimen.drafts recheck`. Each step runs only when the one before it succeeds.
+- **Answers:** about [amount removed] each (Haiku 5.5 rerank and answer), capped by `PARLIMEN_DAILY_USD`.
+
+### Later
 
 In the order users ask: older Parliaments, Dewan Negara, attendance, point-in-time law (amendments
 by date), subsidiary legislation, state assemblies (Selangor first), written answers if Parliament
@@ -494,17 +413,14 @@ publishes them.
 
 ## What the owner does
 
-1. Sign off the phase 0 legal finding before anything is public.
-2. No hand review of pilot records or test questions: Claude reviews them in the owner's place.
-3. Find a law-student reviewer for the hand-written questions, if one is available.
-4. Build the list of 30 prospects during phases 2 to 5.
-5. Approve the demo's monthly budget.
-6. Run the outreach and the 10 buyer conversations in phase 7.
+1. No hand review of pilot records or test questions: Claude reviews them in the owner's place.
+2. Find a law-student reviewer for the hand-written questions, if one is available.
 
 ## Costs
 
 Claude prices per million tokens, input and output (claude-api skill, cached 2026-10-06): Haiku
 5.5 [amount removed]; Sonnet 5.5 [amount removed]; Opus 5.5 [amount removed]. The Batch API halves
+them.
 
 Corpus, counted in phase 0 (`docs/sources.md`): Malay runs at about 1.9 characters per token, so
 a full sitting day is 160,000 to 210,000 tokens and the 539 days hold about 92 million. The 494
@@ -513,14 +429,16 @@ estimated at 27 million tokens.
 
 | Item | Expected |
 |---|---|
-| Enrichment, Haiku 5.5 with adaptive thinking on the Batch API (the chosen model) | about [amount removed]; thinking adds output tokens (0.62 output tokens per input token in the benchmark) |
+| Enrichment, Haiku 5.5 with adaptive thinking on the Batch API (the chosen model) | about [amount removed] expected; measured [amount removed] with the pilots, plus [amount removed] of Opus audits (`PROGRESS.md`) |
 | Enrichment, Sonnet 5.5 on the Batch API (not used) | about [amount removed] |
 | Re-processing a revised sitting | about [amount removed] |
 | Phase 3 pilot | under [amount removed] |
 | Phase 5 eval | about [amount removed] |
 | New sittings each month | under [amount removed] on either model |
+| Demo answers, Haiku 5.5 (about 20,000 tokens in and 700 out per answer) | about [amount removed] per answer; 1,000 answers a day is about [amount removed] a month |
 | Demo rerank, Haiku 5.5 (about 9,000 tokens in and 50 out per search, measured in phase 5) | about [amount removed] per search; 1,000 searches a day is about [amount removed] a month |
-| Demo hosting | under [amount removed] a month |
+| Static demo on GitHub Pages | [amount removed]; recording its 8 answers cost [amount removed] |
+| Live site hosting | about [amount removed] a month for the VPS |
 
 ## Risks
 
@@ -528,13 +446,12 @@ estimated at 27 million tokens.
 |---|---|
 | An AI summary misquotes an MP | Parser decides the speaker; summaries shown beside verbatim text and labelled; commitment quotes checked by code; correction link |
 | The project reads as partisan | No scoring or stance labels on people; records describe what was said; the same treatment for every party |
-| Section 3 reads differently in context | Phase 0 sign-off before any public step; the private build goes on either way |
-| The government adds AI search or alerts to Hansard Digital | The paid value is the structured history (question-answer pairs, commitments, Act links) and the digest, not search alone; Track A gate before any paid build |
-| No organisation pays | Release 1 still stands as portfolio work; the gate stops paid work before it costs anything |
+| Section 3 reads differently in context | The owner signed off phase 0 on 2026-11-27; only extracted text is published, and every page links the official PDF |
+| The government adds AI search to Hansard Digital | The structured history (question-answer pairs, commitments, Act links) and the published eval still set the project apart |
 | A source blocks crawling | Cache everything once; slow, identified downloads; ask Parliament for bulk access if needed |
 | PDF layouts vary between years | Pilots per Parliament; failure reports instead of silent drops |
 | Qwen3 is weak on Malay | Measured in phase 5: the language gap is 0 points with the Haiku reranker; misses follow the source text's language (a Malay question about a section held only in English) |
 | The reranker is slow on a CPU container | Measured in phase 5: the local reranker misses 3 seconds at every pool size, so Haiku 5.5 reranks through the API (95th percentile 2.8 s, a narrow pass). If the container misses it, a pool of 10 or a faster first stage |
 | The rerank call fails or the API is down | The search keeps the fused order and still answers; failures are counted |
 | A wrong legal answer harms someone | Citations on every claim, "not legal advice", refusal on personal cases, quotes shown beside answers |
-| Old consolidated text shown as current | Every law answer shows its reprint date; point-in-time text comes after launch |
+| Old consolidated text shown as current | Every law answer shows its reprint date; point-in-time text comes later |
