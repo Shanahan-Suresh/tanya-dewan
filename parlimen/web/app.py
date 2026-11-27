@@ -45,7 +45,7 @@ from pydantic import BaseModel
 
 from .. import answer as answer_mod
 from .. import config
-from ..records import Records, reflow, slug
+from ..records import SITE_DB, Records, build_empty, reflow, slug
 from . import present
 from .i18n import LANGS, t
 from .limits import Limits
@@ -692,7 +692,13 @@ def main() -> None:
                                                 "(for design work; docs/design/data.json holds one)")
     a = ap.parse_args()
     _lock = None if a.replay else hold_single_site()  # noqa: F841 - kept open for the life of the site
-    app = create_app(replay=a.replay)
+    records = None
+    if a.replay and not SITE_DB.exists():            # a fresh clone: the pages show empty lists
+        import tempfile
+
+        records = Records(build_empty(Path(tempfile.mkdtemp()) / "site.db"))
+        print("no data/site.db: the pages are empty; build the data to fill them", flush=True)
+    app = create_app(replay=a.replay, records=records)
     if not a.replay:
         app.state.engine.warm()
     threading.Thread(target=_watch_idle, args=(app.state.engine,), daemon=True).start()

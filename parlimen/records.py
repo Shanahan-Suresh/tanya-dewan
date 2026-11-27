@@ -457,6 +457,18 @@ class Page:
         return max(1, -(-self.total // self.size))
 
 
+def build_empty(path: Path) -> Path:
+    """An empty page database with zero counts, so a fresh clone can run `--replay` with no data."""
+    con = sqlite3.connect(path)
+    con.executescript(SCHEMA)
+    con.executemany("INSERT INTO meta VALUES (?, ?)",
+                    [(k, "0") for k in ("units", "speeches", "qa", "commitments", "members")] +
+                    [("built", json.dumps("no data"))])
+    con.commit()
+    con.close()
+    return path
+
+
 class Records:
     """Read access to site.db, one connection per thread (FastAPI runs sync routes on a pool)."""
 

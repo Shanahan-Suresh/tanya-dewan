@@ -224,3 +224,17 @@ def test_bills_and_topics(recs):
 def test_a_sitting_carries_its_draft_flag(recs):
     assert recs.sitting("DR", "2024-05-02")["draft"] == 1
     assert recs.sitting("DR", "2022-03-01")["draft"] == 0
+
+
+def test_an_empty_page_database_serves_every_menu_page(tmp_path):
+    from fastapi.testclient import TestClient
+
+    from pathlib import Path
+
+    from parlimen.records import Records, build_empty
+    from parlimen.web.app import create_app
+
+    app = create_app(replay=Path("docs/design/data.json"), records=Records(build_empty(tmp_path / "site.db")))
+    client = TestClient(app)
+    for url in ["/", "/about", "/law", "/hansard", "/questions", "/commitments", "/mp", "/bills", "/topics"]:
+        assert client.get(url).status_code == 200, url
