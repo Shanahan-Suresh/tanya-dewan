@@ -1,6 +1,10 @@
 # Tanya Dewan (repo tanya-dewan): progress
 
-Current state and what is owed. `ROADMAP.md` is the plan; `docs/sources.md` is the phase 0 finding.
+Current state, run commands and measurements. `ROADMAP.md` is the plan; `docs/sources.md` is the
+phase 0 finding.
+
+**Status: concluded (2026-11-27).** The code is public, the demo is live, and nothing is owed.
+The "Known gaps" notes below are limits on record, not planned work.
 
 ## Decisions the owner has made
 
@@ -61,7 +65,7 @@ Tests: `tests/test_act_text.py` (7) and `tests/test_act_ocr.py` (5); suite 21 pa
   digits in the 2006 font), letter-spaced words rebuilt from character boxes, running heads
   found by their page numbers, notes found by their small type; for scans, pages turned upright,
   margin notes split from the section line, Sonnet on the pages Tesseract disagrees with.
-Owed: optional polish, by the report: 281 listed sections not found (64 files; 63 of the sections
+Known gaps, by the report: 281 listed sections not found (64 files; 63 of the sections
    in OCR files, some from years such as "1949" read as entries on faded arrangement pages),
    2,689 sections with no heading line in the body, 61 Acts whose two languages list different
    sections, about 550 sections that still hold a "NOTE" line in normal type, 13 letter-spaced
@@ -95,7 +99,7 @@ on. Tests: `tests/test_hansard.py` (10); suite 30 pass.
   in `data/speeches.jsonl` and `data/enrich/units.jsonl`; it refuses when extract ids or speech
   seqs change. DR 2023-10-18 is re-parsed: its stray "researcher" before a heading is gone (160
   speeches, 12 extracts).
-- Owed: optional polish. 172 named speeches stay unresolved, mostly source typos ("Tuan Look
+- Known gaps. 172 named speeches stay unresolved, mostly source typos ("Tuan Look
   Siew Fook", "Tuan Pengerus") and Speakers from outside the House. `data/members.csv` keeps
   81 keys seen once, some with the office in front of the name ("timbalan menteri ... hanifah
   hajar taib"); the word match still finds them. Members' dates and party changes are not
@@ -291,7 +295,7 @@ The tools:
 - `parlimen/judge.py [--arms ...] [--ids ...] [--answer-effort E]`: Haiku answers, Opus 5.5
   grades each answer blind, twice.
 
-Open, for later: Hansard recall. Most misses are questions that name no date, where the top hits
+Known gap: Hansard recall. Most misses are questions that name no date, where the top hits
 are the same topic in another sitting.
 
 ## Phase 6: the pages and the MCP server: built, exit check passes
@@ -302,8 +306,9 @@ Scope and exit are in ROADMAP Phase 6.
 
 Done (2026-11-27). The repository is public at https://github.com/Shanahan-Suresh/tanya-dewan,
 the demo is live at https://shanahan-suresh.github.io/tanya-dewan/ (the `gh-pages` branch), and
-the personal site has a card for it. To refresh the demo: `tools/static_demo.py`, then push
-`build/demo/` to `gh-pages` by a plain git push. Nothing is owed.
+the personal site has a card for it. To refresh the demo: run `tools/static_demo.py`, clone
+the `gh-pages` branch into a scratch folder, replace its files with `build/demo/`, commit and
+push. `gh api repos/Shanahan-Suresh/tanya-dewan/pages/builds/latest` shows when the build is live.
 
 ### The site
 
@@ -331,8 +336,8 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
   on https://claude.ai/artifact/Ub2MRtJRcswidYHisSDPi5, source `docs/design/logo/`), in the
   header, the icons (`tools/make_icons.py`) and the share image (`tools/make_og.py`).
 - Copy: one voice in English and Malay (voice guide in `data/copy-pass.md`). Presentation filters
-  in `parlimen/web/present.py` (title case, readable dates). Open: the Malay About page carries
-  the "how well it works" section from the English one, owner to confirm.
+  in `parlimen/web/present.py` (title case, readable dates). The Malay About page carries
+  the "how well it works" section from the English one.
 - Draft flag (`parlimen/drafts.py`): `python -m parlimen.drafts scan` reads page 1 of every cached
   sitting PDF for "Naskhah belum disemak" into `data/drafts.csv`; an ingest adds each new
   sitting's row. Measured 2026-11-26: 54 of 1,036 sittings are drafts, all Dewan Rakyat, from DR
