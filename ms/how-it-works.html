@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cara ia berfungsi · Tanya Dewan</title>
+<meta name="description" content="Bagaimana soalan menjadi jawapan bersumber, bahagian demi bahagian. Tekan satu bahagian untuk melihat fungsinya dan di mana kodnya.">
+<meta property="og:site_name" content="Tanya Dewan">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cara ia berfungsi">
+<meta property="og:description" content="Bagaimana soalan menjadi jawapan bersumber, bahagian demi bahagian. Tekan satu bahagian untuk melihat fungsinya dan di mana kodnya.">
+<meta property="og:url" content="https://shanahan-suresh.github.io/tanya-dewan/how-it-works">
+<meta property="og:image" content="https://shanahan-suresh.github.io/tanya-dewan/static/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ms_MY">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<script>try { var th = localStorage.getItem("theme"); if (th === "dark" || th === "light") document.documentElement.dataset.theme = th; } catch (e) {}</script>
+<link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../static/apple-touch-icon.png">
+<link rel="stylesheet" href="../static/site.css">
+<link rel="preload" href="../static/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../static/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<script src="../static/shell.js" defer></script>
+</head>
+<body class="demo">
+<a class="skip" href="#main">Langkau ke kandungan</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="../ms/index.html" aria-label="Tanya Dewan"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="bm-o" d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z" stroke-width="3" stroke-linejoin="round"/><path class="bm-r" d="M32 19 L45 32 L32 45 L19 32 Z" fill="none" stroke-width="3"/><path d="M32 26 L38 32 L32 38 L26 32 Z" fill="#F5B800"/></svg><span class="bt">Tanya Dewan</span></a>
+  <nav class="nav" aria-label="Menu utama">
+<a href="../ms/index.html" >Tanya</a><a href="../ms/law.html" >Akta</a><a href="../ms/hansard.html" >Persidangan</a><a href="../ms/questions.html" >Soalan</a><a href="../ms/commitments.html" >Komitmen</a><a href="../ms/mp.html" >Ahli Parlimen</a><a href="../ms/bills.html" >Rang undang-undang</a><a href="../ms/topics.html" >Topik</a>  </nav>
+  <div class="tools">
+    <button type="button" class="jump-btn" id="jump-btn" aria-haspopup="dialog" aria-controls="jump"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="jt">Lompat ke</span><kbd class="jk">Ctrl K</kbd></button>
+    <button type="button" class="icon-btn theme-btn" id="theme-btn" aria-label="Tema: ikut peranti anda" title="Tema: ikut peranti anda"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button>
+  </div>
+  <div class="lang" role="group" aria-label="Bahasa">
+<a href="../how-it-works.html" lang="en" hreflang="en" title="English" rel="nofollow">EN</a><span aria-current="true" lang="ms" title="Bahasa Melayu">BM</span>
+  </div>
+</div></header>
+<div class="demo-bar"><div class="wrap"><span><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Ini demo. Ia memainkan jawapan yang dirakam pada 27 Nov 2026 dan memuatkan sebahagian halaman.</span> <a href="https://github.com/Shanahan-Suresh/tanya-dewan" rel="noopener">Kod dan cara memasang di GitHub</a></div></div><main id="main">
+<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">Tanya Dewan</p><h1>Cara ia berfungsi</h1><p class="lead">Bagaimana soalan menjadi jawapan bersumber, bahagian demi bahagian. Tekan satu bahagian untuk melihat fungsinya dan di mana kodnya.</p></header></div></div><div class="band-paper"><div class="wrap">
+
+<section class="arch" aria-labelledby="arch-h">
+  <h2 class="sr-only" id="arch-h">Bahagian sistem</h2>
+  <div class="flow">
+    <div class="flow-g">
+      <span class="lbl">Kumpul</span>
+      <button type="button" class="node" data-id="acts" aria-pressed="false" aria-controls="hd-acts">
+        <b>Akta</b><span class="n tnum">887 Akta</span><span class="s">Dari Jabatan Peguam Negara</span>
+      </button>
+      <button type="button" class="node" data-id="hansard" aria-pressed="false" aria-controls="hd-hansard">
+        <b>Hansard</b><span class="n tnum">2018 →</span><span class="s">PDF setiap persidangan</span>
+      </button>
+    </div>
+    <div class="flow-g">
+      <span class="lbl">Fahami</span>
+      <button type="button" class="node" data-id="parse" aria-pressed="true" aria-controls="hd-parse">
+        <b>Kenal pasti penceramah</b><span class="n tnum">361,676 ucapan</span><span class="s">Kod yang menentukan, bukan AI</span>
+      </button>
+      <button type="button" class="node ai" data-id="enrich" aria-pressed="false" aria-controls="hd-enrich">
+        <b>Perkaya</b><span class="n tnum">18,523 komitmen</span><span class="s">Claude, dalam satu larian kelompok</span>
+<span class="ai-mark"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg><span class="sr-only">Menggunakan Claude</span></span>      </button>
+    </div>
+    <div class="flow-g">
+      <span class="lbl">Cari</span>
+      <button type="button" class="node" data-id="kw" aria-pressed="false" aria-controls="hd-kw">
+        <b>Indeks kata kunci</b><span class="n tnum">BM25</span><span class="s">Carian teks penuh SQLite</span>
+      </button>
+      <button type="button" class="node" data-id="vec" aria-pressed="false" aria-controls="hd-vec">
+        <b>Indeks makna</b><span class="n tnum">Qwen3 0.6B</span><span class="s">Benaman dibuat pada mesin ini</span>
+      </button>
+      <button type="button" class="node ai" data-id="rank" aria-pressed="false" aria-controls="hd-rank">
+        <b>Gabung dan susun semula</b><span class="n tnum">20 → 8</span><span class="s">Gabungan pangkat, kemudian Claude Haiku</span>
+<span class="ai-mark"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg><span class="sr-only">Menggunakan Claude</span></span>      </button>
+    </div>
+    <div class="flow-g">
+      <span class="lbl">Jawab</span>
+      <button type="button" class="node ai" data-id="answer" aria-pressed="false" aria-controls="hd-answer">
+        <b>Tulis jawapan</b><span class="n tnum">SSE</span><span class="s">Distrim ke pelayar</span>
+<span class="ai-mark"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg><span class="sr-only">Menggunakan Claude</span></span>      </button>
+    </div>
+    <div class="flow-g">
+      <span class="lbl">Sajikan</span>
+      <button type="button" class="node" data-id="web" aria-pressed="false" aria-controls="hd-web">
+        <b>Laman web</b><span class="n tnum">FastAPI</span><span class="s">Jinja dan htmx</span>
+      </button>
+      <button type="button" class="node" data-id="mcp" aria-pressed="false" aria-controls="hd-mcp">
+        <b>Pelayan MCP</b><span class="n tnum">MCP</span><span class="s">Cari dari pembantu AI</span>
+      </button>
+      <button type="button" class="node" data-id="demo" aria-pressed="false" aria-controls="hd-demo">
+        <b>Demo percuma</b><span class="n tnum">GitHub Pages</span><span class="s">Tiada pelayan di belakangnya</span>
+      </button>
+    </div>
+    <div class="flow-g">
+      <span class="lbl">Semak</span>
+      <button type="button" class="node" data-id="eval" aria-pressed="false" aria-controls="hd-eval">
+        <b>Penilaian</b><span class="n tnum">5 / 6</span><span class="s">Sasaran ditetapkan sebelum larian</span>
+      </button>
+    </div>
+  </div>
+  <div class="details">
+    <div class="card detail" id="hd-acts" data-id="acts" hidden>
+      <p class="eyebrow">Kumpul</p>
+      <h3>Akta</h3>
+      <ul><li>66,052 seksyen, dalam bahasa Melayu dan Inggeris.</li><li>Halaman imbasan melalui OCR, kemudian semakan teks.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/acts.py" rel="noopener"><code>parlimen/acts.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/act_text.py" rel="noopener"><code>parlimen/act_text.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/act_ocr.py" rel="noopener"><code>parlimen/act_ocr.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-hansard" data-id="hansard" hidden>
+      <p class="eyebrow">Kumpul</p>
+      <h3>Hansard</h3>
+      <ul><li>Setiap fail diambil sekali dan disimpan, dengan had kadar yang sopan.</li><li>Persidangan draf disemak setiap minggu sehingga salinan akhir terbit.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/fetch.py" rel="noopener"><code>parlimen/fetch.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/sittings.py" rel="noopener"><code>parlimen/sittings.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/drafts.py" rel="noopener"><code>parlimen/drafts.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-parse" data-id="parse" >
+      <p class="eyebrow">Fahami</p>
+      <h3>Kenal pasti penceramah</h3>
+      <ul><li>Penghurai membaca baris penceramah, kerusi dan masa daripada teks PDF.</li><li>Ia memadankan setiap penceramah dengan salah seorang daripada 341 Ahli Parlimen dan partinya pada tarikh itu.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/hansard.py" rel="noopener"><code>parlimen/hansard.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/parties.py" rel="noopener"><code>parlimen/parties.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/links.py" rel="noopener"><code>parlimen/links.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-enrich" data-id="enrich" hidden>
+      <p class="eyebrow">Fahami</p>
+      <h3>Perkaya <span class="label-ai"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>Menggunakan Claude</span></h3>
+      <ul><li>31,767 soalan dipadankan dengan jawapan menteri.</li><li>Ringkasan dan tag topik bagi setiap perbahasan.</li><li>Komitmen dibuang jika petikannya tiada dalam teks Hansard.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/enrich.py" rel="noopener"><code>parlimen/enrich.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/commit_check.py" rel="noopener"><code>parlimen/commit_check.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-kw" data-id="kw" hidden>
+      <p class="eyebrow">Cari</p>
+      <h3>Indeks kata kunci</h3>
+      <ul><li>Mencari perkataan, nama dan nombor seksyen yang tepat.</li><li>Bahasa Melayu dan Inggeris dalam satu indeks.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/index.py" rel="noopener"><code>parlimen/index.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/chunk.py" rel="noopener"><code>parlimen/chunk.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-vec" data-id="vec" hidden>
+      <p class="eyebrow">Cari</p>
+      <h3>Indeks makna</h3>
+      <ul><li>Mencari petikan yang menyatakan perkara sama dengan perkataan lain.</li><li>Ia berjalan pada CPU semasa carian.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/index.py" rel="noopener"><code>parlimen/index.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/models.py" rel="noopener"><code>parlimen/models.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-rank" data-id="rank" hidden>
+      <p class="eyebrow">Cari</p>
+      <h3>Gabung dan susun semula <span class="label-ai"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>Menggunakan Claude</span></h3>
+      <ul><li>Gabungan pangkat salingan menggabungkan dua senarai itu.</li><li>Claude Haiku membaca 20 teratas dan menyimpan 8 terbaik.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/search.py" rel="noopener"><code>parlimen/search.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/llm_rerank.py" rel="noopener"><code>parlimen/llm_rerank.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-answer" data-id="answer" hidden>
+      <p class="eyebrow">Jawab</p>
+      <h3>Tulis jawapan <span class="label-ai"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>Menggunakan Claude</span></h3>
+      <ul><li>Setiap ayat mesti memetik petikan yang disebut.</li><li>Ia menolak memberi nasihat tentang kes pembaca sendiri.</li><li>Teks distrim ke halaman sebagai acara pelayan.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/answer.py" rel="noopener"><code>parlimen/answer.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/web/app.py" rel="noopener"><code>parlimen/web/app.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-web" data-id="web" hidden>
+      <p class="eyebrow">Sajikan</p>
+      <h3>Laman web</h3>
+      <ul><li>30,091 halaman perbahasan, serta Ahli Parlimen, Akta, rang undang-undang dan topik.</li><li>Bahasa Inggeris dan Melayu, cerah dan gelap, telefon dahulu.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/web/app.py" rel="noopener"><code>parlimen/web/app.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/records.py" rel="noopener"><code>parlimen/records.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-mcp" data-id="mcp" hidden>
+      <p class="eyebrow">Sajikan</p>
+      <h3>Pelayan MCP</h3>
+      <ul><li>Pembantu AI boleh mencari Akta dan perbahasan sebagai alat.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/mcp_server.py" rel="noopener"><code>parlimen/mcp_server.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-demo" data-id="demo" hidden>
+      <p class="eyebrow">Sajikan</p>
+      <h3>Demo percuma</h3>
+      <ul><li>Halaman sebenar, dijana sekali.</li><li>Jawapan yang dirakam dimainkan semula sebagai strim.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/tools/static_demo.py" rel="noopener"><code>tools/static_demo.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/tools/record_answers.py" rel="noopener"><code>tools/record_answers.py</code></a></div>
+    </div>
+    <div class="card detail" id="hd-eval" data-id="eval" hidden>
+      <p class="eyebrow">Semak</p>
+      <h3>Penilaian</h3>
+      <ul><li>Set soalan tetap, hakim buta dan semakan dapatan semula.</li><li>Keputusannya dalam jadual di bawah.</li></ul>
+      <p class="eyebrow">Kod</p>
+      <div class="files"><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/evaluate.py" rel="noopener"><code>parlimen/evaluate.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/judge.py" rel="noopener"><code>parlimen/judge.py</code></a><a href="https://github.com/Shanahan-Suresh/tanya-dewan/blob/main/parlimen/evalset.py" rel="noopener"><code>parlimen/evalset.py</code></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="ev-h">
+  <div class="section-head"><div><h2 id="ev-h">Lima daripada enam sasaran dicapai</h2><p>Setiap sasaran ditetapkan sebelum ujian dijalankan. Carian perbahasan tidak mencapai sasarannya.</p></div><a class="linkbtn" href="https://github.com/Shanahan-Suresh/tanya-dewan" rel="noopener">Baca kod di GitHub <svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  <div class="card evals"><table class="stages">
+    <thead><tr><th>Apa yang diukur</th><th>Sasaran</th><th class="r">Keputusan</th><th>Dicapai?</th></tr></thead>
+    <tbody><tr><td>Soalan undang-undang: seksyen yang betul dalam 10 teratas</td><td>0.85 atau lebih</td><td class="r tnum">0.907</td><td><span class="pass"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ya</span></td></tr><tr><td>Soalan perbahasan: ucapan yang betul dalam 10 teratas</td><td>0.80 atau lebih</td><td class="r tnum">0.727</td><td><span class="miss"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg>Tidak dicapai</span></td></tr><tr><td>Soalan yang sama dalam bahasa Melayu dan Inggeris</td><td>beza kurang 5 mata</td><td class="r tnum">0</td><td><span class="pass"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ya</span></td></tr><tr><td>Masa carian pada CPU, persentil ke-95</td><td>kurang 3 s</td><td class="r tnum">2.83 s</td><td><span class="pass"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ya</span></td></tr><tr><td>Jawapan yang ditanda betul oleh hakim buta</td><td>65% atau lebih</td><td class="r tnum">77%</td><td><span class="pass"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ya</span></td></tr><tr><td>Jawapan yang setiap dakwaannya ada sumber dipetik</td><td>80% atau lebih</td><td class="r tnum">82%</td><td><span class="pass"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ya</span></td></tr></tbody>
+  </table></div>
+</section>
+
+<section class="section" aria-labelledby="small-h">
+  <div class="section-head"><div><h2 id="small-h">Perkara kecil yang membantu</h2></div></div>
+  <div class="grid c3">
+    <div class="card pad small-card"><h3><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>Cerah dan gelap</h3><p>Laman ini mengikut peranti anda. Butang bulan di atas membolehkan anda memilih.</p></div>
+    <div class="card pad small-card"><h3><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Lompat ke mana-mana</h3><p>Tekan Ctrl K pada mana-mana halaman untuk mencari Ahli Parlimen, Akta, rang undang-undang, topik atau persidangan.</p></div>
+    <div class="card pad small-card"><h3><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>Kekunci</h3><p>Tekan ? pada mana-mana halaman untuk melihat semua kekunci.</p><button type="button" class="btn ghost" data-keys>Tunjuk kekunci</button></div>
+  </div>
+</section>
+</div></div></main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg><span><b>Sumber.</b> Laws of Malaysia Online (Jabatan Peguam Negara) dan Hansard Parlimen Malaysia. Akta dan perbahasan Parlimen tidak tertakluk kepada hak cipta (Akta Hak Cipta 1987, seksyen 3).</span></p>
+    <p><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg><span><b>AI.</b> Ringkasan, padanan soalan dan nota komitmen ditulis oleh AI dan dilabelkan. Ucapan dan seksyen Akta ialah teks verbatim.</span></p>
+    <p><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z"/></svg><span><b>Bukan nasihat undang-undang.</b> Ini maklumat umum daripada rekod yang diterbitkan, bukan nasihat undang-undang.</span></p>
+    <div class="links"><a href="../ms/about.html">Tentang</a><a href="../ms/how-it-works.html">Cara ia berfungsi</a><button type="button" class="linkbtn keys-btn" data-keys><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>Tunjuk kekunci</button></div>
+  </div>
+</footer>
+<nav class="bottom-nav" aria-label="Menu utama (telefon)">
+  <a href="../ms/index.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Tanya</span></a>
+  <a href="../ms/hansard.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span>Persidangan</span></a>
+  <a href="../ms/questions.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg><span>Soalan</span></a>
+  <a href="../ms/mp.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5M16 5a3.2 3.2 0 0 1 0 6M18 14.8c2 .6 3.2 2.3 3.5 5"/></svg><span>Ahli Parlimen</span></a>
+  <button type="button" id="more-btn" aria-expanded="false" aria-controls="more-sheet"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg><span>Lagi</span></button>
+</nav>
+<div class="sheet" id="more-sheet" hidden>
+<a href="../ms/index.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>Tanya</a><a href="../ms/law.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>Akta</a><a href="../ms/hansard.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Persidangan</a><a href="../ms/questions.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>Soalan</a><a href="../ms/commitments.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>Komitmen</a><a href="../ms/mp.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5M16 5a3.2 3.2 0 0 1 0 6M18 14.8c2 .6 3.2 2.3 3.5 5"/></svg>Ahli Parlimen</a><a href="../ms/bills.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/></svg>Rang undang-undang</a><a href="../ms/topics.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9h8v8l-9 9z"/><circle cx="16" cy="8" r="1.2"/></svg>Topik</a>  <a href="../ms/how-it-works.html"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Cara ia berfungsi</a>
+  <a href="../ms/about.html"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>Tentang</a>
+</div>
+<dialog class="jump" id="jump" aria-labelledby="jump-h">
+  <h2 class="sr-only" id="jump-h">Lompat ke halaman</h2>
+  <div class="jump-field"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="jump-q" type="text" role="combobox" aria-expanded="true" aria-controls="jump-list" aria-autocomplete="list" aria-label="Cari Ahli Parlimen, Akta, rang undang-undang, topik atau persidangan" placeholder="Cari Ahli Parlimen, Akta, rang undang-undang, topik atau persidangan" autocomplete="off" spellcheck="false"><kbd>Esc</kbd></div>
+  <ul id="jump-list" role="listbox" aria-label="Lompat ke halaman"></ul>
+  <p class="jump-foot"><span id="jump-status" role="status"></span><span class="hint">Kekunci anak panah bergerak, Enter membuka, Esc menutup.</span></p>
+</dialog>
+<dialog class="keysheet" id="keys" aria-labelledby="keys-h">
+  <div class="keys-head"><h2 id="keys-h">Kekunci yang boleh digunakan</h2><button type="button" class="icon-btn" id="keys-close" aria-label="Tutup" title="Tutup"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <dl>
+    <div><dt><kbd>Ctrl</kbd> <kbd>K</kbd></dt><dd>Lompat ke Ahli Parlimen, Akta, rang undang-undang, topik atau persidangan</dd></div>
+    <div><dt><kbd>?</kbd></dt><dd>Tunjuk senarai ini</dd></div>
+    <div><dt><kbd>J</kbd> <kbd>K</kbd></dt><dd>Ucapan seterusnya atau sebelumnya, pada halaman perbahasan</dd></div>
+    <div><dt><kbd>J</kbd> <kbd>K</kbd></dt><dd>Sumber seterusnya atau sebelumnya, dalam pembaca sumber</dd></div>
+    <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Bergerak sepanjang garis masa perbahasan</dd></div>
+    <div><dt><kbd>Esc</kbd></dt><dd>Tutup kotak atau pembaca</dd></div>
+  </dl>
+</dialog>
+<script id="shell-strings" type="application/json">{"chambers": {"DR": "Dewan Rakyat", "KK": "Dewan Khas"}, "demo": true, "failed": "Senarai tidak dapat dimuatkan. Cuba lagi kemudian.", "icons": ["\u003csvg class=\"i \" viewBox=\"0 0 24 24\" aria-hidden=\"true\"\u003e\u003crect x=\"3\" y=\"4\" width=\"18\" height=\"12\" rx=\"2\"/\u003e\u003cpath d=\"M8 20h8M12 16v4\"/\u003e\u003c/svg\u003e", "\u003csvg class=\"i \" viewBox=\"0 0 24 24\" aria-hidden=\"true\"\u003e\u003cpath d=\"M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z\"/\u003e\u003c/svg\u003e", "\u003csvg class=\"i \" viewBox=\"0 0 24 24\" aria-hidden=\"true\"\u003e\u003ccircle cx=\"12\" cy=\"12\" r=\"4\"/\u003e\u003cpath d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/\u003e\u003c/svg\u003e"], "kinds": {"act": "Akta", "bill": "Rang undang-undang", "mp": "Ahli Parlimen", "sitting": "Persidangan", "topic": "Topik"}, "lang": "ms", "loading": "Memuatkan senarai\u2026", "none": "Tiada padanan. Cuba huruf yang lebih sedikit.", "themes": ["Tema: ikut peranti anda", "Tema: gelap", "Tema: cerah"]}</script>
+<script>
+(function () {
+  const nodes = document.querySelectorAll(".node"), details = document.querySelectorAll(".detail");
+  nodes.forEach((b) => b.addEventListener("click", () => {
+    nodes.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    details.forEach((d) => { d.hidden = d.dataset.id !== b.dataset.id; });
+  }));
+})();
+</script></body>
+</html>

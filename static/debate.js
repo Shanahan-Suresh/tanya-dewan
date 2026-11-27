@@ -7,6 +7,8 @@
   const now = document.getElementById("smap-now");
   const ticks = Array.from(document.querySelectorAll(".smap-ticks a"));
   const rows = Array.from(document.querySelectorAll("#smap li a"));
+  const bars = Array.from(document.querySelectorAll(".lanes .track a")).sort((a, b) => a.dataset.i - b.dataset.i);
+  const barSeq = bars.map((b) => b.getAttribute("href").split("seq-")[1]);
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const label = (map && map.dataset.of) || "{n} / {m}";
   let cur = -1, keyed = null;
@@ -45,6 +47,7 @@
     cur = i;
     const t = turns[Math.max(i, 0)];
     ticks.forEach((a) => a.classList.toggle("cur", a.dataset.seq === t.dataset.seq));
+    bars.forEach((b, k) => b.classList.toggle("cur", barSeq[k] === t.dataset.seq));
     rows.forEach((a) => {
       const on = a.dataset.who === t.dataset.who;
       a.classList.toggle("cur", on);
@@ -74,9 +77,31 @@
     if (k !== "j" && k !== "k") return;
     const el = e.target;
     if (el.closest && el.closest("input, textarea, select, [contenteditable]")) return;
+    if (document.querySelector("dialog[open], .reader:not([hidden])")) return;
     e.preventDefault();
     const at = atTop();
     if (k === "j") jump(at + 1);
     else jump(turns[Math.max(at, 0)].getBoundingClientRect().top < -20 ? at : at - 1);
+  });
+
+  // The timeline strip: a bar opens its speech; the arrow keys, Home and End move between bars.
+  const bySeq = (seq) => turns.findIndex((x) => x.dataset.seq === seq);
+  bars.forEach((b, k) => {
+    b.addEventListener("click", (e) => {
+      const i = bySeq(barSeq[k]);
+      if (i < 0) return;
+      e.preventDefault(); unclip(turns[i]); jump(i);
+    });
+  });
+  const lanes = document.querySelector(".lanes");
+  if (lanes) lanes.addEventListener("keydown", (e) => {
+    const k = bars.indexOf(document.activeElement);
+    if (k < 0) return;
+    const to = { ArrowRight: k + 1, ArrowDown: k + 1, ArrowLeft: k - 1, ArrowUp: k - 1, Home: 0, End: bars.length - 1 }[e.key];
+    if (to === undefined) return;
+    e.preventDefault();
+    const n = Math.max(0, Math.min(bars.length - 1, to));
+    bars.forEach((b, i) => { b.tabIndex = i === n ? 0 : -1; });
+    bars[n].focus();
   });
 })();

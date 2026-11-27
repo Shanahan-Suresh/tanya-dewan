@@ -16,38 +16,32 @@
 <meta property="og:locale" content="en_MY">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
+<script>try { var th = localStorage.getItem("theme"); if (th === "dark" || th === "light") document.documentElement.dataset.theme = th; } catch (e) {}</script>
 <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="static/apple-touch-icon.png">
 <link rel="stylesheet" href="static/site.css">
 <link rel="preload" href="static/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="static/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <script src="static/shell.js" defer></script>
 </head>
 <body class="demo">
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-<pattern id="songket" width="32" height="16" patternUnits="userSpaceOnUse">
-<path d="M16 1.5L24.5 8 16 14.5 7.5 8z" fill="none" style="stroke:var(--motif)" stroke-width="1.4"/>
-<path d="M16 5.2L20 8 16 10.8 12 8z" style="fill:var(--accent)"/>
-<path d="M0 8h5.5M26.5 8H32" style="stroke:var(--motif)" stroke-width="1.4"/>
-<path d="M0 0l3 3M0 16l3-3M32 0l-3 3M32 16l-3-3" style="stroke:var(--motif)" stroke-width="1.1"/>
-</pattern>
-<pattern id="songket-inv" width="48" height="24" patternUnits="userSpaceOnUse">
-<path d="M24 2L36 12 24 22 12 12z" fill="none" style="stroke:var(--motif-inv)" stroke-width="1.6"/>
-<path d="M24 7.5L30 12 24 16.5 18 12z" fill="none" style="stroke:var(--motif-inv)" stroke-width="1.6"/>
-<path d="M0 12h9M39 12h9M0 0l4 4M0 24l4-4M48 0l-4 4M48 24l-4-4" style="stroke:var(--motif-inv)" stroke-width="1.6"/>
-</pattern></defs></svg>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap">
-  <a class="brand" href="index.html" aria-label="Tanya Dewan"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="bm-o" d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z" stroke-width="3" stroke-linejoin="round"/><path class="bm-r" d="M32 19 L45 32 L32 45 L19 32 Z" fill="none" stroke-width="3"/><path d="M32 26 L38 32 L32 38 L26 32 Z" fill="#F5B800"/></svg>Tanya Dewan</a>
+  <a class="brand" href="index.html" aria-label="Tanya Dewan"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="bm-o" d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z" stroke-width="3" stroke-linejoin="round"/><path class="bm-r" d="M32 19 L45 32 L32 45 L19 32 Z" fill="none" stroke-width="3"/><path d="M32 26 L38 32 L32 38 L26 32 Z" fill="#F5B800"/></svg><span class="bt">Tanya Dewan</span></a>
   <nav class="nav" aria-label="Main menu">
 <a href="index.html" >Ask</a><a href="law.html" >Acts</a><a href="hansard.html" >Sittings</a><a href="questions.html" >Questions</a><a href="commitments.html" aria-current="page">Commitments</a><a href="mp.html" >MPs</a><a href="bills.html" >Bills</a><a href="topics.html" >Topics</a>  </nav>
+  <div class="tools">
+    <button type="button" class="jump-btn" id="jump-btn" aria-haspopup="dialog" aria-controls="jump"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="jt">Jump to</span><kbd class="jk">Ctrl K</kbd></button>
+    <button type="button" class="icon-btn theme-btn" id="theme-btn" aria-label="Theme: same as your device" title="Theme: same as your device"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button>
+  </div>
   <div class="lang" role="group" aria-label="Language">
 <span aria-current="true" lang="en" title="English">EN</span>
 <a href="ms/commitments.html" lang="ms" hreflang="ms" title="Bahasa Melayu" rel="nofollow">BM</a>  </div>
 </div></header>
-<div class="demo-bar"><div class="wrap"><span><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> This is a demo. It plays answers recorded on 27 Nov 2026 and holds a sample of the pages.</span> <a href="https://github.com/Shanahan-Suresh/tanya-dewan" rel="noopener">Code and setup on GitHub</a></div></div><main id="main" class="wrap">
-<header class="ph"><p class="eyebrow">From the Hansard</p><h1>Commitments</h1><p class="lead">What ministers committed to in the Dewan Rakyat. Code checks each quote against the Hansard text. The summary of each commitment is written by AI.</p></header>
+<div class="demo-bar"><div class="wrap"><span><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> This is a demo. It plays answers recorded on 27 Nov 2026 and holds a sample of the pages.</span> <a href="https://github.com/Shanahan-Suresh/tanya-dewan" rel="noopener">Code and setup on GitHub</a></div></div><main id="main">
+<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">From the Hansard</p><h1>Commitments</h1><p class="lead">What ministers committed to in the Dewan Rakyat. Code checks each quote against the Hansard text. The summary of each commitment is written by AI.</p></header></div></div><div class="band-paper"><div class="wrap">
 <form class="card filter-bar" method="get" action="commitments.html">
   <label>Keywords <input name="q" value="" placeholder="RM / 2027 / sekolah" type="search"></label>
   <label>Year
@@ -540,14 +534,13 @@
 <a href="?page=2">Next<svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></nav>
 
 </div>
-</main>
+</div></div></main>
 <footer class="site-footer">
-  <svg class="divider band" aria-hidden="true"><rect width="100%" height="16" fill="url(#songket)"/></svg>
   <div class="wrap">
     <p><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg><span><b>Sources.</b> Laws of Malaysia Online (Attorney General&#39;s Chambers) and the Hansard of the Parliament of Malaysia. Acts and parliamentary debates carry no copyright (Copyright Act 1987, section 3).</span></p>
     <p><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg><span><b>AI.</b> Summaries, question matches and commitment notes are written by AI and labelled as such. Speeches and Act sections are verbatim.</span></p>
     <p><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z"/></svg><span><b>Not legal advice.</b> This is general information from the published record, not legal advice.</span></p>
-    <div class="links"><a href="about.html">About</a></div>
+    <div class="links"><a href="about.html">About</a><a href="how-it-works.html">How it works</a><button type="button" class="linkbtn keys-btn" data-keys><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>Show the keys</button></div>
   </div>
 </footer>
 <nav class="bottom-nav" aria-label="Main menu (phone)">
@@ -558,7 +551,26 @@
   <button type="button" id="more-btn" aria-expanded="false" aria-controls="more-sheet"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg><span>More</span></button>
 </nav>
 <div class="sheet" id="more-sheet" hidden>
-<a href="index.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>Ask</a><a href="law.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>Acts</a><a href="hansard.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Sittings</a><a href="questions.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>Questions</a><a href="commitments.html" aria-current="page"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>Commitments</a><a href="mp.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5M16 5a3.2 3.2 0 0 1 0 6M18 14.8c2 .6 3.2 2.3 3.5 5"/></svg>MPs</a><a href="bills.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/></svg>Bills</a><a href="topics.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9h8v8l-9 9z"/><circle cx="16" cy="8" r="1.2"/></svg>Topics</a>  <a href="about.html"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>About</a>
+<a href="index.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>Ask</a><a href="law.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>Acts</a><a href="hansard.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Sittings</a><a href="questions.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>Questions</a><a href="commitments.html" aria-current="page"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>Commitments</a><a href="mp.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5M16 5a3.2 3.2 0 0 1 0 6M18 14.8c2 .6 3.2 2.3 3.5 5"/></svg>MPs</a><a href="bills.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/></svg>Bills</a><a href="topics.html" ><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9h8v8l-9 9z"/><circle cx="16" cy="8" r="1.2"/></svg>Topics</a>  <a href="how-it-works.html"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>How it works</a>
+  <a href="about.html"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>About</a>
 </div>
+<dialog class="jump" id="jump" aria-labelledby="jump-h">
+  <h2 class="sr-only" id="jump-h">Jump to a page</h2>
+  <div class="jump-field"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="jump-q" type="text" role="combobox" aria-expanded="true" aria-controls="jump-list" aria-autocomplete="list" aria-label="Find an MP, Act, bill, topic or sitting" placeholder="Find an MP, Act, bill, topic or sitting" autocomplete="off" spellcheck="false"><kbd>Esc</kbd></div>
+  <ul id="jump-list" role="listbox" aria-label="Jump to a page"></ul>
+  <p class="jump-foot"><span id="jump-status" role="status"></span><span class="hint">Arrow keys move, Enter opens, Esc closes.</span></p>
+</dialog>
+<dialog class="keysheet" id="keys" aria-labelledby="keys-h">
+  <div class="keys-head"><h2 id="keys-h">Keys you can use</h2><button type="button" class="icon-btn" id="keys-close" aria-label="Close" title="Close"><svg class="i " viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <dl>
+    <div><dt><kbd>Ctrl</kbd> <kbd>K</kbd></dt><dd>Jump to an MP, Act, bill, topic or sitting</dd></div>
+    <div><dt><kbd>?</kbd></dt><dd>Show this list</dd></div>
+    <div><dt><kbd>J</kbd> <kbd>K</kbd></dt><dd>Next or previous speech, on a debate page</dd></div>
+    <div><dt><kbd>J</kbd> <kbd>K</kbd></dt><dd>Next or previous source, in the source reader</dd></div>
+    <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Move along the debate timeline</dd></div>
+    <div><dt><kbd>Esc</kbd></dt><dd>Close a box or the reader</dd></div>
+  </dl>
+</dialog>
+<script id="shell-strings" type="application/json">{"chambers": {"DR": "Dewan Rakyat", "KK": "Special Chamber"}, "demo": true, "failed": "The list did not load. Try again later.", "icons": ["\u003csvg class=\"i \" viewBox=\"0 0 24 24\" aria-hidden=\"true\"\u003e\u003crect x=\"3\" y=\"4\" width=\"18\" height=\"12\" rx=\"2\"/\u003e\u003cpath d=\"M8 20h8M12 16v4\"/\u003e\u003c/svg\u003e", "\u003csvg class=\"i \" viewBox=\"0 0 24 24\" aria-hidden=\"true\"\u003e\u003cpath d=\"M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z\"/\u003e\u003c/svg\u003e", "\u003csvg class=\"i \" viewBox=\"0 0 24 24\" aria-hidden=\"true\"\u003e\u003ccircle cx=\"12\" cy=\"12\" r=\"4\"/\u003e\u003cpath d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/\u003e\u003c/svg\u003e"], "kinds": {"act": "Act", "bill": "Bill", "mp": "MP", "sitting": "Sitting", "topic": "Topic"}, "lang": "en", "loading": "Loading the list\u2026", "none": "Nothing matches. Try fewer letters.", "themes": ["Theme: same as your device", "Theme: dark", "Theme: light"]}</script>
 </body>
 </html>
