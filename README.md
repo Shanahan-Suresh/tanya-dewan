@@ -138,7 +138,7 @@ Other entry points:
   `tools/record_answers.py` records its answers from a running site.
 - `python -m pytest -q` runs the tests. They need no data.
 
-`ROADMAP.md` holds the plan, the targets and the costs. `PROGRESS.md` holds the current state
+`ROADMAP.md` holds the plan and the targets. `PROGRESS.md` holds the current state
 and the measurements.
 
 ## Data, licence and limits
