@@ -408,7 +408,7 @@ the static demo, in English and Malay, light and dark, at desktop and 390 px.
 - [x] 7. How it works page, a light and dark switch, page transitions, a `?` list of keys.
 - [x] Tests (144 pass), demo rebuilt (666 pages, 0 broken links), README text and shots, page
   shots checked at 1828 and 390 px, light and dark, English and Malay.
-- [ ] Commit, push and deploy the demo to gh-pages: waits for the owner.
+- [x] Committed, pushed and deployed to gh-pages (2026-11-27).
 
 ## Phase 9: a new look
 
@@ -425,7 +425,8 @@ polish on the record pages (2026-11-27); the build plan is `docs/design/restyle/
   label, and the brand name below 1240 px).
 - [x] Checked at 1828, 1100, 1000 and 390 px, light and dark, English and Malay: no sideways
   scroll, no page errors. 144 tests pass, demo 0 broken links. README shots retaken.
-- [ ] Push phases 8 and 9 and deploy the demo: waits for the owner.
+- [x] Pushed and deployed: the live demo at https://shanahan-suresh.github.io/tanya-dewan/ shows
+  the Stage look (2026-11-27).
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking
 
