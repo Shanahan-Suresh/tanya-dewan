@@ -300,8 +300,10 @@ Scope and exit are in ROADMAP Phase 6.
 
 ## Phase 7: public portfolio release
 
-Steps are in ROADMAP Phase 7. Owed: the README as a portfolio page; the public repository, the
-demo on GitHub Pages and the personal-site card.
+Done (2026-11-27). The repository is public at https://github.com/Shanahan-Suresh/tanya-dewan,
+the demo is live at https://shanahan-suresh.github.io/tanya-dewan/ (the `gh-pages` branch), and
+the personal site has a card for it. To refresh the demo: `tools/static_demo.py`, then push
+`build/demo/` to `gh-pages` by a plain git push. Nothing is owed.
 
 ### The site
 
@@ -378,7 +380,7 @@ demo on GitHub Pages and the personal-site card.
 - Checked by eye on 2026-11-27 under `/tanya-dewan/` at desktop and phone width: the home page,
   a played answer with its source titles and citation preview, a debate, an MP page, an Act and
   the Malay home page.
-- Tests: 135 pass, including `tests/test_static_demo.py` (link rewriting and the checker) and
+- Tests: 136 pass, including `tests/test_static_demo.py` (link rewriting and the checker) and
   `tests/test_config.py` (`ANTHROPIC_API_KEY` before the key file).
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking

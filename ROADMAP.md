@@ -381,10 +381,10 @@ The project is a public portfolio piece with a free static demo (owner's decisio
 4. ~~**Static demo.** `tools/record_answers.py` records the example questions from the full site;
    `tools/static_demo.py` renders a sample of pages in English and Malay with every link made
    relative; `ask.js` plays the recorded answers.~~
-5. **README as a portfolio page:** screenshots, the demo link, a diagram, the eval table, how to
-   run it, the data and licence terms.
-6. **Public repository** `tanya-dewan`, the demo on GitHub Pages from the `gh-pages` branch, and a
-   card on the author's personal site.
+5. ~~**README as a portfolio page:** screenshots, the demo link, a diagram, the eval table, how to
+   run it, the data and licence terms.~~
+6. ~~**Public repository** `tanya-dewan`, the demo on GitHub Pages from the `gh-pages` branch, and a
+   card on the author's personal site.~~
 
 - **Exit:** the repository is public, the demo loads on GitHub Pages, and the README explains the
   project to a visitor who is not technical.
