@@ -314,6 +314,8 @@ TEXT = {
         "Akta dan Hansard"),
     "hero_sub": ("Ask in English or Malay. Each answer cites the Act or sitting it comes from and links to the exact words.",
         "Tanya dalam bahasa Melayu atau Inggeris. Setiap jawapan menyebut Akta atau persidangan yang menjadi sumbernya dan memaut ke teks sebenar."),
+    "ans_seats_note": ("Illustration only: the seats light up as each step finishes. They are not the sources.",
+        "Ilustrasi sahaja: kerusi menyala apabila setiap langkah selesai. Ia bukan sumber."),
     "more_filters": ("More filters",
         "Lagi penapis"),
     "fewer_filters": ("Fewer filters",

@@ -2,8 +2,8 @@
 {% block title %}{{ t('nav_topics') }}{% endblock %}
 {% block scripts %}{% if months %}<script src="/static/topics.js" defer></script>{% endif %}{% endblock %}
 {% block description %}Topics debated in the Dewan Rakyat since 2018, with the debates on each.{% endblock %}
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">{{ t('from_hansard') }}</p><h1>{{ t('nav_topics') }}</h1><p class="lead">{{ t('topics_intro') }}</p></header></div></div>{% endblock %}
 {% block main %}
-<header class="ph"><p class="eyebrow">{{ t('from_hansard') }}</p><h1>{{ t('nav_topics') }}</h1><p class="lead">{{ t('topics_intro') }}</p></header>
 {% if months %}
 <section class="card pad te" id="te" aria-labelledby="te-h">
   <h2 id="te-h">{{ t('te_title') }}</h2>

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ t('correction') }}{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
-{% block main %}
-<header class="ph"><h1>{{ t('correction') }}</h1>
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph"><h1>{{ t('correction') }}</h1>
 {% if sent %}<p class="lead">{{ t('thanks') }}</p>{% if back %}<p><a class="btn" href="{{ back }}">{{ t('back_to_record') }}</a></p>{% endif %}
 {% else %}<p class="lead">{{ t('correction_intro') }}</p>{% endif %}
-</header>
+</header></div></div>{% endblock %}
+{% block main %}
 {% if not sent %}
 <form class="stack card pad" method="post" action="/correction">
   <input type="hidden" name="back" value="{{ back }}">

@@ -10,6 +10,16 @@
   const form = $("ask"), input = $("q"), go = form.querySelector(".ask-go");
   const answer = $("answer"), text = $("answer-text"), notice = $("notice"), progress = $("progress");
   let sources = [], passages = [], lastQuestion = "", token = 0, t0 = 0;
+  const hero = $("hero");
+
+  // ---- the lit seats: an illustration, labelled as one in the page. They follow the steps, not the sources. ----
+  const seatEls = Array.from(document.querySelectorAll("#ans-seats .seat"));
+  const seatOrder = seatEls.map((_, i) => i).sort((x, y) => ((x * 7919) % 1009) - ((y * 7919) % 1009));
+  function lightSeats(level, share) {
+    const n = Math.round(seatEls.length * share);
+    seatOrder.slice(0, n).forEach((i) => { seatEls[i].classList.remove("l1", "l2", "l3"); seatEls[i].classList.add("l" + level); });
+  }
+  function resetSeats() { seatEls.forEach((s) => s.classList.remove("l1", "l2", "l3")); }
 
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const ico = (d, cls) => `<svg class="i ${cls || ""}" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
@@ -211,6 +221,7 @@
     for (const st of r.stages || []) fn[st.name] = { n: st.hits, ms: st.ms };
     fn.cited = { n: sources.length };
     drawFunnel();
+    lightSeats(3, Math.min(0.1, sources.length / 100));
     $("how-meta").textContent = r.search_ms != null ? `· ${secs(r.search_ms)} ${S.search}` : "";
     // Passages
     const ps = r.passages || [];
@@ -243,7 +254,10 @@
     addLog(ev, d, at == null ? performance.now() - t0 : at);
     if (ev === "stage") {
       if (d.hits == null) { startStage(d.name); if (FN.some((x) => x[0] === d.name)) { fn[d.name] = { active: true }; drawFunnel(); } }
-      else { stageMs[d.name] = d.ms; drawProgress(); fn[d.name] = { n: d.hits, ms: d.ms }; drawFunnel(); }
+      else {
+        stageMs[d.name] = d.ms; drawProgress(); fn[d.name] = { n: d.hits, ms: d.ms }; drawFunnel();
+        if (d.name === "bm25" || d.name === "dense") lightSeats(1, 0.18); else if (d.name === "fused") lightSeats(1, 0.4); else if (d.name === "reranked") lightSeats(2, 0.12);
+      }
     } else if (ev === "passages") {
       showFound(d.passages);
     } else if (ev === "text") {
@@ -279,6 +293,8 @@
     lastQuestion = q; t0 = performance.now();
     go.disabled = true; go.setAttribute("aria-busy", "true");
     answer.hidden = false;
+    if (hero) hero.classList.add("asking");
+    resetSeats();
     $("q-echo").textContent = q;
     notice.innerHTML = ""; sources = []; passages = []; closeReader();
     text.innerHTML = `<p class="wait">${esc(S.asking)}</p>`;

@@ -2,8 +2,8 @@
 {% import "_macros.html" as m with context %}
 {% block title %}{{ t('nav_commitments') }}{% endblock %}
 {% block description %}What ministers have committed to in the Dewan Rakyat since 2018, each with the verbatim quote from the Hansard.{% endblock %}
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">{{ t("from_hansard") }}</p><h1>{{ t("nav_commitments") }}</h1><p class="lead">{{ t('commitments_intro') }}</p></header></div></div>{% endblock %}
 {% block main %}
-<header class="ph"><p class="eyebrow">{{ t("from_hansard") }}</p><h1>{{ t("nav_commitments") }}</h1><p class="lead">{{ t('commitments_intro') }}</p></header>
 <form class="card filter-bar" method="get" action="/commitments" hx-get="{{ path }}" hx-target="#results" hx-push-url="true" hx-trigger="submit, change" hx-swap="innerHTML show:#results:top">
   <label>{{ t('f_words') }} <input name="q" value="{{ f.q }}" placeholder="RM / 2027 / sekolah" type="search"></label>
   {{ m.select('year', t('f_year'), opts.years, f.year, t('f_any')) }}

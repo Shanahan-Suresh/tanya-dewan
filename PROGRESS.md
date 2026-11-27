@@ -317,12 +317,15 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
   vectors stay float16 in memory (`Searcher.scores` widens one block at a time).
   `hold_single_site` refuses a second full site on the machine; stop a site by its PID
   (`data/site.pid`).
-- Design: the Civic direction (`docs/design/civic/`) with three Console features (citation hover
-  lights its source, the MP month-by-year grid, the debate speaker map with J and K), in
-  hand-written token CSS with self-hosted Geist and Literata, htmx 2.0.4 for list filters and
-  paging, and the answer streamed by `POST /api/ask/stream` (stage, text, done, error events).
-  Showcase of the three directions: https://claude.ai/artifact/KWLv7EmBCyYXLt1XbJK4d8. The
-  prototypes' generators are `docs/design/gazette/gen.py` and `docs/design/civic/build.py`.
+- Design: the Stage look (Phase 9): navy stage bands hold the moments (home hero with the
+  chamber drawn in gold dots, the streaming answer, page heads, debate and MP heads, footer) and
+  light paper holds the record in calm cards. Hand-written token CSS with self-hosted Bricolage
+  Grotesque (display), Geist (interface) and Literata (verbatim text); htmx 2.0.4 for list
+  filters and paging; the answer streamed by `POST /api/ask/stream` (stage, passages, text, done,
+  error events). It grew from the Civic direction (`docs/design/civic/`) with three Console
+  features (citation hover lights its source, the MP month-by-year grid, the debate speaker map
+  with J and K); showcase of those directions: https://claude.ai/artifact/KWLv7EmBCyYXLt1XbJK4d8,
+  generators `docs/design/gazette/gen.py` and `docs/design/civic/build.py`.
 - Name and logo: Tanya Dewan (`config.SITE_NAME`; shortlist page
   https://claude.ai/artifact/Pv5MVDAfWr2bwy8g1qK7YE) and the L4 diamond speech bubble (concepts
   on https://claude.ai/artifact/Ub2MRtJRcswidYHisSDPi5, source `docs/design/logo/`), in the
@@ -406,6 +409,23 @@ the static demo, in English and Malay, light and dark, at desktop and 390 px.
 - [x] Tests (144 pass), demo rebuilt (666 pages, 0 broken links), README text and shots, page
   shots checked at 1828 and 390 px, light and dark, English and Malay.
 - [ ] Commit, push and deploy the demo to gh-pages: waits for the owner.
+
+## Phase 9: a new look
+
+Four looks were built as working prototypes of the Ask, MP and debate pages in
+`docs/design/restyle/` (local only, not in git): Sharpened, Bento, Stage and Poster, from the
+brief `BRIEF.md` there; `shoot.py` there shoots a look. Review page:
+https://claude.ai/artifact/XEwd2Di5Px7yPjS6NA2A16. The owner picked Stage, with Sharpened's
+polish on the record pages (2026-11-27); the build plan is `docs/design/restyle/PLAN.md`.
+
+- [x] Built: Bricolage fonts with `OFL-Bricolage.txt`, stage and paper tokens, shell, home,
+  debate, MP, a stage header on the 16 other pages, count-up and header condense in `shell.js`,
+  seat lighting in `ask.js`. The hero chamber is `present.arc_points` (five open rows, the ask
+  box inside the arch). The header fits from 1000 px in both languages (Malay drops the jump-box
+  label, and the brand name below 1240 px).
+- [x] Checked at 1828, 1100, 1000 and 390 px, light and dark, English and Malay: no sideways
+  scroll, no page errors. 144 tests pass, demo 0 broken links. README shots retaken.
+- [ ] Push phases 8 and 9 and deploy the demo: waits for the owner.
 
 ## Phase 3 model: Haiku 5.5 with adaptive thinking
 

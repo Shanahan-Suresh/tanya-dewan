@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ t('nav_law') }}{% endblock %}
 {% block description %}Every principal Act of Malaysia in force, in English and Malay, section by section, with the reprint date and the official PDF.{% endblock %}
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">{{ t('nav_law') }}</p><h1>{{ t('nav_law') }}</h1><p class="lead">{{ t('acts_intro') }}</p></header></div></div>{% endblock %}
 {% block main %}
-<header class="ph"><p class="eyebrow">{{ t('nav_law') }}</p><h1>{{ t('nav_law') }}</h1><p class="lead">{{ t('acts_intro') }}</p></header>
 <form class="inline-filter" method="get" action="/law" hx-get="/law" hx-target="#results" hx-push-url="true" hx-trigger="submit, input changed delay:300ms from:find input" hx-swap="innerHTML">
   <label>{{ t('search_title') }} <input name="q" value="{{ q }}" placeholder="employment / kerja" type="search"></label>
   <button class="btn" type="submit">{{ t('apply') }}</button>

@@ -3,8 +3,7 @@
 {% set title = (act.title_bi if lang_code == 'BI' else act.title_bm)|tcase %}
 {% block title %}{{ title }} (Act {{ act.number }}){% endblock %}
 {% block description %}The full text of {{ title }} (Act {{ act.number }}), section by section, with Dewan Rakyat debates on its bills.{% endblock %}
-{% block main %}
-<header class="ph">
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph">
   <p class="eyebrow"><a href="/law">{{ t('nav_law') }}</a> · {{ t('act') }} {{ act.number }} · {{ t('in_force') if act.status == 'in force' else t('repealed') }}</p>
   <h1>{{ title }}</h1>
   <p class="meta">
@@ -13,7 +12,8 @@
     {% for o in other %} · {{ t('other_lang') }} <a href="{{ law_url(act.number, o) }}">{{ t('lang_' ~ o) }}</a>{% endfor %}
   </p>
   <p class="notice">{{ m.icon('scales', 'sm') }}<span>{{ t('reprint_note') }} {{ t('not_advice') }}</span></p>
-</header>
+</header></div></div>{% endblock %}
+{% block main %}
 <div class="act-layout">
   <aside class="toc" aria-label="{{ t('contents') }}">
     <details class="card toc-d">

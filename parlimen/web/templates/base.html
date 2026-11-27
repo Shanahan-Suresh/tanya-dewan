@@ -23,6 +23,7 @@
 <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <link rel="stylesheet" href="/static/site.css">
 <link rel="preload" href="/static/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/static/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/static/htmx.min.js" defer></script>
 <script src="/static/shell.js" defer></script>
 </head>
@@ -38,21 +39,9 @@
   ('/bills', 'nav_bills', 'bills', ('/bill',)),
   ('/topics', 'nav_topics', 'topics', ('/topic',)),
 ] %}
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-<pattern id="songket" width="32" height="16" patternUnits="userSpaceOnUse">
-<path d="M16 1.5L24.5 8 16 14.5 7.5 8z" fill="none" style="stroke:var(--motif)" stroke-width="1.4"/>
-<path d="M16 5.2L20 8 16 10.8 12 8z" style="fill:var(--accent)"/>
-<path d="M0 8h5.5M26.5 8H32" style="stroke:var(--motif)" stroke-width="1.4"/>
-<path d="M0 0l3 3M0 16l3-3M32 0l-3 3M32 16l-3-3" style="stroke:var(--motif)" stroke-width="1.1"/>
-</pattern>
-<pattern id="songket-inv" width="48" height="24" patternUnits="userSpaceOnUse">
-<path d="M24 2L36 12 24 22 12 12z" fill="none" style="stroke:var(--motif-inv)" stroke-width="1.6"/>
-<path d="M24 7.5L30 12 24 16.5 18 12z" fill="none" style="stroke:var(--motif-inv)" stroke-width="1.6"/>
-<path d="M0 12h9M39 12h9M0 0l4 4M0 24l4-4M48 0l-4 4M48 24l-4-4" style="stroke:var(--motif-inv)" stroke-width="1.6"/>
-</pattern></defs></svg>
 <a class="skip" href="#main">{{ t('skip') }}</a>
 <header class="site-header"><div class="wrap">
-  <a class="brand" href="/" aria-label="{{ site_name }}"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="bm-o" d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z" stroke-width="3" stroke-linejoin="round"/><path class="bm-r" d="M32 19 L45 32 L32 45 L19 32 Z" fill="none" stroke-width="3"/><path d="M32 26 L38 32 L32 38 L26 32 Z" fill="#F5B800"/></svg>{{ site_name }}</a>
+  <a class="brand" href="/" aria-label="{{ site_name }}"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="bm-o" d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z" stroke-width="3" stroke-linejoin="round"/><path class="bm-r" d="M32 19 L45 32 L32 45 L19 32 Z" fill="none" stroke-width="3"/><path d="M32 26 L38 32 L32 38 L26 32 Z" fill="#F5B800"/></svg><span class="bt">{{ site_name }}</span></a>
   <nav class="nav" aria-label="{{ t('nav_main') }}">
     {% for href, key, icon, match in nav %}<a href="{{ href }}" {% if ((path == '/') if href == '/' else path.startswith(match)) %}aria-current="page"{% endif %}>{{ t(key) }}</a>{% endfor %}
   </nav>
@@ -68,11 +57,12 @@
   </div>
 </div></header>
 {% if demo %}<div class="demo-bar"><div class="wrap"><span>{{ ui.icon('info', 'sm') }} {{ t('demo_bar', date=(demo.recorded|hdate)) }}</span> <a href="{{ demo.repo }}" rel="noopener">{{ t('demo_code') }}</a></div></div>{% endif %}
-<main id="main" class="wrap">
+<main id="main">
+{% block page %}{% block head %}{% endblock %}<div class="band-paper"><div class="wrap">
 {% block main %}{% endblock %}
+</div></div>{% endblock %}
 </main>
 <footer class="site-footer">
-  <svg class="divider band" aria-hidden="true"><rect width="100%" height="16" fill="url(#songket)"/></svg>
   <div class="wrap">
     <p>{{ ui.icon('doc') }}<span><b>{{ t('foot_sources') }}</b> {{ t('footer_sources') }}</span></p>
     <p>{{ ui.icon('sparkle') }}<span><b>AI.</b> {{ t('footer_ai') }}</span></p>

@@ -3,7 +3,6 @@
 {% set summary = unit.summary_ms if lang == 'ms' and unit.summary_ms else unit.summary_en %}
 {% block title %}{{ unit.business|tcase|truncate(80) }} · {{ m.chamber(unit.chamber) }} {{ unit.date|hdate }}{% endblock %}
 {% block description %}{{ summary|truncate(200) }}{% endblock %}
-{% block main %}
 {# Speakers in order of first appearance, each with a colour slot and a speech count. #}
 {% set sp = namespace(keys=[], counts={}, first={}, names={}) %}
 {% for s in speeches %}
@@ -12,8 +11,9 @@
   {% set _ = sp.counts.update({k: sp.counts.get(k, 0) + 1}) %}
 {% endfor %}
 
+{% block head %}<div class="band-stage band-head"><div class="wrap">
 <nav class="crumbs" aria-label="{{ t('breadcrumb') }}"><a href="/hansard">{{ t('nav_hansard') }}</a>{{ m.icon('arrow') }}<a href="/hansard/{{ unit.chamber }}/{{ unit.date }}">{{ m.chamber(unit.chamber) }}, {{ unit.date|hdate }}</a></nav>
-<header class="card dh">
+<header class="dh">
   <p class="kicker tnum"><span>{{ t('f_parliament') }} {{ unit.parliament }}</span><span>{{ unit.id }}</span></p>
   <h1>{{ (unit.business or t('business'))|tcase }}</h1>
   <p class="links">
@@ -23,9 +23,18 @@
   </p>
   {% if sitting and sitting.draft %}{{ m.draft_note() }}{% endif %}
 </header>
-
 {% if timeline %}{{ m.debate_timeline(timeline) }}{% endif %}
-
+{% if seat_map %}
+{% set n_spoke = seat_map.seats|selectattr('member', 'in', spoke)|list|length %}
+{% if n_spoke %}
+<section class="db-seats" aria-labelledby="sm-d-h">
+  <h2 id="sm-d-h">{{ t('sm_spoke_title') }}</h2>
+  {{ m.seat_map(seat_map, lit=spoke, big=n_spoke, small=t('sm_spoke'), id='sm-d') }}
+</section>
+{% endif %}
+{% endif %}
+</div></div>{% endblock %}
+{% block main %}
 {% if summary %}
 <section class="card happened" aria-labelledby="happened-h">
   {{ m.ai_label(t('ai_summary')) }}
@@ -57,15 +66,6 @@
   </section>
 
   <aside class="aside" aria-label="{{ t('beside_record') }}">
-    {% if seat_map %}
-    {% set n_spoke = seat_map.seats|selectattr('member', 'in', spoke)|list|length %}
-    {% if n_spoke %}
-    <section class="card aside-box" aria-labelledby="sm-d-h">
-      <h2 id="sm-d-h">{{ t('sm_spoke_title') }}</h2>
-      {{ m.seat_map(seat_map, lit=spoke, big=n_spoke, small=t('sm_spoke'), id='sm-d') }}
-    </section>
-    {% endif %}
-    {% endif %}
     {% if speeches|length > 1 %}
     <section class="card aside-box smap" id="smap" data-of="{{ t('n_of_m') }}" aria-labelledby="smap-h">
       <h2 id="smap-h">{{ t('who_spoke') }}</h2>

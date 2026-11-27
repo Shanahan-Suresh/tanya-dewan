@@ -2,13 +2,13 @@
 {% import "_macros.html" as m with context %}
 {% block title %}{{ m.chamber(sitting.chamber) }}, {{ sitting.date|hdate }}{% endblock %}
 {% block description %}Hansard of the {{ m.chamber(sitting.chamber) }} for {{ sitting.date }}, with every debate and its speeches.{% endblock %}
-{% block main %}
-<header class="ph">
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph">
   <p class="eyebrow"><a href="/hansard">{{ t('nav_hansard') }}</a> · {{ t('f_parliament') }} {{ sitting.parliament }} · {{ sitting.meeting }}</p>
   <h1>{{ m.chamber(sitting.chamber) }}, {{ sitting.date|hdate }}</h1>
   <p class="meta">{% if sitting.pdf %}<a href="{{ sitting.pdf }}" rel="noopener">{{ t('official_pdf') }}</a> · {% endif %}{{ units|length }} {{ t('items') }}</p>
   {% if sitting.draft %}{{ m.draft_note() }}{% endif %}
-</header>
+</header></div></div>{% endblock %}
+{% block main %}
 {{ m.ai_note(t('ai_label')) }}
 <ol class="units">
   {% for u in units %}{{ m.unit_row(u, False) }}{% endfor %}

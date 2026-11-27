@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ t('nav_mps') }}, {{ t('f_parliament') }} {{ parliament }}{% endblock %}
 {% block description %}Members of the Dewan Rakyat by seat, with the debates they spoke in and the questions they asked.{% endblock %}
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">{{ t('f_parliament') }} {{ parliament }}</p><h1>{{ t('nav_mps') }}</h1><p class="lead">{{ t('no_rank') }}</p></header></div></div>{% endblock %}
 {% block main %}
-<header class="ph"><p class="eyebrow">{{ t('f_parliament') }} {{ parliament }}</p><h1>{{ t('nav_mps') }}</h1><p class="lead">{{ t('no_rank') }}</p></header>
 <p class="tabs" role="group" aria-label="{{ t('f_parliament') }}">{% for p in (15, 14) %}<a href="?parliament={{ p }}" {% if p == parliament %}aria-current="page"{% endif %}>{{ t('f_parliament') }} {{ p }}</a>{% endfor %}</p>
 <form class="card filter-bar" method="get" action="/mp" role="search" hx-get="/mp" hx-target="#results" hx-push-url="true" hx-trigger="submit, input changed delay:250ms from:input[name=q], search from:input[name=q]">
   <input type="hidden" name="parliament" value="{{ parliament }}">

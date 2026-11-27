@@ -64,7 +64,7 @@
 {% endmacro %}
 
 {% macro stats(items) %}
-<div class="stats">{% for n, label in items %}<div><b>{{ "{:,}".format(n) }}</b><span>{{ label }}</span></div>{% endfor %}</div>
+<div class="stats">{% for n, label in items %}<div><b data-count="{{ n }}">{{ "{:,}".format(n) }}</b><span>{{ label }}</span></div>{% endfor %}</div>
 {% endmacro %}
 
 {% macro commitment_card(c, show_unit=True) %}
@@ -256,4 +256,22 @@
     {% if tl.start %}<div class="axis tnum" aria-hidden="true"><span>{{ tl.start }}</span><span>{{ tl.end }}</span></div>{% endif %}
   </div>
 </section>
+{% endmacro %}
+
+{# The hero: the chamber as five open rows of gold dots (present.arc_points), with the ask box
+   inside the arch. A drawing, so it is hidden from screen readers. #}
+{% macro hero_arc(pts) %}
+<svg class="hero-arc" viewBox="0 0 1000 515" aria-hidden="true" focusable="false">
+  {% for i in range(5) %}{% set r = (470 * (0.72 + 0.28 * i / 4))|round(1) %}<path class="row" d="M{{ 500 - r }} 500A{{ r }} {{ r }} 0 0 1 {{ 500 + r }} 500"/>{% endfor %}
+  <path class="row" d="M10 500H990"/>
+  {% for x, y in pts %}<circle class="seat" cx="{{ x }}" cy="{{ y }}" r="3.4"/>{% endfor %}
+</svg>
+{% endmacro %}
+
+{# The seats that light while an answer runs: an illustration, labelled as one. ask.js sets the classes. #}
+{% macro answer_seats(sm) %}
+<figure class="ans-seats" id="ans-seats">
+  <svg viewBox="0 0 1000 515" aria-hidden="true" focusable="false">{% for s in sm.seats %}<circle class="seat" cx="{{ s.x }}" cy="{{ s.y }}" r="{{ (sm.r * 0.7)|round(1) }}"/>{% endfor %}</svg>
+  <figcaption>{{ t('ans_seats_note') }}</figcaption>
+</figure>
 {% endmacro %}

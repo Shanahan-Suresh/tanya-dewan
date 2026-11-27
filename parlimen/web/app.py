@@ -286,7 +286,7 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     def home(request: Request):
         r = rec()
         return page(request, "home.html", topics=r.topics(), parties=PARTIES, meta=r.meta(),
-                    seat_map=seat_map(), corpus=r.corpus_size(),
+                    seat_map=seat_map(), hero_arc=present.arc_points(222), corpus=r.corpus_size(),
                     sittings=r.sittings(limit=6), commitments=r.commitments(kind="promise", size=6).rows,
                     topic_trend=r.topic_trend(6), q=request.query_params.get("q", "")[:500])
 

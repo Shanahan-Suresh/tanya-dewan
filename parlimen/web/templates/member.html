@@ -2,20 +2,22 @@
 {% import "_macros.html" as mac with context %}
 {% block title %}{{ m.name }}{% endblock %}
 {% block description %}{{ m.name }}'s seat, party history, debates and questions in the Dewan Rakyat.{% endblock %}
-{% block main %}
+{% block head %}<div class="band-stage band-head"><div class="wrap">
 <nav class="crumbs" aria-label="{{ t('breadcrumb') }}"><a href="/mp">{{ t('nav_mps') }}</a></nav>
-<section class="card profile" aria-labelledby="mp-h">
-  <svg class="divider band" aria-hidden="true"><rect width="100%" height="16" fill="url(#songket)"/></svg>
-  <div class="inner">
+<section class="mp-hero" aria-labelledby="mp-h">
+  <div>
     {{ mac.avatar(m.name) }}
-    <div>
-      <h1 id="mp-h">{{ m.name }}</h1>
-      <p class="facts">{% for s in m.seats %}<span><b>{{ s.code }} {{ s.seat }}</b>, {{ t('f_parliament') }} {{ s.parliament }}</span>{% endfor %}</p>
-    </div>
+    <h1 id="mp-h" style="margin-top:18px">{{ m.name }}</h1>
+    <p class="facts">{% for s in m.seats %}<span><b>{{ s.code }} {{ s.seat }}</b>, {{ t('f_parliament') }} {{ s.parliament }}</span>{% endfor %}</p>
   </div>
+  {% if seat_map %}
+  {% set mine = seat_map.seats|selectattr('member', 'equalto', m.slug)|first %}
+  <div>{{ mac.seat_map(seat_map, lit=[m.slug], big=mine.code, small=mine.seat, id='sm-mp') }}</div>
+  {% endif %}
 </section>
 {{ mac.stats([(counts['items'], t('mp_items')), (counts.answered, t('mp_answered')), (counts.asked, t('mp_asked')), (counts.commitments, t('mp_commitments'))]) }}
-
+</div></div>{% endblock %}
+{% block main %}
 <div class="two">
   <div class="stack-col">
     <section class="card box" aria-labelledby="act-h">
@@ -33,13 +35,6 @@
     {% endif %}
   </div>
   <div class="stack-col">
-    {% if seat_map %}
-    {% set mine = seat_map.seats|selectattr('member', 'equalto', m.slug)|first %}
-    <section class="card box" aria-labelledby="seat-h">
-      <h2 id="seat-h">{{ t('sm_mp_title') }}</h2>
-      <div class="body">{{ mac.seat_map(seat_map, lit=[m.slug], big=mine.code, small=mine.seat, id='sm-mp') }}</div>
-    </section>
-    {% endif %}
     <section class="card box" aria-labelledby="party-h">
       <h2 id="party-h">{{ t('party_history') }}</h2>
       {% if m.parties %}

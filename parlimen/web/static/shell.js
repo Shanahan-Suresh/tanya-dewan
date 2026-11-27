@@ -174,3 +174,38 @@
     });
   });
 })();
+
+// The header condenses once the page scrolls.
+(function () {
+  const h = document.querySelector(".site-header");
+  if (!h) return;
+  let tick = false;
+  const set = () => { tick = false; h.classList.toggle("condensed", window.scrollY > 24); };
+  addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(set); } }, { passive: true });
+  set();
+})();
+
+// Motion, once and only when the reader allows it: numbers count up, the topic bars grow.
+(function () {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("js-reveal");
+  const fmt = (n) => n.toLocaleString("en-US");
+  const run = (el) => {
+    const to = Number(el.dataset.count);
+    if (!isFinite(to) || to < 20) return;
+    const t0 = performance.now(), dur = 900;
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(Math.round(to * e));
+      if (k < 1) requestAnimationFrame(step); else el.textContent = fmt(to);
+    };
+    el.textContent = fmt(0);
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    io.unobserve(e.target);
+    if (e.target.dataset.count) run(e.target); else e.target.classList.add("in");
+  }), { threshold: 0.25 });
+  document.querySelectorAll("[data-count], .chart-card").forEach((el) => io.observe(el));
+})();

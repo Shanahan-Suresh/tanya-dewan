@@ -123,6 +123,24 @@ def seat_layout(seats: list[dict], rows: int = 8) -> dict:
     return {"r": dot, "seats": rows_in, "blocs": [b for b in blocs if b[2]]}
 
 
+def arc_points(n: int, rows: int = 5, inner: float = 0.72) -> list[tuple[float, float]]:
+    """n points on open rows of a half circle in the same 1000 x 515 box as seat_layout, for the
+    home hero's chamber drawing: the rows start at `inner` of the outer radius, so the middle stays
+    clear for the ask box. A drawing only, not seat data."""
+    import math
+
+    big, cx, cy = 470, 500, 500
+    radii = [big * (inner + (1 - inner) * i / (rows - 1)) for i in range(rows)]
+    counts = [round(n * r / sum(radii)) for r in radii]
+    counts[-1] += n - sum(counts)
+    pts = []
+    for r, c in zip(radii, counts):
+        for k in range(c):
+            a = math.pi - math.pi * k / max(1, c - 1)
+            pts.append((round(cx + r * math.cos(a), 1), round(cy - r * math.sin(a), 1)))
+    return pts
+
+
 def hhmm(t: str | None) -> str:
     """The Hansard's 1650 as 16.50, as the speech headers print it; anything else comes back empty."""
     return f"{t[:2]}.{t[2:]}" if t and len(t) == 4 and t.isdigit() else ""

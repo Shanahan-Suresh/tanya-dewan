@@ -2,12 +2,12 @@
 {% import "_macros.html" as m with context %}
 {% block title %}{{ bill.title|tcase }}{% endblock %}
 {% block description %}The Dewan Rakyat debates on the {{ bill.title }} bill{% if act %} and the Act it {{ 'changed' if bill.change != 'new' else 'became' }}{% endif %}.{% endblock %}
-{% block main %}
-<header class="ph">
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph">
   <p class="eyebrow"><a href="/bills">{{ t('nav_bills') }}</a></p>
   <h1>{{ bill.title|tcase }}</h1>
   {% if act %}<p class="meta">{{ t('change_' ~ bill.change) }}: <a href="/law/{{ act.number }}">{{ act.title_bi|tcase }} (Act {{ act.number }})</a></p>{% endif %}
-</header>
+</header></div></div>{% endblock %}
+{% block main %}
 {{ m.ai_note(t('ai_label')) }}
 <ol class="timeline">
   {% set units = bill.units|sort(attribute='date,id') %}

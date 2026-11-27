@@ -2,8 +2,8 @@
 {% import "_macros.html" as m with context %}
 {% block title %}{{ t('nav_how') }}{% endblock %}
 {% block description %}{{ t('how_intro') }}{% endblock %}
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">{{ site_name }}</p><h1>{{ t('nav_how') }}</h1><p class="lead">{{ t('how_intro') }}</p></header></div></div>{% endblock %}
 {% block main %}
-<header class="ph"><p class="eyebrow">{{ site_name }}</p><h1>{{ t('nav_how') }}</h1><p class="lead">{{ t('how_intro') }}</p></header>
 
 <section class="arch" aria-labelledby="arch-h">
   <h2 class="sr-only" id="arch-h">{{ t('how_parts') }}</h2>

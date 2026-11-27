@@ -7,7 +7,7 @@ answer that shows exactly where it came from.**
 the full system and holds a sample of the pages. To ask your own questions, run it yourself
 (below).
 
-![The home page: a question box over a navy songket pattern, example questions, and the record in numbers](docs/readme/home.webp)
+![The home page: the question box inside the Dewan Rakyat chamber drawn in gold dots, example questions in English and Malay, and the record in numbers](docs/readme/home.webp)
 
 *Tanya Dewan* means "Ask the Dewan" (the Dewan Rakyat is Malaysia's lower house of Parliament).
 It reads two public records:
@@ -27,7 +27,7 @@ While the model writes, the page shows what the search went through: how many pa
 step kept, with its time, and the passages found. A fold shows the raw server-sent events as they
 arrive.
 
-![The search at work: the steps with their times, a chart of how many passages each step kept, and the passages found before the answer is written](docs/readme/search.webp)
+![The search at work: the steps with their times, a chart of how many passages each step kept, and the chamber's seats lighting as each step finishes](docs/readme/search.webp)
 
 ## What it does that a keyword search does not
 
@@ -46,7 +46,7 @@ arrive.
 - **Gets you anywhere fast.** Ctrl K jumps to any MP, Act, bill, topic or sitting; `?` lists the
   keys. Light and dark themes follow the device or a switch in the header.
 
-![A debate page: a strip of every speech in order, coloured by coalition, above the summary](docs/readme/debate.webp)
+![A debate page: a strip of every speech in order, coloured by coalition, above the seat map of who spoke](docs/readme/debate.webp)
 
 ![An MP page: debates spoken in, questions answered, a month-by-year activity grid and party history](docs/readme/mp.webp)
 
@@ -102,7 +102,7 @@ Design choices that keep it honest:
 Stack: Python, FastAPI with server-rendered Jinja and htmx, SQLite FTS5, NumPy,
 Qwen3-Embedding-0.6B through sentence-transformers, Claude Haiku 5.5 and Sonnet 5.5 through the
 Anthropic API, the MCP Python SDK, Playwright for the checks. Hand-written CSS with self-hosted
-Geist and Literata.
+Bricolage Grotesque, Geist and Literata.
 
 ## Run it yourself
 

@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ t('nav_about') }}{% endblock %}
 {% block description %}What the site holds, what AI writes, how answers are checked, and what data the site keeps.{% endblock %}
+{% block head %}<div class="band-stage band-head"><div class="wrap"><header class="ph"><p class="eyebrow">{{ site_name }}</p><h1>{{ 'Tentang Tanya Dewan' if lang == 'ms' else 'About Tanya Dewan' }}</h1></header></div></div>{% endblock %}
 {% block main %}
 <article class="prose">
 {% if lang == 'ms' %}
-<h1>Tentang Tanya Dewan</h1>
 <p>Tanya Dewan mencari Akta utama Malaysia dan perbahasan Dewan Rakyat sekali gus, dalam bahasa Melayu dan Inggeris. Ia meliputi Parlimen ke-14 dan ke-15, termasuk Dewan Khas.</p>
 <h2>Kandungan laman</h2>
 <ul>
@@ -32,7 +32,6 @@
 <h2>Bukan nasihat undang-undang</h2>
 <p>{{ t('not_advice') }} Teks Akta ialah cetakan semula yang dipaparkan di Laws of Malaysia Online, setakat tarikh yang tertera pada setiap halaman.</p>
 {% else %}
-<h1>About Tanya Dewan</h1>
 <p>Tanya Dewan searches Malaysia's principal Acts and Dewan Rakyat debates together, in English and Malay. It covers the 14th and 15th Parliaments, including the Special Chamber.</p>
 <h2>What the site holds</h2>
 <ul>

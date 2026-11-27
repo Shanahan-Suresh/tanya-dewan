@@ -1,92 +1,98 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block title %}{{ t('nav_ask') }}{% endblock %}
-{% block main %}
-<section class="hero" aria-labelledby="hero-h">
-  <svg class="texture" aria-hidden="true"><rect width="100%" height="100%" fill="url(#songket-inv)"/></svg>
-  <span class="eyebrow">{{ t('hero_eyebrow') }}</span>
-  <h1 id="hero-h">{{ t('hero_title') }}</h1>
-  <p class="sub">{{ t('hero_sub') }}</p>
-  <form id="ask" class="ask" action="/" method="get" autocomplete="off" role="search">
-    <div class="ask-field">
-      {{ m.icon('search') }}
-      <label class="sr-only" for="q">{{ t('ask_placeholder') }}</label>
-      <input id="q" name="q" type="text" value="{{ q }}" maxlength="500" placeholder="{{ t('ask_tiny') }}" enterkeyhint="search" required>
-      <button class="ask-go" type="submit"><span class="go-text">{{ t('ask_button') }}</span>{{ m.icon('arrow') }}<span class="sr-only go-sr">{{ t('ask_button') }}</span></button>
+{% block page %}
+<section class="band-stage hero" id="hero" aria-labelledby="hero-h">
+  <div class="hero-in">
+    {% if hero_arc %}{{ m.hero_arc(hero_arc) }}{% endif %}
+    <div class="hero-ui">
+      <span class="eyebrow">{{ t('hero_eyebrow') }}</span>
+      <h1 id="hero-h">{{ t('hero_title') }}</h1>
+      <p class="sub">{{ t('hero_sub') }}</p>
+      <form id="ask" class="ask" action="/" method="get" autocomplete="off" role="search">
+        <div class="ask-field">
+          {{ m.icon('search') }}
+          <label class="sr-only" for="q">{{ t('ask_placeholder') }}</label>
+          <input id="q" name="q" type="text" value="{{ q }}" maxlength="500" placeholder="{{ t('ask_tiny') }}" enterkeyhint="search" required>
+          <button class="ask-go" type="submit"><span class="go-text">{{ t('ask_button') }}</span>{{ m.icon('arrow') }}<span class="sr-only go-sr">{{ t('ask_button') }}</span></button>
+        </div>
+        <div class="try" id="try" aria-label="{{ t('examples') }}"><span class="k">{{ t('examples') }}</span></div>
+        <div class="filters" role="group" aria-label="{{ t('filters') }}">
+          {{ m.fchip_select('kind', t('f_kind'), [('law', t('f_kind_law')), ('debate', t('f_kind_debate'))], t('f_kind_all')) }}
+          {{ m.fchip_select('parliament', t('f_parliament'), [('15', '15'), ('14', '14')], t('f_any')) }}
+          {{ m.fchip_select('chamber', t('f_chamber'), [('DR', t('chamber_DR')), ('KK', t('chamber_KK'))], t('f_any')) }}
+          <button type="button" class="more-filters" id="more-filters" aria-expanded="false" aria-controls="extra-filters"><span class="mf-t">{{ t('more_filters') }}</span>{{ m.icon('chev', 'sm') }}</button>
+          <div class="extra" id="extra-filters" hidden>
+            {{ m.fchip_input('date_from', t('f_from'), 'date') }}
+            {{ m.fchip_input('date_to', t('f_to'), 'date') }}
+            {{ m.fchip_input('speaker', t('f_speaker'), 'text', 'Anwar') }}
+            {{ m.fchip_flat('party', t('f_party'), parties, t('f_any')) }}
+            {{ m.fchip_flat('topic', t('f_topic'), topics|map(attribute='name')|list, t('f_any')) }}
+            {{ m.fchip_input('act', t('f_act'), 'text', '265') }}
+            {{ m.fchip_select('lang', t('f_lang'), [('BI', t('lang_BI')), ('BM', t('lang_BM'))], t('f_lang_any')) }}
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="try" id="try" aria-label="{{ t('examples') }}"><span class="k">{{ t('examples') }}</span></div>
-    <div class="filters" role="group" aria-label="{{ t('filters') }}">
-      {{ m.fchip_select('kind', t('f_kind'), [('law', t('f_kind_law')), ('debate', t('f_kind_debate'))], t('f_kind_all')) }}
-      {{ m.fchip_select('parliament', t('f_parliament'), [('15', '15'), ('14', '14')], t('f_any')) }}
-      {{ m.fchip_select('chamber', t('f_chamber'), [('DR', t('chamber_DR')), ('KK', t('chamber_KK'))], t('f_any')) }}
-      <button type="button" class="more-filters" id="more-filters" aria-expanded="false" aria-controls="extra-filters"><span class="mf-t">{{ t('more_filters') }}</span>{{ m.icon('chev', 'sm') }}</button>
-      <div class="extra" id="extra-filters" hidden>
-        {{ m.fchip_input('date_from', t('f_from'), 'date') }}
-        {{ m.fchip_input('date_to', t('f_to'), 'date') }}
-        {{ m.fchip_input('speaker', t('f_speaker'), 'text', 'Anwar') }}
-        {{ m.fchip_flat('party', t('f_party'), parties, t('f_any')) }}
-        {{ m.fchip_flat('topic', t('f_topic'), topics|map(attribute='name')|list, t('f_any')) }}
-        {{ m.fchip_input('act', t('f_act'), 'text', '265') }}
-        {{ m.fchip_select('lang', t('f_lang'), [('BI', t('lang_BI')), ('BM', t('lang_BM'))], t('f_lang_any')) }}
-      </div>
-    </div>
-  </form>
+  </div>
+  <div class="hero-foot"><div class="wrap">{{ m.stats([(meta.units, t('stat_units')), (meta.speeches, t('stat_speeches')), (meta.qa, t('stat_qa')), (meta.commitments, t('stat_commitments'))]) }}</div></div>
 </section>
 
-<section id="answer" hidden tabindex="-1" aria-label="{{ t('answer_region') }}">
-  <div class="q-echo">
-    {{ m.ai_label(t('ai_answer')) }}<q id="q-echo"></q>
-    <button type="button" class="linkbtn" id="copy-link">{{ m.icon('link', 'sm') }}<span>{{ t('copy_link') }}</span></button>
-    <span class="sr-only" id="copy-status" role="status"></span>
-  </div>
-  <div class="run">
-  <ol class="progress" id="progress" aria-label="{{ t('progress') }}"></ol>
-  <section class="funnel" id="funnel" aria-labelledby="fn-h" hidden>
-    <h3 id="fn-h">{{ t('fn_title') }} <span class="meta tnum" id="how-meta"></span></h3>
-    <ol id="fn-rows"></ol>
-    <p class="fn-note">{{ t('fn_note') }}</p>
-  </section>
-  </div>
-  <div id="notice"></div>
-  <div class="answer-grid">
-    <div class="card pad answer-card" id="answer-card">
-      <div class="head">{{ m.ai_label(t('ai_answer')) }}<span class="label-rec" id="answer-state"></span></div>
-      <div class="answer-text" id="answer-text" lang="{{ lang }}"></div>
-      <div class="answer-foot" id="answer-foot" hidden>
-        <p>{{ m.icon('info', 'sm') }}<span>{{ t('answer_ai') }}</span></p>
-        <p>{{ m.icon('scales', 'sm') }}<span>{{ t('not_advice') }}</span></p>
+<div id="answer" hidden tabindex="-1" aria-label="{{ t('answer_region') }}">
+  <section class="band-stage ans-band"><div class="wrap">
+    <div class="q-echo">
+      {{ m.ai_label(t('ai_answer')) }}<q id="q-echo"></q>
+      <button type="button" class="linkbtn" id="copy-link">{{ m.icon('link', 'sm') }}<span>{{ t('copy_link') }}</span></button>
+      <span class="sr-only" id="copy-status" role="status"></span>
+    </div>
+    <div class="ans-grid">
+      <div class="run">
+        <ol class="progress" id="progress" aria-label="{{ t('progress') }}"></ol>
+        <section class="funnel" id="funnel" aria-labelledby="fn-h" hidden>
+          <h3 id="fn-h">{{ t('fn_title') }} <span class="meta tnum" id="how-meta"></span></h3>
+          <ol id="fn-rows"></ol>
+          <p class="fn-note">{{ t('fn_note') }}</p>
+        </section>
+        {% if seat_map and seat_map.seats %}{{ m.answer_seats(seat_map) }}{% endif %}
+      </div>
+      <div class="answer-card" id="answer-card">
+        <div id="notice"></div>
+        <div class="head">{{ m.ai_label(t('ai_answer')) }}<span class="label-rec" id="answer-state"></span></div>
+        <div class="answer-text" id="answer-text" lang="{{ lang }}"></div>
+        <div class="answer-foot" id="answer-foot" hidden>
+          <p>{{ m.icon('info', 'sm') }}<span>{{ t('answer_ai') }}</span></p>
+          <p>{{ m.icon('scales', 'sm') }}<span>{{ t('not_advice') }}</span></p>
+        </div>
       </div>
     </div>
+  </div></section>
+  <section class="band-paper rec-band"><div class="wrap">
     <aside class="sources" aria-labelledby="src-h">
       <h3 id="src-h">{{ t('sources') }} <span id="src-count"></span></h3>
       <ol class="src-list" id="src-list"><li class="card src hold">{{ t('sources_wait') }}</li></ol>
     </aside>
-  </div>
-  <details class="card fold" id="how" hidden>
-    <summary>{{ m.icon('stream') }}{{ t('stream_title') }} <span class="meta tnum" id="stream-n"></span>{{ m.icon('chev', 'chev') }}</summary>
-    <div class="body">
-      <p class="muted small">{{ t('stream_sub') }}{% if demo %} {{ t('stream_demo') }}{% endif %}</p>
-      <div class="stream-wrap"><table class="stream"><thead><tr><th class="r">{{ t('ev_at') }}</th><th>{{ t('ev_event') }}</th><th>{{ t('ev_data') }}</th></tr></thead><tbody id="stream-body"></tbody></table></div>
-    </div>
-  </details>
-  <details class="card fold" id="passages" hidden>
-    <summary>{{ m.icon('doc') }}{{ t('passages') }} <span class="meta tnum" id="passages-n"></span>{{ m.icon('chev', 'chev') }}</summary>
-    <div class="body" id="passages-body"></div>
-  </details>
-</section>
-
-<section class="section" aria-labelledby="rec-h">
-  <div class="section-head"><div><h2 id="rec-h">{{ t('browse') }}</h2><p>{{ t('browse_sub') }}</p></div></div>
-  {{ m.stats([(meta.units, t('stat_units')), (meta.speeches, t('stat_speeches')), (meta.qa, t('stat_qa')), (meta.commitments, t('stat_commitments'))]) }}
-</section>
+    <details class="card fold" id="how" hidden>
+      <summary>{{ m.icon('stream') }}{{ t('stream_title') }} <span class="meta tnum" id="stream-n"></span>{{ m.icon('chev', 'chev') }}</summary>
+      <div class="body">
+        <p class="muted small">{{ t('stream_sub') }}{% if demo %} {{ t('stream_demo') }}{% endif %}</p>
+        <div class="stream-wrap"><table class="stream"><thead><tr><th class="r">{{ t('ev_at') }}</th><th>{{ t('ev_event') }}</th><th>{{ t('ev_data') }}</th></tr></thead><tbody id="stream-body"></tbody></table></div>
+      </div>
+    </details>
+    <details class="card fold" id="passages" hidden>
+      <summary>{{ m.icon('doc') }}{{ t('passages') }} <span class="meta tnum" id="passages-n"></span>{{ m.icon('chev', 'chev') }}</summary>
+      <div class="body" id="passages-body"></div>
+    </details>
+  </div></section>
+</div>
 
 {% if seat_map and seat_map.seats %}
-<section class="section" id="seats" aria-labelledby="seats-h">
+<section class="band-stage bnd" id="seats" aria-labelledby="seats-h"><div class="wrap">
   <div class="section-head"><div><h2 id="seats-h">{{ t('sm_title') }}</h2><p>{{ t('sm_sub') }}</p></div><a class="linkbtn" href="/mp">{{ t('nav_mps') }} {{ m.icon('arrow', 'sm') }}</a></div>
-  <div class="card pad">{{ m.seat_map(seat_map, find=True) }}</div>
-</section>
+  {{ m.seat_map(seat_map, find=True) }}
+</div></section>
 {% endif %}
 
+<div class="band-paper bnd"><div class="wrap">
 <section class="section" id="sittings" aria-labelledby="sit-h">
   <div class="section-head"><div><h2 id="sit-h">{{ t('latest_sittings') }}</h2><p>{{ t('sittings_sub') }}</p></div><a class="linkbtn" href="/hansard">{{ t('all_sittings') }} {{ m.icon('arrow', 'sm') }}</a></div>
   <div class="grid c3">
@@ -112,9 +118,10 @@
     {% endfor %}
   </div>
 </section>
+</div></div>
 
 {% if topic_trend %}
-<section class="section" id="topics" aria-labelledby="top-h">
+<section class="band-stage bnd" id="topics" aria-labelledby="top-h"><div class="wrap">
   <div class="section-head"><div><h2 id="top-h">{{ t('topic_trend') }}</h2><p>{{ t('topic_trend_sub') }}</p></div><a class="linkbtn" href="/topics">{{ t('nav_topics') }} {{ m.icon('arrow', 'sm') }}</a></div>
   <div class="charts">
     {% for g in topic_trend|groupby('topic') %}
@@ -126,10 +133,10 @@
     </div>
     {% endfor %}
   </div>
-  <div class="chips" style="margin-top:18px">
+  <div class="chips" style="margin-top:24px">
     {% for x in topics %}<a class="chip" href="/topic/{{ x.topic }}">{{ x.name }}</a>{% endfor %}
   </div>
-</section>
+</div></section>
 {% endif %}
 
 <aside class="reader" id="reader" role="dialog" aria-modal="false" aria-labelledby="rd-t" hidden>
