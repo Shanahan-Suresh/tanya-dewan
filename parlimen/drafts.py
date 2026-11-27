@@ -207,8 +207,12 @@ def recheck(listing: list[Sitting], download: Callable[[str], bytes] | None = No
     if download is None:
         download = lambda url: fetch.client().get(url).raise_for_status().content  # noqa: E731
     if parse is None:
-        registers = hansard.read_registers()
-        parse = lambda s: hansard.parse_one(s, registers)  # noqa: E731
+        registers: dict = {}
+
+        def parse(s: Sitting) -> tuple:              # the registers load only when a sitting needs a parse
+            if not registers:
+                registers.update(hansard.read_registers())
+            return hansard.parse_one(s, registers)
     revised, failed = [], []
     for s in due:
         k = (s.chamber, s.date)
