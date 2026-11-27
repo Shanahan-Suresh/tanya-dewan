@@ -25,7 +25,7 @@
 <script src="/static/htmx.min.js" defer></script>
 <script src="/static/shell.js" defer></script>
 </head>
-<body>
+<body{% if demo %} class="demo"{% endif %}>
 {% import "_macros.html" as ui with context %}
 {% set nav = [
   ('/', 'nav_ask', 'ask', ('/',)),
@@ -62,6 +62,7 @@
     {% endfor %}
   </div>
 </div></header>
+{% if demo %}<div class="demo-bar"><div class="wrap"><span>{{ ui.icon('info', 'sm') }} {{ t('demo_bar', date=(demo.recorded|hdate)) }}</span> <a href="{{ demo.repo }}" rel="noopener">{{ t('demo_code') }}</a></div></div>{% endif %}
 <main id="main" class="wrap">
 {% block main %}{% endblock %}
 </main>
@@ -71,7 +72,7 @@
     <p>{{ ui.icon('doc') }}<span><b>{{ t('foot_sources') }}</b> {{ t('footer_sources') }}</span></p>
     <p>{{ ui.icon('sparkle') }}<span><b>AI.</b> {{ t('footer_ai') }}</span></p>
     <p>{{ ui.icon('scales') }}<span><b>{{ t('foot_legal') }}</b> {{ t('not_advice') }}</span></p>
-    <div class="links"><a href="/about">{{ t('nav_about') }}</a><a href="/correction?back={{ full_path|urlencode }}">{{ t('correction') }}</a></div>
+    <div class="links"><a href="/about">{{ t('nav_about') }}</a>{% if not demo %}<a href="/correction?back={{ full_path|urlencode }}">{{ t('correction') }}</a>{% endif %}</div>
   </div>
 </footer>
 <nav class="bottom-nav" aria-label="{{ t('nav_phone') }}">

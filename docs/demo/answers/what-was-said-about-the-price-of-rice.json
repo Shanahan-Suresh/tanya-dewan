@@ -1,0 +1,466 @@
+{
+ "question": "What was said about the price of rice?",
+ "lang": "en",
+ "recorded": "2026-11-27",
+ "events": [
+  {
+   "t": 261,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 429,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": 100,
+    "ms": 165
+   }
+  },
+  {
+   "t": 430,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 1761,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": 100,
+    "ms": 1335
+   }
+  },
+  {
+   "t": 1761,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 1762,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": 197,
+    "ms": 0
+   }
+  },
+  {
+   "t": 1762,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 3154,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": 20,
+    "ms": 1392
+   }
+  },
+  {
+   "t": 3242,
+   "event": "stage",
+   "data": {
+    "name": "answer",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 9631,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said"
+   }
+  },
+  {
+   "t": 9757,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1]"
+   }
+  },
+  {
+   "t": 9774,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that"
+   }
+  },
+  {
+   "t": 9855,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]"
+   }
+  },
+  {
+   "t": 9937,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]."
+   }
+  },
+  {
+   "t": 10065,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2]"
+   }
+  },
+  {
+   "t": 10269,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed."
+   }
+  },
+  {
+   "t": 10346,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3]"
+   }
+  },
+  {
+   "t": 10570,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification."
+   }
+  },
+  {
+   "t": 10715,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]"
+   }
+  },
+  {
+   "t": 10794,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]."
+   }
+  },
+  {
+   "t": 10958,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4]"
+   }
+  },
+  {
+   "t": 10978,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that"
+   }
+  },
+  {
+   "t": 11101,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4]"
+   }
+  },
+  {
+   "t": 11352,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4]."
+   }
+  },
+  {
+   "t": 11421,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4].\n- **Farmers' demands (February 2025):** Shahidan Kassim (PAS) said farmers had heard of a price of RM1,500 instead of RM1,800[5]"
+   }
+  },
+  {
+   "t": 11491,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4].\n- **Farmers' demands (February 2025):** Shahidan Kassim (PAS) said farmers had heard of a price of RM1,500 instead of RM1,800[5]."
+   }
+  },
+  {
+   "t": 11754,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4].\n- **Farmers' demands (February 2025):** Shahidan Kassim (PAS) said farmers had heard of a price of RM1,500 instead of RM1,800[5]. Ronald Kiandee said local white rice that was supposedly sold at RM2.60 per kilo is no longer available, and at markets it now costs about RM3.00, RM3.50, or RM4.00 per kilogram[6]"
+   }
+  },
+  {
+   "t": 11919,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4].\n- **Farmers' demands (February 2025):** Shahidan Kassim (PAS) said farmers had heard of a price of RM1,500 instead of RM1,800[5]. Ronald Kiandee said local white rice that was supposedly sold at RM2.60 per kilo is no longer available, and at markets it now costs about RM3.00, RM3.50, or RM4.00 per kilogram[6]."
+   }
+  },
+  {
+   "t": 12039,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4].\n- **Farmers' demands (February 2025):** Shahidan Kassim (PAS) said farmers had heard of a price of RM1,500 instead of RM1,800[5]. Ronald Kiandee said local white rice that was supposedly sold at RM2.60 per kilo is no longer available, and at markets it now costs about RM3.00, RM3.50, or RM4.00 per kilogram[6].\n- **Government position (January 2026):** Deputy Minister Chan Foong Hin said the government does not intend to review the minimum paddy purchase price, which is currently RM1,500 per tonne[7]"
+   }
+  },
+  {
+   "t": 12060,
+   "event": "text",
+   "data": {
+    "text": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4].\n- **Farmers' demands (February 2025):** Shahidan Kassim (PAS) said farmers had heard of a price of RM1,500 instead of RM1,800[5]. Ronald Kiandee said local white rice that was supposedly sold at RM2.60 per kilo is no longer available, and at markets it now costs about RM3.00, RM3.50, or RM4.00 per kilogram[6].\n- **Government position (January 2026):** Deputy Minister Chan Foong Hin said the government does not intend to review the minimum paddy purchase price, which is currently RM1,500 per tonne[7]."
+   }
+  },
+  {
+   "t": 12261,
+   "event": "done",
+   "data": {
+    "question": "What was said about the price of rice?",
+    "lang": "en",
+    "filters": "no filter",
+    "answer": "The documents contain several speeches on rice prices, mostly about the farmgate paddy price and the price of white rice:\n\n- **Paddy floor price (2023 to 2024):** In October 2023, Ronald Kiandee (BERSATU) said the floor price was set at RM1200[1], and that the industry had raised the price itself to RM1700 per tonne[1]. Mohamad Sabu (AMANAH) said the government had set the floor purchase price at RM1,200 since 2014[2] and that it should be reviewed.\n- **Import prices (2023):** Jeffrey Kitingan (STAR) said imported rice prices had risen 36 percent although world prices had not risen that much[3], and asked for the justification.\n- **Mill price cut (October 2024):** Ahmad Saad (PAS) said millers had lowered the purchase price from RM1,800 per tonne to RM1,450 per tonne from 10 October[4]. The Deputy Minister, Arthur Kurup, replied that the GMP had been raised from RM1,200 to RM1,300 per tonne in Peninsular Malaysia[4] and that price fluctuations are business decisions made by millers based on market demand and supply[4].\n- **Farmers' demands (February 2025):** Shahidan Kassim (PAS) said farmers had heard of a price of RM1,500 instead of RM1,800[5]. Ronald Kiandee said local white rice that was supposedly sold at RM2.60 per kilo is no longer available, and at markets it now costs about RM3.00, RM3.50, or RM4.00 per kilogram[6].\n- **Government position (January 2026):** Deputy Minister Chan Foong Hin said the government does not intend to review the minimum paddy purchase price, which is currently RM1,500 per tonne[7].\n\nThis is general information from the published record, not legal advice.",
+    "budget_out": false,
+    "sources": [
+     {
+      "n": 1,
+      "cite": "Dewan Rakyat 2023-10-09 (DR-2023-10-09-037)",
+      "quotes": [
+       "Datuk Seri Dr. Ronald Kiandee [Beluran]: Bila harga lantai beras RM1200 kita set kan. Dahulu kita hendak naikkan RM1400 tetapi tidak boleh naik.",
+       "Datuk Seri Dr. Ronald Kiandee [Beluran]: Sekarang ini harga dinaikkan sendiri oleh pihak industri sehingga RM1700, satu tan."
+      ],
+      "title": "DR-2023-10-09-037",
+      "meta": "Dewan Rakyat · 9 Oct 2023",
+      "url": "/debate/DR-2023-10-09-037#seq-467",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-09102023.Pindaan20032025.pdf#page=88",
+      "draft": true
+     },
+     {
+      "n": 2,
+      "cite": "Dewan Rakyat 2023-10-09 (DR-2023-10-09-047)",
+      "quotes": [
+       "Datuk Seri Haji Mohamad bin Sabu: Kerajaan menetapkan harga lantai belian pada RM1,200 sejak tahun 2014."
+      ],
+      "title": "DR-2023-10-09-047",
+      "meta": "Dewan Rakyat · 9 Oct 2023",
+      "url": "/debate/DR-2023-10-09-047#seq-564",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-09102023.Pindaan20032025.pdf#page=113",
+      "draft": true
+     },
+     {
+      "n": 3,
+      "cite": "Dewan Rakyat 2023-09-13 (DR-2023-09-13-044)",
+      "quotes": [
+       "Datuk Seri Panglima Dr. Jeffrey G. Kitingan [Keningau]: Baru-baru ini kecoh satu negara apabila harga beras import dinaik harga 36 peratus walaupun harga dunia tidak naik sebanyak itu."
+      ],
+      "title": "DR-2023-09-13-044",
+      "meta": "Dewan Rakyat · 13 Sep 2023",
+      "url": "/debate/DR-2023-09-13-044#seq-366",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-13092023.pdf#page=95",
+      "draft": false
+     },
+     {
+      "n": 4,
+      "cite": "Special Chamber 2024-10-28 (KK-2024-10-28-007)",
+      "quotes": [
+       "Dato’ Haji Ahmad bin Saad @ Yahaya [Pokok Sena]: Puan Yang di-Pertua, langkah drastik daripada para pengilang yang menurunkan harga belian padi daripada RM1,800 per tan kepada RM1,450 per tan bermula 10 Oktober yang lalu meresahkan para pesawah ketika ini.",
+       "Timbalan Menteri Pertanian dan Keterjaminan Makanan [Datuk Arthur Joseph Kurup]: Kadar GMP semasa telah dinaikkan dari RM1,200 kepada RM1,300 per tan metrik di Semenanjung dan pelaksanaannya telah diseragamkan bagi Sabah dan Sarawak berkuat kuasa pada 15 hari bulan Februari 2024.",
+       "Timbalan Menteri Pertanian dan Keterjaminan Makanan [Datuk Arthur Joseph Kurup]: Turun naik harga belian padi adalah keputusan perniagaan yang dibuat oleh pengilang bergantung kepada permintaan dan penawaran pasaran."
+      ],
+      "title": "KK-2024-10-28-007",
+      "meta": "Special Chamber · 28 Oct 2024",
+      "url": "/debate/KK-2024-10-28-007#seq-17",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/KKDR-28102024.pdf#page=12",
+      "draft": false
+     },
+     {
+      "n": 5,
+      "cite": "Dewan Rakyat 2025-02-13 (DR-2025-02-13-022)",
+      "quotes": [
+       "Dato’ Seri Dr. Shahidan bin Kassim [Arau]: Patutnya RM1,800 tiba-tiba RM1,500."
+      ],
+      "title": "DR-2025-02-13-022",
+      "meta": "Dewan Rakyat · 13 Feb 2025",
+      "url": "/debate/DR-2025-02-13-022#seq-311",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-13022025.pdf#page=56",
+      "draft": false
+     },
+     {
+      "n": 6,
+      "cite": "Dewan Rakyat 2025-02-04 (DR-2025-02-04-008)",
+      "quotes": [
+       "Datuk Seri Dr. Ronald Kiandee [Beluran]: Mereka juga ingin kerajaan tahu bahawa beras yang mereka keluarkan di pasaran ini yang supposedly dijual pada RM2.60 satu kilo, dah tak ada dah. Sekarang ini beras putih tempatan, pergi pasar, dia lebih kurang RM3.00, RM3.50, RM4.00 satu kilogram."
+      ],
+      "title": "DR-2025-02-04-008",
+      "meta": "Dewan Rakyat · 4 Feb 2025",
+      "url": "/debate/DR-2025-02-04-008#seq-47",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-04022025.pdf#page=18",
+      "draft": false
+     },
+     {
+      "n": 7,
+      "cite": "Dewan Rakyat 2026-01-29 (DR-2026-01-29-016)",
+      "quotes": [
+       "Timbalan Menteri Pertanian dan Keterjaminan Makanan [Datuk Chan Foong Hin]: Sehubungan itu, kerajaan tidak berhasrat untuk mengkaji semula harga minimum belian padi yang telah ditetapkan buat masa kini pada kadar RM1,500 bagi setiap tan metrik."
+      ],
+      "title": "DR-2026-01-29-016",
+      "meta": "Dewan Rakyat · 29 Jan 2026",
+      "url": "/debate/DR-2026-01-29-016#seq-203",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-29012026.pdf#page=57",
+      "draft": true
+     }
+    ],
+    "passages": [
+     {
+      "cite": "Dewan Rakyat 2023-10-09 (DR-2023-10-09-037)",
+      "title": "DR-2023-10-09-037",
+      "meta": "Dewan Rakyat · 9 Oct 2023",
+      "header": "Dewan Rakyat, 2023-10-09, Parliament 15. PENERANGAN DARIPADA MENTERI PERTANIAN DAN KETERJAMINAN MAKANAN DI BAWAH PERATURAN MESYUARAT 14(1)(i) ISU BEKALAN BERAS PUTIH TEMPATAN. Speakers: Datuk Seri Dr. Ronald Kiandee [Beluran] (BERSATU).",
+      "text": "Datuk Seri Dr. Ronald Kiandee [Beluran] (continued): We are not, Speaker. Kita tidak berhadapan\ndengan masalah distribution, kita berhadapan dengan masalah supply of BPT. [Timbalan Yang di-Pertua, (Dato' Ramli bin Dato' Mohd Nor) mempengerusikan\nSebab itu langkah menggalakkan intervensi beras LPP dengan FAMA, ini tidak\nmeng-address masalah pokok yang kita hadapai iaitu masalah supply of BPT. BPT. Sebab\nitu saya tak hendak bertelagah dengan Pengerusi FAMA soal autoriti kuasa di bawah Akta\n141. Biarlah PUU FAMA advise dia on the legal aspect of the act. Jadi, memang benar kerana kenaikan harga beras putih di peringkat global\nmeningkatkan demand untuk white rice tempatan. BPT tempatan. Memang betul, tetapi kita\njangan rules out manipulasi. Manipulasi. Kementerian KPIPB ini di bahagian Padi dan Beras,\nDato’ Azman, ini pandai ini. Belakang sana itu. Bila harga lantai beras RM1200 kita set kan. Dahulu kita hendak naikkan RM1400\ntetapi tidak boleh naik. RM1200 masih untuk satu tan padi. Sekarang ini harga dinaikkan\nsendiri oleh pihak industri sehingga RM1700, satu tan. You must- mesti ring a bell. Kementerian mesti rings a bell. Ada sesuatu tidak betul. Kita setkan RM1200, pengilang pergi RM1200 untuk satu tan, tetapi pengilang beli\nRM1700 campur RM100 upah. Setiap satu tan ini upah agen ataupun orang tengah. Di utara\ndipanggil agen. Kerana saya katakan you must ring a bell kementerian kerana kalau diproses\nsatu tan padi itu pada recover rate 62 peratus, dia akan pergi kepada white rice, whole rice,\nbroken rice, dan juga bran. Pada whole rice kalau diproses pada 62 percent, recovery 50\nperatus, 310 kilogram pada harga RM2.20 satu kilogram. Bererti ada RM1364 itu. Dan kategori kedua broken rice pada 16 peratus percentage 99 kilogram pada harga\nRM1.10 satu kilogram. Dia akan mencecah kepada harga berapa ini. RM200 lebih. Total\ndaripada semua ini, Dato’ Yang di-Pertua, proses satu tan dia beli RM1700 campur RM100\npengilang akan rugi RM273 untuk satu tan pembelian. Itu yang saya katakan. Kementerian\nmesti sedar ini. Kita suruh beli harga lantai RM1200. Mereka beli RM1700 tetapi mereka rugi. Maknanya ada elemen manipulasi di peringkat ini. Kerana apa? Kalau mereka jual\nini harga padi tempatan dijual sebagai BPT, Beras Putih Tempatan setiap satu tan mereka\nakan rugi RM273. Semak ini, ada manipulasi. Beras Putih Tempatan ini ada pihak yang jual\nsebagai beras putih import. Sekarang ini RM1700 satu tan. Pesawah gembira sekarang. Betul pesawah gembira. Kita pun sokong dahulu\nRM1400 satu tan, tetapi kilang rugi tetapi kilang masih lagi berlumba-lumba di kalangan\nmereka sekarang ini untuk membeli beras RM1700 campur RM100 agen. Belanja upah agen. RM1800 diluluskan kerana ada elemen. Kementerian mesti semak. Ada elemen beras ini di\nmanipulasi dan dijual sebagai beras putih import.\n\nDatuk Awang bin Hashim [Pendang]: Beluran.\n\nDatuk Seri Dr. Ronald Kiandee [Beluran]: So, itu yang beras RM30, beras RM40,\nberas RM60. Kita bukan berhadapan dengan masalah beras. Tidak. Kita Cuma berhadapan\ndengan masalah beras putih tempatan. So, lantik FAMA, lantik LPP tidak menyelesaikan\nmasalah. Kita bukan berhadapan dengan masalah distribution tetapi....\n\nDatuk Awang bin Hashim [Pendang]: Beluran.\n\nDatuk Seri Dr. Ronald Kiandee [Beluran]: ...Masalah supply.",
+      "kind": "debate",
+      "url": "/debate/DR-2023-10-09-037#seq-467",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-09102023.Pindaan20032025.pdf#page=88",
+      "via": "",
+      "score": 20.0,
+      "draft": true
+     },
+     {
+      "cite": "Dewan Rakyat 2023-09-13 (DR-2023-09-13-044)",
+      "title": "DR-2023-09-13-044",
+      "meta": "Dewan Rakyat · 13 Sep 2023",
+      "header": "Dewan Rakyat, 2023-09-13, Parliament 15. USUL PERDANA MENTERI DI BAWAH P.M. 27(3) KAJIAN SEPARUH PENGGAL RANCANGAN MALAYSIA KEDUA BELAS (2023-2025). Speakers: Datuk Seri Panglima Dr. Jeffrey G. Kitingan [Keningau] (STAR).",
+      "text": "Datuk Seri Panglima Dr. Jeffrey G. Kitingan [Keningau] (continued): Jika\nperuntukan geran ini ditingkatkan pada RM5 juta setahun iaitu 20 kali ganda, usahawan\ndan nilai jualan boleh ditingkatkan juga 20 kali ganda. Penambahan dana RM5 juta untuk melaksanakan Program Geran Pemadanan\nini boleh membawa usahawan industri makanan dan asas tani dalam kategori mikro untuk\nmeningkatkan nilai jualan tahunan melebihi RM55 juta setahun. Program ini mampu\nmemperkasakan perniagaan usahawan melalui pengeluaran produk yang cepat,\nkonsisten dan berkualiti serta beroperasi dalam premis yang mematuhi pensijilan. Skop\ngeran ini menyokong dan seiring dengan permintaan produk makanan tempatan bernilai\ntinggi bagi memenuhi keperluan pasaran domestik dan juga untuk eksport. Tuan Yang di-Pertua, kawal selia padi dan beras diurus di bawah Timbalan\nSetiausaha Bahagian Seksyen Kawal Selia Padi dan Beras di Kementerian Pertanian dan\nKeterjaminan Makanan. Baru-baru ini kecoh satu negara apabila harga beras import\ndinaik harga 36 peratus walaupun harga dunia tidak naik sebanyak itu. Mungkin 14\nperatus sahaja. Adalah menjadi tanggungjawab berkanun Timbalan Setiausaha Bahagian\nSeksyen Kawal Selia Padi dan Beras untuk dengan izin, to ensure a fair and stable price\nof rice for consumers dan to do all things expedite or reasonable necessary or incidental\nto enforce the maintenance of a fair and stable price of rice for consumers. Jadi, persoalan saya apakah justifikasi Menteri Pertanian dan Keterjaminan\nMakanan dan Timbalan Setiausaha Bahagian Seksyen Kawal Selia Padi dan Beras\nmembenarkan kenaikan harga beras import sebanyak 36 peratus? Apakah langkah-langkah dan tindakan segera kerajaan untuk mengawal harga beras berikutan bebanan\nhidup rakyat yang semakin meningkat? Tuan Yang di-Pertua, saya mencadangkan untuk menambah baik dan\nmemperkasa RMKe-12 ini untuk industri padi dan beras. Kerajaan Persekutuan\ndicadangkan untuk mengambil tindakan seperti berikut. Pertama, membatalkan atau\nmengecualikan pelaksanaan Akta 522, Control of Paddy and Rice Act 1994 di Sabah dan\nmenurunkan kuasa kawal selia dan autonomi padi dan beras kepada Kerajaan Negeri\nSabah di bawah Jabatan Pertanian Sabah seperti mana juga yang telah dilaksanakan\ndengan Akta Perikanan 1995 di mana pada tahun 2021...",
+      "kind": "debate",
+      "url": "/debate/DR-2023-09-13-044#seq-366",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-13092023.pdf#page=95",
+      "via": "",
+      "score": 19.0,
+      "draft": false
+     },
+     {
+      "cite": "Special Chamber 2024-10-28 (KK-2024-10-28-007)",
+      "title": "KK-2024-10-28-007",
+      "meta": "Special Chamber · 28 Oct 2024",
+      "header": "Special Chamber of the Dewan Rakyat, 2024-10-28, Parliament 15. ISU BELIAN PADI YANG MENEKAN PARA PESAWAH. Speakers: Dato’ Haji Ahmad bin Saad @ Yahaya [Pokok Sena] (PAS).",
+      "text": "Dato’ Haji Ahmad bin Saad @ Yahaya [Pokok Sena]: Puan Yang di-Pertua,\nlangkah drastik daripada para pengilang yang menurunkan harga belian padi\ndaripada RM1,800 per tan kepada RM1,450 per tan bermula 10 Oktober yang lalu\nmeresahkan para pesawah ketika ini. Apa yang dihujahkan di peringkat pengilang ketika ini adalah kerana harga jual\nRM2.60 per kilogram tidak lagi memberikan keuntungan kepada mereka. Ia juga\ndikatakan susulan operasi yang dijalankan Kementerian bagi menguatkuasakan\nlarangan campuran Beras Putih Tempatan (BPT) dengan Beras Putih Import (BPI). Situasi ini menjelaskan bahawa sememangnya BPT yang telah ditukar sarung\nke beras putih import mendorong beras tempatan yang rendah di pasaran selepas\nhampir satu tahun. Penurunan harga belian padi ini menjejaskan mata pencarian\nribuan pesawah yang berada di kawasan fasa tiga tanaman padi dengan anggaran 5\nribu sehingga 6 ribu hektar yang belum dituai kerana menunggu giliran jentera. Walhal, pesawah di kawasan lain yang lebih awal telah menjual padi pada\nharga RM1,800 per tan. Keadaan ini menyebabkan ada pesawah yang menikmati\nharga belian yang tinggi, manakala ada pesawah yang terpaksa menjualnya pada\nharga yang rendah dan tidak menguntungkan. Oleh yang demikian, saya memohon\npenjelasan kementerian supaya menyediakan pelan tindakan segera bagi mengatasi\nisu ini; (i) langkah segera bagi memastikan pengilang mengekalkan harga\nbelian padi pada RM1,800 per tan sekurang-kurangnya sehingga\nhabis musim ini; (ii) isu bekalan beras tempatan dengan harga kompetitif wajar\nditangani dengan komprehensif; dan\n(iii) sistem sokongan kewangan kepada pesawah yang terjejas\nberikutan bencana banjir yang teruk sebelum ini. Sekian, terima kasih.\n\nTimbalan Yang di-Pertua [Puan Alice Lau Kiong Yieng]: Minta Yang\nBerhormat Menteri untuk menjawab.\n\nTimbalan Menteri Pertanian dan Keterjaminan Makanan [Datuk Arthur Joseph Kurup]: Terima kasih Puan Yang di-Pertua, terima kasih Yang Berhormat\nPokok Seba. Soalan Yang Berhormat ini dia ada tiga bahagian, merujuk kepada isu\npertama yang dibangkitkan oleh YB Pokok Sena berkaitan langkah segera bagi\nmemastikan pengilang mengekalkan harga belian padi pada RM1,800 per tan\nsekurang-kurangnya sehingga habis musim ini. Untuk makluman Ahli Yang Berhormat, kerajaan telah melaksanakan harga\nminimum terjamin padi atau dengan izin Guaranteed Minimum Price (GMP) iaitu\nharga minimum belian padi yang perlu dibayar oleh pengilang padi kepada pesawah\ndan penetapan ini juga tertakluk kepada pemutuan sebenar padi. Pelaksanaan GMP\nini adalah bagi melindungi kepentingan pesawah supaya mendapat hasil jualan padi\npada harga yang berpatutan. Kadar GMP semasa telah dinaikkan dari RM1,200 kepada RM1,300 per tan\nmetrik di Semenanjung dan pelaksanaannya telah diseragamkan bagi Sabah dan\nSarawak berkuat kuasa pada 15 hari bulan Februari 2024. Pada masa ini, pengilang\npadi komersial atau pemegang lesen membeli padi bebas menawarkan harga belian\npadi yang terbaik kepada pesawah namun, perlu mematuhi harga minimum yang\ntelah ditetapkan oleh kerajaan. Turun naik harga belian padi adalah keputusan perniagaan yang dibuat oleh\npengilang bergantung kepada permintaan dan penawaran pasaran. Buat masa ini,\nkerajaan masih mengekalkan harga minimum terjamin padi pada kadar yang telah\nditetapkan. Keduanya, berkaitan isu bekalan beras tempatan dengan harga kompetitif\nyang wajar ditangani dengan komprehensif.",
+      "kind": "debate",
+      "url": "/debate/KK-2024-10-28-007#seq-17",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/KKDR-28102024.pdf#page=12",
+      "via": "",
+      "score": 18.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2025-02-13 (DR-2025-02-13-022)",
+      "title": "DR-2025-02-13-022",
+      "meta": "Dewan Rakyat · 13 Feb 2025",
+      "header": "Dewan Rakyat, 2025-02-13, Parliament 15. PENERANGAN DARIPADA MENTERI PERTANIAN DAN KETERJAMINAN MAKANAN DI BAWAH P.M 14(1)(i) PENJELASAN LANJUT BERKENAAN SITUASI SEMASA INDUSTRI BERAS NEGARA. Speakers: Dato’ Seri Dr. Shahidan bin Kassim [Arau] (PAS); Timbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor] (UMNO); Tuan Haji Azli bin Yusof [Shah Alam] (AMANAH).",
+      "text": "Tuan Haji Azli bin Yusof [Shah Alam] (continued): Sesiapa yang\nboleh menghasilkan sehingga lima tan per hektar, ada insentif untuk pengeluaran\ntambahan. Kalau naik enam tan per hektar, ada lagi insentifnya. Ini menjadikan kita\nberlumba-lumba untuk meningkatkan hasil pengeluaran padi. Terima kasih Dato' Yang di-Pertua.\n\nTimbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor]: Baik, terima kasih\nYang Berhormat Shah Alam. Ada berbaki seorang lagi pembahas. Yang Berhormat Arau,\nsaya beri lepas makan lah ya. Pasal apa? Nanti karang sudah time pukul 1.00 tengah hari\ndah. Selepas ini...\n\nDato’ Seri Dr. Shahidan bin Kassim [Arau]: Yang Berhormat adalah seorang\nSpeaker suka menggunakan 15 minit. Lebih 15 minit. Tetapi hari ini nampaknya tak dapat\npakai yang itu?\n\nTimbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor]: Yang Berhormat,\nyang itu saya selalu gunakan penghujung. Ini time makan. [Ketawa] Tak apa Yang\nBerhormat Arau, nanti selepas ini Yang Berhormat Arau akan berucap...\n\nDato’ Seri Dr. Shahidan bin Kassim [Arau]: Dak, saya — Siapa Speaker\nselepas ini?\n\nTimbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor]: Dan Menteri juga\nakan menjawab.\n\nDato’ Seri Dr. Shahidan bin Kassim [Arau]: Dak, siapa Speaker? Saya nak\nYang Berhormat jadi Speaker, baru saya dapat lebih sedikit... [Ketawa] Jadi, Yang\nBerhormat ini pasal benda ini penting...\n\nTimbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor]: [Ketawa] Yang\nBerhormat...\n\nDato’ Seri Dr. Shahidan bin Kassim [Arau]: Rakyat sedang tunggu sekarang\ntentang harga lantai padi, ada yang nak pengsan, terkejut. Patutnya RM1,800 tiba-tiba\nRM1,500. Itu yang saya minta kalau boleh saya bercakap sekejap.\n\nTimbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor]: Tak apa Yang\nBerhormat. Yang menentukan saya. Saya tentukan la ni, saya putuskan pukul 2.30\npetang.\n\nDato’ Seri Dr. Shahidan bin Kassim [Arau]: Rakyat tengah ramai...\n\nTimbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor]: Selepas itu\nsambung oleh Menteri akan menjawab nah. Baik, terima kasih.\n\nDato’ Seri Dr. Shahidan bin Kassim [Arau]: Cubalah sedikit, boleh. Tolong sikit. Lima minit saja Yang Berhormat.\n\nTimbalan Yang di-Pertua [Dato’ Ramli bin Dato’ Mohd Nor]: Yang Berhormat,\nsekarang Mesyuarat ditangguh sehingga jam 2.30 petang. [Mesyuarat ditempohkan pada pukul 1.02 tengah hari]\nMesyuarat disambung semula pada pukul 2.30 petang]\n[Timbalan Yang di-Pertua (Puan Alice Lau Kiong Yieng) mempengerusikan\n\nTimbalan Yang di-Pertua [Puan Alice Lau Kiong Yieng]: Saya jemput Yang\nBerhormat Arau untuk berucap.\n\nDato’ Seri Dr. Shahidan bin Kassim [Arau]: Terima kasih Puan Yang di-Pertua. Pengorbanan sepanjang hayat, petani. Polis dengan askar berkorban jiwa dan raga\nsepanjang hayat juga. Tetapi mereka ada pencen, ada gaji. Petani tidak ada gaji Yang\nBerhormat. Hari ini bila dengar cerita RM1,500 yang mereka hendak minta RM1,800. Maka dengan – saya tidak pernah nampak petani menangis. Tetapi dengan sedu-sedu\ndia kata terima kasihlah, syukurlah dia kata. Tetapi kita minta RM1,800. Sebab kita minta\nRM1,800, dia ulang balik berkali-kali tentang kos pengeluaran padi, Yang Berhormat. Tetapi dia kata tidak apalah. Kalau macam mana pun dia kata mintalah kalau boleh\nkerajaan backdate lah seminggu. Bayangkan petani di Salang saya pergi hendak makan kenduri. Saya tanya\nkenapa tidak ambil padi, sudah merah. Hendak tunggu hari Khamis. Sudah lima hari dia\ntunggu, baru hendak dengar pengumuman padi. Dia kata kalau RM1,500, pening kepala. Kalau RM1,800, boleh tahan. Jadi Yang Berhormat, terima kasih, syukur. Sebagai orang\nIslam, kita bersyukur RM1,500. Tetapi Yang Berhormat, minta naik RM1,800. Tetapi kalau\nYang Berhormat tidak boleh naik RM1,800, mungkin kalut dan sebagainya, naik RM1,700\nlah. Umum sedikit lebih. Saya melihat tidak ada masalah.",
+      "kind": "debate",
+      "url": "/debate/DR-2025-02-13-022#seq-311",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-13022025.pdf#page=56",
+      "via": "",
+      "score": 17.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2025-02-04 (DR-2025-02-04-008)",
+      "title": "DR-2025-02-04-008",
+      "meta": "Dewan Rakyat · 4 Feb 2025",
+      "header": "Dewan Rakyat, 2025-02-04, Parliament 15. WAKTU PERTANYAAN-PERTANYAAN MENTERI. Speakers: Datuk Seri Dr. Ronald Kiandee [Beluran] (BERSATU).",
+      "text": "Datuk Seri Dr. Ronald Kiandee [Beluran] (continued): Dan ini sebahagian daripada komponen industri padi beras yang\npenting bagi membantu pesawah. [Tidak Jelas] tak tanam, tuai dan pelbagai yang\nmenggunakan mesin. Ini tak termasuk. Mereka nak kerajaan tahu ini. Mereka juga ingin kerajaan tahu bahawa beras yang mereka keluarkan di pasaran ini\nyang supposedly dijual pada RM2.60 satu kilo, dah tak ada dah. Sekarang ini beras putih\ntempatan, pergi pasar, dia lebih kurang RM3.00, RM3.50, RM4.00 satu kilogram. Jadi\npesawah nampak ini. Beras mereka tak ada dijual RM2.60.\n\nTuan Yang di-Pertua: Maka soalan saya...\n\nDatuk Seri Dr. Ronald Kiandee [Beluran]: Soalan dia, soalan Dato’ Tan Sri, dalam\nmelestarikan kehendak dan Dasar 73 ini, pesawah adalah komponen yang penting. Apa\nkerajaan melihat, prihatin dan empati terhadap kesengsaraan, keperitan yang sedang dialami\noleh pesawah? Kerajaan melalui kementerian ada prihatin kepada pengimport kerana\npengimport kekurangan kenaikan harga pasaran beras, mereka allow pengimport bawa\nmelebihi daripada kos RM3,000 per tan dan sekarang ini diturunkan RM2,800 per tan. Pengeluar benih pun Tan Sri, di-okey-kan masalah mereka oleh kementerian tetapi\npesawah ini mereka nak harga lantai padi RM1,800 satu tan. [Tepuk] Kalaupun harga padi\ndibeli pada RM1,800 satu tan daripada pesawah, mereka kekal B40. Mereka tidak akan lonjak\nmenjadi T20, T15.\n\nTuan Yang di-Pertua: Okey.\n\nDatuk Seri Dr. Ronald Kiandee [Beluran]: Adakah kerajaan prihatin terhadap\nmasalah yang sedang dihadapi oleh pesawah? Ini yang mereka nak saya habaq pada Tan\nSri. Terima kasih Tan Sri.\n\nTuan Yang di-Pertua: Depa habaq-lah ya.\n\nDato’ Seri Anwar bin Ibrahim: Baik. Terima kasih.\n\nDr. Mohammed Taufiq bin Johari [Sungai Petani]: [Bangun]\n\nDato’ Seri Anwar bin Ibrahim: Saya terima baik pandangan Beluran kerana isu ini\nmemang kita ikuti. Bukan baru. Saya masih ingat sekitar 1992, 1993 ada tunjuk perasaan\nbesar-besaran di sekitar Alor Setar dan saya sendiri hadir dan Yang Berhormat Arau pun ada\nmasa itu.\n\nTuan Hassan bin Abdul Karim [Pasir Gudang]: [Bangun]\n\nDato’ Seri Anwar bin Ibrahim: Di situ kita cuba naikkan harga lantai. Tetapi masalah\npenanam padi, pesawah padi terutama utara termasuk Seberang Perai Utara, Permatang\nPauh, Kepala Batas, Tasek Gelugor sehingga kawasan MADA dan Perlis dan Kelantan itu\nkerana produktiviti sangat rendah. Jadi, kadar kemiskinan rakyat. Jadi sebab itu mereka\nbangkitkan. Tetapi seperti kita tahu, Yang Berhormat sendiri tahu, tidak ada langkah yang tegas\ndan berani yang dibuat sebelum ini untuk menaikkan, termasuk 2020, 2021, 2022, tidak ada\nyang drastik. Hanya setelah Kerajaan MADANI naik, barulah Bantuan Khas Sumbangan\nTunai ditambah RM228 juta tahun 2023 [Tepuk] dan ditambah pada tahun 2024, RM600\nsetahun bagi setiap pesawah. Belum dibuat sebelum ini. Bantuan Khas BERNAS, saya bincang dengan BERNAS. Memang dipertikai tapi\nBERNAS kontrak itu telah diperbaharui pada tahun 2021 untuk 10 tahun. [Tepuk] Jadi kita\nnak rungkai. Cuma yang saya boleh minta tolong bagilah bantuan sikit. Maka dia bagi RM60\njuta Bantuan Khas BERNAS kepada pesawah-pesawah terkesan di utara. Kemudian kita tambah Skim Takaful Tanaman Padi. Dana permulaan tahun 2024,\nRM50 juta, harga lantai belian padi ini hanya kita tambah pada tahun 2024, Januari 2024\nkenaikannya. Dan tentu tinggi di Sabah Sarawak kerana harga beras terlalu tinggi di Sabah\nSarawak.",
+      "kind": "debate",
+      "url": "/debate/DR-2025-02-04-008#seq-47",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-04022025.pdf#page=18",
+      "via": "",
+      "score": 16.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2026-01-29 (DR-2026-01-29-016)",
+      "title": "DR-2026-01-29-016",
+      "meta": "Dewan Rakyat · 29 Jan 2026",
+      "header": "Dewan Rakyat, 2026-01-29, Parliament 15. PERTANYAAN-PERTANYAAN BAGI JAWAB LISAN. Speakers: Timbalan Menteri Pertanian dan Keterjaminan Makanan [Datuk Chan Foong Hin] (DAP).",
+      "text": "Timbalan Menteri Pertanian dan Keterjaminan Makanan [Datuk Chan Foong Hin] (continued): Perkara lain yang turut diambil kira adalah\npergerakan harga beras dunia, unjuran permintaan dan penawaran beras tempatan. Bagi tahun 2026, kerajaan telah menyediakan sejumlah RM2.62 bilion untuk\nsubsidi dan bantuan kepada pesawah dengan peningkatan sebanyak 0.73 peratus\nberbanding tahun yang sebelumnya. Pecahan utama peruntukan ini merangkumi RM1.456 bilion subsidi input dan\nRM825 juta subsidi output, manakala selebihnya berjumlah RM339 juta untuk lain-lain insentif. Subsidi input merangkumi komponen pembekalan input pertanian di\nbawah skim baja padi Kerajaan Persekutuan (SBPKP) sebanyak RM627.46 juta,\nskim insentif pengeluaran padi (SIPP) sebanyak RM687.96 juta dan skim baja dan\nracun padi bukit huma (SBRB) sebanyak RM53.3 juta serta insentif benih padi sah\nsebanyak RM87.5 juta. Subsidi output pula merangkumi pemberian insentif di bawah\nskim subsidi harga padi (SSHP). Lain-lain insentif meliputi dana pembiayaan perlindungan di bawah skim\ntakaful tanaman padi, insentif penuaian padi yang baharu dan penyelarasan harga\nberas putih import di Sabah dan Sarawak, termasuk Wilayah Persekutuan Labuan. Sehubungan itu, kerajaan tidak berhasrat untuk mengkaji semula harga\nminimum belian padi yang telah ditetapkan buat masa kini pada kadar RM1,500 bagi\nsetiap tan metrik. Kerajaan memberi jaminan akan sentiasa memantau sebarang\nperubahan kos pengeluaran padi dan memberi pertimbangan sewajarnya pada masa\ndepan bagi memastikan kebajikan pesawah terbela. Sekian, terima kasih.\n\nTimbalan Yang di-Pertua [Puan Alice Lau Kiong Yieng]: Jerai.\n\nTuan Sabri bin Azit [Jerai]: Terima kasih Yang di-Pertua dan terima kasih\nTimbalan Menteri atas jawapan yang diberikan. Cuma akhir-akhir ini Timbalan\nMenteri, potongan harga padi cukup tinggi melibatkan sepertimana yang disebut oleh\nParit dan ramai lagi lah Ahli Parlimen yang menyebut tentang potongan yang tinggi\nini. Adakah dengan masalah-masalah yang seperti ini, kerajaan masih lagi\nbertegas untuk mengekalkan harga tersebut? Di mana rayuan-rayuan yang dibuat\noleh rakyat semakin meningkat dan baru-baru ini ada demo ataupun tunjuk perasaan\ndi depan pintu Parlimen. Sekian, Menteri.\n\nDatuk Chan Foong Hin: Terima kasih kepada YB Jerai, saya yang mewakili\nkementerian untuk menerima memorandum itu.\n\nDato Dr. Richard Rapu @ Aman anak Begri [Betong]: [Bangun]\n\nDatuk Chan Foong Hin: So, berhubung dengan dakwaan mengenai kadar\npemutuan tinggi di negeri Kedah. Memang padi yang dituai tersebut sekarang dijual\ndi kilang padi beras BERNAS dan swasta tempatan di negeri Kedah sahaja, dengan\npurata pemutuan sebanyak 24.4 peratus. Okey, itu memang yang sekarang berlaku. Susulan aduan serta himpunan petani di Parlimen pada 20 Januari 2026\nberhubung isu pemutuan padi yang tinggi di Kedah. Pihak kementerian telah\nmengadakan sesi libat urus bersama dengan pihak kilang dan pembeli padi di zon\nutara yang melibatkan negeri Perlis, Kedah dan Pulau Pinang pada 26 Januari 2026. So, sesi ini diadakan bagi mendapatkan maklum balas segera serta\ngambaran sebenar situasi di lapangan. Sekali gus, membolehkan satu kaedah\npenyelesaian yang lebih menyeluruh dan langkah intervensi kerajaan yang\nbersesuaian di rangka bagi menangani isu yang dibangkitkan. Dan kementerian turut mengambil maklum kekangan yang dihadapi oleh\npihak kilang dan pembeli padi, khususnya berkaitan kenaikan kos harga padi. Namun, harga beras yang rendah di pasaran. So, itu yang kekangan dia.",
+      "kind": "debate",
+      "url": "/debate/DR-2026-01-29-016#seq-203",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-29012026.pdf#page=57",
+      "via": "",
+      "score": 15.0,
+      "draft": true
+     },
+     {
+      "cite": "Dewan Rakyat 2023-10-09 (DR-2023-10-09-047)",
+      "title": "DR-2023-10-09-047",
+      "meta": "Dewan Rakyat · 9 Oct 2023",
+      "header": "Dewan Rakyat, 2023-10-09, Parliament 15. PENERANGAN DARIPADA MENTERI PERTANIAN DAN KETERJAMINAN MAKANAN DI BAWAH PERATURAN MESYUARAT 14(1)(i) ISU BEKALAN BERAS PUTIH TEMPATAN. Speakers: Datuk Seri Haji Mohamad bin Sabu (AMANAH).",
+      "text": "Datuk Seri Haji Mohamad bin Sabu: Tidak terjerumus, intervensi. Sementara kalau\nperkara lagi berat, mungkin kita boleh guna RELA. Ertinya...\n\nDato' Dr. Zulkafperi bin Hanapi [Tanjong Karang]: Kenapa BERNAS tidak\nberperanan sekarang?\n\nDatuk Seri Haji Mohamad bin Sabu: BERNAS berperanan. Peranannya\nmengimport dan juga berusaha dan mereka jenis bukan buat kenyataan akhbar. Mereka\nbukan badan politik seperti kita yang banyak membuat – mereka badan perniagaan dan juga\nterlibat di dalam obligasi sosial. Kuranglah mereka membuat kenyataan. Kita ini sebab orang\npolitik, kita buat sedikit, kita hendak beritahu dekat orang, macam Arau. Kalau tidak, siapa\nnak tahu kerja kebajikan yang kita buat. Kerajaan menetapkan harga lantai belian pada RM1,200 sejak tahun 2014. Penetapan harga lantai ini adalah bagi memastikan petani mendapat harga padi yang\nberpatutan sebagai tanda aras pada waktu itu. Kita lihat sekarang ini misalnya beras kita, ini tahun 2008 yang RM2.60 sekilo ini. Ini\ntahun 2008. Adakah perlu dikaji semula? Saya kata perlu. Sebarang kenaikan ini dan\nmelibatkan kos dan sebagainya. Kalau nak beri subsidi pada B40, kena bincang pula dengan\npihak Kementerian Ekonomi dan Kementerian Kewangan. Saya akan segerakan bincang perkara ini supaya harga lantai ini dapat dikaji. Saya\ntidak boleh kata, “Yes, saya akan setuju.” Tiba-tiba esok ini pihak Menteri Ekonomi dan\nMenteri Kewangan kata, “No, kita tak ada kemampuan lagi.” Tetapi saya akan bawa perkara\nini dengan seberapa segera supaya dapat kita kaji dengan harga lantai dan harga pasaran\nberas ini upaya petani dapat dibela, dapat mengangkat sedikit.\n\nTuan Haji Mohd Misbahul Munir bin Masduki [Parit Buntar]: [Bangun]\n\nTuan Ahmad Tarmizi bin Sulaiman [Sik]: [Bangun]\n\nDatuk Seri Haji Mohamad bin Sabu: Walaupun baru ini naik RM500, sudah\nterangkat tetapi diganggu pula dengan para pengilang yang beli tinggi itu, tiba-tiba mereka\nbeli pula rendah sekarang ini RM1,250. Dia beli pula harga menyebabkan para petani marah,\npara pengilang pun rasa tidak berapa sesuai dengan harga yang ada sekarang.\n\nDatuk Seri Johari bin Abdul Ghani [Titiwangsa]: [Bangun]\n\nTuan Ahmad Tarmizi bin Sulaiman [Sik]: Yang Berhormat Menteri.\n\nTuan Haji Mohd Misbahul Munir bin Masduki [Parit Buntar]: Parit Buntar tanya\nsedikit. Parit Buntar dulu ya.\n\nTuan Ahmad Tarmizi bin Sulaiman [Sik]: Selepas ini Sik sedikit, ya.\n\nDato’ Siti Zailah binti Mohd Yusoff [Rantau Panjang]: Saya minta juga sedikit.\n\nTuan Haji Mohd Misbahul Munir bin Masduki [Parit Buntar]: Okey, daerah Kerian\nini, antaranya jelapang padi di sebelah utara Perak. Saya sempat melawat beberapa kilang\npengeluar padi dengan padi di Parit Buntar. Memang beras tempatan tak ada. Kebanyakannya beras import yang dibungkus oleh kilang-kilang tersebut. Saya juga melawat beberapa pasar raya di seluruh pekan Parit Buntar, sama ada\nyang kecil atau yang besar dan beras tempatan waktu itu memang tidak ada. Kebanyakannya\nberas import. Dalam masa yang sama, YB Menteri pernah bercakap beras tempatan cukup dan\ndiedarkan oleh FAMA sendiri ke setiap daerah. Isunya, kalau beras tempatan cukup untuk\ndiedar kepada pengguna, mengapa tidak dihantar ke kedai-kedai? Sebab apabila diedar oleh\nFAMA, menyebabkan rakyat berebut-rebut. Jadi tidak elok. Berebut hendakkan beras. Hantar\nsahajalah ke kedai, ke pasar raya, supaya tidak menyusahkan rakyat untuk mendapatkan\nberas tempatan.\n\nDatuk Seri Haji Mohamad bin Sabu: Terima kasih. Kalau dengar flow ucapan saya,\nsaya sudah terang kenapa beras tempatan ini tiba-tiba tidak cukup kerana berlaku kenaikan\nharga import, bahasa Kedah utara depa pi terpa ke beras tempatan. Sebelum itu beras\ntempatan misalnya ada Mydin memberitahu sampai dia kena hantar balik. Ertinya orang tidak\nbeli waktu itu.",
+      "kind": "debate",
+      "url": "/debate/DR-2023-10-09-047#seq-564",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-09102023.Pindaan20032025.pdf#page=113",
+      "via": "",
+      "score": 14.0,
+      "draft": true
+     },
+     {
+      "cite": "Dewan Rakyat 2023-11-16 (DR-2023-11-16-006)",
+      "title": "DR-2023-11-16-006",
+      "meta": "Dewan Rakyat · 16 Nov 2023",
+      "header": "Dewan Rakyat, 2023-11-16, Parliament 15. PERTANYAAN-PERTANYAAN BAGI JAWAB LISAN. Speakers: Datuk Seri Haji Mohamad bin Sabu (AMANAH).",
+      "text": "Datuk Seri Haji Mohamad bin Sabu (continued): Paling hebat sebenarnya\n2014. Pada waktu itu tak ada TikTok. Jadi, ramailah rakyat tidak cemaslah, tak tahu. Tapi, tahun itulah yang paling teruk. Sekarang ini misalnya TikTok kata bulan depan beras\ntak ada, beras putih tempatan tak ada, menyebabkan orang panik dan membeli secara\nbanyak. Sebelum ini orang tak beli beras tempatan ini kerana harganya murah. Mydin\nmengatakan beras putih tempatan di stoknya kadang-kadang sampai naik habuk kerana\norang tak beli, dia murah. Orang-orang Damansara ini dia suka beli beras import. Tapi\nbila berat import naik mendadak, maka dia cari beras tempatan. Maka, beras tempatan\nini sekarang ini dicari oleh penduduk, oleh pengguna bukan kerana dia nak tempatan itu,\nkerana ia harga lebih murah. Itu yang menjadikan beras tempatan ini menjadi popular. Sebelum ini kalau beras tempatan RM26 atau RM28, beras import dalam RM32,\nRM33. Jadi, tak jauh. Sekarang bila beras import pergi sampai RM40, RM45, maka\ntermasuklah pengguna di daerah Lembah Kelang ini pun mencari beras putih tempatan. Tapi, itu adalah hak pengguna. Kerajaan akan cuba mencari jalan untuk memberi\npembekalan yang secukupnya. Ini langkah-langkah yang diambil. Kalau saya nak baca ini banyaklah. Saya akan\nberi kepada Damansara supaya dalam mahkamah nanti siapa bawa isu beras, lawyer kita\ndapat membelanya. Terima kasih. [Ketawa]\n\nTimbalan Yang di-Pertua [Puan Alice Lau Kiong Yieng]: Padang Terap.\n\nTuan Nurul Amin bin Hamid [Padang Terap]: Terima kasih Timbalan Yang di-Pertua. Yang Berhormat Menteri, saya ada mendengar tadi tentang Yang Berhormat\nMenteri sebut tentang harga beras yang menjadi keperluan masyarakat mencari beras\nputih tempatan. Kita lihat desakan daripada pihak industri beras ini supaya untuk\nmenaikkan harga siling beras dan saya lihat kerajaan pun ada respons untuk mengkaji\nkenaikan harga siling RM2.60 kepada RM3 lebih. Jadi, soalan saya adakah pihak kerajaan\nbersedia untuk menaikkan harga siling beras dan kalau bersedia, apakah mekanisme—\nadakah kenaikan itu mendadak ataupun kenaikan tu berperingkat di saat rakyat keluh\nkesah tentang kos harga yang mahal ini. Terima kasih.\n\nDatuk Seri Haji Mohamad bin Sabu: Terima kasih. Ini soalan yang saya sukalah\nsoalan ini. Memang saya kata tadi kita kena bagi keadilan kepada semua, penanam padi,\npengguna, orang yang berniaga, pengilang dan sebagainya. Memang harga RM26 ini\nharga tahun 2008. Harga upah telah naik, harga lain telah naik tapi harga beras masih\nharga 2008. Kalau nak berlaku kenaikan sebagainya, sebab tu saya sebut kita kena bincang\ndengan Kementerian Ekonomi, Kementerian Kewangan, KPDNK supaya kalau berlaku\nperubahan misalnya, kita harap dapat kongsi bersama dan bagaimana kita nak bagi puas\nhati kepada semua pihak termasuk di pihak kerajaan, termasuk di pihak pembangkang. Dalam hal beras ini nampaknya ada berpandangan— sama pandangan soal harga ini\nsupaya dapat dipertimbangkan. Tapi kalau kita setuju nak bela petani, angkat sebenarnya Kementerian Ekonomi\nkena bincang juga. Apa impaknya kepada ekonomi majoriti rakyat, bagaimana dengan\npengilang dan sebagainya. Sebab itu, sekurang-kurang empat kementerian ini kami\nsedang duduk berbincang dan sudah tentulah bersama dengan Kementerian Kewangan\ndan food security yang dipengerusikan sendiri oleh Perdana Menteri.",
+      "kind": "debate",
+      "url": "/debate/DR-2023-11-16-006#seq-49",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-16112023.pdf#page=21",
+      "via": "",
+      "score": 13.0,
+      "draft": false
+     }
+    ],
+    "stages": [
+     {
+      "name": "bm25",
+      "hits": 100,
+      "ms": 165
+     },
+     {
+      "name": "dense",
+      "hits": 100,
+      "ms": 1335
+     },
+     {
+      "name": "fused",
+      "hits": 197,
+      "ms": 0
+     },
+     {
+      "name": "reranked",
+      "hits": 20,
+      "ms": 1392
+     }
+    ],
+    "usd": null,
+    "search_ms": 2976,
+    "total_ms": 11999
+   }
+  }
+ ]
+}

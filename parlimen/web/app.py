@@ -177,10 +177,12 @@ def play(saved: dict, events: queue.Queue, pace: float = 1.0) -> None:
 
 def create_app(records: Records | None = None, searcher=None, answer_fn: Callable | None = None,
                corrections: Path = CORRECTIONS, limits: Limits | None = None, question_log: Path = QUESTIONS,
-               site_url: str = SITE_URL, replay: Path | None = None) -> FastAPI:
+               site_url: str = SITE_URL, replay: Path | None = None, demo: dict | None = None) -> FastAPI:
     """`replay` names a JSON file holding one saved /api/ask body under "answer" (as
     docs/design/data.json does): the ask routes then serve it with no model and no spend, for
-    design work and screenshots."""
+    design work and screenshots. `demo` renders the pages for the static demo
+    (tools/static_demo.py): {"repo", "recorded", "answers": [{"q", "lang", "file"}]} adds the demo
+    bar, plays the recorded answers on the ask page and serves /not-in-demo."""
     app = FastAPI(title=config.SITE_NAME, docs_url=None, redoc_url=None)
     replay = {"done": json.loads(replay.read_text(encoding="utf-8"))["answer"]} if replay else None
     app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
@@ -199,7 +201,7 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
     env.globals.update(law_url=law_url, debate_url=debate_url, pdf_page=pdf_page, slug=slug,
                        site_name=config.SITE_NAME, examples=EXAMPLES,
                        # the answer's own closing line; the page shows it once, in the answer foot
-                       advice_lines=[answer_mod.NOT_ADVICE, answer_mod.NOT_ADVICE_MS])
+                       advice_lines=[answer_mod.NOT_ADVICE, answer_mod.NOT_ADVICE_MS], demo=demo)
     engine = _Engine(searcher)
     app.state.engine = engine
     limits = limits or Limits()
@@ -570,6 +572,11 @@ def create_app(records: Records | None = None, searcher=None, answer_fn: Callabl
                                    ensure_ascii=False) + "\n")
         return page(request, "correction.html", record=record, back=back if back.startswith("/") else "",
                     sent=bool(text))
+
+    if demo:
+        @app.get("/not-in-demo", response_class=HTMLResponse)
+        def not_in_demo(request: Request):
+            return page(request, "demo_missing.html")
 
     @app.get("/about", response_class=HTMLResponse)
     def about(request: Request):

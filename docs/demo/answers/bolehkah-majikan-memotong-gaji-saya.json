@@ -1,0 +1,336 @@
+{
+ "question": "Bolehkah majikan memotong gaji saya?",
+ "lang": "ms",
+ "recorded": "2026-11-27",
+ "events": [
+  {
+   "t": 242,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 442,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": 100,
+    "ms": 194
+   }
+  },
+  {
+   "t": 443,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 1847,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": 100,
+    "ms": 1412
+   }
+  },
+  {
+   "t": 1847,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 1847,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": 182,
+    "ms": 0
+   }
+  },
+  {
+   "t": 1848,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 3434,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": 20,
+    "ms": 1587
+   }
+  },
+  {
+   "t": 3549,
+   "event": "stage",
+   "data": {
+    "name": "answer",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 9831,
+   "event": "text",
+   "data": {
+    "text": "Jawapannya bergantung pada jenis potongan. Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:**"
+   }
+  },
+  {
+   "t": 10098,
+   "event": "text",
+   "data": {
+    "text": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1]"
+   }
+  },
+  {
+   "t": 10774,
+   "event": "text",
+   "data": {
+    "text": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1] - **Pengurangan gaji kerana liabiliti caruman:** Akta Keselamatan Sosial Pekerja 1969 (Akta 4, seksyen 52) menyatakan bahawa tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja[2]"
+   }
+  },
+  {
+   "t": 11062,
+   "event": "text",
+   "data": {
+    "text": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1] - **Pengurangan gaji kerana liabiliti caruman:** Akta Keselamatan Sosial Pekerja 1969 (Akta 4, seksyen 52) menyatakan bahawa tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja[2] (dicetak semula pada 2024-10-01)."
+   }
+  },
+  {
+   "t": 11212,
+   "event": "text",
+   "data": {
+    "text": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1] - **Pengurangan gaji kerana liabiliti caruman:** Akta Keselamatan Sosial Pekerja 1969 (Akta 4, seksyen 52) menyatakan bahawa tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja[2] (dicetak semula pada 2024-10-01).\n- **Caruman pekerja:** Di bawah Akta 4, seksyen 7(2), majikan utama berhak memotong caruman pekerja daripada gaji tetapi tidak dengan cara lain[3]"
+   }
+  },
+  {
+   "t": 11423,
+   "event": "text",
+   "data": {
+    "text": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1] - **Pengurangan gaji kerana liabiliti caruman:** Akta Keselamatan Sosial Pekerja 1969 (Akta 4, seksyen 52) menyatakan bahawa tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja[2] (dicetak semula pada 2024-10-01).\n- **Caruman pekerja:** Di bawah Akta 4, seksyen 7(2), majikan utama berhak memotong caruman pekerja daripada gaji tetapi tidak dengan cara lain[3]."
+   }
+  },
+  {
+   "t": 11834,
+   "event": "text",
+   "data": {
+    "text": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1] - **Pengurangan gaji kerana liabiliti caruman:** Akta Keselamatan Sosial Pekerja 1969 (Akta 4, seksyen 52) menyatakan bahawa tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja[2] (dicetak semula pada 2024-10-01).\n- **Caruman pekerja:** Di bawah Akta 4, seksyen 7(2), majikan utama berhak memotong caruman pekerja daripada gaji tetapi tidak dengan cara lain[3].\n- **Potongan gaji lain:** Dalam perbahasan Dewan Rakyat pada 15 Julai 2019, Tuan M. Kulasegaran berkata bahawa mengikut seksyen 24 Akta Kerja 1955, Ketua Pengarah Jabatan Tenaga Kerja menerusi permohonan majikan akan mengeluarkan permit potong gaji selepas siasatan dilakukan. Pada masa ini, kadar maksimum yang dibenarkan bagi seorang pekerja adalah sebanyak RM50 sebulan.[4]"
+   }
+  },
+  {
+   "t": 12455,
+   "event": "text",
+   "data": {
+    "text": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1] - **Pengurangan gaji kerana liabiliti caruman:** Akta Keselamatan Sosial Pekerja 1969 (Akta 4, seksyen 52) menyatakan bahawa tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja[2] (dicetak semula pada 2024-10-01).\n- **Caruman pekerja:** Di bawah Akta 4, seksyen 7(2), majikan utama berhak memotong caruman pekerja daripada gaji tetapi tidak dengan cara lain[3].\n- **Potongan gaji lain:** Dalam perbahasan Dewan Rakyat pada 15 Julai 2019, Tuan M. Kulasegaran berkata bahawa mengikut seksyen 24 Akta Kerja 1955, Ketua Pengarah Jabatan Tenaga Kerja menerusi permohonan majikan akan mengeluarkan permit potong gaji selepas siasatan dilakukan. Pada masa ini, kadar maksimum yang dibenarkan bagi seorang pekerja adalah sebanyak RM50 sebulan.[4] Untuk nasihat tentang kes anda, sila rujuk peguam."
+   }
+  },
+  {
+   "t": 12621,
+   "event": "done",
+   "data": {
+    "question": "Bolehkah majikan memotong gaji saya?",
+    "lang": "ms",
+    "filters": "no filter",
+    "answer": "Dokumen yang diberikan menyebut beberapa perkara:\n\n- **Caruman majikan:** Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja.[1] - **Pengurangan gaji kerana liabiliti caruman:** Akta Keselamatan Sosial Pekerja 1969 (Akta 4, seksyen 52) menyatakan bahawa tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja[2] (dicetak semula pada 2024-10-01).\n- **Caruman pekerja:** Di bawah Akta 4, seksyen 7(2), majikan utama berhak memotong caruman pekerja daripada gaji tetapi tidak dengan cara lain[3].\n- **Potongan gaji lain:** Dalam perbahasan Dewan Rakyat pada 15 Julai 2019, Tuan M. Kulasegaran berkata bahawa mengikut seksyen 24 Akta Kerja 1955, Ketua Pengarah Jabatan Tenaga Kerja menerusi permohonan majikan akan mengeluarkan permit potong gaji selepas siasatan dilakukan. Pada masa ini, kadar maksimum yang dibenarkan bagi seorang pekerja adalah sebanyak RM50 sebulan.[4] Untuk nasihat tentang kes anda, sila rujuk peguam.\n\nIni maklumat umum daripada rekod yang diterbitkan, bukan nasihat undang-undang.",
+    "budget_out": false,
+    "sources": [
+     {
+      "n": 1,
+      "cite": "Act 452, s. 47 (BM, as at 2022-07-01)",
+      "quotes": [
+       "(1) Walau apa pun apa-apa kontrak yang berlawanan, majikan tidaklah berhak memotong atau selainnya mendapatkan kembali daripada upah atau saraan pekerja, caruman majikan daripada pekerja."
+      ],
+      "title": "Akta Kumpulan Wang Simpanan Pekerja 1991, section 47",
+      "meta": "Text as at 1 Jul 2022",
+      "url": "/law/452/BM#s-47",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMTczNjI0Nl9CTS9Ba3RhIDQ1MiAoRGFsYW0gVGFsaWFuIDIwMjIpLnBkZnw5NzhjOWY1OGUxZDI5MDRiNzI4N2MwOWIyYmY0YmFmOTA2Zjk1NGRhN2ViMGVjZGZlMGM1OTdkYmNjOGY3OWE3#page=62",
+      "draft": false
+     },
+     {
+      "n": 2,
+      "cite": "Act 4, s. 52 (BM, as at 2024-10-01)",
+      "quotes": [
+       "Tiada seseorang majikan jua boleh, semata-mata oleh sebab tanggungannya terhadap apa-apa caruman yang kena dibayar di bawah Akta ini, boleh, secara langsung atau tidak langsung, mengurangkan gaji mana-mana pekerja, atau kecuali sebagaimana yang diperuntukkan dalam peraturan, memberhentikan atau mengurangkan faedah yang kena dibayar kepada pekerja itu menurut syarat perkhidmatannya yang serupa dengan faedah yang diberikan oleh Akta ini."
+      ],
+      "title": "Akta Keselamatan Sosial Pekerja 1969, section 52",
+      "meta": "Text as at 1 Oct 2024",
+      "url": "/law/4/BM#s-52",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMzIyNjk4MV9CTS9Ba3RhIDQgKERhbGFtIHRhbGlhbiAyMDI2KS5wZGZ8ZDcyMWE0MTA3NjgwOTJiNjFhYThmNmUyMjE4MjNiZTRhNjYzZDEzMzliYzExZmJiNTk3Mzc0MDRlY2YwMTQ0Zg%3D%3D#page=57",
+      "draft": false
+     },
+     {
+      "n": 3,
+      "cite": "Act 4, s. 7 (BM, as at 2024-10-01)",
+      "quotes": [
+       "(2) Walau apa pun apa-apa peruntukan yang terkandung dalam mana-mana undang-undang bertulis yang lain tetapi tertakluk pada Akta ini dan peraturan-peraturan, jika ada, majikan utama adalah, mengenai seseorang pekerja yang diambil kerja terus olehnya, berhak mendapatkan daripada pekerja itu caruman pekerja dengan memotong daripada gajinya tetapi tidak dengan cara lain: Dengan syarat bahawa tiada apa-apa potongan sedemikian boleh dibuat daripada mana-mana gaji kecuali gaji yang bersabit dengan tempoh atau bahagian tempoh yang mengenainya caruman kena dibayar, atau yang lebih daripada caruman pekerja bagi tempoh itu."
+      ],
+      "title": "Akta Keselamatan Sosial Pekerja 1969, section 7",
+      "meta": "Text as at 1 Oct 2024",
+      "url": "/law/4/BM#s-7",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMzIyNjk4MV9CTS9Ba3RhIDQgKERhbGFtIHRhbGlhbiAyMDI2KS5wZGZ8ZDcyMWE0MTA3NjgwOTJiNjFhYThmNmUyMjE4MjNiZTRhNjYzZDEzMzliYzExZmJiNTk3Mzc0MDRlY2YwMTQ0Zg%3D%3D#page=20",
+      "draft": false
+     },
+     {
+      "n": 4,
+      "cite": "Dewan Rakyat 2019-07-15 (DR-2019-07-15-056)",
+      "quotes": [
+       "Tuan M. Kulasegaran: Mengikut seksyen 24 Akta Kerja 1955, Ketua Pengarah Jabatan Tenaga Kerja menerusi permohonan majikan akan mengeluarkan permit potong gaji selepas siasatan dilakukan. Pada masa ini, kadar maksimum yang dibenarkan bagi seorang pekerja adalah sebanyak RM50 sebulan."
+      ],
+      "title": "DR-2019-07-15-056",
+      "meta": "Dewan Rakyat · 15 Jul 2019",
+      "url": "/debate/DR-2019-07-15-056#seq-1282",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-15072019.pdf#page=134",
+      "draft": false
+     }
+    ],
+    "passages": [
+     {
+      "cite": "Dewan Rakyat 2019-07-15 (DR-2019-07-15-056)",
+      "title": "DR-2019-07-15-056",
+      "meta": "Dewan Rakyat · 15 Jul 2019",
+      "header": "Dewan Rakyat, 2019-07-15, Parliament 14. RANG UNDANG-UNDANG STANDARD MINIMUM PERUMAHAN DAN KEMUDAHAN PEKERJA (PINDAAN) 2019 Bacaan Kali Yang Kedua dan Ketiga. Speakers: Puan Kasthuriraani a/p Patto [Batu Kawan] (DAP); Tuan M. Kulasegaran (DAP).",
+      "text": "Tuan M. Kulasegaran (continued): Kedua, penalti yang dikenakan ke atas majikan yang gagal mematuhi Akta 446. Cadangan meningkatkan kadar penalti ini kepada RM50,000 adalah sebagai satu langkah\npencegahan dalam menunjukkan ketegasan dan keseriusan kerajaan dalam menangani isu-isu perumahan dan penginapan pekerja yang tidak menemui standard minimum yang\nditetapkan. Perkara ini dipandang serius oleh masyarakat antarabangsa kerana perumahan\npekerja sering dikaitkan dengan isu buruh paksa (force labour) dan hak asasi manusia. Diharapkan dengan peningkatan kadar penalti akan meningkatkan pemantauan dan\nseterusnya meningkatkan kualiti kehidupan pekerja.\n\nPuan Kasthuriraani a/p Patto [Batu Kawan]: Yang Berhormat Menteri.\n\nTuan M. Kulasegaran: Ya.\n\nPuan Kasthuriraani a/p Patto [Batu Kawan]: Sedikit penjelasan. Terima kasih\nTuan Yang di-Pertua, terima kasih Yang Berhormat Menteri. Soalan saya ini bukan di dalam\nucapan perbahasan saya tadi tetapi adalah soalan yang berhubung kait sekiranya majikan\nmempunyai seorang pekerja yang telah lari meninggalkan premis ataupun melarikan diri,\nmaka sekarang ini denda terpaksa dibayar oleh majikan. Contohnya sekiranya majikan itu\nselalu mengingatkan pekerja itu untuk membersihkan tempat mereka tidur ataupun\nmemotong kuku yang dalam F&B, tetapi tidak juga dibuat. Dengan izin, when they nagged\ntheir workers dan pekerja itu tidak tahan dan melarikan diri. Maka wajarkah majikan itu\ndikenakan denda di atas tindakan pekerja itu sendiri? Mohon Menteri memberikan sedikit\npenjelasan. Terima kasih.\n\nTuan M. Kulasegaran: Terima kasih Yang Berhormat Batu Kawan. Itu adalah\ndaripada segi peraturan yang sedia ada, yang mewajibkan bahawa majikan perlu membayar\ndenda. Jika ada satu polisi yang baharu, kemungkinan ia dapat ditukar tetapi setakat ini kalau\npekerja lari daripada majikan dan jika majikan melaporkan kepada pihak imigresen, dia perlu,\ndia dimestikan membayar denda. Dia tidak boleh lari. Itu adalah keperluan daripada segi\nregulasi yang kita ada. Potongan ke atas gaji pekerja, berapakah kadar potongan tersebut? Mengikut\nseksyen 24 Akta Kerja 1955, Ketua Pengarah Jabatan Tenaga Kerja menerusi permohonan\nmajikan akan mengeluarkan permit potong gaji selepas siasatan dilakukan. Pada masa ini,\nkadar maksimum yang dibenarkan bagi seorang pekerja adalah sebanyak RM50 sebulan. Pada masa akan datang, perbincangan antara majikan dengan kesatuan sekerja serta\nkesatuan majikan akan membincangkan kadar tersebut bagi menetapkan kadar yang\ndipersetujui kemudian. Yang Berhormat Batu Kawan juga. Apakah kriteria dan kuasa Menteri untuk\nmenetapkan peraturan kompaun? Peraturan berkaitan kompaun akan digubal berdasarkan\nkepada peruntukan baharu seksyen 28A dan peraturan ini hanya akan digubal setelah libat\nurus bersama semua pihak yang berkepentingan (stakeholders) dilakukan. Semua kriteria,\nkaedah dan tatacara mengkompaun tersebut akan digubal berdasarkan penglibatan semua\nstakeholders. Yang Berhormat Lembah Pantai, perkara yang dibangkitkan, adakah tindakan yang\nakan diambil kepada penyedia penginapan yang gagal melantik orang bertanggungjawab. Penalti ya. Penalti adalah sebanyak RM50,000 dikenakan bagi kesalahan ini. Yang Berhormat Batu Kawan juga, majikan membenarkan pekerja asing di rumah\nmurah ataupun pangsapuri yang sepatutnya didiami oleh pekerja tempatan. Kelulusan\ndaripada PBT atau lain-lain agensi diperlukan dan JTKSM akan juga membuat siasatan dan\npemantauan untuk memastikan perkara seperti ini tidak berlaku. Pembetungan dijaga oleh siapa?\n\nPuan Kasthuriraani a/p Patto [Batu Kawan]: Yang Berhormat Menteri, terima\nkasih Tuan Yang di-Pertua. Yang Berhormat Menteri, boleh saya tahu secara terperinci sebab\nyang ini penting. Yang Berhormat Menteri katakan ada kelulusan daripada PBT.",
+      "kind": "debate",
+      "url": "/debate/DR-2019-07-15-056#seq-1282",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-15072019.pdf#page=134",
+      "via": "",
+      "score": 20.0,
+      "draft": false
+     },
+     {
+      "cite": "Act 452, s. 47 (BM, as at 2022-07-01)",
+      "title": "Akta Kumpulan Wang Simpanan Pekerja 1991, section 47",
+      "meta": "Text as at 1 Jul 2022",
+      "header": "AKTA KUMPULAN WANG SIMPANAN PEKERJA 1991 (Akta 452), seksyen 47: Caruman majikan tidak boleh didapatkan kembali daripada pekerja. Bahagian V: CARUMAN KEPADA KUMPULAN WANG SIMPANAN PEKERJA. cetakan semula pada 2022-07-01.",
+      "text": "47. (1) Walau apa pun apa-apa kontrak yang berlawanan, majikan\ntidaklah berhak memotong atau selainnya mendapatkan kembali\ndaripada upah atau saraan pekerja, caruman majikan daripada pekerja. (2) Jika majikan memotong atau cuba memotong daripada upah\natau saraan mana-mana pekerja keseluruhan atau mana-mana bahagian\ndaripada caruman majikan, dia melakukan suatu kesalahan dan boleh,\napabila disabitkan, dipenjarakan selama tempoh tidak melebihi enam\ntahun atau didenda tidak melebihi dua puluh ribu ringgit atau\nkedua-duanya.",
+      "kind": "law",
+      "url": "/law/452/BM#s-47",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMTczNjI0Nl9CTS9Ba3RhIDQ1MiAoRGFsYW0gVGFsaWFuIDIwMjIpLnBkZnw5NzhjOWY1OGUxZDI5MDRiNzI4N2MwOWIyYmY0YmFmOTA2Zjk1NGRhN2ViMGVjZGZlMGM1OTdkYmNjOGY3OWE3#page=62",
+      "via": "",
+      "score": 19.0,
+      "draft": false
+     },
+     {
+      "cite": "Act 4, s. 52 (BM, as at 2024-10-01)",
+      "title": "Akta Keselamatan Sosial Pekerja 1969, section 52",
+      "meta": "Text as at 1 Oct 2024",
+      "header": "AKTA KESELAMATAN SOSIAL PEKERJA 1969 (Akta 4), seksyen 52: Majikan tidak boleh mengurangkan gaji, dsb.. Bahagian III: FAEDAH. cetakan semula pada 2024-10-01.",
+      "text": "52. Tiada seseorang majikan jua boleh, semata-mata oleh sebab\ntanggungannya terhadap apa-apa caruman yang kena dibayar di bawah\nAkta ini, boleh, secara langsung atau tidak langsung, mengurangkan\ngaji mana-mana pekerja, atau kecuali sebagaimana yang\ndiperuntukkan dalam peraturan, memberhentikan atau mengurangkan\nfaedah yang kena dibayar kepada pekerja itu menurut syarat\nperkhidmatannya yang serupa dengan faedah yang diberikan oleh\nAkta ini.",
+      "kind": "law",
+      "url": "/law/4/BM#s-52",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMzIyNjk4MV9CTS9Ba3RhIDQgKERhbGFtIHRhbGlhbiAyMDI2KS5wZGZ8ZDcyMWE0MTA3NjgwOTJiNjFhYThmNmUyMjE4MjNiZTRhNjYzZDEzMzliYzExZmJiNTk3Mzc0MDRlY2YwMTQ0Zg%3D%3D#page=57",
+      "via": "",
+      "score": 18.0,
+      "draft": false
+     },
+     {
+      "cite": "Act 800, s. 24 (BM, as at 2022-09-01)",
+      "title": "Akta Sistem Insurans Pekerjaan 2017, section 24",
+      "meta": "Text as at 1 Sep 2022",
+      "header": "AKTA SISTEM INSURANS PEKERJAAN 2017 (Akta 800), seksyen 24: Majikan tidak boleh mengurangkan gaji, dsb.. Bahagian IV: PENDAFTARAN DAN CARUMAN. cetakan semula pada 2022-09-01.",
+      "text": "24. (1) Majikan tidak boleh, semata-mata oleh sebab liabilitinya bagi\napa-apa caruman yang kena dibayar di bawah Akta ini, secara langsung\natau tidak langsung, mengurangkan gaji mana-mana pekerja, atau\nmenghentikan atau mengurangkan faedah yang kena dibayar kepada\npekerja itu di bawah syarat perkhidmatan yang serupa dengan faedah yang\ndiberikan oleh Akta ini kecuali sebagaimana yang diperuntukkan dalam\nmana-mana undang-undang bertulis yang lain. (2) Mana-mana majikan yang melanggar subseksyen (1) melakukan\nsuatu kesalahan dan boleh, apabila disabitkan, didenda tidak melebihi\nsepuluh ribu ringgit atau dipenjarakan selama tempoh tidak melebihi dua\ntahun atau kedua-duanya.",
+      "kind": "law",
+      "url": "/law/800/BM#s-24",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMTc0MjE0MV9CTS9Ba3RhIDgwMCBNVUtUQU1BRC5wZGZ8OTY1MThiNmM0YTBiYTRhM2E0NWQ3NTRiZGYwYTEzNTE3ZTE2YTJmNzhkMDhlMDJhMzczNDJmYmM2YTQ5MTg4ZA%3D%3D#page=26",
+      "via": "",
+      "score": 17.0,
+      "draft": false
+     },
+     {
+      "cite": "Act 4, s. 7 (BM, as at 2024-10-01)",
+      "title": "Akta Keselamatan Sosial Pekerja 1969, section 7",
+      "meta": "Text as at 1 Oct 2024",
+      "header": "AKTA KESELAMATAN SOSIAL PEKERJA 1969 (Akta 4), seksyen 7: Majikan utama hendaklah mendahulukan pembayaran caruman. Bahagian II: INSURANS DAN CARUMAN. cetakan semula pada 2024-10-01.",
+      "text": "7. (1) Majikan utama hendaklah membayar caruman majikan dan\ncaruman pekerja kedua-duanya bagi tiap-tiap seorang pekerja sama\nada yang diambil kerja terus olehnya atau melalui seorang majikan\nlangsung. (2) Walau apa pun apa-apa peruntukan yang terkandung dalam\nmana-mana undang-undang bertulis yang lain tetapi tertakluk pada\nAkta ini dan peraturan-peraturan, jika ada, majikan utama adalah,\nmengenai seseorang pekerja yang diambil kerja terus olehnya, berhak\nmendapatkan daripada pekerja itu caruman pekerja dengan memotong\ndaripada gajinya tetapi tidak dengan cara lain: Dengan syarat bahawa tiada apa-apa potongan sedemikian boleh\ndibuat daripada mana-mana gaji kecuali gaji yang bersabit dengan\ntempoh atau bahagian tempoh yang mengenainya caruman kena\ndibayar, atau yang lebih daripada caruman pekerja bagi tempoh itu. (3) Walau apa pun yang terkandung dalam apa-apa kontrak yang\nberlawanan, majikan utama atau majikan langsung tidak berhak\nmemotong caruman majikan daripada mana-mana gaji yang kena\ndibayar kepada seseorang pekerja atau mendapatkan caruman itu\ndaripadanya dengan apa-apa cara lain. (4) Apa-apa jumlah wang yang dipotong oleh majikan utama\ndaripada gaji di bawah Akta ini hendaklah disifatkan sebagai telah\ndiamanahkan kepadanya oleh pekerja bagi maksud membayar\ncaruman yang kerananya wang itu telah dipotong.",
+      "kind": "law",
+      "url": "/law/4/BM#s-7",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMzIyNjk4MV9CTS9Ba3RhIDQgKERhbGFtIHRhbGlhbiAyMDI2KS5wZGZ8ZDcyMWE0MTA3NjgwOTJiNjFhYThmNmUyMjE4MjNiZTRhNjYzZDEzMzliYzExZmJiNTk3Mzc0MDRlY2YwMTQ0Zg%3D%3D#page=20",
+      "via": "",
+      "score": 16.0,
+      "draft": false
+     },
+     {
+      "cite": "Act 4, s. 8 (BM, as at 2024-10-01)",
+      "title": "Akta Keselamatan Sosial Pekerja 1969, section 8",
+      "meta": "Text as at 1 Oct 2024",
+      "header": "AKTA KESELAMATAN SOSIAL PEKERJA 1969 (Akta 4), seksyen 8: Mendapatkan balik caruman daripada majikan langsung. Bahagian II: INSURANS DAN CARUMAN. cetakan semula pada 2024-10-01.",
+      "text": "8. (1) Seseorang majikan utama, yang telah membayar caruman bagi\nseseorang pekerja yang diambil kerja olehnya atau melalui seorang\nmajikan langsung, adalah berhak mendapatkan balik wang caruman\nyang telah dibayar itu (iaitu caruman majikan serta apa-apa jua\ncaruman pekerja, jika ada) daripada majikan langsung, sama ada\ndengan memotong wang itu daripada apa-apa wang yang kena dibayar\nkepadanya oleh majikan utama di bawah apa-apa kontrak, atau sebagai\nsuatu hutang yang kena dibayar oleh majikan langsung itu. (2) Dalam hal yang dirujuk dalam subseksyen (1), majikan\nlangsung adalah berhak mendapatkan balik caruman pekerja daripada\npekerja yang diambil kerja olehnya atau melaluinya dengan memotong\ndaripada gaji dan tidak dengan apa-apa cara lain, tertakluk pada syarat\nbagi subseksyen 7(2).",
+      "kind": "law",
+      "url": "/law/4/BM#s-8",
+      "pdf": "https://lom.agc.gov.my/processFile.php?token=aHR0cHM6Ly9sb20uYWdjLmdvdi5teS9pbGltcy91cGxvYWQvcG9ydGFsL2FrdGEvb3V0cHV0YWt0YXAvMzIyNjk4MV9CTS9Ba3RhIDQgKERhbGFtIHRhbGlhbiAyMDI2KS5wZGZ8ZDcyMWE0MTA3NjgwOTJiNjFhYThmNmUyMjE4MjNiZTRhNjYzZDEzMzliYzExZmJiNTk3Mzc0MDRlY2YwMTQ0Zg%3D%3D#page=21",
+      "via": "",
+      "score": 15.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2022-03-21 (DR-2022-03-21-024)",
+      "title": "DR-2022-03-21-024",
+      "meta": "Dewan Rakyat · 21 Mar 2022",
+      "header": "Dewan Rakyat, 2022-03-21, Parliament 14. RANG UNDANG-UNDANG KERJA (PINDAAN) 2021 Bacaan Kali Yang Kedua dan Ketiga. Bill for the EMPLOYMENT ACT 1955 (Act 265). Speakers: Tuan Shaharizukirnain bin Abd Kadir [Setiu] (PAS).",
+      "text": "Tuan Shaharizukirnain bin Abd Kadir [Setiu] (continued): Dan siapa yang\nmencari dunia hanya untuk memperbanyakkan, berbangga dan bersombong akan\nbertemu dengan Allah pada hari kiamat sedangkan Allah murka kepadanya.” Riwayat Al-Baihaqi. Tuan Yang di-Pertua, perkara pertama yang ingin saya bangkitkan berkenaan\nlangkah kerajaan meningkatkan tempoh cuti bersalin daripada 60 hari kepada 90 hari\nwajar disokong. Hal ini kerana pemberian cuti bersalin jelas sekali memberi impak yang\nbesar kepada pembentukan sesebuah keluarga sekali gus mengurangkan kegusaran\ngolongan wanita untuk bersama-sama berkecimpung dalam apa jua bidang pekerjaan. Namun begitu, yang menjadi kebimbangan saya adalah berkenaan sesetengah\nmajikan yang mendiskriminasikan pekerja wanita disebabkan pemberian cuti bersalin\nyang agak panjang ini. Hal ini kerana sesetengah majikan lebih cenderung untuk memilih\npekerja lelaki daripada wanita dan beralasan pekerja wanita terpaksa diberikan cuti\nbersalin untuk tempoh yang lama. Oleh itu, apakah langkah kerajaan dalam memastikan isu diskriminasi pekerja\nwanita ini tidak berlaku walaupun setelah pindaan akta ini dilakukan? Selain itu, adakah\nakta ini turut memasukkan denda terhadap majikan yang memotong gaji mahupun tidak\nmembayar gaji terhadap pekerja yang bercuti melebihi 60 hari? Hal ini kerana terdapat\nkes di mana majikan memberikan pekerja wanita cuti bersalin, namun begitu gaji pekerja\ntersebut dipotong ataupun gaji tidak dibayar apabila cuti melebihi tempoh 60 hari terutama\nsekali pekerja dalam sektor swasta. Tuan Yang di-Pertua, saya juga ingin menyentuh fasal 36 berhubung kewajipan\nmajikan untuk mempamerkan notis bagi meningkatkan kesedaran terhadap gangguan\nseksual. Isu ini amat kerap berlaku dalam kalangan pekerja, kerana apabila ia\nmenyebabkan ketidakselesaan kepada mangsa, itu adalah merupakan gangguan\nseksual. Namun, ramai dalam kalangan masyarakat hari ini, wanita khususnya, tidak\nmengambil apa-apa tindakan terhadap masalah tersebut. Malah kebanyakan mangsa\nlebih memilih untuk sekadar memendam rasa dan hanya berkongsi luahan kepada orang\nterdekat. Saya kira kewajipan mempamerkan notis ini adalah satu langkah yang tepat bagi\nmemastikan hak pekerja sentiasa dilindungi sekali gus isu gangguan seksual di tempat\nkerja dapat dibendung. Oleh itu, apakah mekanisme yang disediakan oleh kerajaan bagi\nmemastikan para majikan khususnya benar-benar menjalankan tanggungjawab ini? Adakah penguatkuasaan benar-benar diberi perhatian dalam perkara ini? Tuan Yang di-Pertua, seterusnya saya juga ingin menyentuh fasal 34 bertujuan\nuntuk menaikkan amaun penalti yang dikenakan ke atas majikan bagi kesalahan atas\nkegagalan untuk menyiasat aduan gangguan seksual. Saya amat bersetuju dengan\npindaan pada fasal 34 kerana kebanyakan mangsa tidak mahu membuat aduan kerana\nmajikan tidak mengendahkan aduan tersebut. Malah mereka merasakan laporan hanya\nakan merumitkan keadaan bahkan boleh menimbulkan ketegangan hubungan antara\nmangsa, pemangsa dan majikan. Mangsa akan memilih jalan untuk berdiam diri sahaja. Masalah ini patut segera diselesaikan. Jika tidak, pindaan fasal ini tidak berfungsi dengan\nsebaiknya. Oleh itu, kerajaan seharusnya mengambil langkah proaktif dengan meletakkan\nmekanisme dasar dalam setiap pengurusan untuk mencegah gangguan seksual ini. Hal\nini bagi memastikan pihak majikan jelas akan langkah-langkah pelaksanaan yang patut\ndijalankan sekiranya mereka menerima aduan. Saya mohon menyokong rang undang-undang ini. Sekian, Tuan Yang di-Pertua,\nterima kasih.",
+      "kind": "debate",
+      "url": "/debate/DR-2022-03-21-024#seq-233",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-21032022.pdf#page=58",
+      "via": "",
+      "score": 14.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2019-07-15 (DR-2019-07-15-043)",
+      "title": "DR-2019-07-15-043",
+      "meta": "Dewan Rakyat · 15 Jul 2019",
+      "header": "Dewan Rakyat, 2019-07-15, Parliament 14. RANG UNDANG-UNDANG STANDARD MINIMUM PERUMAHAN DAN KEMUDAHAN PEKERJA (PINDAAN) 2019 Bacaan Kali Yang Kedua dan Ketiga. Speakers: Puan Kasthuriraani a/p Patto [Batu Kawan] (DAP).",
+      "text": "Puan Kasthuriraani a/p Patto [Batu Kawan] (continued): Mereka masih lagi kerja walaupun mereka\nmengalami kecederaan walaupun mereka mengalami kemalangan di tempat kerja. Oleh\nsebab mereka tidak mahu dibayar gaji separuh hari, oleh sebab mahu mengambil cuti sakit\nyang mungkin akan dipotong daripada gaji mereka, mereka akan tahan sakit itu yang mungkin\nakan membawa padah pada masa depan di atas produktiviti mereka. Saya ingin tahu dengan pindaan ini, adakah wujud juga pindaan kepada\npembayaran kos bagi pekerja-pekerja asing di hospital? Supaya ini secara tidak langsung\njuga akan menggalakkan majikan untuk tidak berfikir dua kali untuk membawa pekerja-pekerja asing untuk mendapat rawatan di hospital kita. When the cost is high, Yang\nBerhormat Menteri, mereka tidak akan membawa pekerja mereka. Jadi, saya ingin tahu kalau\ncadangan untuk pindaan rate untuk membawa pekerja asing ke hospital akan\ndipertimbangkan atau tidak? Tuan Yang di-Pertua, ingin saya juga bertanya di sini berhubung kuasa Menteri\nuntuk membenarkan majikan untuk memungut apa-apa jumlah bagi sewa atau caj berkenaan\ndengan mana-mana penginapan yang disediakan oleh majikan atau menyediakan\npenginapan berpusat dan jumlah sewa atau caj boleh dibuat melalui potongan upah pekerja. Maka, saya ingin tahu dan dapat penjelasan, apakah amaun yang telah ditetapkan\nsecara potongan dan bagaimana caj ini akan ditetapkan? Adakah ia ditetapkan oleh majikan\nitu sendiri? Apakah proses konsultasi? Ataupun bagaimana Yang Berhormat Menteri akan\nachieve rate yang akan dikenakan? Adakah ia mengikut industri? Adakah ianya mengikut\ngred ataupun gaji pada masa sekarang yang diterima oleh pekerja-pekerja asing dan\ntempatan tersebut? Adakah ianya juga RM50 ataupun lebih daripada itu? Sekiranya tidak ditetapkan, maka mungkin ada majikan yang akan\nmenyalahgunakan provision ini untuk memotong jauh lebih banyak amaun daripada RM50\natau lebih daripada itu dengan memberi justifikasi, sebagai contoh, sekiranya pekerja kilang\nbekerja di kilang tetapi menetap di workers hostel iaitu satu macam apartmen atau pangsapuri\nyang menempatkan pekerja asing yang ada kemudahan-kemudahan yang lebih daripada\nyang biasa. Mungkin mereka ada tenis court di sana, atau laundromat di sana. Adakah\npotongan itu akan mencecah satu per empat daripada gaji mereka? Saya rasa ini adalah satu isu yang kita perlu melihat. Ramai developer di luar sana\nmembina workers’ hostel dan selepas itu menetapkan satu kos yang tinggi untuk memotong\ngaji daripada pekerja mereka dan ini akan mengakibatkan ejen-ejen dan majikan tidak mahu\nmenghantar pekerja di sana sebab mereka yang menanggung potongan tersebut atau\nsebahagian daripada potongan tersebut. Tuan Yang di-Pertua, saya juga ingin bertanya, bagaimanakah pendakwa raya akan\nmemutuskan peraturan-peraturan bagi menetapkan apa-apa kesalahan kriteria, kaedah dan\ntatacara untuk pengkompaunan kesalahan? Apakah proses pengkompaunan kesalahan ini\ndan siapakah yang akan, dengan izin, enforce peraturan ini? Pada masa yang sama, saya\ningin juga tahu, apakah impak pindaan ini bagi pekerja wanita, sama ada pekerja asing\nataupun tempatan di negara kita ini? Tuan Yang di-Pertua...",
+      "kind": "debate",
+      "url": "/debate/DR-2019-07-15-043#seq-1096",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-15072019.pdf#page=107",
+      "via": "",
+      "score": 13.0,
+      "draft": false
+     }
+    ],
+    "stages": [
+     {
+      "name": "bm25",
+      "hits": 100,
+      "ms": 194
+     },
+     {
+      "name": "dense",
+      "hits": 100,
+      "ms": 1412
+     },
+     {
+      "name": "fused",
+      "hits": 182,
+      "ms": 0
+     },
+     {
+      "name": "reranked",
+      "hits": 20,
+      "ms": 1587
+     }
+    ],
+    "usd": null,
+    "search_ms": 3307,
+    "total_ms": 12379
+   }
+  }
+ ]
+}

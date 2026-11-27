@@ -39,7 +39,7 @@
 <div class="rec{% if quote %} rec-quote{% endif %}" lang="{{ lang_attr }}">{% if quote %}<span>{{ text }}</span>{% else %}{{ text }}{% endif %}</div>
 {% endmacro %}
 
-{% macro correction(record) %}<a class="fix" href="/correction?record={{ record|urlencode }}&back={{ full_path|urlencode }}">{{ t('correction') }}</a>{% endmacro %}
+{% macro correction(record) %}{% if not demo %}<a class="fix" href="/correction?record={{ record|urlencode }}&back={{ full_path|urlencode }}">{{ t('correction') }}</a>{% endif %}{% endmacro %}
 
 {# Two letters from a name or a speaker label: the bracketed name when there is one, titles skipped. #}
 {% macro initials(name) %}{% set raw = (name.split('[')[1].split(']')[0] if '[' in name else name) %}{% set ns = namespace(w=[]) %}{% for w in raw.replace('.', ' ').replace("'", ' ').split() if w[0].isalpha() and w|lower not in ('yb', 'yab', 'tuan', 'puan', 'dato', 'datuk', 'datin', 'seri', 'sri', 'dr', 'ir', 'tan', 'tun', 'tengku', 'haji', 'hajah', 'ts', 'prof', 'datoʼ', 'dato’') %}{% set ns.w = ns.w + [w] %}{% endfor %}{% if ns.w|length >= 2 %}{{ ns.w[0][0]|upper }}{{ ns.w[-1][0]|upper }}{% elif ns.w %}{{ ns.w[0][:2]|upper }}{% else %}?{% endif %}{% endmacro %}

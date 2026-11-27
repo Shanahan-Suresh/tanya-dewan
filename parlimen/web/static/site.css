@@ -554,3 +554,11 @@ ol.timeline .when { font-weight: 650; font-size: 14.5px; color: var(--muted); ma
 .src .cl .meta { font-weight: 400; font-size: 13.5px; color: var(--muted); }
 /* Help text under a form field. */
 .hint { display: block; font-weight: 400; font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+
+/* ---------- static demo (tools/static_demo.py) ---------- */
+.demo-bar { background: var(--accent-soft); border-bottom: 1px solid var(--accent-line); color: var(--ink); font-size: 14.5px; }
+.demo-bar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding-block: 9px; }
+.demo-bar a { color: var(--link); font-weight: 600; }
+.demo-bar .i { vertical-align: -3px; margin-right: 4px; }
+.demo .ask .filters, .demo .filter-bar, .demo .inline-filter, .demo .pager, .demo #copy-link { display: none; }
+.row-btns { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }

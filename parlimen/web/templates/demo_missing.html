@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}{{ t('demo_missing') }}{% endblock %}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block main %}
+<header class="ph"><p class="eyebrow">Demo</p><h1>{{ t('demo_missing') }}</h1><p class="lead">{{ t('demo_missing_body') }}</p>
+<p class="row-btns"><a class="btn" href="/">{{ t('go_home') }}</a> <a class="linkbtn" href="{{ demo.repo }}" rel="noopener">{{ t('demo_code') }}</a></p></header>
+{% endblock %}

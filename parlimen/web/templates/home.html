@@ -130,7 +130,8 @@
   'draft': t('draft_short'), 'draft_note': t('draft_note'), 'budget_out': t('budget_out'), 'writing': t('step_write'),
   'done': t('answer_done'), 'copy': t('copy_link'), 'copied': t('link_copied'), 'more': t('more_filters'), 'less': t('fewer_filters'),
   'asking': t('asking'), 'no_answer': t('no_answer'), 'stage': t('stage_word'), 'time': t('time_word'), 'try': t('examples'),
-  'ask': t('ask_button'), 'source_n': t('source_n')
+  'ask': t('ask_button'), 'source_n': t('source_n'),
+  'demo': demo.answers if demo else None, 'demo_only': t('demo_only') if demo else ''
 }|tojson }}</script>
 {% endblock %}
 {% block scripts %}<script src="/static/ask.js" defer></script>{% endblock %}

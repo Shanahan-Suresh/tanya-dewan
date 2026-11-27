@@ -1,6 +1,8 @@
 // The Ask page. Sends the question and filters to /api/ask/stream and reads the server-sent events:
 // `stage` (live progress), `text` (the cited answer so far: replace, never append), then `done`
 // (the final /api/ask body) or `error`. A ?q= link only fills the box; the reader presses Ask.
+// In the static demo (S.demo, from tools/static_demo.py) there is no server: an example question
+// plays its recorded events at their recorded times, and any other question gets a notice.
 (function () {
   const S = JSON.parse(document.getElementById("strings").textContent);
   const $ = (id) => document.getElementById(id);
@@ -158,6 +160,33 @@
     new FormData(form).forEach((v, k) => { if (k !== "q" && String(v).trim()) o[k] = String(v).trim(); });
     return o;
   }
+  // One server-sent event; true when it ends the answer.
+  function onEvent(ev, d) {
+    if (ev === "stage") {
+      if (d.hits == null) startStage(d.name); else { stageMs[d.name] = d.ms; drawProgress(); }
+    } else if (ev === "text") {
+      text.innerHTML = markdown(d.text) + '<span class="caret" aria-hidden="true"></span>';
+    } else if (ev === "done") { render(d); return true; }
+    else if (ev === "error") { fail(d.error); return true; }
+    return false;
+  }
+  const norm = (q) => q.trim().toLowerCase().replace(/\s+/g, " ");
+  const wait = (ms) => new Promise((ok) => setTimeout(ok, ms));
+  async function playRecorded(q, mine) {
+    const rec = S.demo.find((x) => norm(x.q) === norm(q));
+    if (!rec) {
+      notice.innerHTML = `<p class="notice" role="status">${ico(I.info)}<span>${esc(S.demo_only)}</span></p>`;
+      text.innerHTML = ""; progress.innerHTML = ""; $("src-list").innerHTML = "";
+      return;
+    }
+    const events = (await (await fetch(rec.file)).json()).events;
+    let at = 0;
+    for (const e of events) {
+      await wait(Math.min(e.t - at, 2500)); at = e.t;
+      if (mine !== token) return;
+      if (onEvent(e.event, e.data)) return;
+    }
+  }
   async function ask(q) {
     const mine = ++token;
     lastQuestion = q;
@@ -171,8 +200,13 @@
     $("src-count").textContent = "";
     $("src-list").innerHTML = `<li class="card src hold">${esc(S.sources_wait)}</li>`;
     state = STEPS.map(() => "wait"); stageMs = {}; drawProgress();
-    try { history.replaceState(null, "", "/?q=" + encodeURIComponent(q)); } catch (e) { /* the link is a convenience */ }
+    if (!S.demo) try { history.replaceState(null, "", "/?q=" + encodeURIComponent(q)); } catch (e) { /* the link is a convenience */ }
     answer.scrollIntoView({ block: "start" }); answer.focus({ preventScroll: true });
+    if (S.demo) {
+      try { await playRecorded(q, mine); } catch (e) { if (mine === token) fail(S.error); }
+      finally { if (mine === token) { go.disabled = false; go.removeAttribute("aria-busy"); } }
+      return;
+    }
     try {
       const res = await fetch("/api/ask/stream", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body(q)) });
       if (!res.ok) { let m = ""; try { m = (await res.json()).error; } catch (e) { /* no body */ } fail(m); return; }
@@ -191,13 +225,7 @@
             else if (line.startsWith("data:")) data += line.slice(5).trim();
           }
           if (mine !== token || !data) continue;
-          const d = JSON.parse(data);
-          if (ev === "stage") {
-            if (d.hits == null) startStage(d.name); else { stageMs[d.name] = d.ms; drawProgress(); }
-          } else if (ev === "text") {
-            text.innerHTML = markdown(d.text) + '<span class="caret" aria-hidden="true"></span>';
-          } else if (ev === "done") { render(d); finished = true; }
-          else if (ev === "error") { fail(d.error); finished = true; }
+          if (onEvent(ev, JSON.parse(data))) finished = true;
         }
       }
       if (!finished && mine === token) fail(S.error);
@@ -215,7 +243,7 @@
 
   // ---- copy link ----
   $("copy-link").addEventListener("click", async () => {
-    const url = location.origin + "/?q=" + encodeURIComponent(lastQuestion || input.value.trim());
+    const url = S.demo ? location.href.split("#")[0] : location.origin + "/?q=" + encodeURIComponent(lastQuestion || input.value.trim());
     try { await navigator.clipboard.writeText(url); } catch (e) {
       const t = document.createElement("textarea"); t.value = url; document.body.appendChild(t); t.select();
       try { document.execCommand("copy"); } catch (x) { /* nothing more to try */ } t.remove();
@@ -236,7 +264,8 @@
   // ---- example questions: three at a time, both languages, rotating while nobody is using them ----
   const other = S.lang === "ms" ? "en" : "ms";
   const pool = [];
-  const a = S.examples[S.lang] || [], b = S.examples[other] || [];
+  const byLang = (lg) => S.demo ? S.demo.filter((x) => x.lang === lg).map((x) => x.q) : (S.examples[lg] || []);
+  const a = byLang(S.lang), b = byLang(other);
   for (let i = 0; i < Math.max(a.length, b.length); i++) { if (a[i]) pool.push([S.lang, a[i]]); if (b[i]) pool.push([other, b[i]]); }
   const tryBox = $("try");
   let at = 0;

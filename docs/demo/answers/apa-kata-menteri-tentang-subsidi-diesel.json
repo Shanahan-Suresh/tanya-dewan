@@ -1,0 +1,299 @@
+{
+ "question": "Apa kata menteri tentang subsidi diesel?",
+ "lang": "ms",
+ "recorded": "2026-11-27",
+ "events": [
+  {
+   "t": 217,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 957,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": 100,
+    "ms": 738
+   }
+  },
+  {
+   "t": 957,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 2079,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": 100,
+    "ms": 1124
+   }
+  },
+  {
+   "t": 2079,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 2079,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": 155,
+    "ms": 0
+   }
+  },
+  {
+   "t": 2079,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 3651,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": 20,
+    "ms": 1572
+   }
+  },
+  {
+   "t": 3718,
+   "event": "stage",
+   "data": {
+    "name": "answer",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 10382,
+   "event": "text",
+   "data": {
+    "text": "Menteri Kewangan (II), Datuk Seri Amir Hamzah Azizan, menjelaskan pelaksanaan penyasaran semula subsidi diesel dalam Dewan Rakyat pada 24 Jun 2024. Menurut beliau:\n\n-"
+   }
+  },
+  {
+   "t": 10650,
+   "event": "text",
+   "data": {
+    "text": "Menurut beliau:\n\n- Perbelanjaan semula subsidi diesel negara telah meningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion pada tahun 2023.[1]"
+   }
+  },
+  {
+   "t": 10883,
+   "event": "text",
+   "data": {
+    "text": "Menurut beliau:\n\n- Perbelanjaan semula subsidi diesel negara telah meningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion pada tahun 2023.[1]\n- Sebelum ini, harga diesel bersubsidi adalah RM2.15 seliter iaitu antara termurah di dunia, sedangkan harga komersial mencecah RM3.50 seliter.[1]"
+   }
+  },
+  {
+   "t": 11168,
+   "event": "text",
+   "data": {
+    "text": "Menurut beliau:\n\n- Perbelanjaan semula subsidi diesel negara telah meningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion pada tahun 2023.[1]\n- Sebelum ini, harga diesel bersubsidi adalah RM2.15 seliter iaitu antara termurah di dunia, sedangkan harga komersial mencecah RM3.50 seliter.[1]\n- Kerajaan telah menetapkan semula harga runcit bahan api diesel di Semenanjung Malaysia pada RM3.35 seliter bermula 10 Jun 2024 manakala harga runcit di Sabah, Sarawak dan Labuan kekal pada RM2.15 seliter.[1]"
+   }
+  },
+  {
+   "t": 11431,
+   "event": "text",
+   "data": {
+    "text": "Menurut beliau:\n\n- Perbelanjaan semula subsidi diesel negara telah meningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion pada tahun 2023.[1]\n- Sebelum ini, harga diesel bersubsidi adalah RM2.15 seliter iaitu antara termurah di dunia, sedangkan harga komersial mencecah RM3.50 seliter.[1]\n- Kerajaan telah menetapkan semula harga runcit bahan api diesel di Semenanjung Malaysia pada RM3.35 seliter bermula 10 Jun 2024 manakala harga runcit di Sabah, Sarawak dan Labuan kekal pada RM2.15 seliter.[1]\n- Dengan pelaksanaan penyasaran semula subsidi diesel, diunjurkan bahawa kerajaan mampu meraih penjimatan tahunan sebanyak RM4 bilion.[2]"
+   }
+  },
+  {
+   "t": 11716,
+   "event": "text",
+   "data": {
+    "text": "Menurut beliau:\n\n- Perbelanjaan semula subsidi diesel negara telah meningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion pada tahun 2023.[1]\n- Sebelum ini, harga diesel bersubsidi adalah RM2.15 seliter iaitu antara termurah di dunia, sedangkan harga komersial mencecah RM3.50 seliter.[1]\n- Kerajaan telah menetapkan semula harga runcit bahan api diesel di Semenanjung Malaysia pada RM3.35 seliter bermula 10 Jun 2024 manakala harga runcit di Sabah, Sarawak dan Labuan kekal pada RM2.15 seliter.[1]\n- Dengan pelaksanaan penyasaran semula subsidi diesel, diunjurkan bahawa kerajaan mampu meraih penjimatan tahunan sebanyak RM4 bilion.[2]\n\nDalam sesi 5 November 2024, beliau berkata berdasarkan data awal, penyasaran subsidi diesel setakat ini telah menjana penjimatan sekitar RM600 juta sebulan.[3]"
+   }
+  },
+  {
+   "t": 11861,
+   "event": "done",
+   "data": {
+    "question": "Apa kata menteri tentang subsidi diesel?",
+    "lang": "ms",
+    "filters": "no filter",
+    "answer": "Menurut beliau:\n\n- Perbelanjaan semula subsidi diesel negara telah meningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion pada tahun 2023.[1]\n- Sebelum ini, harga diesel bersubsidi adalah RM2.15 seliter iaitu antara termurah di dunia, sedangkan harga komersial mencecah RM3.50 seliter.[1]\n- Kerajaan telah menetapkan semula harga runcit bahan api diesel di Semenanjung Malaysia pada RM3.35 seliter bermula 10 Jun 2024 manakala harga runcit di Sabah, Sarawak dan Labuan kekal pada RM2.15 seliter.[1]\n- Dengan pelaksanaan penyasaran semula subsidi diesel, diunjurkan bahawa kerajaan mampu meraih penjimatan tahunan sebanyak RM4 bilion.[2]\n\nDalam sesi 5 November 2024, beliau berkata berdasarkan data awal, penyasaran subsidi diesel setakat ini telah menjana penjimatan sekitar RM600 juta sebulan.[3]\n\nIni maklumat umum daripada rekod yang diterbitkan, bukan nasihat undang-undang.",
+    "budget_out": false,
+    "sources": [
+     {
+      "n": 1,
+      "cite": "Dewan Rakyat 2024-06-24 (DR-2024-06-24-016)",
+      "quotes": [
+       "Menteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan]: Untuk makluman semua, perbelanjaan semula subsidi diesel negara telah meningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion pada tahun 2023.",
+       "Menteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan]: Sebelum ini, harga diesel bersubsidi adalah RM2.15 seliter iaitu antara termurah di dunia, sedangkan harga komersial mencecah RM3.50 seliter.",
+       "Menteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan]: Kerajaan telah menetapkan semula harga runcit bahan api diesel di Semenanjung Malaysia pada RM3.35 seliter bermula 10 Jun 2024 manakala harga runcit di Sabah, Sarawak dan Labuan kekal pada RM2.15 seliter."
+      ],
+      "title": "DR-2024-06-24-016",
+      "meta": "Dewan Rakyat · 24 Jun 2024",
+      "url": "/debate/DR-2024-06-24-016#seq-163",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-24062024.pdf#page=39",
+      "draft": false
+     },
+     {
+      "n": 2,
+      "cite": "Dewan Rakyat 2024-06-24 (DR-2024-06-24-017)",
+      "quotes": [
+       "Datuk Seri Amir Hamzah Azizan: Dengan pelaksanaan penyasaran semula subsidi diesel, diunjurkan bahawa kerajaan mampu meraih penjimatan tahunan sebanyak RM4 bilion."
+      ],
+      "title": "DR-2024-06-24-017",
+      "meta": "Dewan Rakyat · 24 Jun 2024",
+      "url": "/debate/DR-2024-06-24-017#seq-168",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-24062024.pdf#page=40",
+      "draft": false
+     },
+     {
+      "n": 3,
+      "cite": "Dewan Rakyat 2024-11-05 (DR-2024-11-05-004)",
+      "quotes": [
+       "Menteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan]: Berdasarkan data awal, penyasaran subsidi diesel setakat ini telah menjana penjimatan sekitar RM600 juta sebulan."
+      ],
+      "title": "DR-2024-11-05-004",
+      "meta": "Dewan Rakyat · 5 Nov 2024",
+      "url": "/debate/DR-2024-11-05-004#seq-27",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-05112024.pdf#page=17",
+      "draft": false
+     }
+    ],
+    "passages": [
+     {
+      "cite": "Dewan Rakyat 2024-06-24 (DR-2024-06-24-019)",
+      "title": "DR-2024-06-24-019",
+      "meta": "Dewan Rakyat · 24 Jun 2024",
+      "header": "Dewan Rakyat, 2024-06-24, Parliament 15. PENERANGAN DARIPADA MENTERI KEWANGAN DI BAWAH P.M. 14(1)(i) PENYASARAN SEMULA SUBSIDI DIESEL. Speakers: Tuan Sim Tze Tzin [Bayan Baru] (PKR); Tuan Haji Mohd Syahir bin Che Sulaiman [Bachok] (PAS); Datuk Awang bin Hashim [Pendang] (PAS); Tuan Yang di-Pertua.",
+      "text": "Tuan Yang di-Pertua: Silakan.\n\nTuan Sim Tze Tzin [Bayan Baru]: Terima kasih. Terima kasih Tan Sri Speaker. Saya dengar ucapan dari Putrajaya dan juga dengan Menteri. Kita tahu bahawa ini isu\nyang amat-amat besar kerana diesel subsidi ini sudah mencecah RM14 bilion. Dua tiga\ntahun yang dulu, pada tahun 2019, 2020, diesel subsidi hanya lebih kurang RM8 bilion,\nsekarang dah RM14 bilion. Apa yang berlaku, kalau kita dengar dengan teliti, Yang\nBerhormat Menteri MKII telah membuktikan bahawa selepas sahaja diesel subsidi\ndisasarkan semula, disasarkan semula- apa yang...\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru, minta laluan.\n\nTuan Sim Tze Tzin [Bayan Baru]: Dia telah turun. Okey. Yang semua\npenyeludupan itu turun 40 peratus, 40 peratus. Tadi saya, Putrajaya tak bagi laluan.\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru, minta laluan.\n\nTuan Haji Mohd Syahir bin Che Sulaiman [Bachok]: Bayan Baru, kawan saya. Bachok nak mencelah sikit.\n\nTuan Sim Tze Tzin [Bayan Baru]: Biar saya cakap dulu.\n\nTuan Haji Mohd Syahir bin Che Sulaiman [Bachok]: No, no. I mean...\n\nTuan Sim Tze Tzin [Bayan Baru]: Duduk, duduk. Saya tak bagi laluan. Duduk.\n\nTuan Haji Mohd Syahir bin Che Sulaiman [Bachok]: Sebab angka, angka\npenyeludupan itu...\n\nTuan Yang di-Pertua: Bachok.\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru. Bolehlah sikit.\n\nTuan Sim Tze Tzin [Bayan Baru]: Duduk, duduk.\n\nTuan Haji Mohd Syahir bin Che Sulaiman [Bachok]: Angka penyeludupan itu\nkena ada...\n\nTuan Yang di-Pertua: Bachok. Satu.\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru.\n\nTuan Haji Mohd Syahir bin Che Sulaiman [Bachok]: Berapa banyak, berapa\nlori?\n\nTuan Yang di-Pertua: Bachok. Dua.\n\nTuan Haji Mohd Syahir bin Che Sulaiman [Bachok]: Berapa...\n\nTuan Yang di-Pertua: Bachok. Dua.\n\nTuan Sim Tze Tzin [Bayan Baru]: Tolong duduk. Tolong duduk. Tak bagi.\n\nTuan Yang di-Pertua: Bachok. Tiga. Duduk. Semua duduk dulu.\n\nTuan Sim Tze Tzin [Bayan Baru]: Nak bahas, bahas nanti.\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru.\n\nTuan Sim Tze Tzin [Bayan Baru]: Ya.\n\nDatuk Awang bin Hashim [Pendang]: Minta laluan.\n\nTuan Sim Tze Tzin [Bayan Baru]: Jadi, isunya...\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru. Pendang minta laluan.\n\nTuan Sim Tze Tzin [Bayan Baru]: The diesel subsidy is not sustainable.\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru.\n\nTuan Sim Tze Tzin [Bayan Baru]: Kita tahu bahawa kalau blanket subsidies ini\ntidak sustainable dan akan membankrapkan negara pada masa depan.\n\nDatuk Awang bin Hashim [Pendang]: Dak, dak. Dah lama dah, diesel.\n\nTuan Sim Tze Tzin [Bayan Baru]: Siapa-siapa yang jadi kerajaan akan berdepan\ndengan masalah ini dan kita telah buktikan...\n\nTuan Yang di-Pertua: Bayan Baru nak bagi dekat Pendang?\n\nTuan Sim Tze Tzin [Bayan Baru]: Tak bagi, tak bagi, tak bagi.\n\nTuan Yang di-Pertua: Pendang, tak bagi. Duduk.\n\nTuan Sim Tze Tzin [Bayan Baru]: Kita telah buktikan Perdana Menteri Keenam,\nPerdana Menteri Ketujuh, Kelapan, Kesembilan termasuk Pagoh di sini, pernah cakap\nbahawa ini not sustainable dan perlu disasarkan semula. Apa yang kerajaan buat\nsekarang adalah sasar semula. Diesel subsidi masih dibagi kepada golongan petani,\norang yang susah, individu 400,000. Tak ada masalah.\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru, minta laluan.\n\nTuan Sim Tze Tzin [Bayan Baru]: Yang sekarang dimainkan isu politik.\n\nDatuk Awang bin Hashim [Pendang]: Bayan Baru, minta laluan.\n\nTuan Sim Tze Tzin [Bayan Baru]: Apa yang dimainkan adalah politik.\n\nTuan Haji Mohd Syahir bin Che Sulaiman [Bachok]: Eh, masalah ekonomi\nrakyat. Poket rakyat.\n\nDr. Radzi bin Jidin [Putrajaya]: Saya dah kata dah. Ini bukan politik, ini untuk\nrakyat.\n\nDatuk Awang bin Hashim [Pendang]: Ini bukan politik. Bila naik minyak, bukan\nisu politik. Ini isu rakyat yang menanggung.\n\nTuan Yang di-Pertua: Baik, baik, baik.\n\nDatuk Awang bin Hashim [Pendang]: Perdana Menteri dahulu, adakah pernah\nberjanji...\n\nTuan Yang di-Pertua: Pendang. Satu.\n\nDatuk Dr. Ahmad Marzuk bin Shaary [Pengkalan Chepa]: Ini isu rakyat, bukan\npolitik.\n\nTuan Yang di-Pertua: Baik.\n\nTuan Sim Tze Tzin [Bayan Baru]: Dulu Pagoh pernah cakap juga nak sasar\nsemula. Pagoh sendiri. Okey. Jadi, janganlah hipokrit. Janganlah hipokrit. Kita demi\nnegara. Kita nak supaya bahawa negara ini atas landasan yang betul. Jangan hanya\nsekarang kerana nak menang sorak di lapangan, tetapi negara tergadai. Jadi...\n\nDatuk Dr. Ahmad Marzuk bin Shaary [Pengkalan Chepa]: Sekarang masalah\nmenang dan tipu rakyat.\n\nDr. Radzi bin Jidin [Putrajaya]: Apakah bila janji nak turunkan harga minyak itu\nnak menang sorak? Sekian, terima kasih.\n\nTuan Sim Tze Tzin [Bayan Baru]: Okey, saya nak respons tentang...\n\nDatuk Awang bin Hashim [Pendang]: Eh, Bayan Baru...\n\nTuan Sim Tze Tzin [Bayan Baru]: Saya nak respons tentang apa yang...\n\nDatuk Awang bin Hashim [Pendang]: You sokong naik harga minyak kah? Rakyat susah tau.\n\nTuan Sim Tze Tzin [Bayan Baru]: Kejap.\n\nTuan Yang di-Pertua: Duduk, duduk, duduk.\n\nTuan Sim Tze Tzin [Bayan Baru]: Saya nak respons tentang Putrajaya kata\nPerdana Menteri tipu.\n\nTuan Hassan bin Abdul Karim [Pasir Gudang]: [Bangun]\n\nTuan Sim Tze Tzin [Bayan Baru]: Saya nak bagi tahu, apa yang kita janjikan\nada dah dalam manifesto. Manifesto Pakatan Harapan, Manifesto Barisan Nasional,\nManifesto GPS tak pernah cakap nak turunkan harga minyak. Tak ada. Tak ada... [Dewan\nriuh]\n\nDatuk Awang bin Hashim [Pendang]: Eh, Perdana Menteri sekarang janji itu.",
+      "kind": "debate",
+      "url": "/debate/DR-2024-06-24-019#seq-232",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-24062024.pdf#page=45",
+      "via": "",
+      "score": 20.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2024-06-24 (DR-2024-06-24-016)",
+      "title": "DR-2024-06-24-016",
+      "meta": "Dewan Rakyat · 24 Jun 2024",
+      "header": "Dewan Rakyat, 2024-06-24, Parliament 15. PENERANGAN DARIPADA MENTERI KEWANGAN DI BAWAH P.M. 14(1)(i) PENYASARAN SEMULA SUBSIDI DIESEL. Speakers: Menteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan].",
+      "text": "Menteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan]: Bismillahi rahmani\nrahim. Assalamualaikum warahmatullahi wabarakatuh dan salam Malaysia MADANI. Tan Sri Yang di-Pertua serta Ahli-ahli Yang Berhormat yang saya hormati, pada\nsesi penerangan Menteri ini, izinkan saya memberi penerangan serta pencerahan\nberhubungan usaha kerajaan dalam melaksanakan program penyasaran semula subsidi\ndiesel. Ahli Yang Berhormat juga boleh merujuk dokumen penerangan yang disediakan\nmelalui imbasan kod QR yang diletakkan di atas meja Yang Berhormat. Sebelum saya menerangkan lebih lanjut, saya mulakan dengan memberikan\nkonteks berhubungan tujuan utama kerajaan perlu melaksanakan penyasaran semula\nsubsidi diesel. Untuk makluman semua, perbelanjaan semula subsidi diesel negara telah\nmeningkat 10 kali ganda iaitu dari RM1.4 bilion pada tahun 2019 kepada RM14.3 bilion\npada tahun 2023. Trend kenaikan subsidi diesel ini tidak mampu lagi ditampung kerajaan\nsecara berterusan. Peningkatan belanja subsidi bukan hanya sebab kenaikan harga pasaran tetapi\njuga akibat peningkatan ketirisan diesel bersubsidi. Jumlah diesel bersubsidi yang\ndigunakan telah naik mendadak sekitar 80 peratus iaitu daripada 6.1 bilion liter pada tahun\n2019 kepada 10.8 bilion liter pada tahun 2023 walaupun tiada peningkatan kenderaan\ndiesel baru yang ketara. Pada masa yang sama, jumlah jualan diesel komersial tanpa\nsubsidi pula telah turun sebanyak dua bilion liter dalam tempoh yang sama. Peningkatan penggunaan diesel bersubsidi yang amat ketara ini disebabkan\njurang perbezaan harga yang besar antara harga komersial dengan harga runcit\nbersubsidi di pam Malaysia. Sebelum ini, harga diesel bersubsidi adalah RM2.15 seliter\niaitu antara termurah di dunia, sedangkan harga komersial mencecah RM3.50 seliter. Harga runcit diesel kita sebelum ini juga jauh lebih murah berbanding harga diesel di\nnegara jiran. Antaranya Thailand, sekitar RM4.20; Indonesia sekitar RM4.40; dan\nSingapura hampir mencecah RM9 seliter. Jelaslah bahawa jurang harga ini besar, membolehkan sebilangan peniaga sektor\nkomersial tempatan yang sepatutnya membeli diesel pada harga pasaran, telah\nmengambil kesempatan menikmati dan menyeleweng diesel bersubsidi secara tidak sah. Contohnya, mereka membeli diesel bersubsidi dari stesen minyak dan disalahgunakan\nuntuk genset di kilang, apa-apa pembinaan atau ladang sawit. Selain itu, isu yang lebih utama ialah akibat harga diesel kita yang amat murah, ia\ntelah menyebabkan aktiviti penyeludupan diesel ke negara jiran sukar dibendung. Ini\nditemui oleh Kementerian Perdagangan Dalam Negeri dan Kos Sara Hidup (KPDN)\nsemasa Ops Tiris dengan tangkapan kenderaan yang telah diubahsuai untuk menyeludup\ndiesel, beroperasi terutamanya di kawasan sempadan. Oleh itu, satu-satu cara untuk\nmengekang ketirisan secara efisien adalah dengan merapatkan jurang perbezaan harga\ndiesel tempatan dengan harga pasaran global. Tan Sri Yang di-Pertua, program penyasaran semula subsidi diesel melibatkan\nlangkah penetapan harga runcit diesel mengikut harga pasaran yang turut dilaksanakan\nserentak dengan penambahbaikan bantuan diesel untuk golongan sasar khususnya bagi\nmengurangkan kesan kepada rakyat dan harga barang pengguna. Diesel bersubsidi\ndiperluaskan kepada sektor logistik dan bantuan tunai disediakan kepada pemilik\nkenderaan diesel individu serta petani kecil dan pekebun kecil. Kerajaan telah menetapkan semula harga runcit bahan api diesel di Semenanjung\nMalaysia pada RM3.35 seliter bermula 10 Jun 2024 manakala harga runcit di Sabah,\nSarawak dan Labuan kekal pada RM2.15 seliter. Penetapan harga pada RM3.35 seliter\nadalah berdasarkan purata harga pasaran tanpa subsidi bagi bulan Mei 2024. Penetapan\nharga runcit diesel pada harga tanpa subsidi adalah untuk memastikan tiada jurang\nperbezaan dengan harga diesel komersial yang sudah tentu dapat membendung aktiviti\npenyeludupan dari stesen minyak. Dengan penetapan semula harga diesel di pasaran\ntempatan...\n\nDatuk Seri Takiyuddin bin Hassan [Kota Bharu]: Peraturan mesyuarat,\nperaturan mesyuarat.\n\nTuan Yang di-Pertua: Ya. Sebentar YB.\n\nDatuk Seri Takiyuddin bin Hassan [Kota Bharu]: Peraturan mesyuarat. Peraturan Mesyuarat 14(1)(i), penerangan daripada Menteri, saya ingin mendapat Petua\ndaripada Tan Sri Yang di-Pertua, adakah sesi ini dibenarkan pencelahan daripada Ahli-ahli? Terima kasih.\n\nTuan Yang di-Pertua: Okey, sebab14(1)(i) tidak memberikan kita peluang untuk\nperbahasan dan pengundian, mungkin saya memberikan seorang-seoranglah kut. Kerajaan seorang boleh bahas dan pembangkang juga supaya mendapatkan. Seorang-seorang ya, one, one. Five minutes each, lima minit seorang ya. Okey, silakan Menteri,\nteruskan.",
+      "kind": "debate",
+      "url": "/debate/DR-2024-06-24-016#seq-163",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-24062024.pdf#page=39",
+      "via": "",
+      "score": 19.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2024-06-24 (DR-2024-06-24-017)",
+      "title": "DR-2024-06-24-017",
+      "meta": "Dewan Rakyat · 24 Jun 2024",
+      "header": "Dewan Rakyat, 2024-06-24, Parliament 15. PENERANGAN DARIPADA MENTERI KEWANGAN DI BAWAH P.M. 14(1)(i) PENYASARAN SEMULA SUBSIDI DIESEL. Speakers: Datuk Seri Amir Hamzah Azizan.",
+      "text": "Datuk Seri Amir Hamzah Azizan (continued): Setakat 20 Jun 2024,\nsebanyak 2,100 premis telah diperiksa di seluruh negara. Dan antara jumlah tersebut,\n210 notis bertulis di bawah seksyen 21 Akta Kawalan Harga dan Antipencatutan 2011\ntelah dikeluarkan kepada peniaga di seluruh negara. Sehingga kini, sebanyak tujuh kes telah dikenal pasti hasil pelaksanaan Ops\nKesan 2.0. Analisis pencatuan akan disediakan bagi tujuan mengesan sekiranya wujud\nsebarang elemen pencatut terhadap notis-notis. Selanjutnya, bermula 20 Januari 2024 juga, para pegawai penguat kuasa KPDN\ndi negeri Perlis, Kedah, Perak dan Kelantan telah menjalankan pemeriksaan di lapan pintu\nmasuk Kompleks Imigresen, Kastam, Kuarantin dan Keselamatan (ICQS) bagi\nmemastikan pematuhan ke atas akta dan perundangan subsidiari yang berkuat kuasa. Hampir 30,000 pemeriksaan telah dijalankan dan telah mula dikenal pasti kes yang\nmelibatkan kesalahan di bawah Akta Kawalan Bekalan 1961 kerana disyaki dan cuba\nmembawa keluar barang kawalan bersubsidi ke negara jiran. Dengan pelaksanaan\npenyasaran semula subsidi diesel, diunjurkan bahawa kerajaan mampu meraih\npenjimatan tahunan sebanyak RM4 bilion. Penjimatan ini tentunya dapat di manfaat untuk menambah baik mutu hidup rakyat\nmelalui menyediakan infrastruktur awam berkualiti serta perlindungan sosial yang lebih\nmenyeluruh. Perlu kita juga ditekankan bahawa berbanding dengan kos subsidi diesel\nRM14 bilion tahun 2023, penjimatan RM4 bilion setahun bermakna kerajaan masih\nmenanggung subsidi diesel sebanyak RM10 bilion. Antaranya untuk menampung subsidi\ndi Sabah, Sarawak, subsidi untuk pengangkutan awam dan sektor logistik Semenanjung,\nbantuan tunai untuk pemilik kenderaan individu dan pengusaha kecil agrokomoditi serta\nsubsidi diesel nelayan. Maknanya, walaupun kerajaan telah mengambil langkah menyasarkan subsidi\nbagi mengurangkan ketirisan dan penyeludupan tetapi golongan yang memerlukan akan\nterus menerima bantuan dan subsidi diesel. Pendekatan penyasaran semula subsidi\ndiesel yang diambil iaitu menyediakan diesel bersubsidi kepada sektor logistik dan\nbantuan tunai bulanan kepada individu akan mengurangkan tekanan ke atas harga barang\npengguna dan impak kepada rakyat. Dengan itu, walaupun terdapat perubahan harga\nruncit diesel yang ketara, namun dijangka tidak akan menjejaskan prestasi ekonomi atau\nmenjejaskan kadar inflasi. Kerajaan yakin bahawa dengan pelaksanaan penyasaran\nsemula subsidi diesel, ekonomi negara masih tetap mencapai unjuran rasmi kerajaan\nterhadap kadar inflasi 2024 iaitu antara dua hingga 3.5 peratus serta kadar pertumbuhan\nKDNK 2024 antara empat hingga lima peratus. Tan Sri Yang di-Pertua, keputusan melaksanakan penyasaran semula subsidi\ndiesel bukanlah satu langkah yang mudah diambil. Kerajaan tidak terburu-buru, malah\nsentiasa memberi perhatian khusus untuk memastikan mekanisme terbaik digunakan\nuntuk melindungi sektor perniagaan dan rakyat yang layak dibantu. Keputusan ini juga\nmelibatkan kerjasama utuh semua pihak, sama ada jabatan kerajaan di bawah\nkementerian Kewangan, Kementerian Perdagangan Dalam Negeri dan Kos Sara Hidup,\nKementerian Perladangan dan Komoditi, Kementerian Pertanian dan Keterjaminan\nMakanan, Kementerian Pengangkutan mahupun syarikat minyak dan pemain industri.",
+      "kind": "debate",
+      "url": "/debate/DR-2024-06-24-017#seq-168",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-24062024.pdf#page=40",
+      "via": "",
+      "score": 18.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2024-11-05 (DR-2024-11-05-004)",
+      "title": "DR-2024-11-05-004",
+      "meta": "Dewan Rakyat · 5 Nov 2024",
+      "header": "Dewan Rakyat, 2024-11-05, Parliament 15. WAKTU PERTANYAAN-PERTANYAAN MENTERI. Speakers: Menteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan]; Tuan Haji Aminolhuda bin Hassan [Sri Gading] (AMANAH).",
+      "text": "Tuan Haji Aminolhuda bin Hassan [Sri Gading]: minta Menteri Kewangan\nmenyatakan, setakat mana keberkesanan pelaksanaan penyasaran semula subsidi diesel\nyang diusahakan melalui MyBUDI dan bagaimana golongan T15 ditentukan khususnya\nuntuk penyasaran subsidi petrol RON95 bermula pertengahan tahun 2025?\n\nTimbalan Yang di-Pertua [Puan Alice Lau Kiong Yieng]: Silakan.\n\nMenteri Kewangan (II) [Datuk Seri Amir Hamzah Azizan]: Terima kasih Yang\nBerhormat Sri Gading atas soalan tersebut. Puan Yang di-Pertua, pada 10 Jun 2024,\nkerajaan telah mengumumkan pelaksanaan penyasaran subsidi diesel yang melibatkan\nkenaikan harga pam diesel di stesen minyak Semenanjung Malaysia pada harga tanpa\nsubsidi iaitu RM3.35 seliter, tetapi pada masa yang sama, bagi memastikan majoriti rakyat\ntidak terjejas, diperkenalkan bantuan tunai untuk pemilik kenderaan individu diesel dan\npetani berskala kecil serta diperkenalkan subsidi khusus untuk sektor logistik. Subsidi sektor pengangkutan barangan darat melibatkan 23 jenis kenderaan\ndiesel pengangkutan barangan darat di bawah Sistem Kawalan Diesel Bersubsidi (SKDS\n2.0) dengan menggunakan kaedah fleet card. Sektor pengangkutan awam dan lain-lain\nmasih dikekalkan masing-masing pada kadar RM1.88 seliter dan RM1.65 seliter dan\npengangkutan barangan darat kekal membeli diesel pada harga subsidi RM2.15 seliter\niaitu harga pam sebelum 10 Jun 2024. Bantuan tunai BUDI MADANI sebanyak RM200\nsebulan atau RM2,400 setahun disediakan untuk golongan petani, pekebun kecil serta\npemilik persendirian kenderaan diesel berdasarkan kelayakan yang ditetapkan. Untuk makluman Yang Berhormat, setakat 31 Oktober 2024, lebih 140,000\npenerima BUDI Individu dan 65,000 penerima BUDI Agri-Komoditi telah diluluskan dalam\ntempoh lima bulan pelaksanaan sejak Jun 2024 dengan jumlah bayaran sebanyak RM160\njuta. Perlaksanaan penyasaran subsidi diesel menunjukkan penurunan mendadak dan\ndari segi penjualan diesel kepada stesen minyak iaitu sekitar 25 peratus atau hampir tujuh\njuta liter sehari, mencerminkan pengurangan aktiviti penyeludupan. Manakala, jualan\ndiesel secara komersial pula menunjukkan peningkatan hampir 50 peratus atau empat\njuta liter sehari, menggambarkan setakat mana sektor industri berhenti membeli diesel\nbersubsidi daripada stesen minyak. Berdasarkan data awal, penyasaran subsidi diesel setakat ini telah menjana\npenjimatan sekitar RM600 juta sebulan.",
+      "kind": "debate",
+      "url": "/debate/DR-2024-11-05-004#seq-27",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-05112024.pdf#page=17",
+      "via": "",
+      "score": 16.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2023-03-27 (DR-2023-03-27-003)",
+      "title": "DR-2023-03-27-003",
+      "meta": "Dewan Rakyat · 27 Mar 2023",
+      "header": "Dewan Rakyat, 2023-03-27, Parliament 15. PERTANYAAN-PERTANYAAN BAGI JAWAB LISAN. Speakers: Datuk Seri Haji Ahmad bin Haji Maslan (UMNO).",
+      "text": "Datuk Seri Haji Ahmad bin Haji Maslan: Semuanya masih dirangka Yang\nBerhormat Putrajaya. Akan tetapi, kita sedang menyiapkan apa yang dipanggil sebagai\nSistem Kawalan Diesel Bersubsidi (SKDS). Kita sedang menyiapkan sistem itu dan sistem\nitu dijangka siap pada separuh tahun kedua 2023. Sama ada Jun, Julai, Ogos untuk\nmenyiapkan sistem kawalan diesel bersubsidi. Bererti lepas elektrik ini, diesel. Petrol tidak nampak lagi bila nak dilaksanakan. Satu lagi ialah kita sedang melaksanakan dan melakukan kajian terhadap e-cooking oil\nsubsidy scheme (e-COSS) dengan izin untuk tracking minyak masak satu kilogram itu\ndaripada pengeluar hingga ke peruncit. Jadi, ini dua yang sedang kita lakukan. Kemudian satu lagi perkara apabila disebut tentang M40 dan T20 adalah\npenggunaan − contoh saya ambil petrol subsidi ini. Sejumlah 22 peratus digunakan oleh\nB40. Hanya 22 peratus. Kemudian M40, 46 peratus menggunakan subsidi petrol RON95. T20 menggunakan 32 peratus. Jadi, kalau 32 peratus kita darabkan dengan lebih kurang\nRM50 bilion subsidi, kalau kita tidak berikan kepada T20, kita boleh menjimatkan\nsebagaimana saya sebut sebelum ini RM16 bilion ke RM17 bilion. Terima kasih.\n\nTimbalan Yang di-Pertua [Puan Alice Lau Kiong Yieng]: Saya jemput Yang\nBerhormat Kota Melaka.\n\nTuan Khoo Poay Tiong [Kota Melaka]: Terima kasih Tuan Yang di-Pertua. Soalan tambahan saya kepada Yang Berhormat Timbalan Menteri ialah saya fokus\nkepada subsidi terhadap diesel. Tadi dalam jawapan kata, mungkin akan datang ialah\nsubsidi bersasar kepada diesel. Jadi, soalan saya ialah apakah rasionalnya langkah ini\nsubsidi bersasar terhadap diesel? Adakah kementerian telah membuat kajian sektor mana\nyang akan paling terkesan akibat daripada subsidi bersasar kepada diesel? Apakah\nlangkah mitigasi untuk membantu sektor-sektor yang terkesan ini? Terima kasih Tuan\nYang di-Pertua.\n\nDatuk Seri Haji Ahmad bin Haji Maslan: Rasionalnya memang mudah. Rasionalnya kerana pemberian petrol, diesel dan LPG ini pada tahun sudah contohnya\nRM50.8 bilion. RM50.8 bilion ini adalah satu angka yang cukup besar untuk subsidi bahan\nbakar. Ia terbakar hangus begitu memanglah segala kereta boleh bergerak dan enjin dan\nlain-lain tetapi oleh sebab RM50.8 bilion itu atas dasar USD100 satu barrel, subsidi itu\nagak berkurang pada tahun 2023 ini kerana minyak turun kepada USD80 satu barrel. Untuk diesel ini kita sedang mengkaji bagaimana ia boleh melibatkan kos\nkenaikan harga barang dan sebagainya. Itu sebab kemungkinan untuk PKS ada treatment\nyang lain. Jadi, kita masih lagi dalam kajian. Walau bagaimanapun, sistemnya hanya akan\nsiap pada suku kedua tahun ini. Pelaksanaannya belum tahu bila, tetapi yang kita hendak\ndahulukan ialah elektrik dan sudah pun bermula. Selepas ini diesel, kemudian kita melihat\npetrol kemudian. Petrol ini yang cukup sensitif. Terima kasih.\n\nTimbalan Yang di-Pertua [Puan Alice Lau Kiong Yieng]: Terima kasih. Saya\njemput Yang Berhormat Tuan Pang Hok Liong, Labis.",
+      "kind": "debate",
+      "url": "/debate/DR-2023-03-27-003#seq-30",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-27032023.pdf#page=15",
+      "via": "",
+      "score": 15.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2024-11-12 (DR-2024-11-12-024)",
+      "title": "DR-2024-11-12-024",
+      "meta": "Dewan Rakyat · 12 Nov 2024",
+      "header": "Dewan Rakyat, 2024-11-12, Parliament 15. RANG UNDANG-UNDANG PERBEKALAN 2025 Bacaan Kali Yang Kedua DAN USUL ANGGARAN PEMBANGUNAN 2025. Speakers: Menteri Perdagangan Dalam Negeri dan Kos Sara Hidup [Datuk Armizan bin Mohd Ali] (GRS).",
+      "text": "Menteri Perdagangan Dalam Negeri dan Kos Sara Hidup [Datuk Armizan bin Mohd Ali] (continued): Dato’ Timbalan Yang di-Pertua, berhubung kenaikan duit eksais gula dan\npemberian insentif gula yang dibangkitkan oleh Yang Berhormat Ayer Hitam. Yang\nBerhormat Ayer Hitam tidak ada di dalam Dewan yang mulia ini. Saya akan jawab\nkemudian secara bertulis kepada beliau. Dato’ Yang di-Pertua, Yang Berhormat Pulai,\nLarut, Hulu Terengganu, Jempol dan Tumpat membangkitkan perkara yang terkait dengan\npelaksanaan subsidi diesel. Sebahagian isu yang dibangkitkan melibatkan bidang kuasa\nKementerian Kewangan. Punca kuasa KPDN berhubung perkara ini melibatkan penurunan kuasa oleh\nYang Amat Berhormat Perdana Menteri di bawah seksyen 6(3), Akta Kemajuan Petroleum\n1974 dan Peraturan 3A(2) Peraturan Kemajuan Petroleum 1974 yang memberikan\ntanggungjawab kepada KPDN untuk mengawal selia aktiviti pemasaran dan pengedaran\nbahan-bahan petroleum atau bahan keluaran petroleum. Ini melibatkan empat jenis kebenaran PDA yang dikeluarkan mengikut PDA1,\nPDA2, PDA3 dan juga PDA4. Berhubung penyasaran subsidi diesel di Semenanjung\nMalaysia bersandarkan kepada punca kuasa perundangan yang saya sebutkan tadi. Tanggungjawab KPDN adalah untuk mengawal selia pelaksanaan Sistem Kawalan Diesel\nBersubsidi 2.0 bagi menggantikan pemberian diesel secara pukal di stesen minyak. Ini\nbermaksud, subsidi masih diteruskan dan disalurkan secara bersasar kepada sektor-sektor tertentu selain subsidi bantuan tunai kepada pengguna individu yang berkelayakan. Seperti mana yang dimaklumkan sebelum ini, mekanisme pemberian diesel\nbersubsidi di bawah SKDS adalah melalui saluran fleet card. Di mana syarikat yang layak\nboleh membuat pembelian diesel bersubsidi menggunakan fleet card untuk menikmati\ndiesel bersubsidi pada harga RM1.88 per liter ataupun RM2.15 per liter. Sehingga kini,\nterdapat 33 jenis kenderaan layak menerima diesel bersubsidi di bawah Program\nPenyasaran Semula Subsidi Diesel (SKDS) ini. Setakat 10 November 2024, jumlah\nsyarikat yang berdaftar di bawah sistem MySubsidi Diesel adalah sebanyak 107,976\ndengan jumlah keseluruhan kenderaan sebanyak 295,261. Yang Berhormat Padang Serai\ndan Hulu Terengganu telah membangkitkan berkenaan beban pengusaha stesen minyak\nyang meningkat disebabkan penggunaan fleet card selaras dengan penyasaran subsidi\ndiesel yang telah dilaksanakan. Dalam hal ini, KPDN sememangnya sedia maklum dan telah mengangkat syor\nsemakan semula margin pengusaha yang dikemukakan oleh pihak-pihak yang berkenaan\nkepada Kementerian Kewangan pada 25 September 2024 yang lalu dalam memastikan\nkelestarian industri penghiliran stesen minyak. Yang Berhormat Jempol juga\nmencadangkan agar pengangkutan bas dan lain-lain kenderaan yang menggunakan\ndiesel di IPT swasta disenaraikan sebagai kenderaan yang layak menerima subsidi di\nbawah Program SKDS. Berhubung cadangan Yang Berhormat Jempol tersebut, saya ingin maklumkan\nbahawa KPDN mengambil maklum berkenaan perkara ini dan telah mengangkat perkara\ntersebut dalam Mesyuarat Jawatankuasa Kelulusan Subsidi Diesel pada 2 Oktober 2024\ndan syor berkenaan sekarang ini berada dalam pertimbangan Kementerian Kewangan.",
+      "kind": "debate",
+      "url": "/debate/DR-2024-11-12-024#seq-294",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-12112024.pdf#page=58",
+      "via": "",
+      "score": 14.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2024-03-18 (DR-2024-03-18-006)",
+      "title": "DR-2024-03-18-006",
+      "meta": "Dewan Rakyat · 18 Mar 2024",
+      "header": "Dewan Rakyat, 2024-03-18, Parliament 15. PERTANYAAN-PERTANYAAN BAGI JAWAB LISAN. Speakers: Timbalan Menteri Kewangan [Puan Lim Hui Ying] (DAP).",
+      "text": "Timbalan Menteri Kewangan [Puan Lim Hui Ying] (continued): Namun, kerajaan tetap menitik berat aspek pelaksanaan dan komunikasi yang berkesan\nkepada pihak industri agar tidak berlaku kejutan kepada ekonomi. Pelaksanaan\npemberian subsidi secara bersasar ini akan dibuat secara berperingkat, tertakluk kepada\nketersediaan berasaskan kepada model yang bersesuaian dan kebolehlaksanaan serta\nmengekalkan fokus kerajaan dalam memastikan kos sara hidup rakyat tidak terjejas. Sebagaimana yang telah diumumkan dalam Belanjawan 2024, kerajaan akan\nmenumpukan kepada penyasaran subsidi diesel terlebih dahulu melalui kaedah dan\nmechanism yang telah diumumkan oleh Kementerian Perdagangan Dalam Negeri dan\nSara Hidup pada 6 Mac 2024. Perluasan pemberian di bawah Sistem Kawalan Subsidi Diesel 2.0 (SKDS 2.0)\nkepada sembilan jenis kenderaan barangan telah dibuka untuk permohonan bermula 7\nMac 2024 dan dijangka memanfaatkan lebih 260,000 kenderaan. Sejak 8 Mac sehingga\n16 Mac, sejumlah lebih 5,800 buah syarikat dengan lebih 34,400 bilangan kenderaan telah\nberjaya mendaftar dalam SKDS 2.0. Justeru, kerajaan menyeru agar semua pemilik\nkenderaan yang layak, berdaftar di bawah SKDS 2.0 agar dapat terus menikmati subsidi\ndi masa hadapan. Jumlah perbelanjaan subsidi diesel pada tahun 2023 telah mencecah RM14.3\nbilion di mana jumlah penggunaan telah meningkat kepada 10.8 bilion liter setahun\nberbanding dengan 6.1 bilion liter pada tahun 2019, sebelum pandemik COVID-19. Peningkatan jumlah penggunaan sebanyak 70 peratus ini dilihat tidak selari dengan\npertambahan bilangan kenderaan diesel yang hanya mencatatkan peningkatan kurang\ndari tiga peratus. Ini mengukuhkan lagi dakwaan bahawa ketirisan subsidi diesel adalah\nsangat besar. Ketika ini, semua kenderaan diesel dalam kategori pengangkutan awam di bawah\nSKDS sedia ada termasuk van, bas sekolah telah menikmati harga diesel bersubsidi pada\nkadar RM1.88 seliter, manakala golongan nelayan menerima subsidi diesel pada harga\nRM1.65 seliter. Kedua-dua kategori ini akan kekal menikmati harga diesel tersebut dan\ntidak akan terlibat dalam program pemberian subsidi diesel secara bersasar. Di samping itu, satu lagi strategi penting yang diberikan penekanan ialah\npenguatkuasaan yang merupakan elemen terpenting dalam memastikan para peniaga\ntidak menaikkan harga barangan dan perkhidmatan sewenang-wenangnya. Pelbagai Ops\ndilaksanakan oleh Kementerian Perdagangan Dalam Negeri dan Kos Sara Hidup seperti\nOps Kesan, Ops Catut, Ops Terjah, Ops Tiris, Ops Menu, Ops Pasar dan Ops Samar bagi\nmemastikan bekalan sentiasa stabil dan mengekang elemen pencatutan di pasaran. Sekian, terima kasih.\n\nTuan Yang di-Pertua: Sandakan.\n\nPuan Vivian Wong Shir Yee [Sandakan]: Terima kasih Timbalan Menteri atas\njawapan yang sangat menyeluruh. Soalan Sandakan adalah— Terlebih dahulu kami ingin\nterima kasih kerana Sabah masih dapat enjoy subsidi diesel di Sabah, tetapi soalan saya\nadalah bagaimana kementerian memastikan Sabah tidak akan menjadi salah satu tempat\npenyeludupan diesel yang tertinggi sekiranya kami punya diesel punya price ada\ndifference di seluruh negara? Terima kasih.\n\nTuan Yang di-Pertua: Sila Menteri.\n\nPuan Lim Hui Ying: Terima kasih Tan Sri Yang di-Pertua, terima kasih Yang\nBerhormat Sandakan. Untuk maklumat Ahli Yang Berhormat, kerajaan melalui\nKementerian Perdagangan Dalam Negeri dan Kos Sara Hidup (KPDN) sentiasa komited\ndalam melaksanakan kawalan berterusan ke atas penjualan dan pengedaran barang\nkawalan bersubsidi bagi membendung penyelewengan dan memastikan bekalannya\nsampai dan dapat dinikmati oleh rakyat negara ini.\n\nTuan Roslan bin Hashim [Kulim-Bandar Baharu]: [Bangun]",
+      "kind": "debate",
+      "url": "/debate/DR-2024-03-18-006#seq-75",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-18032024.pdf#page=21",
+      "via": "",
+      "score": 13.0,
+      "draft": false
+     }
+    ],
+    "stages": [
+     {
+      "name": "bm25",
+      "hits": 100,
+      "ms": 738
+     },
+     {
+      "name": "dense",
+      "hits": 100,
+      "ms": 1124
+     },
+     {
+      "name": "fused",
+      "hits": 155,
+      "ms": 0
+     },
+     {
+      "name": "reranked",
+      "hits": 20,
+      "ms": 1572
+     }
+    ],
+    "usd": null,
+    "search_ms": 3502,
+    "total_ms": 11643
+   }
+  }
+ ]
+}

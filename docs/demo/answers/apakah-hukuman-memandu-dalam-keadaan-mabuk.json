@@ -1,0 +1,355 @@
+{
+ "question": "Apakah hukuman memandu dalam keadaan mabuk?",
+ "lang": "ms",
+ "recorded": "2026-11-27",
+ "events": [
+  {
+   "t": 373,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 592,
+   "event": "stage",
+   "data": {
+    "name": "bm25",
+    "hits": 100,
+    "ms": 217
+   }
+  },
+  {
+   "t": 593,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 1824,
+   "event": "stage",
+   "data": {
+    "name": "dense",
+    "hits": 100,
+    "ms": 1233
+   }
+  },
+  {
+   "t": 1824,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 1824,
+   "event": "stage",
+   "data": {
+    "name": "fused",
+    "hits": 158,
+    "ms": 0
+   }
+  },
+  {
+   "t": 1824,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 3307,
+   "event": "stage",
+   "data": {
+    "name": "reranked",
+    "hits": 20,
+    "ms": 1483
+   }
+  },
+  {
+   "t": 3396,
+   "event": "stage",
+   "data": {
+    "name": "answer",
+    "hits": null,
+    "ms": null
+   }
+  },
+  {
+   "t": 15184,
+   "event": "text",
+   "data": {
+    "text": "Menurut dokumen, hukuman untuk kesalahan memandu di bawah pengaruh alkohol atau dadah di bawah seksyen 44 bergantung pada sama ada kesalahan itu menyebabkan kecederaan atau kematian. Pada 2024, Menteri Pengangkutan menyatakan bahawa"
+   }
+  },
+  {
+   "t": 15347,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1]"
+   }
+  },
+  {
+   "t": 15449,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan"
+   }
+  },
+  {
+   "t": 15633,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]"
+   }
+  },
+  {
+   "t": 15756,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:**"
+   }
+  },
+  {
+   "t": 16062,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]"
+   }
+  },
+  {
+   "t": 16105,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:**"
+   }
+  },
+  {
+   "t": 16348,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]"
+   }
+  },
+  {
+   "t": 16410,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:**"
+   }
+  },
+  {
+   "t": 16737,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:** Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.[1]"
+   }
+  },
+  {
+   "t": 16940,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:** Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.[1] Tempoh kelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada tempoh 20 tahun dari tarikh sabitan.[1]"
+   }
+  },
+  {
+   "t": 17391,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:** Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.[1] Tempoh kelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada tempoh 20 tahun dari tarikh sabitan.[1]\n\nSebelum pindaan, kadar hukuman yang diperuntukkan adalah sama bagi kedua-dua situasi iaitu hukuman penjara selama tempoh tidak kurang tiga tahun dan tidak lebih daripada sepuluh tahun dan didenda tidak kurang daripada RM8,000 dan tidak lebih daripada RM20,000.[1]"
+   }
+  },
+  {
+   "t": 17553,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:** Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.[1] Tempoh kelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada tempoh 20 tahun dari tarikh sabitan.[1]\n\nSebelum pindaan, kadar hukuman yang diperuntukkan adalah sama bagi kedua-dua situasi iaitu hukuman penjara selama tempoh tidak kurang tiga tahun dan tidak lebih daripada sepuluh tahun dan didenda tidak kurang daripada RM8,000 dan tidak lebih daripada RM20,000.[1] Pindaan ini telah dikuatkuasakan pada 23 Oktober 2020[1]"
+   }
+  },
+  {
+   "t": 17983,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:** Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.[1] Tempoh kelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada tempoh 20 tahun dari tarikh sabitan.[1]\n\nSebelum pindaan, kadar hukuman yang diperuntukkan adalah sama bagi kedua-dua situasi iaitu hukuman penjara selama tempoh tidak kurang tiga tahun dan tidak lebih daripada sepuluh tahun dan didenda tidak kurang daripada RM8,000 dan tidak lebih daripada RM20,000.[1] Pindaan ini telah dikuatkuasakan pada 23 Oktober 2020[1]."
+   }
+  },
+  {
+   "t": 18352,
+   "event": "text",
+   "data": {
+    "text": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:** Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.[1] Tempoh kelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada tempoh 20 tahun dari tarikh sabitan.[1]\n\nSebelum pindaan, kadar hukuman yang diperuntukkan adalah sama bagi kedua-dua situasi iaitu hukuman penjara selama tempoh tidak kurang tiga tahun dan tidak lebih daripada sepuluh tahun dan didenda tidak kurang daripada RM8,000 dan tidak lebih daripada RM20,000.[1] Pindaan ini telah dikuatkuasakan pada 23 Oktober 2020[1]. Bagi kesalahan memandu dengan kepekatan alkohol melebihi had (seksyen 45A), Che Alias bin Hamid (PAS) menerangkan dalam perbahasan 2020 bahawa mereka yang bersalah di dalam seksyen ini akan dikenakan penjara maksimum selama dua tahun, denda RM10 ribu hingga RM30 ribu manakala kesalahan kali kedua akan dikenakan penjara maksimum selama lima tahun, dan denda sebanyak RM20 ribu sehingga RM50 ribu.[2]"
+   }
+  },
+  {
+   "t": 19112,
+   "event": "done",
+   "data": {
+    "question": "Apakah hukuman memandu dalam keadaan mabuk?",
+    "lang": "ms",
+    "filters": "no filter",
+    "answer": "Pada 2024, Menteri Pengangkutan menyatakan bahawa seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah[1], dan jenis hukuman dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.[1]\n\nBagi kes kematian, Menteri menyatakan:\n- **Sabitan pertama:** penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.[1]\n- **Sabitan kedua:** penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.[1]\n- **Lesen:** Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.[1] Tempoh kelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada tempoh 20 tahun dari tarikh sabitan.[1]\n\nSebelum pindaan, kadar hukuman yang diperuntukkan adalah sama bagi kedua-dua situasi iaitu hukuman penjara selama tempoh tidak kurang tiga tahun dan tidak lebih daripada sepuluh tahun dan didenda tidak kurang daripada RM8,000 dan tidak lebih daripada RM20,000.[1] Pindaan ini telah dikuatkuasakan pada 23 Oktober 2020[1]. Bagi kesalahan memandu dengan kepekatan alkohol melebihi had (seksyen 45A), Che Alias bin Hamid (PAS) menerangkan dalam perbahasan 2020 bahawa mereka yang bersalah di dalam seksyen ini akan dikenakan penjara maksimum selama dua tahun, denda RM10 ribu hingga RM30 ribu manakala kesalahan kali kedua akan dikenakan penjara maksimum selama lima tahun, dan denda sebanyak RM20 ribu sehingga RM50 ribu.[2]\n\nIni maklumat umum daripada rekod yang diterbitkan, bukan nasihat undang-undang.",
+    "budget_out": false,
+    "sources": [
+     {
+      "n": 1,
+      "cite": "Special Chamber 2024-12-03 (KK-2024-12-03-011)",
+      "quotes": [
+       "Datuk Haji Hasbi bin Haji Habibollah: Pertama sekali ialah seksyen 44 iaitu berkaitan kesalahan memandu semasa berada di bawah pengaruh minuman yang memabukkan atau dadah.",
+       "Datuk Haji Hasbi bin Haji Habibollah: Bagi menjadi satu bentuk deterrence dan menjelaskan hukuman ke atas pelakuan kesalahan yang serius ini, jenis hukuman bagi kesalahan di bawah seksyen 44 telah dibahagikan kepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang menyebabkan kematian.",
+       "Datuk Haji Hasbi bin Haji Habibollah: Setelah pindaan baharu dibuat, dikuatkuasakan, bagi kes yang menyebabkan kematian, mana-mana yang telah disabitkan kali pertama, hendaklah dihukum penjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan dikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada RM100,000.",
+       "Datuk Haji Hasbi bin Haji Habibollah: Dalam dalam hal sabitan kali kedua, ini ulanganlah ya, penjara selama tempoh tidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan denda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000.",
+       "Datuk Haji Hasbi bin Haji Habibollah: Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu lesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun kepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama.",
+       "Datuk Haji Hasbi bin Haji Habibollah: Tempoh kelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada tempoh 20 tahun dari tarikh sabitan.",
+       "Datuk Haji Hasbi bin Haji Habibollah: Sebelum ini, kadar hukuman yang diperuntukkan adalah sama bagi kedua-dua situasi iaitu hukuman penjara selama tempoh tidak kurang tiga tahun dan tidak lebih daripada sepuluh tahun dan didenda tidak kurang daripada RM8,000 dan tidak lebih daripada RM20,000.",
+       "Datuk Haji Hasbi bin Haji Habibollah: Dalam hal ini, Kementerian Pengangkutan telah pun menguatkuasakan pindaan ke atas Akta Pengangkutan Jalan 1987 [Akta 333] pada 23 Oktober 2020."
+      ],
+      "title": "KK-2024-12-03-011",
+      "meta": "Special Chamber · 3 Dec 2024",
+      "url": "/debate/KK-2024-12-03-011#seq-98",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/KKDR-3122024-1.pdf#page=24",
+      "draft": false
+     },
+     {
+      "n": 2,
+      "cite": "Dewan Rakyat 2020-08-26 (DR-2020-08-26-035)",
+      "quotes": [
+       "Tuan Che Alias bin Hamid [Kemaman]: Berdasarkan pindaan yang dinyatakan di sini, mereka yang bersalah di dalam seksyen ini akan dikenakan penjara maksimum selama dua tahun, denda RM10 ribu hingga RM30 ribu manakala kesalahan kali kedua akan dikenakan penjara maksimum selama lima tahun, dan denda sebanyak RM20 ribu sehingga RM50 ribu."
+      ],
+      "title": "DR-2020-08-26-035",
+      "meta": "Dewan Rakyat · 26 Aug 2020",
+      "url": "/debate/DR-2020-08-26-035#seq-473",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-26082020.pdf#page=77",
+      "draft": false
+     }
+    ],
+    "passages": [
+     {
+      "cite": "Special Chamber 2024-12-03 (KK-2024-12-03-011)",
+      "title": "KK-2024-12-03-011",
+      "meta": "Special Chamber · 3 Dec 2024",
+      "header": "Special Chamber of the Dewan Rakyat, 2024-12-03, Parliament 15. USUL PERKARA TERTENTU BERKENAAN KEPENTINGAN ORANG RAMAI YANG BERKEHENDAK DISEGERAKAN DI BAWAH P.M. 18(1) ISU MASALAH PEMANDU MABUK. Speakers: Datuk Haji Hasbi bin Haji Habibollah (PBB).",
+      "text": "Datuk Haji Hasbi bin Haji Habibollah: Terima kasih. Untuk makluman Ahli\nYang Berhormat, isu berkaitan dengan kemalangan disebabkan oleh pemandu yang\nmemandu di bawah pengaruh alkohol adalah satu perkara yang amat dipandang\nserius oleh Kementerian Pengangkutan. Dalam hal ini, Kementerian Pengangkutan\ntelah pun menguatkuasakan pindaan ke atas Akta Pengangkutan Jalan 1987 [Akta\n333] pada 23 Oktober 2020. Latest pindaan yang telah dibuat. Sejak berkuat kuasanya pindaan Akta tersebut, hukuman yang lebih berat\ntelah diperuntukkan termasuk meningkatkan kadar denda, tempoh penjara dan\nmenjadikan hukuman penjara sebagai mandatori bagi jenis-jenis kesalahan tertentu\ntermasuk kesalahan pemanduan di bawah pengaruh alkohol atau dadah. Pindaan\nhukuman ini bertujuan menjadi satu bentuk deterrence dan memupuk kesedaran\nkepada orang ramai ke atas pematuhan undang-undang. Kementerian Pengangkutan juga berpandangan bahawa pindaan ini adalah\nmemadai untuk menjadi suatu halangan dan pengajaran kepada pemandu mabuk. Pindaan terlibat adalah seperti berikut. Jadi di sini sudah pastinya siapa yang kita\nterbabit dalam— di bawah kementerian ini minum, mabuk dan memandu. Jadi kalau yang dijual apa itu sudah di luar bidang kementerianlah. Itu sudah\npasti di bawah penguatkuasaan penjualan, penentuan siapa hendak hantar orang\nmabuk balik dari pub, sudah di bawah kementerian. Ini yang kita kuat kuasakan\nadalah apabila dia minum, mabuk. Minum itu mabuk atau tidak mabuk, tetapi dia\ndrive. Kalau ini dijumpai, dia kenalah, diambil tindakanlah. Ada sesetengah orang\ndia minum, tetapi tidak mabuk. Tetapi adalah level-nya yang akan dikuatkuasakan\ndalam undang-undang tersebut. Pertama sekali ialah seksyen 44 iaitu berkaitan kesalahan memandu semasa\nberada di bawah pengaruh minuman yang memabukkan atau dadah. Bagi menjadi\nsatu bentuk deterrence dan menjelaskan hukuman ke atas pelakuan kesalahan yang\nserius ini, jenis hukuman bagi kesalahan di bawah seksyen 44 telah dibahagikan\nkepada dua kategori iaitu bagi kes yang menyebabkan kecederaan dan kes yang\nmenyebabkan kematian. Sebelum ini, kadar hukuman yang diperuntukkan adalah sama bagi kedua-dua situasi iaitu hukuman penjara selama tempoh tidak kurang tiga tahun dan tidak\nlebih daripada sepuluh tahun dan didenda tidak kurang daripada RM8,000 dan tidak\nlebih daripada RM20,000. Setelah pindaan baharu dibuat, dikuatkuasakan, bagi kes yang menyebabkan\nkematian, mana-mana yang telah disabitkan kali pertama, hendaklah dihukum\npenjara selama tempoh tidak kurang 10 tahun dan tidak lebih daripada 15 tahun dan\ndikenakan denda tidak kurang daripada RM50,000 dan tidak lebih daripada\nRM100,000. Dalam dalam hal sabitan kali kedua, ini ulanganlah ya, penjara selama tempoh\ntidak kurang daripada 15 tahun dan tidak lebih daripada 20 tahun dan dikenakan\ndenda tidak kurang daripada RM100,000 dan tidak lebih daripada RM150,000. Tempoh hilang kelayakan daripada memegang atau mendapatkan suatu\nlesen memandu juga telah dipinda dari tempoh tidak kurang daripada lima tahun\nkepada tempoh tidak kurang sepuluh tahun dalam sabitan pertama. Tempoh\nkelayakan dalam hal sabitan kali kedua atau kemudian juga telah dipinda kepada\ntempoh 20 tahun dari tarikh sabitan.",
+      "kind": "debate",
+      "url": "/debate/KK-2024-12-03-011#seq-98",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/KKDR-3122024-1.pdf#page=24",
+      "via": "",
+      "score": 20.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2026-06-23 (DR-2026-06-23-035)",
+      "title": "DR-2026-06-23-035",
+      "meta": "Dewan Rakyat · 23 Jun 2026",
+      "header": "Dewan Rakyat, 2026-06-23, Parliament 15. RANG UNDANG-UNDANG PENGANGKUTAN JALAN (PINDAAN) 2026 Bacaan Kali Yang Kedua dan Ketiga. Bill for the ROAD TRANSPORT ACT 1987 (Act 333). Speakers: Tuan Haji Kamal bin Ashaari [Kuala Krau] (PAS).",
+      "text": "Tuan Haji Kamal bin Ashaari [Kuala Krau] (continued): Bagaimana status sesuatu notis itu akan ditentukan sebagai telah sampai ataupun\ntidak? Sekiranya berlaku pertikaian, adakah rakyat diberi ruang yang mencukupi\nuntuk membuat rayuan? Perkara ini penting apabila melibatkan golongan warga\nemas dan warga yang buta teknologi. Begitu juga dengan penduduk di kawasan luar bandar yang masih\nberhadapan dengan masalah capaian internet dan liputan telekomunikasi yang tidak\nkonsisten. Saya berharap kementerian dapat menjelaskan mekanisme yang akan\ndigunakan untuk memastikan tak ada rakyat yang kehilangan hak mereka semata-mata kerana kekangan teknologi atau kegagalan sistem penyampaian notis ini. Tuan Yang di-Pertua, saya bersetuju bahawa perkembangan penggunaan\nmakro mobiliti memerlukan kerangka perundangan yang lebih jelas dan\nkomprehensif. Namun, saya ingin mendapatkan penjelasan. Adakah kementerian\nbercadang memperkenalkan standard keselamatan yang lebih menyeluruh bagi\nkenderaan-kenderaan makro mobiliti ini? Kedua, adakah terdapat perancangan untuk mewujudkan sistem pendaftaran\natau pengenalpastian yang lebih tersusun bagi kategori-kategori tertentu? Dan yang\nlebih penting, bagaimana kementerian akan memastikan penguatkuasaan dapat\ndilaksanakan secara konsisten di seluruh negara supaya tidak wujud kekeliruan\nantara negeri dan pihak berkuasa tempatan. Selain penguatkuasaan, kementerian\njuga perlu memberi penekanan kepada pendidikan pengguna dan kempen\nkeselamatan agar matlamat sebenar pindaan ini dapat dicapai. Tuan Yang di-Pertua, 32(3) menaik taraf hukuman pemandu mabuk. Saya\nmengambil maklum bahawa seksyen 32(3) yang dicadangkan ini meningkatkan\nhukuman daripada denda maksimum RM5,000 kepada denda maksimum RM3,000\ndan maksimum RM10,000. Bagi mereka yang memandu ketika lesen memandu sedang digantung. Pada\npandangan saya, pendekatan yang lebih tegas ini juga wajar dipertimbangkan\nterhadap kesalahan pemanduan di bawah pengaruh alkohol dan juga dadah. Jangan\ntunggu sehingga seseorang itu menjadi pesalah berulang atau disabitkan beberapa\nkali, baru tindakan yang benar-benar berat dikenakan kepada mereka. Bagi kesalahan memandu dalam keadaan mabuk dan membahayakan\npengguna jalan raya yang lain, hukuman yang berat perlu dikenakan, walaupun bagi\nkesalahan pertama kerana risiko ini diwujudkan adalah terlalu berat dan melibatkan\nnyawa orang awam yang tidak berdosa. Saya juga mengambil maklum kenyataan Yang Berhormat Menteri bahawa\nmekanisme pampasan kepada mangsa kemalangan yang melibatkan pemandu\nmabuk, dadah dan pemanduan melulu akan dibawa melalui pindaan seterusnya\npada hujung tahun ini. Justeru, saya mengharapkan kementerian dapat memperhalusi mekanisme\ntersebut sebaik mungkin supaya apabila ia dibentangkan kelak, Dewan, Dewan ini\ndapat akan memberikan sokongan dan mangsa dan keluarga mereka bukan saja\nmemerlukan keadilan melalui hukuman terhadap pesalah, tetapi juga pembelaan\nyang sewajarnya ditanggung oleh pesalah terhadap apa juga implikasi yang terpaksa\nditanggung oleh keluarga mangsa. Berkaitan kadar kompaun dan denda minimum. Saya memahami hasrat\nkementerian untuk memastikan hukuman yang dikenakan mempunyai kesan\npencegahan yang lebih kuat berbanding kadar sedia ada. Namun, saya ingin\nmendapat penjelasan daripada Yang Berhormat Menteri, apakah kajian atau data\nyang digunakan oleh kementerian bagi menunjukkan bahawa kadar kompaun dan\nyang sedia ada ini, sudah tidak lagi berkesan dalam mengurangkan kesalahan dan\njenayah jalan raya?",
+      "kind": "debate",
+      "url": "/debate/DR-2026-06-23-035#seq-233",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-23062026.pdf#page=104",
+      "via": "",
+      "score": 19.0,
+      "draft": true
+     },
+     {
+      "cite": "Dewan Rakyat 2026-06-24 (DR-2026-06-24-034)",
+      "title": "DR-2026-06-24-034",
+      "meta": "Dewan Rakyat · 24 Jun 2026",
+      "header": "Dewan Rakyat, 2026-06-24, Parliament 15. RANG UNDANG-UNDANG PENGANGKUTAN JALAN (PINDAAN) 2026 Bacaan Kali Yang Kedua. Bill for the ROAD TRANSPORT ACT 1987 (Act 333). Speakers: Tuan Haji Mohd Hasnizan bin Harun [Hulu Selangor] (PAS).",
+      "text": "Tuan Haji Mohd Hasnizan bin Harun [Hulu Selangor] (continued): Dalam\nkeadaan sebegini, denda RM500 sudah tentu memberikan kesan yang cukup besar,\nkhususnya kepada golongan yang berpendapatan rendah. Berbeza dengan mereka yang\nmempunyai kemampuan kewangan yang lebih baik, jumlah tersebut mungkin tidak\nmemberikan kesan yang sama. Saya nak tegaskan, kita bukan mempertahankan mana-mana individu yang\nmelakukan kesalahan jalan raya. Kesalahan tetap kesalahan dan tindakan wajar perlu\ndiambil. Cuma saya mencadangkan agar kementerian meneliti satu mekanisme kompaun\nyang lebih adil dan seimbang berdasarkan jenis serta tahap kesalahan yang dilakukan,\nbukan pendekatan yang sama bagi semua kesalahan. Matlamat kita bukan untuk mengumpulkan lebih banyak hasil dari kompaun\ntersebut tetapi untuk mengubah sikap pengguna jalan raya. Sebab itu saya berpandangan\nbahawa yang lebih penting bukan berapa tinggi kompaun yang dikenakan tetapi\nbagaimana sistem itu dapat mengubah tingkah laku pengguna jalan raya supaya lebih\nberdisiplin dan bertanggungjawab. Mohon kementerian dapat menelitikan semula perkara\nini. Puan Yang di-Pertua, perkara yang terakhir iaitu perkara ketiga yang saya ingin\nsuarakan adalah pindaan yang dinanti-nantikan oleh seluruh rakyat Malaysia iaitu\nberkaitan pemandu mabuk yang ramai sahabat-sahabat, kawan-kawan kita Ahli Parlimen\nmembawa isu ini. Namun sayang sekali, dalam pindaan kali ini ia tidak dibincangkan\nsecara serius. Kesalahan memandu dalam keadaan mabuk bukanlah kesalahan yang\nberlaku secara tidak sengaja. Ia adalah pilihan yang dibuat dengan sedar. Berapa ramai\nibu, ayah, anak-anak yang menderita apabila mereka kehilangan ahli keluarga tersayang\nhanya kerana pemandu mabuk yang semakin berleluasa. Tidak dinafikan, pindaan pada tahun 2020 telah memperketatkan hukuman\nterhadap pemandu mabuk, termasuk hukuman penjara 10 hingga 15 tahun dan denda\nRM50,000 hingga RM100,000 bagi kes kematian. Namun, jika kita lihat pada data yang\ndilaporkan baru-baru ini, sebanyak 31 kes kemalangan maut direkodkan melibatkan\npemandu mabuk pada tahun 2025, meningkat berbanding 27 kes pada tahun\nsebelumnya. Puan Yang di-Pertua, jelas pindaan yang terakhir pada tahun 2020 masih tidak\nmencukupi untuk membanteras isu pemandu di bawah pengaruh alkohol ini. Saya melihat\nkerajaan perlu memandang serius perkara ini kerana isu pemandu mabuk ini telah lama\ndibangkitkan dan berulang kali dalam Dewan yang mulia ini supaya tindakan undang-undang yang lebih ketat dikenakan. Malah, Menteri Pengangkutan sendiri sebelum ini ada menyatakan bahawa\nkementerian sedang merangka pindaan lanjut terhadap Akta Pengangkutan Jalan ini,\ntermasuk cadangan mewajibkan pesalah pemandu mabuk untuk membayar pampasan\nkepada keluarga mangsa. Jadi, apakah status sebenar cadangan pindaan tersebut dan mengapa ia nya\ntidak dimasukkan dalam pindaan kali ini? Saya tidak menafikan bahawa banyak\nkesalahan serius lain turut diberikan perhatian dalam pindaan kali ini. Namun bagi saya,\nkesalahan memandu dalam keadaan mabuk mempunyai tahap keseriusan yang berbeza. Puan Yang di-Pertua, apa guna seseorang itu memiliki lesen memandu yang sah,\njika pada masa yang sama, dia memilih untuk memandu dalam keadaan mabuk. Apa\nguna kita menekankan disiplin dan kecekapan pemanduan, jika akhirnya, satu keputusan\nyang tidak bertanggungjawab itu meragut nyawa pengguna jalan raya yang tidak bersalah. Yang terkorban bukan orang yang membuat pilihan untuk mabuk tetapi selalunya orang\nawam yang pergi keluar bekerja, pulang ke rumah dari kerja atau sedang menjalani\nkehidupan harian mereka seperti biasa. Pindaan untuk isu pemandu mabuk ini tidak sepatutnya ditangguhkan lagi.",
+      "kind": "debate",
+      "url": "/debate/DR-2026-06-24-034#seq-432",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-24062026.pdf#page=80",
+      "via": "",
+      "score": 18.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2026-06-24 (DR-2026-06-24-030)",
+      "title": "DR-2026-06-24-030",
+      "meta": "Dewan Rakyat · 24 Jun 2026",
+      "header": "Dewan Rakyat, 2026-06-24, Parliament 15. RANG UNDANG-UNDANG PENGANGKUTAN JALAN (PINDAAN) 2026 Bacaan Kali Yang Kedua. Bill for the ROAD TRANSPORT ACT 1987 (Act 333). Speakers: Dato’ Hajah Siti Zailah binti Mohd Yusoff [Rantau Panjang] (PAS).",
+      "text": "Dato’ Hajah Siti Zailah binti Mohd Yusoff [Rantau Panjang] (continued): Apakah usaha yang telah dibuat untuk mengukuhkan kerjasama penguatkuasaan\nantara Malaysia dan Thailand dalam isu-isu yang berkaitan dengan kenderaan ini? Berapakah jumlah kehadiran asing yang telah diperiksa setakat ini? Berapakah kutipan\nsaman yang telah dikenal pasti dan apa impak kepada ekonomi hasil daripada kemasukan\nyang semakin ramai dalam negara kita ini? Jadi saya ingin tahu apakah usaha yang telah dibuat dan kita tidak mahu\nberlakunya rasuah ataupun penyalahgunaan kuasa sehingga menyebabkan dengan\nmudah kenderaan asing masuk dalam negara kita? Sejauh mana usaha ini ditangani? Isu yang seterusnya ialah saya ingin penjelasan iaitu dalam pindaan ini kita tidak\nnampak satu perkataan-perkataan pampasan kepada mangsa terutama yang berkaitan\ndengan kemalangan maut akibat daripada pemandu mabuk. Jadi, seharusnya saya kira\nisu ini banyak disentuh oleh rakan-rakan yang lain. Sepatutnya dalam pindaan yang ini dibuat memfokuskan menangani isu pemandu\nmabuk yang kita telah tahu bagaimana, berapa ramai dah yang meninggal dunia yang\nmana isteri kehilangan suami, anak kehilangan ayah, ibu bapa kehilangan tempat pencari\nnafkah, punca rezeki keluarga kerana akibat dilanggar oleh pemandu mabuk. Jadi, kenapa dalam pindaan ini, walaupun sebelum ini sudah ada pindaan tahun\n2020 berkaitan dengan pindaan dengan pemandu mabuk tapi tidak memadai. Seharusnya\ndalam pindaan ini diambil kesempatan untuk menambahkan lagi hukuman yang lebih\nberat kepada pemandu mabuk sebagaimana yang pernah disebut dan dijanjikan oleh\nYang Berhormat Menteri sebelum ini. Nyawa rakyat lebih berharga daripada hasil\nkompaun yang didapati oleh kerajaan. Jadi saya ingin penjelasan kenapa perkara ini tidak disegerakan?, seolah-olah\nkerajaan tidak serius dalam menangani isu pemandu mabuk di Malaysia. Jadi, ini adalah\nsatu ancaman kepada nyawa rakyat. Jadi saya ingin mencadangkan kepada kerajaan\nsupaya di peringkat Jawatankuasa nanti dipertimbangkan beberapa pindaan tambahan. Di mana, mana-mana individu yang memandu di bawah pengaruh alkohol ataupun dadah\nsehingga menyebabkan kematian hendaklah dikenakan hukuman yang setara dengan\nkesalahan jenayah berat terhadap nyawa manusia. Begitu juga yang kedua, saya mencadangkan lesen memandu dibatalkan secara\nkekal bagi pesalah yang menyebabkan kematian, yang memandu di bawah pengaruh\nalkohol. Pesalah hendaklah diwajibkan membayar pampasan kepada keluarga mangsa. Hari ini keluarga mangsa tak dapat apa-apa. Tidak ada satu pun dalam klausa, dalam\nfasal, dalam pindaan ini ia menyebutkan pampasan yang perlu diberi kepada keluarga\nmangsa terutama yang melibatkan pemandu mabuk. Saya mencadangkan perlu kepada wujud dana khas diwujudkan untuk membantu\nwaris mangsa yang kemalangan maut. Dan saya mencadangkan supaya pampasan\nataupun denda yang dikenakan 50 peratus sekurang-kurangnya denda yang dikenakan\nkepada pemandu mabuk— ini diberi juga kepada keluarga mangsa yang kehilangan\ntempat bergantung. Dan saya ingin tahu juga berkenaan dengan pesalah berulang? Apa usaha untuk\nmemastikan supaya kes-kes yang menyebabkan pesalah berulang ini supaya tidak ada\nterlepas pandang? Dan sejauh mana usaha untuk memasukkan pesalah— nama-nama\npesalah berulang ini dalam pangkalan data nasional yang boleh dipantau oleh semua\nagensi penguat kuasa? Rakyat menuntut perlindungan yang lebih tegas punca\nkemalangan yang disebabkan oleh pemandu mabuk ini. Jadi sekali lagi saya ingin menegaskan bahawa kita bersetuju dengan keperluan\npendigitalan. Kita bersetuju juga untuk membanteras mat rempit. Kita bersetuju untuk\nmembanteras tonto dengan sehabis-habisnya.",
+      "kind": "debate",
+      "url": "/debate/DR-2026-06-24-030#seq-424",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-24062026.pdf#page=72",
+      "via": "",
+      "score": 17.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2020-08-03 (DR-2020-08-03-005)",
+      "title": "DR-2020-08-03-005",
+      "meta": "Dewan Rakyat · 3 Aug 2020",
+      "header": "Dewan Rakyat, 2020-08-03, Parliament 14. JAWAPAN-JAWAPAN LISAN BAGI PERTANYAAN-PERTANYAAN. Speakers: Menteri Pengangkutan [Datuk Seri Ir. Dr. Wee Ka Siong] (MCA); Datuk Dr. Hasan bin Bahrom [Tampin] (AMANAH).",
+      "text": "Datuk Dr. Hasan bin Bahrom [Tampin]: minta Menteri Pengangkutan\nmenyatakan, bila kementerian hendak membentangkan rang undang-undang berhubung\nkait dengan kes pemandu memandu dalam keadaan mabuk sehingga menyebabkan\nkematian, adakah kerajaan akan mengenakan hukuman yang lebih berat kepada\npesalah-pesalah tersebut dan bagaimana kerajaan hendak memastikan pemandu tidak\nmemandu dalam keadaan mabuk.\n\nMenteri Pengangkutan [Datuk Seri Ir. Dr. Wee Ka Siong]: Tuan Yang di-Pertua, saya memohon izin untuk menjawab soalan yang dibangkitkan oleh beberapa\nAhli Yang Berhormat iaitu Yang Berhormat Tampin dan Yang Berhormat Kuala Krai pada\nhari ini, Yang Berhormat Parit Buntar dan Yang Berhormat Marang pada 6 Ogos 2020. Yang Berhormat Batu pada 12 Ogos, Yang Berhormat Cameron Highlands pada 18\nOgos. Yang Berhormat Ledang dan Yang Berhormat Rompin pada 26 Ogos serta Yang\nBerhormat Parit, Yang Berhormat Tanjong Karang, Yang Berhormat Batu Kawan pada\n27 Ogos 2020 secara bersekali kerana isu yang dibangkitkan adalah berkisar topik yang\nsama iaitu berkaitan kesalahan memandu di bawah pengaruh alkohol ataupun pemandu\nmabuk. Untuk makluman Yang Berhormat, isu kemalangan maut yang disebabkan oleh\npemandu yang memandu di bawah pengaruh alkohol merupakan satu perkara yang amat\ndipandang serius oleh kerajaan, khususnya Kementerian Pengangkutan. Perkara ini jika\ntidak dibendung dengan serius akan membawa kesan yang amat negatif kepada orang\nramai dan pengguna jalan raya yang tidak bersalah. Dalam konteks menangani isu ini serta aspek keselamatan jalan raya secara\namnya, pendekatan dan strategi yang holistik adalah diperlukan bagi memastikan usaha\nini berjaya dan mencapai objektifnya. Dalam hal ini, skop tanggungjawab Kementerian\nPengangkutan adalah tertumpu kepada aktiviti advokasi, program pendidikan, penetapan\nperaturan dan penguatkuasaan. Justeru itu, sebagai salah satu strategi utama dalam usaha mencegah dan\nmenjadi deterrence kepada orang ramai daripada memandu di bawah pengaruh alkohol\natau dadah, Akta Pengangkutan Jalan 1987 atau Akta 333 akan dipinda bagi\nmeningkatkan hukuman-hukuman berkaitan dengan kesalahan memandu dengan tidak\nmematuhi peraturan jalan raya termasuk memandu dalam keadaan mabuk. Bacaan pertama rang undang-undang ini telah pun dilaksanakan pada sesi\nParlimen pada 27 Julai 2020 yang lalu. Bacaan kali kedua dan ketiga turut dijadualkan\ndalam sesi Parlimen kali ini. Secara spesifik, pindaan seksyen 41 hingga seksyen 45\nmerupakan komitmen kerajaan untuk memastikan tindakan tegas bagi kesalahan\npemanduan di bawah pengaruh alkohol, dadah atau memandu secara melulu termasuk\nmerempit. Ahli Yang Berhormat, Kementerian Pengangkutan telah melaksanakan soal\nselidik atas talian mengenai perkara ini mulai 21 Mei 2020 hingga 4 Jun 2020 yang lepas. Berdasarkan kepada responden seramai 345 ribu orang, hampir 97 peratus responden\nmemberi maklum balas yang positif dan bersetuju bahawa kuantum hukuman sedia ada\ntidak memadai. Sebagai contoh, seramai 324,489 orang iaitu 94 peratus responden\nbersetuju agar kadar hukuman penjara, denda dan tempoh hilang kelayakan lesen\nmemandu ditingkatkan ke atas pemandu yang disabitkan atas kesalahan dalam keadaan\npemanduan mabuk. Jadi, selain daripada pindaan ke atas hukuman yang sedia ada saya juga telah\nmengarahkan MOT dan agensi utama seperti JPJ dan MIROS untuk menggiatkan lagi\naktiviti advokasi dan program pendidikan keselamatan jalan raya. Dalam pelaksanaan\nprogram-program sebegini, saya menyeru semua pihak berkepentingan termasuk NGO,\npengusaha premis minuman, makanan, pengendali perkhidmatan pengangkutan awam\ndan lain-lain untuk bekerjasama dengan kementerian bagi menjayakan usaha ini ke arah\nmenjamin kesejahteraan dan keselamatan rakyat Malaysia. Saya percaya pelbagai program, kemudahan dan inisiatif boleh diadakan\ndengan jayanya dengan sokongan dan penglibatan daripada semua pihak. Kementerian\nPengangkutan berharap agar rang undang-undang pindaan yang akan dibentangkan\ndalam Dewan ini akan mendapat sokongan daripada semua Ahli Yang Berhormat. Sekian, terima kasih.\n\nTimbalan Yang di-Pertua [Dato’ Sri Azalina Othman Said]: Soalan tambahan\npertama.\n\nDatuk Dr. Hasan bin Bahrom [Tampin]: Terima kasih, Yang Berhormat\nMenteri kerana menjawab dan tahniah untuk mengadakan meminda rang undang-undang. Antara faktor yang menyebabkan berlakunya pemanduan mabuk ini jualan\nsecara terbuka dan juga masa penjualan di Malaysia ini tidak ada had. Makna dalam\nmasa 24 jam orang boleh mendapatkan bahan terlarang itu.",
+      "kind": "debate",
+      "url": "/debate/DR-2020-08-03-005#seq-35",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-03082020.pdf#page=19",
+      "via": "",
+      "score": 16.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2020-07-15 (DR-2020-07-15-006)",
+      "title": "DR-2020-07-15-006",
+      "meta": "Dewan Rakyat · 15 Jul 2020",
+      "header": "Dewan Rakyat, 2020-07-15, Parliament 14. JAWAPAN-JAWAPAN LISAN BAGI PERTANYAAN-PERTANYAAN. Speakers: Menteri Pengangkutan [Datuk Seri Ir. Dr. Wee Ka Siong] (MCA).",
+      "text": "Menteri Pengangkutan [Datuk Seri Ir. Dr. Wee Ka Siong] (continued): Selain daripada pindaan hukuman, kerajaan juga akan meminda had\nkandungan alkohol yang dibenarkan supaya selaras dengan piawaian yang disyorkan\noleh Pertubuhan Kesihatan Sedunia (WHO) iaitu daripada 35 mikrogram alkohol dalam\n100 mililiter nafas, 80 miligram alkohol dalam 100 mililiter darah ataupun 107 miligram\nalkohol dalam 100 mililiter air kencing kepada 22 mikrogram alkohol dalam 100 mililiter\nnafas, 50 miligram alkohol dalam 100 mililiter darah atau 67 miligram alkohol dalam 100\nmililiter air kencing. Untuk makluman Ahli-ahli Yang Berhormat, Kementerian Pengangkutan telah\nmelaksanakan satu soal selidik atas talian mengenai perkara ini iaitu daripada 21 Mei\n2020 hingga 4 Jun 2020 yang lepas. Berdasarkan kepada dapatan kajian sebanyak\n345,000 responden telah menyertai soal selidik ini. Hampir 97 peratus responden\nmemberi maklum balas yang positif dan bersetuju bahawa kuantum hukuman sedia ada\ntidak memadai. Sebagai contoh seramai 324,489 orang iaitu 94 peratus responden\nbersetuju agar kadar hukuman penjara, denda dan tempoh hilang kelayakan lesen\nmemandu ditingkatkan ke atas pemandu yang disabitkan kesalahan memandu ketika\nberada di bawah pengaruh alkohol bagi memberi kesedaran kepada umum dan\nkeinsafan kepada pesalah. Berkenaan dengan cadangan mengenakan hukuman mati bagi kesalahan\nmenyebabkan kematian akibat daripada memandu di bawah pengaruh alkohol,\nKementerian Pengangkutan berpendapat kes melibatkan pemandu mabuk perlulah\nmengikut lunas undang-undang yang sedia ada. Jika Kanun Keseksaan Akta 574\ndigunakan untuk menjatuhkan hukuman mati ia perlu dibuktikan di mahkamah bahawa\npemandu mabuk tersebut mempunyai niat untuk membunuh melampaui keraguan\nmunasabah- beyond reasonable doubt. Memang kita geram tetapi kita tidak boleh mengambil tindakan secara melulu\nsupaya pemandu mabuk ini tidak terlepas daripada tindakan undang-undang yang\nsewajarnya. Maka Kementerian Pengangkutan telah mengambil keputusan untuk\nmeminda seksyen-seksyen termasuklah had kandungan alkohol supaya seseorang itu\nyang memandu melebihi had-had tersebut akan dikenakan hukuman yang jauh lebih\nberat. Maka Kementerian Pengangkutan berharap agar pindaan yang dicadangkan\nkali ini dapat mendidik, mengubah sikap semua pengguna di atas jalan raya. Perkara ini\nsekali gus bertujuan membendung berlakunya kesalahan memandu di bawah pengaruh\nalkohol, dadah dan juga memandu secara melulu dalam menjaga keselamatan pengguna\njalan raya di Malaysia secara keseluruhan. Dalam masa yang sama, Kementerian Pengangkutan berpendapat bahawa\nselain daripada langkah-langkah undang-undang, program kesedaran dan juga\npendidikan perlu juga digandakan. Sebagai contoh Kementerian Pengangkutan giat\nmenggalakkan program pencegahan memandu di bawah pengaruh alkohol seperti\nmelaksanakan konsep designated driver serta penggunaan kenderaan perkhidmatan\nawam seperti teksi dan e-hailing.",
+      "kind": "debate",
+      "url": "/debate/DR-2020-07-15-006#seq-131",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-15072020.pdf#page=24",
+      "via": "",
+      "score": 14.0,
+      "draft": false
+     },
+     {
+      "cite": "Dewan Rakyat 2020-08-26 (DR-2020-08-26-035)",
+      "title": "DR-2020-08-26-035",
+      "meta": "Dewan Rakyat · 26 Aug 2020",
+      "header": "Dewan Rakyat, 2020-08-26, Parliament 14. RANG UNDANG-UNDANG PENGANGKUTAN JALAN (PINDAAN) 2020 Bacaan Kali Yang Kedua dan Ketiga. Bill for the ROAD TRANSPORT ACT 1987 (Act 333). Speakers: Tuan Che Alias bin Hamid [Kemaman] (PAS).",
+      "text": "Tuan Che Alias bin Hamid [Kemaman]: Assalamualaikum warahmatullahi\nwabarakatuh dan selamat petang. Terima kasih Tuan Yang di-Pertua kerana\nmemberikan peluang kepada saya untuk bersama-sama membahaskan rang undang-undang yang saya anggap satu rang undang-undang yang penting iaitu berkenaan\npindaan Akta Pengangkutan Jalan 1987. Pindaan ini berkait dengan isu pemandu mabuk yang berlaku hampir di seluruh\nnegara mutakhir ini khususnya sehingga mengorbankan nyawa dan telah menjadikan\npush factor utama kepada pindaan yang dibentangkan pada hari ini. Walau bagaimanapun, saya ingin memuji langkah yang diambil oleh pihak\nkementerian yang turut melakukan pindaan pada beberapa seksyen lain seperti seksyen\n41 mengenai memandu melulu dan membahayakan sehingga menyebabkan kematian\nserta seksyen 43 iaitu memandu dengan tidak cermat dan tidak bertimbang rasa. Namun,\nsaya akan fokuskan perbahasan saya kepada seksyen yang lain yang berkaitan dengan\nisu pemandu mabuk. Tuan Yang di-Pertua, saya ingin menyentuh beberapa perkara dalam pindaan\nini, Pertama, saya menyokong tindakan pihak kementerian yang tidak hanya melihat\nkepada peruntukan seksyen 44 iaitu memandu semasa berada di bawah pengaruh\nminuman yang memabukkan atau dadah yang menjadi tumpuan sejak kes kemalangan\nyang melibatkan pemandu mabuk dibahaskan. Bahkan juga memberi perhatian kepada\npindaan seksyen 45A iaitu memandu dengan kepekatan alkohol yang melebihi had yang\nditetapkan. Perkara ini penting disebabkan peningkatan hukuman yang terkandung dalam\nseksyen 45A adalah langkah pencegahan bagi memastikan para pemandu mabuk ini\ntidak sekali-kali memandu dalam keadaan mabuk sama ada menyebabkan kecederaan,\nkematian bahkan tidak – bukan isunya tetapi memandu dalam keadaan mabuk itu sendiri\nadalah dikira sebagai sesuatu kesalahan yang besar. Walau bagaimanapun, saya berpandangan pindaan yang dinyatakan dalam\nseksyen 45A(a) ini masih rendah dan perlu dipertingkatkan. Berdasarkan pindaan yang\ndinyatakan di sini, mereka yang bersalah di dalam seksyen ini akan dikenakan penjara\nmaksimum selama dua tahun, denda RM10 ribu hingga RM30 ribu manakala kesalahan\nkali kedua akan dikenakan penjara maksimum selama lima tahun, dan denda sebanyak\nRM20 ribu sehingga RM50 ribu. Begitu juga hilang kelayakan pegangan lesen minimum\nselama dua tahun dan kesalahan kali kedua minimumnya selama lima tahun. Oleh itu,\nsaya mengharapkan perhatian daripada pihak kerajaan dalam hal ini dan tidak sekali-kali\nberkompromi dalam soal yang melibatkan keselamatan para pengguna jalan raya. Seterusnya, saya suka menyebutkan bahawa saya ingin menyentuh mengenai\npelaksanaan zon kawalan arak seperti mana yang telah dilakukan di Singapura. Di\nSingapura, dua wilayah yang dikategorikan sebagai zon kawalan arak seperti Geylang\ndan juga Little India. Penguatkuasaan zon menyaksikan ada beberapa peraturan yang\nboleh dikuatkuasakan secara berasingan dan ini akan menjadikan penguatkuasaan\nkerajaan lebih berfokus. Dalam zon kawalan arak yang dilaksanakan di Singapura, pembelian arak\nadalah dilarang dalam tempoh pukul 10.30 malam sehingga 7 pagi dan akan dikenakan\ndenda yang tinggi jika mana-mana peruncit atau kedai yang menjual arak bukan pada\nwaktu yang dibenarkan. Maksudnya, penguatkuasaan zon tersebut memberi peluang\nkepada kerajaan melaksanakan penguatkuasaan yang secara bersasar terhadap\npelesenan, waktu pembelian, penjualan minuman beralkohol dan sebagainya.",
+      "kind": "debate",
+      "url": "/debate/DR-2020-08-26-035#seq-473",
+      "pdf": "https://www.parlimen.gov.my/files/hindex/pdf/DR-26082020.pdf#page=77",
+      "via": "",
+      "score": 13.0,
+      "draft": false
+     }
+    ],
+    "stages": [
+     {
+      "name": "bm25",
+      "hits": 100,
+      "ms": 217
+     },
+     {
+      "name": "dense",
+      "hits": 100,
+      "ms": 1233
+     },
+     {
+      "name": "fused",
+      "hits": 158,
+      "ms": 0
+     },
+     {
+      "name": "reranked",
+      "hits": 20,
+      "ms": 1483
+     }
+    ],
+    "usd": null,
+    "search_ms": 3016,
+    "total_ms": 18739
+   }
+  }
+ ]
+}
