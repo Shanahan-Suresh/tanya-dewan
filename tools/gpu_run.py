@@ -9,6 +9,9 @@ card over at a frame boundary once it ranks ahead of them (least work left first
 time waited). Holding the lease, it stops Forge (`-Force`: the lease is this job's), runs the
 command, restarts Forge if it stopped it, and releases the lease however the run ends.
 Launch it detached with forge-tools `launch-hidden.ps1`, since it can wait for hours.
+
+The lease lives in the author's private forge-tools folder, named by FORGE_TOOLS. On any other
+machine, run the GPU command directly instead.
 """
 import argparse
 import os
@@ -17,7 +20,9 @@ import sys
 import threading
 import time
 
-FORGE_TOOLS = r"D:\Projects\personal\forge-tools"
+FORGE_TOOLS = os.environ.get("FORGE_TOOLS", "")
+if not FORGE_TOOLS or not os.path.isdir(FORGE_TOOLS):
+    sys.exit("gpu_run.py needs FORGE_TOOLS set to the forge-tools folder; without it, run the GPU job directly")
 sys.path.insert(0, FORGE_TOOLS)
 import forge  # noqa: E402
 from train_when_idle import PS  # noqa: E402

@@ -31,7 +31,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from parlimen import config  # noqa: E402
 from parlimen.act_text import _page_lines  # noqa: E402
 
-KEY_FILE = Path.home() / ".claude" / "anthropic-api-key.txt"
 OUT = config.DATA / "bench" / "ocr"
 TESSERACT = Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe")
 TESSDATA = config.DATA / "tessdata"  # tessdata_best eng, msa, osd
@@ -116,7 +115,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     client = None
     if any(r in MODELS for r in args.readers):
-        client = anthropic.Anthropic(api_key=KEY_FILE.read_text().strip(), max_retries=4)
+        client = anthropic.Anthropic(api_key=config.api_key(), max_retries=4)
     results, spend = [], 0.0
     for kind, pages in (("known", KNOWN), ("scanned", SCANNED)):
         for act, lang, page in pages:

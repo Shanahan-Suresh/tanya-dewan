@@ -37,7 +37,6 @@ import anthropic
 
 from . import config
 
-KEY_FILE = Path.home() / ".claude" / "anthropic-api-key.txt"
 SPEECHES = config.DATA / "speeches.jsonl"
 OUT = config.DATA / "enrich"
 UNITS = OUT / "units.jsonl"
@@ -223,7 +222,7 @@ def request(unit: dict) -> dict:
 # ---------- calls ----------
 
 def _client() -> anthropic.Anthropic:
-    return anthropic.Anthropic(api_key=KEY_FILE.read_text().strip(), max_retries=4)
+    return anthropic.Anthropic(api_key=config.api_key(), max_retries=4)
 
 
 def _log(job: str, model: str, endpoint: str, usage) -> float:

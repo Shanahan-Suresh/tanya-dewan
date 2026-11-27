@@ -37,7 +37,6 @@ from . import config
 
 OCR = config.DATA / "ocr"
 REPORT_OUT = config.DATA / "act-ocr-report.csv"
-KEY_FILE = Path.home() / ".claude" / "anthropic-api-key.txt"
 TESSERACT = Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe")
 TESSDATA = config.DATA / "tessdata"  # tessdata_best eng, msa, osd
 # Cache name: (model, US$ per million input and output tokens).
@@ -213,7 +212,7 @@ def main() -> None:
         files = [r for r in files if r["act"] in args.only]
     if args.in_force:
         files = [r for r in files if r["act"] in in_force]
-    client = anthropic.Anthropic(api_key=KEY_FILE.read_text().strip(), max_retries=4)
+    client = anthropic.Anthropic(api_key=config.api_key(), max_retries=4)
 
     jobs = []
     for r in files:

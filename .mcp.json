@@ -2,9 +2,9 @@
   "mcpServers": {
     "tanya-dewan": {
       "type": "stdio",
-      "command": "D:\\Projects\\work\\parlimen-search\\.venv\\Scripts\\python.exe",
+      "command": ".venv\\Scripts\\python.exe",
       "args": ["-m", "parlimen.mcp_server"],
-      "env": {"PYTHONPATH": "D:\\Projects\\work\\parlimen-search", "HF_HUB_OFFLINE": "1"}
+      "env": {"PYTHONPATH": ".", "HF_HUB_OFFLINE": "1"}
     }
   }
 }

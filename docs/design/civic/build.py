@@ -1,7 +1,7 @@
 import json, re, html, datetime as dt
 from pathlib import Path
 
-ROOT = Path(r"D:\Projects\work\parlimen-search\docs\design")
+ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "civic"
 d = json.loads((ROOT / "data.json").read_text(encoding="utf8"))
 E = lambda s: html.escape(str(s), quote=True)

@@ -30,7 +30,6 @@ from parlimen.sittings import read_csv
 SAMPLE_DATES = ["2018-07-16", "2020-11-26", "2022-03-23", "2024-03-12", "2026-10-20"]
 MODELS = ["claude-haiku-5-5", "claude-sonnet-5-5"]
 MARKERS = re.compile(r"(BELUM DISEMAK|DISEMAK|PINDAAN|NASKHAH SEMENTARA|UNREVISED)", re.I)
-KEY_FILE = Path.home() / ".claude" / "anthropic-api-key.txt"
 
 
 def log_usage(entry: dict) -> None:
@@ -51,7 +50,7 @@ def main() -> None:
     # The Dewan Khas sits on fewer days, so its sample is five days spread evenly over the list.
     days = sorted(sittings)
     dates = SAMPLE_DATES if chamber == "DR" else [days[i * (len(days) - 1) // 4] for i in range(5)]
-    client = anthropic.Anthropic(api_key=KEY_FILE.read_text().strip())
+    client = anthropic.Anthropic(api_key=config.api_key())
     text_dir = config.RAW / "text"
     text_dir.mkdir(parents=True, exist_ok=True)
     results = []

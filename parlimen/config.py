@@ -1,7 +1,7 @@
 """Paths, crawl settings and search settings shared by every module.
 
-Importing this module sets HF_HOME before any Hugging Face library loads, so model downloads land
-on the D: drive (shared with novel-rag).
+Importing this module sets HF_HOME before any Hugging Face library loads when a shared model cache
+exists at D:\\hf-cache (the author's machine); elsewhere Hugging Face keeps its own default.
 """
 
 import os
@@ -13,6 +13,17 @@ CACHE = DATA / "cache"
 RAW = DATA / "raw"
 ACTS = RAW / "acts"
 USAGE_LOG = DATA / "api-usage.jsonl"
+KEY_FILE = Path.home() / ".claude" / "anthropic-api-key.txt"
+
+
+def api_key() -> str:
+    """The Claude API key: ANTHROPIC_API_KEY when set, else the first line of KEY_FILE."""
+    key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    if key:
+        return key
+    if KEY_FILE.exists():
+        return KEY_FILE.read_text(encoding="utf-8").strip()
+    raise RuntimeError(f"No Claude API key: set ANTHROPIC_API_KEY or write the key to {KEY_FILE}")
 
 # parlimen.gov.my serves its leaf certificate without the Sectigo DV R36 intermediate, so the
 # intermediate ships in certs/ and joins certifi's roots instead of turning verification off.
@@ -41,7 +52,8 @@ LOM_UPDATED = LOM_SITE + "/principal.php?type=updated"
 ACT_INTERVAL_S = 5.0  # seconds between two Act PDF downloads
 
 # ---------- search (phase 4, novel-rag's pipeline) ----------
-os.environ.setdefault("HF_HOME", r"D:\hf-cache")
+if Path(r"D:\hf-cache").is_dir():
+    os.environ.setdefault("HF_HOME", r"D:\hf-cache")
 os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 

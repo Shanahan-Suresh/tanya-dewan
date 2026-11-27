@@ -1,7 +1,7 @@
 import json, html, re, datetime
 from pathlib import Path
-OUT = Path(r"D:\Projects\work\parlimen-search\docs\design\gazette")
-D = json.load(open(r"D:\Projects\work\parlimen-search\docs\design\data.json", encoding="utf8"))
+OUT = Path(__file__).resolve().parent
+D = json.load(open(OUT.parent / "data.json", encoding="utf8"))
 E = lambda s: html.escape(str(s), quote=True)
 
 def fdate(s, short=False):

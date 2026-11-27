@@ -31,7 +31,6 @@ import anthropic
 
 from parlimen import config
 
-KEY_FILE = Path.home() / ".claude" / "anthropic-api-key.txt"
 OUT = config.DATA / "bench" / "enrich"
 TEXTS = config.RAW / "text"
 
@@ -218,7 +217,7 @@ def make_units() -> list[dict]:
 # ---------- calls ----------
 
 def _client() -> anthropic.Anthropic:
-    return anthropic.Anthropic(api_key=KEY_FILE.read_text().strip(), max_retries=4)
+    return anthropic.Anthropic(api_key=config.api_key(), max_retries=4)
 
 
 def _log(job: str, model: str, usage) -> float:
