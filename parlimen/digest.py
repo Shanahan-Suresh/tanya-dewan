@@ -1,4 +1,4 @@
-"""A weekly digest for one sector, written from the week's records, for the validation outreach.
+"""A weekly digest for one sector, written from the week's records: a working sample of a sector alert.
 
 The week's agenda items on the sector's topics go to Haiku 5.5 with their AI summaries, their
 question-answer pairs and their checked commitments, each under its record id. Haiku writes a
