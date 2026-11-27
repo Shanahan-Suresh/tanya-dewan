@@ -9,3 +9,7 @@ __pycache__/
 # The owner's private review pages; their published copies stay on claude.ai
 /docs/roadmap-page.html
 /docs/launch-page.html
+# Restyle prototype screenshots: docs/design/restyle/shoot.py remakes them
+/docs/design/restyle/current/
+/docs/design/restyle/shots/
+/docs/design/restyle/*/shots/

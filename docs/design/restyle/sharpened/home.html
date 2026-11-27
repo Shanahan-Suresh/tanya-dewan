@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head>
+<title>Ask · Tanya Dewan</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body data-page="home">
+<main id="main">
+<section class="hero" id="hero" aria-label="Ask">
+ <div class="wrap">
+  <div class="hero-head">
+   <div class="eyebrow">Acts and Hansard</div>
+   <h1>Ask Malaysia&rsquo;s <em>Parliament</em> anything.</h1>
+   <p class="lede">Ask in English or Malay. Each answer cites the Act or sitting it comes from and links to the exact words.</p>
+  </div>
+  <div class="stage">
+   <svg class="arc" id="arc" role="img" aria-label="The 222 seats of the Dewan Rakyat drawn as dots. They light up as a search narrows the record."></svg>
+   <div class="ask">
+    <form id="ask-form" class="ask-row" role="search">
+     <div class="ask-field"><label for="q">Your question</label><input id="q" type="text" autocomplete="off" placeholder="Ask about a law or a debate"></div>
+     <button class="btn" type="submit" id="run-btn">Ask</button>
+    </form>
+    <div class="tries" id="tries"></div>
+    <p class="ask-note" id="ask-note" role="status"></p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="answer" id="answer" hidden aria-label="Answer">
+ <div class="wrap">
+  <div class="funnel" id="funnel" aria-label="What the search went through"></div>
+  <p class="funnel-note">What the search went through. Bar lengths use a log scale, so the small steps stay visible.</p>
+  <div class="split">
+   <div class="panel">
+    <div class="panel-head"><span class="lab ai"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>AI answer</span></div>
+    <p class="ai-note">Written by AI from the sources beside it. The verbatim record is the source, so check a claim there before you rely on it.</p>
+    <div id="found"></div>
+    <div class="answer-text" id="atext" aria-live="polite"></div>
+    <p class="note" id="legal" hidden>This is general information from the published record, not legal advice.</p>
+   </div>
+   <aside class="panel" aria-label="Sources">
+    <div class="panel-head"><span class="lab vb"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6M9 11h6"/></svg>Sources, verbatim</span></div>
+    <div id="sources"><p class="empty">Sources appear here when the answer is ready.</p></div>
+   </aside>
+  </div>
+ </div>
+</section>
+
+<div class="wrap">
+ <section class="sec" aria-labelledby="nums">
+  <div class="sec-head rv"><div><div class="eyebrow">The record</div><h2 class="h2" id="nums">The record in numbers</h2><p class="lede">Counted from what the site holds.</p></div></div>
+  <div class="stats">
+   <div class="card stat lift rv"><div class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><div class="v" data-count="30091">30,091</div><div class="t">debates</div></div>
+   <div class="card stat lift rv"><div class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6M9 11h6"/></svg></div><div class="v" data-count="361676">361,676</div><div class="t">verbatim speeches</div></div>
+   <div class="card stat lift rv"><div class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></div><div class="v" data-count="31767">31,767</div><div class="t">questions with answers</div></div>
+   <div class="card stat lift rv"><div class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></div><div class="v" data-count="18523">18,523</div><div class="t">ministers&rsquo; commitments</div></div>
+  </div>
+ </section>
+
+ <section class="sec" aria-labelledby="seatsh">
+  <div class="sec-head rv"><div><div class="eyebrow">15th Parliament</div><h2 class="h2" id="seatsh">The 15th Parliament, seat by seat</h2><p class="lede">Each dot is one seat, in the colour of its MP&rsquo;s coalition. 222 seats in the Dewan Rakyat.</p></div></div>
+  <div class="card map-card rv">
+   <div class="map-find"><label class="eyebrow" for="mapfind" style="margin:0">Find an MP or seat</label><input class="field" id="mapfind" type="text" autocomplete="off" placeholder="For example Langkawi"></div>
+   <div class="map-out" id="mapout" role="status"></div>
+   <svg class="chamber" id="map" role="img" aria-label="Seat map of 222 seats grouped by coalition"></svg>
+   <div class="legend" id="legend"></div>
+   <p class="note">A diagram: seats are grouped by coalition, not placed as in the real chamber.</p>
+  </div>
+ </section>
+
+ <section class="sec">
+  <div class="g">
+   <div class="s-6">
+    <div class="sec-head rv"><div><div class="eyebrow">Sittings</div><h2 class="h2">Latest sittings</h2><p class="lede">Drafts have not been revised and may change.</p></div></div>
+    <div class="list">
+     <a class="row rv" href="debate.html"><span><b>Dewan Rakyat</b><br><span class="sub">22 Oct 2026 &middot; 51 debates</span></span><span class="lab draft"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg>Unrevised draft</span></a>
+     <a class="row rv" href="debate.html"><span><b>Special Chamber</b><br><span class="sub">22 Oct 2026 &middot; 7 debates</span></span></a>
+     <a class="row rv" href="debate.html"><span><b>Dewan Rakyat</b><br><span class="sub">21 Oct 2026 &middot; 54 debates</span></span><span class="lab draft"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg>Unrevised draft</span></a>
+     <a class="row rv" href="debate.html"><span><b>Special Chamber</b><br><span class="sub">21 Oct 2026 &middot; 8 debates</span></span></a>
+     <a class="row rv" href="debate.html"><span><b>Dewan Rakyat</b><br><span class="sub">20 Oct 2026 &middot; 56 debates</span></span><span class="lab draft"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg>Unrevised draft</span></a>
+     <a class="row rv" href="debate.html"><span><b>Special Chamber</b><br><span class="sub">20 Oct 2026 &middot; 6 debates</span></span></a>
+    </div>
+    <a class="more" href="#">All sittings <svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+   </div>
+   <div class="s-6">
+    <div class="sec-head rv"><div><div class="eyebrow">Commitments</div><h2 class="h2">Latest commitments</h2><p class="lede">What ministers committed to in the Dewan Rakyat, their own words first.</p></div></div>
+    <div class="list">
+     <article class="commit rv"><p class="q" lang="ms">&ldquo;sehingga penghujung tahun ini, tumpuan adalah untuk menambah bilangan perkhidmatan kerajaan yang&rdquo;</p><p class="ai"><span class="ai-tag"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Commitment (AI)</span> Add more government services integrated into MyGOV Malaysia as a quick win</p><p class="by">Menteri Digital [Tuan Gobind Singh Deo] &middot; 22 Oct 2026</p></article>
+     <article class="commit rv"><p class="q" lang="ms">&ldquo;Mulai tahun 2027, GovTech Malaysia akan memperluaskan pendekatan&rdquo;</p><p class="ai"><span class="ai-tag"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Commitment (AI)</span> Expand from individual app development to a reusable government digital platform ecosystem across all ministries and agencies</p><p class="by">Menteri Digital [Tuan Gobind Singh Deo] &middot; 22 Oct 2026</p></article>
+     <article class="commit rv"><p class="q" lang="ms">&ldquo;saya akan mengambil usaha untuk bantu menambahkan stesen-stesen IPU&rdquo;</p><p class="ai"><span class="ai-tag"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Commitment (AI)</span> Will make efforts to help add IPU stations in Sarawak</p><p class="by">Dato&rsquo;Sri Arthur Joseph Kurup &middot; 22 Oct 2026</p></article>
+     <article class="commit rv"><p class="q" lang="ms">&ldquo;kerajaan akan memperluaskan lagi pelepasan cukai individu untuk merangkumi semua perbelanjaan penjagaan ibu bapa dan datuk nenek&rdquo;</p><p class="ai"><span class="ai-tag"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Commitment (AI)</span> Government will expand individual tax relief to cover all care expenses for parents and grandparents, not only health expenses</p><p class="by">Timbalan Menteri Pembangunan Wanita, Keluarga&hellip; &middot; 22 Oct 2026</p></article>
+    </div>
+    <a class="more" href="#">All commitments <svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+   </div>
+  </div>
+ </section>
+
+ <section class="sec" aria-labelledby="topicsh">
+  <div class="sec-head rv"><div><div class="eyebrow">Topics</div><h2 class="h2" id="topicsh">Most debated topics</h2><p class="lede">Debates a year on each of the six biggest topics.</p></div><a class="more" href="#">All topics <svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  <div class="tgrid" id="tgrid"></div>
+ </section>
+</div>
+</main>
+
+<dialog class="reader" id="reader" aria-labelledby="rd-title">
+ <div class="rd-head"><div><span class="lab vb"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6M9 11h6"/></svg>Verbatim record</span><h2 id="rd-title"></h2><p class="src-meta" id="rd-meta"></p></div><button type="button" class="icon-btn" id="rd-close" aria-label="Close the reader"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <div class="rd-body"><p class="rd-hdr" id="rd-hdr"></p><div class="rd-pass" id="rd-pass"></div></div>
+ <div class="rd-foot"><div class="grp"><button type="button" class="btn ghost sm" id="rd-prev"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Previous</button><span id="rd-pos" class="src-meta"></span><button type="button" class="btn ghost sm" id="rd-next">Next<svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div><a class="btn sm" id="rd-pdf" href="#" rel="noopener">Open the record<svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
+</dialog>
+<script src="data.js"></script><script src="app.js"></script>
+</body></html>

@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="style.css"><script src="data.js"></script><script src="app.js" defer></script><title>Tanya Dewan: ask Malaysia's laws and Parliament</title></head>
+<body data-page="home"><main id="main">
+<section class="hero stage" aria-labelledby="h1">
+ <div class="hero-in">
+  <svg class="hero-arc" id="hero-arc" viewBox="0 0 1600 720" aria-hidden="true" focusable="false"></svg>
+  <div class="hero-ui">
+   <h1 id="h1">Ask the <em>record.</em></h1>
+   <p class="lead">Malaysia's Acts and Dewan Rakyat debates, in English and Malay. Every sentence of an answer cites an Act section or a speech.</p>
+   <form class="ask" id="ask" role="search"><label class="sr-only" for="q">Ask about a law or a debate, in English or Malay</label><input id="q" type="text" autocomplete="off" placeholder="Ask about a law or a debate" value=""><button class="btn" type="submit">Ask</button></form>
+   <div class="tries"><span class="lbl">Try</span>
+    <button class="try" type="button" data-q="Can my employer cut my salary?"><small>EN</small>Can my employer cut my salary?</button>
+    <button class="try" type="button" data-q="Bolehkah majikan memotong gaji saya?"><small>BM</small>Bolehkah majikan memotong gaji saya?</button>
+   </div>
+   <p class="demo-note">This demo has no server. Any question replays one recorded answer.</p>
+  </div>
+ </div>
+ <div class="hero-foot"><span><b>30,091</b>debates</span><span><b>887</b>Acts</span><span><b>222</b>seats</span><span>14th and 15th Parliaments, 2018 to 2026</span></div>
+</section>
+
+<section class="band dark" id="answer" hidden aria-labelledby="ans-h" style="padding-top:44px">
+ <div class="wrap ans-grid">
+  <div>
+   <h2 id="ans-h" class="eyebrow">What the search went through</h2>
+   <ol class="funnel" id="funnel"></ol>
+   <figure class="ans-seats"><svg id="ans-arc" viewBox="0 0 1000 520" aria-hidden="true"></svg><figcaption>A picture only: each seat stands for a share of the passages. Light means a step kept it.</figcaption></figure>
+  </div>
+  <div class="ans-box">
+   <p class="ans-q" id="ans-q"></p>
+   <div class="ans-meta" id="ans-meta" hidden><span class="label-ai"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>AI answer</span><span class="mute">Written by AI from the sources below. The verbatim record is the source.</span></div>
+   <div class="ans-text" id="ans-text" aria-live="polite"></div>
+   <p class="ans-foot" id="ans-foot" hidden><span id="ans-ms"></span>.</p>
+  </div>
+ </div>
+</section>
+<section class="band light" id="record" hidden aria-label="The record behind the answer" style="padding-top:56px">
+ <div class="wrap">
+  <div id="sources-wrap" hidden><p class="eyebrow">The record</p><h2 class="h2" style="margin-bottom:28px">Sources</h2><div class="src-grid" id="src-grid"></div></div>
+  <div id="passages-wrap" class="pass" hidden><details><summary>Passages used for the answer (<span id="pass-n"></span>)</summary><ol id="pass-list"></ol></details></div>
+ </div>
+</section>
+
+<section class="band light" aria-labelledby="n-h"><div class="wrap">
+ <div class="sec-head"><div><p class="eyebrow">The record in numbers</p><h2 class="h2" id="n-h">Counted from what the site holds.</h2></div></div>
+ <div class="nums"><div><b data-n="30091">30,091</b><span>debates</span></div><div><b data-n="361676">361,676</b><span>verbatim speeches</span></div><div><b data-n="31767">31,767</b><span>questions with answers</span></div><div><b data-n="18523">18,523</b><span>ministers' commitments</span></div></div>
+</div></section>
+
+<section class="band dark" aria-labelledby="c-h"><div class="wrap">
+ <div class="sec-head"><div><p class="eyebrow">The 15th Parliament</p><h2 class="h2" id="c-h">Seat by seat.</h2></div><p class="mute">Each dot is one seat, in the colour of its MP's coalition.</p></div>
+ <div class="cham"><svg class="arc-svg" id="cham-arc" viewBox="0 0 1000 520" role="group" aria-label="The 15th Parliament, seat by seat"></svg>
+  <div><ul class="legend" id="legend"></ul>
+  <div class="find"><label for="find-in">Find an MP or seat</label><input id="find-in" type="text" autocomplete="off" placeholder="A name, a seat or a code such as P063"><ul id="find-list"></ul><div class="picked" id="picked" hidden></div></div>
+  <p class="note">A diagram: seats are grouped by coalition, not placed as in the real chamber.</p></div></div>
+</div></section>
+
+<section class="band light" aria-labelledby="s-h"><div class="wrap two">
+ <div><p class="eyebrow">Latest sittings</p><h2 class="h2" id="s-h" style="font-size:clamp(28px,3.4vw,44px);margin-bottom:26px">Most recent days</h2><ul class="sit-list" id="sit-list"></ul><p class="note" style="margin-top:14px">Drafts have not been revised and may change.</p></div>
+ <div><p class="eyebrow">Latest commitments</p><h2 class="h2" style="font-size:clamp(28px,3.4vw,44px);margin-bottom:26px">What ministers promised</h2><div id="com-list"></div></div>
+</div></section>
+
+<section class="band dark" aria-labelledby="t-h"><div class="wrap">
+ <div class="sec-head"><div><p class="eyebrow">Topics</p><h2 class="h2" id="t-h">What Parliament talks about.</h2></div><p class="mute">Debates a month on each of the six biggest topics.</p></div>
+ <div class="topics" id="topics"></div>
+</div></section>
+</main>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="reader" id="reader" hidden role="dialog" aria-modal="true" aria-labelledby="rd-title">
+ <div class="rd-head"><div><span class="label-rec" style="color:var(--gold)">Verbatim source</span><h2 id="rd-title"></h2><p id="rd-meta"></p></div><button class="tbtn" id="rd-close" type="button" aria-label="Close the reader"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <div class="rd-body"><div class="rd-text" id="rd-text"></div><p class="note" style="margin-top:20px">The quoted words are marked. <a id="rd-pdf" href="#" rel="noopener">Open the official PDF</a></p></div>
+ <div class="rd-foot"><button class="btn-s" id="rd-prev" type="button">Previous source</button><span class="who" id="rd-pos" style="align-self:center"></span><button class="btn-s" id="rd-next" type="button">Next source</button></div>
+</aside></body></html>

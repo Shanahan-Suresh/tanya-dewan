@@ -1,0 +1,170 @@
+<meta charset="utf-8">
+<title>Tanya Dewan Upgrades</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Literata:opsz,wght@7..72,400..600&display=swap">
+<link rel="stylesheet" href="mockups.css">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5v14l11-7z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+</svg>
+
+<div class="page">
+  <header class="intro">
+    <div class="brandline"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 30 16 16 30 2 16z" fill="#0A1F5C"/><path d="M16 9l7 7-7 7-7-7z" fill="#F5B800"/></svg>Tanya Dewan</div>
+    <h1>Seven upgrades that show the engineering</h1>
+    <p class="lead">The site works, but it looks like a plain records site. These seven upgrades put the search, the data and the build on screen. Each one below works with real data from the site.</p>
+    <ol class="steps">
+      <li><b>1</b>Try each upgrade in its frame.</li>
+      <li><b>2</b>Press Build it, Maybe or Skip under it.</li>
+      <li><b>3</b>Tell me in chat when you are done.</li>
+    </ol>
+  </header>
+
+  <div class="tally" aria-live="polite">
+    <span><b id="tally-n">0</b> of 7 picked</span>
+    <span class="save" id="save-state"></span>
+    <nav aria-label="Jump to an upgrade" id="tally-nav"></nav>
+  </div>
+
+  <!-- 1 -->
+  <section class="concept" id="search" data-key="watch-it-search" aria-labelledby="h1">
+    <header><span class="no">1</span><h2 id="h1">Watch it search</h2>
+      <p class="one">The answer screen shows each search step as it happens. Sources appear as soon as they are ranked, before the answer text.</p></header>
+    <div class="frame"><div class="frame-bar"><span class="url">tanya-dewan/?q=Can+my+employer+cut+my+salary</span></div>
+      <div class="frame-body" id="ws"></div></div>
+    <dl class="facts">
+      <div><dt>What a visitor sees</dt><dd>The search narrow 428,000 records down to the 3 it cites, with the real times. A switch shows the raw stream from the server.</dd></div>
+      <div><dt>What it shows a hiring manager</dt><dd>Server-sent events, a hybrid search pipeline and care for how fast an answer feels.</dd></div>
+      <div><dt>What it takes</dt><dd>Front end, plus a small server change: send the sources when ranking ends, and each passage's rank at each step.</dd></div>
+      <div><dt>Works in the free demo?</dt><dd><span class="demo-ok"><svg class="i"><use href="#i-check"/></svg>Yes, after one new recording</span></dd></div>
+    </dl>
+    <div class="pick" role="group" aria-label="Your pick for Watch it search"></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="concept" id="reader" data-key="citation-reader" aria-labelledby="h2">
+    <header><span class="no">2</span><h2 id="h2">Citation reader</h2>
+      <p class="one">Each number in the answer opens the whole Act section beside it, with the quoted words marked.</p></header>
+    <div class="frame"><div class="frame-bar"><span class="url">tanya-dewan/?q=Can+my+employer+cut+my+salary#source-1</span></div>
+      <div class="frame-body" id="cr"></div></div>
+    <dl class="facts">
+      <div><dt>What a visitor sees</dt><dd>Press a number, and the source opens beside the answer. The quoted words are marked. Use <kbd>J</kbd> and <kbd>K</kbd> to step through the sources and <kbd>Esc</kbd> to close.</dd></div>
+      <div><dt>What it shows a hiring manager</dt><dd>Answers you can check, focus control and keyboard access. On a phone the reader is a bottom sheet.</dd></div>
+      <div><dt>What it takes</dt><dd>Front end only. The full passage text is already in the answer the server sends.</dd></div>
+      <div><dt>Works in the free demo?</dt><dd><span class="demo-ok"><svg class="i"><use href="#i-check"/></svg>Yes</span></dd></div>
+    </dl>
+    <div class="pick" role="group" aria-label="Your pick for Citation reader"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="concept" id="jump" data-key="command-palette" aria-labelledby="h3">
+    <header><span class="no">3</span><h2 id="h3">Jump to anything</h2>
+      <p class="one">Press <kbd>Ctrl</kbd> <kbd>K</kbd> anywhere to find an MP, Act, bill, topic or sitting by typing a few letters.</p></header>
+    <div class="frame"><div class="frame-bar"><span class="url">tanya-dewan/</span></div>
+      <div class="frame-body" id="cp"></div></div>
+    <dl class="facts">
+      <div><dt>What a visitor sees</dt><dd>A search box that finds any of 1,611 pages as they type, grouped by kind, with the matched letters marked.</dd></div>
+      <div><dt>What it shows a hiring manager</dt><dd>A search endpoint, fuzzy matching and an accessible list you can drive with the arrow keys.</dd></div>
+      <div><dt>What it takes</dt><dd>A <code>/api/suggest</code> endpoint on the SQLite full-text index for the live site, and a prebuilt list for the demo.</dd></div>
+      <div><dt>Works in the free demo?</dt><dd><span class="demo-ok"><svg class="i"><use href="#i-check"/></svg>Yes, from a prebuilt list</span></dd></div>
+    </dl>
+    <div class="pick" role="group" aria-label="Your pick for Jump to anything"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="concept" id="seats" data-key="seat-map" aria-labelledby="h4">
+    <header><span class="no">4</span><h2 id="h4">The Dewan seat map</h2>
+      <p class="one">All 222 seats of the 15th Parliament in one half circle. It lights up one MP's seat, or everyone who spoke in a debate.</p></header>
+    <div class="frame"><div class="frame-bar"><span class="url">tanya-dewan/mp/dzulkefly-ahmad</span></div>
+      <div class="frame-body" id="sm"></div></div>
+    <dl class="facts">
+      <div><dt>What a visitor sees</dt><dd>The house at a glance. Point at a seat to see who holds it. It can be the home page picture, and it fits on MP and debate pages.</dd></div>
+      <div><dt>What it shows a hiring manager</dt><dd>A custom chart drawn from real records, with no chart library.</dd></div>
+      <div><dt>What it takes</dt><dd>One query for the seat and party of each MP. The seat order is a diagram, not the real seating plan, and the page says so.</dd></div>
+      <div><dt>Works in the free demo?</dt><dd><span class="demo-ok"><svg class="i"><use href="#i-check"/></svg>Yes</span></dd></div>
+    </dl>
+    <div class="pick" role="group" aria-label="Your pick for The Dewan seat map"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="concept" id="debate" data-key="debate-timeline" aria-labelledby="h5">
+    <header><span class="no">5</span><h2 id="h5">Debate as a timeline</h2>
+      <p class="one">A strip at the top of a debate page shows every speech in order, sized by length and coloured by party.</p></header>
+    <div class="frame"><div class="frame-bar"><span class="url">tanya-dewan/debate/DR-2024-12-11-040</span></div>
+      <div class="frame-body" id="dt"></div></div>
+    <dl class="facts">
+      <div><dt>What a visitor sees</dt><dd>Who spoke, how long and when, before reading a word. Press a bar, or use the arrow keys, to read that speech.</dd></div>
+      <div><dt>What it shows a hiring manager</dt><dd>Messy PDF transcripts turned into clean, structured data that a chart can trust.</dd></div>
+      <div><dt>What it takes</dt><dd>Front end only. Speaker, party, time and length are already in the database.</dd></div>
+      <div><dt>Works in the free demo?</dt><dd><span class="demo-ok"><svg class="i"><use href="#i-check"/></svg>Yes</span></dd></div>
+    </dl>
+    <div class="pick" role="group" aria-label="Your pick for Debate as a timeline"></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="concept" id="topics" data-key="topic-explorer" aria-labelledby="h6">
+    <header><span class="no">6</span><h2 id="h6">Topic explorer</h2>
+      <p class="one">How often Parliament debated each big topic, month by month since July 2018, with key events marked.</p></header>
+    <div class="frame"><div class="frame-bar"><span class="url">tanya-dewan/topics</span></div>
+      <div class="frame-body" id="te"></div></div>
+    <dl class="facts">
+      <div><dt>What a visitor sees</dt><dd>Peaks they can explain: the budget every October and November, and the gap at the first lockdown. Drag across the chart to zoom in.</dd></div>
+      <div><dt>What it shows a hiring manager</dt><dd>An interactive chart over 30,091 debates, with zoom, hover and topic switches.</dd></div>
+      <div><dt>What it takes</dt><dd>Monthly counts per topic, built once into a small JSON file.</dd></div>
+      <div><dt>Works in the free demo?</dt><dd><span class="demo-ok"><svg class="i"><use href="#i-check"/></svg>Yes</span></dd></div>
+    </dl>
+    <div class="pick" role="group" aria-label="Your pick for Topic explorer"></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="concept" id="built" data-key="how-its-built" aria-labelledby="h7">
+    <header><span class="no">7</span><h2 id="h7">How it's built, plus polish</h2>
+      <p class="one">A page that maps the whole system. Press a box to see what it does, its real numbers and its code.</p></header>
+    <div class="frame"><div class="frame-bar"><span class="url">tanya-dewan/how-it-works</span></div>
+      <div class="frame-body" id="hb"></div></div>
+    <dl class="facts">
+      <div><dt>What a visitor sees</dt><dd>The path from PDF to answer, with the test results. Below it are three small touches: a light and dark switch, smooth page changes and a <kbd>?</kbd> list of keys.</dd></div>
+      <div><dt>What it shows a hiring manager</dt><dd>That you can design and measure a whole system. Recruiters often read this page first.</dd></div>
+      <div><dt>What it takes</dt><dd>Front end only. The numbers come from the README and the eval reports.</dd></div>
+      <div><dt>Works in the free demo?</dt><dd><span class="demo-ok"><svg class="i"><use href="#i-check"/></svg>Yes</span></dd></div>
+    </dl>
+    <div class="pick" role="group" aria-label="Your pick for How it's built"></div>
+  </section>
+
+  <footer class="foot">
+    <p>All numbers and text come from the site's own records: the recorded answer of 27 November 2026, the 15th Parliament seat list and the Hansard of 11 December 2024.</p>
+    <p>Press <kbd>?</kbd> to see the keys this page knows.</p>
+  </footer>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="keys card" id="keys" role="dialog" aria-modal="true" aria-labelledby="keys-h" hidden>
+  <h3 id="keys-h">Keys on this page</h3>
+  <dl>
+    <dt><kbd>Ctrl</kbd> <kbd>K</kbd></dt><dd>Jump to anything</dd>
+    <dt><kbd>J</kbd> <kbd>K</kbd></dt><dd>Next or previous source, while the reader is open</dd>
+    <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Step through speeches on the timeline</dd>
+    <dt><kbd>Esc</kbd></dt><dd>Close what is open</dd>
+    <dt><kbd>?</kbd></dt><dd>Show this list</dd>
+  </dl>
+  <p style="margin-top:14px"><button class="btn ghost" type="button" id="keys-close">Close</button></p>
+</div>
+
+<script src="mockups.js"></script>

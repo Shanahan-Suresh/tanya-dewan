@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask · Tanya Dewan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="home">
+<main id="main" class="wrap">
+  <p class="demo-note">This is a demo. It plays answers recorded on 27 Nov 2026 and holds a sample of the pages.</p>
+
+  <div class="grid" id="home">
+    <section class="tile navy ask c8" aria-labelledby="ask-h">
+      <svg class="deco" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 5 L59 32 L32 59 L22.5 49.5 L8 57 L14.5 41.5 L5 32 Z"/><path d="M32 19 L45 32 L32 45 L19 32 Z"/></svg>
+      <div class="label label-big">Acts and Hansard</div>
+      <h1 id="ask-h">Ask about Malaysian law and Parliament</h1>
+      <p class="sub">Ask in English or Malay. Each answer cites the Act or sitting it comes from and links to the exact words.</p>
+      <form class="ask-form" id="ask-form" role="search">
+        <label class="sr" for="q">Ask about a law or a debate, in English or Malay</label>
+        <input id="q" name="q" type="text" placeholder="Ask about a law or a debate, in English or Malay" autocomplete="off">
+        <button type="submit"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg>Ask</button>
+      </form>
+      <p id="demo-q" class="sub" hidden style="font-size:14px">This demo has no server, so it plays the recorded answer to "Can my employer cut my salary?".</p>
+      <div class="chips" id="ex" aria-label="Example questions"></div>
+      <div class="ask-opts">
+        <label for="f-scope">Search in</label>
+        <select id="f-scope"><option>Acts and debates</option><option>Acts only</option><option>Debates only</option></select>
+        <label for="f-parl">Parliament</label>
+        <select id="f-parl"><option>Any</option><option>15</option><option>14</option></select>
+      </div>
+    </section>
+
+    <section class="tile c4" aria-labelledby="seat-h">
+      <div class="label" id="seat-h">The 15th Parliament, seat by seat <a href="mp.html">Find an MP<svg class="i sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div id="arc"></div>
+    </section>
+
+    <section class="tile yellow quote c4" aria-labelledby="cm-h">
+      <div class="label" id="cm-h">Newest commitment <a href="mp.html#commitments">All commitments<svg class="i sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <blockquote lang="ms">“kerajaan akan memperluaskan lagi pelepasan cukai individu untuk merangkumi semua perbelanjaan penjagaan ibu bapa dan datuk nenek”</blockquote>
+      <p class="ai-para"><span class="ai-label"><svg class="i sm" aria-hidden="true"><use href="#i-spark"/></svg>Commitment (AI)</span><br>Government will expand individual tax relief to cover all care expenses for parents and grandparents, not only health expenses</p>
+      <p class="who tile-foot">Timbalan Menteri Pembangunan Wanita, Keluarga... · 22 Oct 2026</p>
+    </section>
+
+    <section class="tile c8" id="topics" aria-labelledby="top-h">
+      <div class="label" id="top-h">Most debated topics <a href="home.html#topics">Topics<svg class="i sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <p class="h-tile">Debates a year on each of the six biggest topics, 2018 to 2026</p>
+      <div id="topic-chart"></div>
+    </section>
+
+    <section class="tile t2 c4" id="how" aria-labelledby="how-h">
+      <div class="label" id="how-h">How an answer is found</div>
+      <p class="h-tile">From 427,728 passages to 3 sources</p>
+      <ol class="path">
+        <li><span class="num">1</span><span>Keyword search</span><span class="hits tnum">100</span><span class="bar"><i style="width:51%"></i></span></li>
+        <li><span class="num">2</span><span>Search by meaning</span><span class="hits tnum">100</span><span class="bar"><i style="width:51%"></i></span></li>
+        <li><span class="num">3</span><span>Merge the two lists</span><span class="hits tnum">196</span><span class="bar"><i style="width:57%"></i></span></li>
+        <li><span class="num">4</span><span>Rerank by relevance</span><span class="hits tnum">20</span><span class="bar"><i style="width:31%"></i></span></li>
+        <li><span class="num">5</span><span>Cite in the answer</span><span class="hits tnum">3</span><span class="bar"><i style="width:8%"></i></span></li>
+      </ol>
+      <p class="ai-note tile-foot">Counts from the recorded answer on this page. Bar lengths use a log scale.</p>
+    </section>
+
+    <section class="tile c4" aria-labelledby="sit-h">
+      <div class="label" id="sit-h">Latest sittings <a href="debate.html">All sittings<svg class="i sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <ul class="rows">
+        <li><a class="row-link" href="debate.html"><span class="date-chip"><b>22</b><span>Oct</span></span><span class="grow"><b>Dewan Rakyat</b><br><span class="sub">51 debates</span></span><span class="draft-label"><svg class="i sm" aria-hidden="true"><use href="#i-pencil"/></svg>unrevised draft</span></a></li>
+        <li><a class="row-link" href="debate.html"><span class="date-chip"><b>22</b><span>Oct</span></span><span class="grow"><b>Special Chamber</b><br><span class="sub">7 debates</span></span></a></li>
+        <li><a class="row-link" href="debate.html"><span class="date-chip"><b>21</b><span>Oct</span></span><span class="grow"><b>Dewan Rakyat</b><br><span class="sub">54 debates</span></span><span class="draft-label"><svg class="i sm" aria-hidden="true"><use href="#i-pencil"/></svg>unrevised draft</span></a></li>
+        <li><a class="row-link" href="debate.html"><span class="date-chip"><b>21</b><span>Oct</span></span><span class="grow"><b>Special Chamber</b><br><span class="sub">8 debates</span></span></a></li>
+        <li><a class="row-link" href="debate.html"><span class="date-chip"><b>20</b><span>Oct</span></span><span class="grow"><b>Dewan Rakyat</b><br><span class="sub">56 debates</span></span><span class="draft-label"><svg class="i sm" aria-hidden="true"><use href="#i-pencil"/></svg>unrevised draft</span></a></li>
+      </ul>
+    </section>
+
+    <section class="tile c4" aria-labelledby="rec-h">
+      <div class="label" id="rec-h">The record in numbers</div>
+      <div class="counts">
+        <div><div class="big" data-count="30091">30,091</div><div class="mute">debates</div></div>
+        <div><div class="big" data-count="361676">361,676</div><div class="mute">verbatim speeches</div></div>
+        <div><div class="big" data-count="31767">31,767</div><div class="mute">questions with answers</div></div>
+        <div><div class="big" data-count="18523">18,523</div><div class="mute">ministers' commitments</div></div>
+      </div>
+      <p class="counts-note">Plus 887 Acts, 66,052 Act sections and 341 MPs. Counted from what the site holds.</p>
+    </section>
+  </div>
+
+  <div class="grid" id="ans" hidden aria-live="polite">
+    <section class="tile c5" aria-labelledby="steps-h">
+      <div class="label" id="steps-h">What the search went through</div>
+      <p class="h-tile" id="ans-state"></p>
+      <ol class="steps" id="steps"></ol>
+      <p class="funnel-note">Searched 427,728 speeches and sections. Bar lengths use a log scale, so the small steps stay visible.</p>
+    </section>
+    <section class="tile c7 r2" aria-labelledby="ans-h">
+      <div class="ans-head"><span class="ai-label" id="ans-h">AI answer</span><button class="btn s2" type="button" id="new-q" style="margin-left:auto">Ask something else</button></div>
+      <p class="ans-q" id="ans-q"></p>
+      <div class="answer-body" id="answer-text"></div>
+      <p class="ai-note tile-foot">Written by AI from the sources beside it. The verbatim record is the source, so check a claim there before you rely on it. This is general information from the published record, not legal advice.</p>
+    </section>
+    <section class="tile c5" id="passages" aria-labelledby="pas-h" hidden>
+      <div class="label" id="pas-h">Passages used for the answer</div>
+      <ul class="plist" id="plist" tabindex="0" aria-label="Passages found, scrollable"></ul>
+    </section>
+    <div class="grid c12" id="srcs" hidden style="margin:0"></div>
+  </div>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="reader-h" aria-hidden="true"></aside>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

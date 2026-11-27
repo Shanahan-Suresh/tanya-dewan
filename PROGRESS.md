@@ -389,7 +389,7 @@ the personal site has a card for it. To refresh the demo: `tools/static_demo.py`
 ## Phase 8: the seven upgrades
 
 The owner picked all seven upgrades on the mockup page (2026-11-27; mockups in
-`docs/design/enhancements/`, untracked). Each item is done when it works on the live site and in
+`docs/design/enhancements/`). Each item is done when it works on the live site and in
 the static demo, in English and Malay, light and dark, at desktop and 390 px.
 
 - [x] 1. Watch it search: a live funnel on the ask page; the server sends a `passages` event
@@ -413,8 +413,8 @@ the static demo, in English and Malay, light and dark, at desktop and 390 px.
 ## Phase 9: a new look
 
 Four looks were built as working prototypes of the Ask, MP and debate pages in
-`docs/design/restyle/` (local only, not in git): Sharpened, Bento, Stage and Poster, from the
-brief `BRIEF.md` there; `shoot.py` there shoots a look. Review page:
+`docs/design/restyle/`: Sharpened, Bento, Stage and Poster, from the brief `BRIEF.md` there.
+Their screenshots stay out of git; `shoot.py` there remakes them. Review page:
 https://claude.ai/artifact/XEwd2Di5Px7yPjS6NA2A16. The owner picked Stage, with Sharpened's
 polish on the record pages (2026-11-27); the build plan is `docs/design/restyle/PLAN.md`.
 

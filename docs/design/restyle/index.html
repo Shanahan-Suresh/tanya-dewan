@@ -1,0 +1,359 @@
+<title>Tanya Dewan Looks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* Layout: one centred column; a tab row picks a look; a live frame with page and width switches beside the notes, the pick and the pictures. */
+:root {
+  --bg: #f3f4f6; --surface: #ffffff; --fg: #14171c; --muted: #555c67; --line: #dadee5;
+  --accent: #0a1f5c; --accent-ink: #ffffff; --frame: #e4e7ec; --ok: #136c3a; --mid: #7a4d00; --no: #9b1c1c;
+  --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101216; --surface: #181b21; --fg: #e8eaee; --muted: #a3aab5; --line: #2b3039;
+  --accent: #9fb6ff; --accent-ink: #0b1430; --frame: #0a0c0f; --ok: #6fd79a; --mid: #f2c053; --no: #ff9a9a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #101216; --surface: #181b21; --fg: #e8eaee; --muted: #a3aab5; --line: #2b3039;
+  --accent: #9fb6ff; --accent-ink: #0b1430; --frame: #0a0c0f; --ok: #6fd79a; --mid: #f2c053; --no: #ff9a9a; color-scheme: dark }
+* { box-sizing: border-box }
+[hidden] { display: none !important }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--font-body); margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 36px 64px }
+.wrap { max-width: 1680px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px }
+h1, h2, h3 { font-family: var(--font-head); text-wrap: balance; margin: 0; font-weight: 600 }
+h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -0.01em }
+h2 { font-size: 22px } h3 { font-size: 15px; font-family: var(--font-body) }
+p { margin: 0 }
+.intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: end }
+.intro p { color: var(--muted); max-width: 64ch; margin-top: 12px }
+.steps { margin: 0; padding: 18px 20px 18px 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; display: grid; gap: 6px }
+.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px }
+.tab { text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; cursor: pointer; display: flex; gap: 14px; align-items: center; min-height: 44px; min-width: 0 }
+.tab:hover { border-color: var(--muted) }
+.tab[aria-selected="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent) }
+.tab img { width: 96px; height: 60px; object-fit: cover; object-position: top; border-radius: 6px; border: 1px solid var(--line); flex: none; background: var(--frame) }
+.tab b { display: block; font-family: var(--font-head); font-size: 17px; font-weight: 600 }
+.tab .s { color: var(--muted); font-size: 13px; display: block }
+.tab .chose { font-size: 12.5px; font-weight: 600; display: inline-flex; gap: 4px; align-items: center; margin-top: 2px }
+.panel { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; min-width: 0 }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--line) }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden }
+.seg button { font: inherit; font-size: 14px; background: transparent; color: var(--fg); border: 0; padding: 0 14px; min-height: 40px; cursor: pointer }
+.seg button + button { border-left: 1px solid var(--line) }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink) }
+.bar .label { font-size: 12px; color: var(--muted); margin-right: 6px }
+.bar .grow { flex: 1 }
+.btn { font: inherit; font-size: 14px; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; min-height: 40px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center }
+.btn:hover { border-color: var(--muted) }
+.screen { background: var(--frame); height: 800px; position: relative; overflow: hidden; display: flex; justify-content: center }
+.screen iframe { border: 0; background: #fff; transform-origin: top left; position: absolute; top: 0; left: 0 }
+.screen.phone iframe { position: static; transform: none; width: 390px; height: 100%; max-width: 100%; border-left: 1px solid var(--line); border-right: 1px solid var(--line) }
+.hint { font-size: 13px; color: var(--muted); padding: 10px 12px; border-top: 1px solid var(--line) }
+.side { display: flex; flex-direction: column; gap: 22px; min-width: 0 }
+.side section { display: grid; gap: 8px }
+.side p, .side li { color: var(--muted); font-size: 14px }
+.side ul { margin: 0; padding-left: 18px; display: grid; gap: 6px }
+.side .lead { color: var(--fg); font-size: 15px }
+.pick { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px }
+.pick .row { display: flex; flex-wrap: wrap; gap: 8px }
+.pick button { font: inherit; font-size: 14px; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 0 12px; min-height: 44px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center }
+.pick button:hover { border-color: var(--muted) }
+.pick button svg { opacity: 0 }
+.pick button[aria-pressed="true"] { border-color: currentColor; box-shadow: inset 0 0 0 1px currentColor; font-weight: 600 }
+.pick button[aria-pressed="true"] svg { opacity: 1 }
+.pick button[data-c="use"][aria-pressed="true"], .chose.use { color: var(--ok) }
+.pick button[data-c="parts"][aria-pressed="true"], .chose.parts { color: var(--mid) }
+.pick button[data-c="no"][aria-pressed="true"], .chose.no { color: var(--no) }
+.pick .save { font-size: 13px; color: var(--muted); min-height: 1.2em }
+.pics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
+.pic { font: inherit; color: var(--muted); font-size: 12px; text-align: left; background: none; border: 0; padding: 0; cursor: zoom-in; display: grid; gap: 6px; min-width: 0 }
+.pic img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid var(--line); background: var(--surface) }
+.pic:hover img { border-color: var(--muted) }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px }
+details summary { cursor: pointer; font-weight: 600; min-height: 28px }
+details p { color: var(--muted); margin-top: 10px; max-width: 80ch }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.full { position: fixed; inset: 0; z-index: 20; background: var(--bg); display: flex; flex-direction: column;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px) }
+.full .side { display: none }
+.full .stage { flex: 1; display: flex; flex-direction: column; border-radius: 0; border: 0 }
+.full .screen { flex: 1; height: auto }
+.viewer { position: fixed; inset: 0; z-index: 30; background: rgba(8, 10, 14, .94); display: flex; flex-direction: column }
+.viewer .vbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: calc(10px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px)); color: #e9ebef }
+.viewer .vbar .btn { color: #e9ebef; border-color: #3a404a }
+.viewer .vbar span { flex: 1; font-size: 14px; min-width: 200px }
+.viewer .vimg { flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 0 16px 24px }
+.viewer img { max-width: min(100%, 1828px); height: auto; cursor: zoom-out; border-radius: 4px }
+@media (max-width: 1180px) { .panel { grid-template-columns: minmax(0, 1fr) } .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+@media (max-width: 760px) {
+  .intro { grid-template-columns: minmax(0, 1fr) }
+  .tabs { grid-template-columns: minmax(0, 1fr) }
+  .screen { height: 640px }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div>
+      <h1>Which new look should Tanya Dewan wear?</h1>
+      <p>I built four new looks for the site. Each look shows the same three pages with real records: the Ask page with a real answer, an MP's page and one debate. The engine and the features stay the same; only the look changes. The pictures also show today's site, so you can compare.</p>
+    </div>
+    <ol class="steps">
+      <li>Pick a look in the row below.</li>
+      <li>Try the live page: press the answer button, click a citation, open the MP and debate pages, switch to phone width.</li>
+      <li>Mark each look: use it, borrow parts of it, or no.</li>
+      <li>Tell me in chat which parts to borrow.</li>
+    </ol>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Looks" id="tabs"></div>
+
+  <div class="panel" id="panel">
+    <div class="stage" id="stage">
+      <div class="bar">
+        <span><span class="label">Page</span><span class="seg" id="pages"></span></span>
+        <span><span class="label">Width</span><span class="seg" id="widths"></span></span>
+        <span class="grow"></span>
+        <button class="btn" id="fullBtn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+          <span id="fullLabel">Fill the window</span>
+        </button>
+      </div>
+      <div class="screen" id="screen"><iframe id="frame" title="Live look preview"></iframe></div>
+      <p class="hint" id="hint"></p>
+    </div>
+    <aside class="side" id="side"></aside>
+  </div>
+
+  <details>
+    <summary>How these were made</summary>
+    <p>One shared brief fixed the content and the rules for all four looks. The rules: real records only, every AI-written line labelled, status shown as an icon with coloured text, phone width and dark mode designed. The name and the logo stay. The two looks you turned down in the first round, the analyst console and the newspaper, were ruled out.</p>
+    <p>Each look was built by its own agent as plain HTML, CSS and JavaScript, the same parts the real site uses. I checked every look's screenshots at your window size (1828 px) and at phone width (390 px), light and dark.</p>
+    <p>Each look follows your device's light or dark setting, and each has its own switch in its header.</p>
+  </details>
+</div>
+
+<div class="viewer" id="viewer" hidden>
+  <div class="vbar">
+    <span id="vcap"></span>
+    <button class="btn" id="vprev" type="button">Previous</button>
+    <button class="btn" id="vnext" type="button">Next</button>
+    <button class="btn" id="vclose" type="button">Close</button>
+  </div>
+  <div class="vimg"><img id="vimg" alt=""></div>
+</div>
+
+<script>
+const DESIGNS = [
+ {
+  "id": "stage",
+  "name": "Stage",
+  "short": "Dark navy bands for key moments, light paper for the record.",
+  "lead": "Dark navy bands hold the moments that matter, and light paper holds the record. The home page opens on the Dewan Rakyat chamber in gold lines, with the ask box where the Speaker sits.",
+  "take": "My pick for the strongest first impression. Its catch: the heavy dark areas need care on phones.",
+  "good": [
+   "The most dramatic first screen of the four. It says Parliament at a glance.",
+   "While an answer runs, the dark band shows the search chart and the seats lighting up. Sources and the reader sit on paper, so the record still looks like the record.",
+   "The debate page opens on a dark band with the speech timeline in coalition colours."
+  ],
+  "hard": [
+   "Dark bands and paper in two themes double the colours to test.",
+   "The seats that light up during an answer are a picture, not real data, so they keep a label that says so.",
+   "Large dark areas can feel heavy for casual readers on a phone."
+  ]
+ },
+ {
+  "id": "sharpened",
+  "name": "Sharpened",
+  "short": "Today's look, refined: bigger type, depth, a gold chamber.",
+  "lead": "Today's colours, type and songket pattern on a stricter grid, with bigger headlines and soft depth. The chamber is drawn in gold dots behind the ask box.",
+  "take": "The safest step up. Its catch: a hiring reader may not see a big change.",
+  "good": [
+   "Anyone who knows today's site sees it at once, only more polished.",
+   "The gold chamber lights up step by step while an answer runs, and the three cited seats stay lit.",
+   "It costs the least to adopt: it keeps today's colours, fonts and page structure."
+  ],
+  "hard": [
+   "It is the least surprising of the four.",
+   "The dot chamber needs the seat list from the server and a small script on the home page.",
+   "Its motion (numbers counting up, sections fading in) runs only in a real browser. The pictures show the final state."
+  ]
+ },
+ {
+  "id": "bento",
+  "name": "Bento",
+  "short": "Every page a grid of tiles, each a small live view.",
+  "lead": "Every page is a grid of tiles, each a small live view of real data, like a modern product site. The ask box is the biggest tile. The seat map, the newest commitment, the topic chart and the counts sit around it.",
+  "take": "The clearest answer view of the four. Its catch: tile grids are common on product sites, so it is less unique.",
+  "good": [
+   "The home page shows the whole product in one screen: ask, seats, a quote and a chart.",
+   "The answer view is very clear: the search steps, the answer, the passages and the sources each have a tile.",
+   "It reads as a polished, current product and is fast to scan."
+  ],
+  "hard": [
+   "Tiles must keep matching heights at every width. The MP page has a large empty navy tile on desktop that needs a fix.",
+   "Each tile needs its own data query on the real site.",
+   "The look is common on product sites, so it says less about Malaysia's Parliament."
+  ]
+ },
+ {
+  "id": "poster",
+  "name": "Poster",
+  "short": "Giant condensed type, flat yellow and navy blocks.",
+  "lead": "Type leads: giant condensed headlines and numbers on a visible grid, with flat yellow and navy blocks as structure. It reads like a design studio's identity on a public record.",
+  "take": "The boldest and most memorable. Its catch: all-caps headlines are slow to read for long Malay titles.",
+  "good": [
+   "It looks designed, not built from a template.",
+   "Numbers become the hero: the counts, the search steps and the MP's seat number are huge.",
+   "Speeches and Act text keep a serif, so the record still stands apart."
+  ],
+  "hard": [
+   "Long Malay agenda titles in condensed capitals are slow to read.",
+   "Big type means more scrolling on a phone.",
+   "A loud look dates faster than a quiet one."
+  ]
+ }
+];
+const PAGES = [["home", "Ask"], ["mp", "MP"], ["debate", "Debate"]];
+const PICS = [
+  ["home-answer-desk-light", "Ask page with an answer"], ["home-reader-desk-light", "A citation opened in the reader"],
+  ["home-answer-desk-dark", "Ask page with an answer, dark"], ["home-deskfull-light", "The whole Ask page"],
+  ["mp-deskfull-light", "The whole MP page"], ["debate-deskfull-light", "The whole debate page"],
+  ["debate-desk-dark", "Debate page, dark"], ["home-answer-phone-light", "Ask page with an answer, phone"],
+  ["mp-phone-dark", "MP page, phone, dark"], ["debate-phone-light", "Debate page, phone"],
+];
+const TODAY = [
+  ["ask-mid-desk-light", "Today: Ask page while the answer is written"], ["reader-desk-light", "Today: a citation opened in the reader"],
+  ["seats-desk-light", "Today: the seat map on the home page"], ["mp-desk-light", "Today: MP page"],
+  ["debate-desk-light", "Today: debate page"], ["debate-desk-dark", "Today: debate page, dark"],
+];
+const CHOICES = [["use", "Use this look"], ["parts", "Borrow parts"], ["no", "No"]];
+const CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const st = { d: 0, page: "home", phone: false, full: false };
+const picks = {};
+let db = null, saveMsg = "";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function renderTabs() {
+  $("tabs").innerHTML = DESIGNS.map((d, i) => {
+    const c = CHOICES.find((x) => x[0] === picks[d.id]);
+    return `<button class="tab" role="tab" aria-selected="${i === st.d}" data-i="${i}">
+     <img src="shots/${d.id}-home-answer-desk-light.webp" alt="">
+     <span><b>${esc(d.name)}</b><span class="s">${esc(d.short)}</span>${c ? `<span class="chose ${c[0]}">${CHECK}${esc(c[1])}</span>` : ""}</span></button>`;
+  }).join("");
+}
+$("pages").innerHTML = PAGES.map(([k, l]) => `<button type="button" data-page="${k}">${l}</button>`).join("");
+$("widths").innerHTML = `<button type="button" data-w="0">Desktop</button><button type="button" data-w="1">Phone</button>`;
+
+function fit() {
+  const scr = $("screen"), fr = $("frame");
+  if (st.phone) { fr.style.width = ""; fr.style.height = ""; fr.style.transform = ""; fr.style.left = ""; return; }
+  const W = 1440, s = Math.min(1, scr.clientWidth / W);
+  fr.style.width = W + "px";
+  fr.style.height = (scr.clientHeight / s) + "px";
+  fr.style.transform = `scale(${s})`;
+  fr.style.left = Math.max(0, (scr.clientWidth - W * s) / 2) + "px";
+}
+function renderSide() {
+  const d = DESIGNS[st.d];
+  $("side").innerHTML = `
+    <section><h2>${esc(d.name)}</h2><p class="lead">${esc(d.lead)}</p><p><b>My take:</b> ${esc(d.take)}</p></section>
+    <section class="pick" aria-label="Your mark for ${esc(d.name)}"><h3>Your mark for this look</h3>
+      <div class="row">${CHOICES.map(([c, l]) => `<button type="button" data-c="${c}" aria-pressed="${picks[d.id] === c}">${CHECK}${l}</button>`).join("")}</div>
+      <p class="save" id="save" role="status">${esc(saveMsg)}</p></section>
+    <section><h3>What it does best</h3><ul>${d.good.map((g) => `<li>${esc(g)}</li>`).join("")}</ul></section>
+    <section><h3>What to weigh</h3><ul>${d.hard.map((g) => `<li>${esc(g)}</li>`).join("")}</ul></section>
+    <section><h3>Pictures at full size</h3><div class="pics">${PICS.map(([f, c], i) =>
+      `<button class="pic" type="button" data-pic="${i}"><img src="shots/${d.id}-${f}.webp" alt="" loading="lazy">${esc(c)}</button>`).join("")}</div></section>
+    <section><h3>Today's site, to compare</h3><div class="pics">${TODAY.map(([f, c], i) =>
+      `<button class="pic" type="button" data-today="${i}"><img src="shots/today-${f}.webp" alt="" loading="lazy">${esc(c)}</button>`).join("")}</div></section>`;
+}
+function render(reload = true) {
+  const d = DESIGNS[st.d];
+  document.querySelectorAll(".tab").forEach((t, i) => t.setAttribute("aria-selected", String(i === st.d)));
+  document.querySelectorAll("[data-page]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.page === st.page)));
+  document.querySelectorAll("[data-w]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.w === +st.phone)));
+  $("screen").classList.toggle("phone", st.phone);
+  $("hint").textContent = st.phone ? "Drawn at 390 px wide, the width of a typical phone. Links inside the page work."
+    : "Drawn at 1440 px wide and shrunk to fit. Fill the window to see it larger. Links inside the page work.";
+  if (reload) $("frame").src = `${d.id}/${st.page}.html`;
+  fit();
+}
+$("tabs").addEventListener("click", (e) => {
+  const t = e.target.closest(".tab"); if (!t) return;
+  st.d = +t.dataset.i; st.page = "home"; renderTabs(); renderSide(); render();
+  try { localStorage.setItem("look", st.d); } catch (_) {}
+});
+$("pages").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; st.page = b.dataset.page; render(); });
+$("widths").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; st.phone = b.dataset.w === "1"; render(false); });
+$("frame").addEventListener("load", () => {
+  try { const p = $("frame").contentWindow.location.pathname.split("/").pop().replace(".html", "");
+    if (PAGES.some(([k]) => k === p) && p !== st.page) { st.page = p; render(false); } } catch (_) {}
+});
+$("fullBtn").addEventListener("click", () => {
+  st.full = !st.full;
+  $("panel").classList.toggle("full", st.full);
+  $("fullLabel").textContent = st.full ? "Back to the page" : "Fill the window";
+  fit();
+});
+new ResizeObserver(fit).observe($("screen"));
+
+let set = PICS, pre = "", vi = 0;
+function showPic(i) {
+  vi = (i + set.length) % set.length;
+  $("vimg").src = `shots/${pre}${set[vi][0]}.webp`;
+  $("vimg").alt = set[vi][1];
+  $("vcap").textContent = `${pre.startsWith("today") ? "" : DESIGNS[st.d].name + ": "}${set[vi][1]} (${vi + 1} of ${set.length})`;
+  $("viewer").hidden = false;
+  $("vclose").focus();
+}
+function closePic() { $("viewer").hidden = true; }
+$("side").addEventListener("click", async (e) => {
+  const p = e.target.closest("[data-pic]");
+  if (p) { set = PICS; pre = DESIGNS[st.d].id + "-"; showPic(+p.dataset.pic); return; }
+  const t = e.target.closest("[data-today]");
+  if (t) { set = TODAY; pre = "today-"; showPic(+t.dataset.today); return; }
+  const b = e.target.closest(".pick button"); if (!b) return;
+  const id = DESIGNS[st.d].id, c = b.dataset.c;
+  if (picks[id] === c) return;
+  picks[id] = c;
+  document.querySelectorAll(".pick button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.c === c)));
+  renderTabs();
+  if (!db) { setSave("Your mark cannot be saved here. Tell me in chat."); return; }
+  setSave("Saving…");
+  try { await db.collection("picks").doc(id).set({ choice: c, at: new Date().toISOString() }); setSave("Saved."); }
+  catch (_) { setSave("That mark did not save. Try again, or tell me in chat."); }
+});
+function setSave(m) { saveMsg = m; const el = $("save"); if (el) el.textContent = m; }
+$("vprev").addEventListener("click", () => showPic(vi - 1));
+$("vnext").addEventListener("click", () => showPic(vi + 1));
+$("vclose").addEventListener("click", closePic);
+$("vimg").addEventListener("click", closePic);
+document.addEventListener("keydown", (e) => {
+  if ($("viewer").hidden) return;
+  if (e.key === "Escape") closePic();
+  else if (e.key === "ArrowLeft") showPic(vi - 1);
+  else if (e.key === "ArrowRight") showPic(vi + 1);
+});
+
+try { const s = +localStorage.getItem("look"); if (s >= 0 && s < DESIGNS.length) st.d = s; } catch (_) {}
+renderTabs(); renderSide(); render();
+
+(async () => {
+  const timer = setTimeout(() => { if (!db) setSave("Saved marks are not reachable yet."); }, 10000);
+  try { db = window.claude?.use ? await window.claude.use("db") : null; } catch { db = null; }
+  clearTimeout(timer);
+  if (!db) { setSave("Your marks cannot be saved here. Tell me in chat."); return; }
+  if (saveMsg.startsWith("Saved marks")) setSave("");
+  db.collection("picks").onSnapshot((snap) => {
+    let changed = false;
+    for (const d of snap.docs) { const v = d.data(); if (v && v.choice && picks[d.id] !== v.choice) { picks[d.id] = v.choice; changed = true; } }
+    if (changed) { renderTabs(); document.querySelectorAll(".pick button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.c === picks[DESIGNS[st.d].id]))); }
+  }, () => setSave("Saved marks could not be read. Tell me in chat."));
+})();
+</script>
